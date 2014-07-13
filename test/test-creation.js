@@ -149,6 +149,9 @@ describe('ng-poly generator', function () {
   describe('route generator', function () {
     beforeEach(function (done) {
       app = helpers.createGenerator('ng-poly:route', ['../../route', '../../controller', '../../view'], 'route-test');
+      helpers.mockPrompt(app, {
+        'url': 'value'
+      });
       done();
     });
 
@@ -198,6 +201,7 @@ describe('ng-poly generator', function () {
         'src/js/values/valueTest.js',
         'tests/unit/values/valueTest.spec.js'
       ];
+
 
       app.run([], function () {
         helpers.assertFile(expected);

@@ -14,6 +14,20 @@ var Generator = module.exports = function Generator() {
 
 util.inherits(Generator, yeoman.generators.NamedBase);
 
+Generator.prototype.askQuestions = function askQuestion() {
+  var done = this.async();
+
+  this.prompt([{
+    name: 'url',
+    message: 'What\'s the url for this state?',
+    default: this.name
+  }], function (props) {
+    this.url = props.url;
+
+    done();
+  }.bind(this));
+};
+
 Generator.prototype.addRoute = function addRoute() {
   var viewName = utils.lowerCamel(this.name);
   var ctrlName = utils.ctrlName(this.name);
@@ -35,7 +49,7 @@ Generator.prototype.addRoute = function addRoute() {
   var newState = [
     '    })',
     '    .state(\'' + viewName + '\', {',
-    '      url: \'/' + viewName + '\',',
+    '      url: \'/' + this.url + '\',',
     '      templateUrl: \'views/' + viewName + '.html\',',
     '      controller: \'' + ctrlName + '\'',
   ];
