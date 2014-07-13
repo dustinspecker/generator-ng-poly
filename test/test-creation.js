@@ -36,6 +36,8 @@ describe('ng-poly generator', function () {
       'src/jade/views/main.jade',
       'src/js/app.js',
       'src/js/controllers/MainCtrl.js',
+      'src/less/includes/variables.less',
+      'src/less/style.less',
       'tests/unit/controllers/MainCtrl.spec.js',
       '.editorconfig',
       '.jshintrc',
