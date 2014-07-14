@@ -29,6 +29,7 @@
     "yosay": "^0.1.0"
   },
   "devDependencies": {
+    "a": "^0.4.5",
     "mocha": "*"
   },
   "peerDependencies": {

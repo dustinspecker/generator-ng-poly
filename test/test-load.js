@@ -8,6 +8,7 @@ describe('ng-poly generator', function () {
     assert(require('../constant') !== undefined);
     assert(require('../controller') !== undefined);
     assert(require('../directive') !== undefined);
+    assert(require('../element') !== undefined);
     assert(require('../factory') !== undefined);
     assert(require('../provider') !== undefined);
     assert(require('../route') !== undefined);

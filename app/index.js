@@ -42,6 +42,8 @@ Generator.prototype.scaffold = function scaffold() {
   this.copy('gulpfile.js', 'Gulpfile.js');
   this.copy('.jshintrc', '.jshintrc');
 
+  this.mkdir('src/components/');
+
   this.mkdir('src/jade/');
   this.template('_index.jade', 'src/jade/index.jade', context);
   this.mkdir('src/jade/views/');

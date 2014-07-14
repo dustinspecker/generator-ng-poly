@@ -40,6 +40,25 @@ gulp.task('clean', function (cb) {
   return rimraf('build', cb);
 });
 
+gulp.task('components', ['clean', 'jshint'], function () {
+  gulp.src('src/components/**/*.js', {
+      base: 'src/components'
+    })
+    .pipe(gulp.dest('build/components/'));
+
+  gulp.src('src/components/**/*.less', {
+      base: 'src/components'
+    })
+    .pipe(less())
+    .pipe(gulp.dest('build/components/'));
+
+  return gulp.src('src/components/**/*.jade', {
+      base: 'src/components'
+    })
+    .pipe(jade())
+    .pipe(gulp.dest('build/components'));
+});
+
 gulp.task('connect', function () {
   connect.server({
     root: 'build',
@@ -54,9 +73,10 @@ gulp.task('jade', ['clean'], function () {
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task('inject', ['jade', 'js', 'less'], function () {
+gulp.task('inject', ['jade', 'js', 'less', 'components'], function () {
   return gulp.src('build/index.html')
     .pipe(inject(gulp.src([
+      'build/components/**/*.html',
       'build/css/*.css',
       'build/js/angular.js',
       'build/js/angular-ui-router.js',    
@@ -73,13 +93,15 @@ gulp.task('js', ['clean', 'jshint'], function () {
   return gulp.src([
       'src/js/**/*.js',
       'bower_components/angular/angular.js',
-      'bower_components/angular-ui-router/release/angular-ui-router.js'
+      'bower_components/angular-ui-router/release/angular-ui-router.js',
+      'bower_components/platform/platform.js'
     ])
     .pipe(gulp.dest('build/js'));
 });
 
 gulp.task('jshint', function () {
   return gulp.src([
+    'src/components/**/*.js',
     'src/js/**/*.js',
     'tests/unit/**/*.spec.js'
     ])
@@ -103,7 +125,17 @@ gulp.task('open', function () {
     .pipe(open('', {url: 'http://localhost:8080'}));
 });
 
-gulp.task('build', ['inject']);
+gulp.task('polymer', ['inject'], function () {
+  return gulp.src([
+    'bower_components/polymer/polymer.{js,html}',
+    'bower_components/polymer/layout.html'
+    ], {
+      base: 'bower_components'
+    })
+    .pipe(gulp.dest('build/components'));
+});
+
+gulp.task('build', ['polymer']);
 
 gulp.task('default', ['build'], function () {
   gulp.start('connect');

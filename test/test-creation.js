@@ -108,6 +108,26 @@ describe('ng-poly generator', function () {
     });
   });
 
+  describe('element generator', function () {
+    beforeEach(function (done) {
+      app = helpers.createGenerator('ng-poly:element', ['../../element'], 'element-test');
+      done();
+    });
+
+    it('creates expected files', function (done) {
+      var expected = [
+        'src/components/element-test/element-test.less',
+        'src/components/element-test/element-test.jade',
+        'src/components/element-test/element-test.js'
+      ];
+
+      app.run([], function () {
+        helpers.assertFile(expected);
+        done();
+      });
+    });
+  });
+
   describe('factory generator', function () {
     beforeEach(function (done) {
       app = helpers.createGenerator('ng-poly:factory', ['../../factory'], 'factory-test');
@@ -201,7 +221,6 @@ describe('ng-poly generator', function () {
         'src/js/values/valueTest.js',
         'tests/unit/values/valueTest.spec.js'
       ];
-
 
       app.run([], function () {
         helpers.assertFile(expected);

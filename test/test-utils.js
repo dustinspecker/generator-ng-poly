@@ -1,6 +1,8 @@
 /*global describe, beforeEach, it */
 'use strict';
 var assert = require('assert')
+  , expectRequire = require('a').expectRequire
+  , path = require('path')
   , utils = require('../utils');
 
 describe('ng-poly generator', function () {
@@ -41,6 +43,24 @@ describe('ng-poly generator', function () {
     });
   });
 
+  describe('hyphen name', function () {
+    it('should transform name with hyphens', function () {
+      assert(utils.hyphenName('test-name') === 'test-name');
+    });
+
+    it('should transform upper camel name', function () {
+      assert(utils.hyphenName('TestName') === 'test-name');
+    });
+
+    it('should transform underscore', function () {
+      assert(utils.hyphenName('test_name') === 'test-name');
+    });
+
+    it('should transform mixed', function () {
+      assert(utils.hyphenName('Test_name-fancy') === 'test-name-fancy');
+    });
+  });
+
   describe('ctrl name', function () {
     it('should transform name with hyphens', function () {
       assert(utils.ctrlName('test-name') === 'TestNameCtrl');
@@ -56,6 +76,13 @@ describe('ng-poly generator', function () {
 
     it('should transform mixed', function () {
       assert(utils.ctrlName('Test_name-fancy') === 'TestNameFancyCtrl');
+    });
+  });
+
+  describe('get app name', function () {
+    it('retrieves app name from package.json', function () {
+      expectRequire(path.join(process.cwd(), 'package.json')).return({name: 'appName'});
+      assert(utils.getAppName() === 'appName');
     });
   });
 
