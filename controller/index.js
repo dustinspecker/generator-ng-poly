@@ -5,7 +5,6 @@ var util = require('util')
 
 
 var Generator = module.exports = function Generator() {
-  console.log('test2');
   yeoman.generators.NamedBase.apply(this, arguments);
 };
 
