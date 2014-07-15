@@ -1,7 +1,7 @@
 {
   "name": "generator-ng-poly",
   "version": "0.0.0",
-  "description": "Yeoman generator",
+  "description": "Yeoman generator for AngularJS and Polymer apps. A work in progress.",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "dustinspecker/generator-ng-poly",
@@ -17,7 +17,19 @@
     "test": "mocha"
   },
   "files": [
-    "app"
+    "app",
+    "constant",
+    "controller",
+    "directive",
+    "element",
+    "factory",
+    "provider",
+    "route",
+    "service",
+    "test",
+    "utils",
+    "value",
+    "view"
   ],
   "keywords": [
     "yeoman-generator"
