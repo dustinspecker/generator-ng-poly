@@ -5,12 +5,13 @@ var util = require('util')
 
 
 var Generator = module.exports = function Generator() {
+  console.log('test2');
   yeoman.generators.NamedBase.apply(this, arguments);
 };
 
 util.inherits(Generator, yeoman.generators.NamedBase);
 
-Generator.prototype.addController = function addController() {
+Generator.prototype.writing = function writing() {
   // get app name
   var appName = utils.getAppName();
   var ctrlName = utils.ctrlName(this.name);

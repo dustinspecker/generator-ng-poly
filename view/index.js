@@ -10,7 +10,7 @@ var Generator = module.exports = function Generator() {
 
 util.inherits(Generator, yeoman.generators.NamedBase);
 
-Generator.prototype.addView = function addView() {
+Generator.prototype.writing = function writing() {
   var viewName = utils.lowerCamel(this.name);
 
   var context = {

@@ -1,4 +1,4 @@
-# generator-ng-poly [![Build Status](https://secure.travis-ci.org/dustinspecker/generator-ng-poly.png?branch=master)](https://travis-ci.org/dustinspecker/generator-ng-poly)
+# generator-ng-poly [![Build Status](https://secure.travis-ci.org/dustinspecker/generator-ng-poly.png?branch=master)](https://travis-ci.org/dustinspecker/generator-ng-poly) [![Dependencies](https://david-dm.org/dustinspecker/generator-ng-poly.png)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=dependencies&view=table) [![DevDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/dev-status.png)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=devDependencies&view=table) [![PeerDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/peer-status.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=peerDependencies&view=table)
 
 > [Yeoman](http://yeoman.io) generator for AngularJS and Polymer apps. A work in progress.
 
@@ -17,16 +17,19 @@ Run `gulp` to build.
 ## Generators
 
 Available generators:
-* [ng-poly](#app) (aka [ng-poly:app](#app))
-* [ng-poly:constant](#constant)
-* [ng-poly:controller](#controller)
-* [ng-poly:directive](#directive)
-* [ng-poly:factory](#factory)
-* [ng-poly:provider](#provider)
-* [ng-poly:route](#route)
-* [ng-poly:service](#service)
-* [ng-poly:value](#value)
-* [ng-poly:view](#view)
+* AngularJS
+  - [ng-poly](#app) (aka [ng-poly:app](#app))
+  - [ng-poly:constant](#constant)
+  - [ng-poly:controller](#controller)
+  - [ng-poly:directive](#directive)
+  - [ng-poly:factory](#factory)
+  - [ng-poly:provider](#provider)
+  - [ng-poly:route](#route)
+  - [ng-poly:service](#service)
+  - [ng-poly:value](#value)
+  - [ng-poly:view](#view)
+* Polymer
+  - [ng-poly:element](#element)
 
 ## License
 

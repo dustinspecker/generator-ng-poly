@@ -8,12 +8,11 @@ var util = require('util')
 
 var Generator = module.exports = function Generator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
-  this.hookFor('ng-poly:controller', { args: ['main'] });
 };
 
 util.inherits(Generator, yeoman.generators.Base);
 
-Generator.prototype.welcome = function welcome() {
+Generator.prototype.prompting = function prompting() {
   var done = this.async();
 
   this.log(yosay('Welcome to ngPoly!'));
@@ -28,26 +27,28 @@ Generator.prototype.welcome = function welcome() {
   }.bind(this));
 };
 
-Generator.prototype.scaffold = function scaffold() {
+Generator.prototype.configuring = function configuring() {
   // create a directory with appName, unless user is in a directory named appName
   if (this.appName !== this._.last(this.destinationRoot().split(path.sep))) {
     this.destinationRoot(this.appName);
   }
 
-  var context = { appName: this.appName };
+  this.context = { appName: this.appName };
 
-  this.template('_bower.json', 'bower.json', context);
-  this.template('_package.json', 'package.json', context);
+  this.template('_bower.json', 'bower.json', this.context);
+  this.template('_package.json', 'package.json', this.context);
   this.copy('.editorconfig', '.editorconfig');
   this.copy('gulpfile.js', 'Gulpfile.js');
   this.copy('.jshintrc', '.jshintrc');
+};
 
+Generator.prototype.writing = function writing() {
   this.mkdir('src/components/');
 
   this.mkdir('src/jade/');
-  this.template('_index.jade', 'src/jade/index.jade', context);
+  this.template('_index.jade', 'src/jade/index.jade', this.context);
   this.mkdir('src/jade/views/');
-  this.template('_main.jade', 'src/jade/views/main.jade', context);
+  this.template('_main.jade', 'src/jade/views/main.jade', this.context);
 
   this.mkdir('src/js/');
   this.template('_app.js', 'src/js/app.js');
@@ -58,11 +59,14 @@ Generator.prototype.scaffold = function scaffold() {
   this.copy('variables.less', 'src/less/includes/variables.less');
 
   this.mkdir('tests/');
-  
 };
 
-Generator.prototype.dependencies = function dependencies() {
+Generator.prototype.install = function install() {
   if (!this.options['skip-install']) {
     this.installDependencies();
   }
+};
+
+Generator.prototype.end = function end() {
+  this.invoke('ng-poly:controller', { args: ['main'] });
 };

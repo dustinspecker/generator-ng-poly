@@ -1,6 +1,6 @@
 /*global Polymer*/
 'use strict';
-(function() {
+(function () {
   var element = new Polymer('<%= elementName %>', {
     name: '<%= elementName %>',
     domReady: function () {

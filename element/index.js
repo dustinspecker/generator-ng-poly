@@ -10,7 +10,7 @@ var Generator = module.exports = function Generator() {
 
 util.inherits(Generator, yeoman.generators.NamedBase);
 
-Generator.prototype.addElement = function addElement() {
+Generator.prototype.writing = function writing() {
   var elementName = utils.hyphenName(this.name);
 
   var context = {

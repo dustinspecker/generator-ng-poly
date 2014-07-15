@@ -10,7 +10,7 @@ var Generator = module.exports = function Generator() {
 
 util.inherits(Generator, yeoman.generators.NamedBase);
 
-Generator.prototype.addDirective = function addDirective() {
+Generator.prototype.writing = function writing() {
   var appName = utils.getAppName();
   var dirName = utils.lowerCamel(this.name);
 

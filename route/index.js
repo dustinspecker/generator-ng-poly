@@ -8,13 +8,11 @@ var util = require('util')
 
 var Generator = module.exports = function Generator() {
   yeoman.generators.NamedBase.apply(this, arguments);
-  this.hookFor('ng-poly:controller', { args: [this.name] });
-  this.hookFor('ng-poly:view', { args: [this.name] });
 };
 
 util.inherits(Generator, yeoman.generators.NamedBase);
 
-Generator.prototype.askQuestions = function askQuestion() {
+Generator.prototype.prompting = function prompting() {
   var done = this.async();
 
   this.prompt([{
@@ -28,7 +26,7 @@ Generator.prototype.askQuestions = function askQuestion() {
   }.bind(this));
 };
 
-Generator.prototype.addRoute = function addRoute() {
+Generator.prototype.writing = function writing() {
   var viewName = utils.lowerCamel(this.name);
   var ctrlName = utils.ctrlName(this.name);
 
@@ -61,4 +59,9 @@ Generator.prototype.addRoute = function addRoute() {
 
   // save modifications
   fs.writeFileSync(filePath, lines.join('\n'));  
+};
+
+Generator.prototype.end = function end() {
+  this.invoke('ng-poly:controller', { args: [this.name] });
+  this.invoke('ng-poly:view', { args: [this.name] });
 };

@@ -10,7 +10,7 @@ var Generator = module.exports = function Generator() {
 
 util.inherits(Generator, yeoman.generators.NamedBase);
 
-Generator.prototype.addConstant = function addConstant() {
+Generator.prototype.writing = function writing() {
   var appName = utils.getAppName();
   var constantName = utils.lowerCamel(this.name);
 
