@@ -22,6 +22,10 @@ Generator.prototype.prompting = function prompting() {
     message: 'What is the preferred markup language?',
     choices: [
       {
+        name: 'HTML',
+        value: 'html'
+      },
+      {
         name: 'Jade',
         value: 'jade',
         checked: true
@@ -81,9 +85,9 @@ Generator.prototype.configuring = function configuring() {
   }
 
   this.config.set('markup', this.markup);
-  this.config.save('appScript', this.appScript);
-  this.config.save('testScript', this.testScript);
-  this.config.save('style', this.style);
+  this.config.set('appScript', this.appScript);
+  this.config.set('testScript', this.testScript);
+  this.config.set('style', this.style);
   this.config.save();
 
   this.context = { appName: this.appName };
@@ -96,12 +100,14 @@ Generator.prototype.configuring = function configuring() {
 };
 
 Generator.prototype.writing = function writing() {
+  var markup = this.config.get('markup');
+
   this.mkdir('src/components/');
 
-  this.mkdir('src/jade/');
-  this.template('_index.jade', 'src/jade/index.jade', this.context);
-  this.mkdir('src/jade/views/');
-  this.template('_main.jade', 'src/jade/views/main.jade', this.context);
+  this.mkdir('src/markup/');
+  this.template('_index.' + markup, 'src/markup/index.' + markup, this.context);
+  this.mkdir('src/markup/views/');
+  this.template('_main.' + markup, 'src/markup/views/main.' + markup, this.context);
 
   this.mkdir('src/js/');
   this.template('_app.js', 'src/js/app.js');

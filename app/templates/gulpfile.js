@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp')
+  , addSrc = require('gulp-add-src')
   , connect = require('gulp-connect')
   , inject = require('gulp-inject')
   , jade = require('gulp-jade')
@@ -32,11 +33,11 @@ var bowerPolymerComponents = [
 // src files
 var componentsBase = 'src/components/'
   , componentsDir = componentsBase + '**/'
-  , componentsJade = componentsDir + '*.jade'
+  , componentsMarkup = componentsDir
   , componentsJs = componentsDir + '*.js'
   , componentsLess = componentsDir + '*.less'
-  , srcJadeFiles = 'src/jade/**/*.jade'
-  , srcJadeTemplates = 'src/jade/templates/*.jade' // used for karmaConf
+  , srcMarkup = 'src/markup/**/'
+  , srcMarkupTemplates = 'src/markup/templates/' // used for karmaConf
   , srcJsFiles = 'src/js/**/*.js'
   , srcLessDir = 'src/less/'; // since we need to strictly specify style.less later
 
@@ -63,15 +64,19 @@ var karmaConf = {
     'bower_components/angular-mocks/angular-mocks.js',
     srcJsFiles,
     unitTests,
-    srcJadeTemplates
+    srcMarkupTemplates + '*.{jade,html}'
   ],
   reporters: ['failed', 'coverage'],
   preprocessors: {
     'src/js/**/*.js': ['coverage'],
-    'src/jade/templates/*.jade': ['ng-jade2js']
+    'src/markup/templates/*.html': ['ng-html2js'],
+    'src/markup/templates/*.jade': ['ng-jade2js']
+  },
+  ngHtml2JsPreprocessor: {
+    stripPrefix: 'src/markup/'
   },
   ngJade2JsPreprocessor: {
-    stripPrefix: 'src/jade/'
+    stripPrefix: 'src/markup/'
   },
   singleRun: true
 };
@@ -92,10 +97,11 @@ gulp.task('components', ['clean', 'jshint'], function () {
     .pipe(less())
     .pipe(gulp.dest(buildComponents));
 
-  return gulp.src(componentsJade, {
+  return gulp.src(componentsMarkup + '*.jade', {
       base: componentsBase
     })
     .pipe(jade())
+    .pipe(addSrc(componentsMarkup + '*.html'))
     .pipe(gulp.dest(buildComponents));
 });
 
@@ -107,13 +113,7 @@ gulp.task('connect', function () {
   });
 });
 
-gulp.task('jade', ['clean'], function () {
-  return gulp.src(srcJadeFiles)
-    .pipe(jade())
-    .pipe(gulp.dest(build));
-});
-
-gulp.task('inject', ['jade', 'js', 'less', 'components'], function () {
+gulp.task('inject', ['js', 'less', 'markup', 'components'], function () {
   return gulp.src(build + 'index.html')
     .pipe(inject(gulp.src([
       buildComponents + '**/*.html',
@@ -156,6 +156,13 @@ gulp.task('less', ['clean'], function () {
     .pipe(gulp.dest(buildCss));
 });
 
+gulp.task('markup', ['clean'], function () {
+  return gulp.src(srcMarkup + '*.jade')
+    .pipe(jade())
+    .pipe(addSrc(srcMarkup + '*.html'))
+    .pipe(gulp.dest(build));
+});
+
 gulp.task('open', function () {
   // A file must be specified as the src when running options.url or gulp will overlook the task.
   return gulp.src('Gulpfile.js')
@@ -183,5 +190,5 @@ gulp.task('test', ['jshint'], function (done) {
 
 gulp.task('watch', function () {
   gulp.watch([unitTests], ['test']);
-  gulp.watch([srcJadeFiles, srcJsFiles, srcLessDir + '**/*.less', componentsDir + '*.{jade,js,less}'], ['build']);
+  gulp.watch([srcMarkup + '*.{html,jade}', srcJsFiles, srcLessDir + '**/*.less', componentsDir + '*.{html,jade,js,less}'], ['build']);
 });

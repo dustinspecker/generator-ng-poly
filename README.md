@@ -32,6 +32,19 @@ Available generators:
 * Polymer
   - [ng-poly:element](#element)
 
+Languages and Features supported:
+  * Markup
+    - Jade
+    - HTML
+  * Application and Test Scripting languages
+    - JavaScript
+  * Style languages
+    - LESS
+  * Unit testing
+    - Jasmine (Karma as the test runner) for AngularJS
+  * Task runners
+    - Gulp
+
 ## License
 
 MIT

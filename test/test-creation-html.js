@@ -3,7 +3,7 @@
 var path = require('path')
   , helpers = require('yeoman-generator').test;
 
-describe('ng-poly generator', function () {
+describe('ng-poly generator HTML', function () {
   var app;
   beforeEach(function (done) {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
@@ -18,7 +18,11 @@ describe('ng-poly generator', function () {
       ]);
 
       helpers.mockPrompt(app, {
-        'appName': true
+        'appName': true,
+        'markup': 'html',
+        'appScript': 'js',
+        'testScript': 'js',
+        'style': 'less'
       });
 
       app.options['skip-install'] = true;
@@ -32,8 +36,8 @@ describe('ng-poly generator', function () {
   it('creates expected files', function (done) {
     var expected = [
       // add files you expect to exist here.
-      'src/jade/index.jade',
-      'src/jade/views/main.jade',
+      'src/markup/index.html',
+      'src/markup/views/main.html',
       'src/js/app.js',
       'src/js/controllers/MainCtrl.js',
       'src/less/includes/variables.less',
@@ -98,6 +102,7 @@ describe('ng-poly generator', function () {
 
     it('creates expected files', function (done) {
       var expected = [
+        'src/markup/templates/directiveTest.html',
         'src/js/directives/directiveTest.js',
         'tests/unit/directives/directiveTest.spec.js'
       ];
@@ -118,7 +123,7 @@ describe('ng-poly generator', function () {
     it('creates expected files', function (done) {
       var expected = [
         'src/components/element-test/element-test.less',
-        'src/components/element-test/element-test.jade',
+        'src/components/element-test/element-test.html',
         'src/components/element-test/element-test.js'
       ];
 
@@ -197,7 +202,7 @@ describe('ng-poly generator', function () {
 
     it('creates expected files', function (done) {
       var expected = [
-        'src/jade/views/routeTest.jade',
+        'src/markup/views/routeTest.html',
         'src/js/controllers/RouteTestCtrl.js',
         'src/js/app.js',
         'tests/unit/controllers/RouteTestCtrl.spec.js'
@@ -257,7 +262,7 @@ describe('ng-poly generator', function () {
 
     it('creates expected files', function (done) {
       var expected = [
-        'src/jade/views/viewTest.jade'
+        'src/markup/views/viewTest.html'
       ];
 
       app.run([], function () {

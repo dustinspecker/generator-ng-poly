@@ -8,6 +8,7 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend();
 Generator.prototype.writing = function writing() {
   var appName = utils.getAppName(this.config.path);
   var dirName = utils.lowerCamel(this.name);
+  var markup = this.config.get('markup');
 
   var context = {
     appName: appName,
@@ -15,6 +16,6 @@ Generator.prototype.writing = function writing() {
   };
 
   this.template('_directive.js', 'src/js/directives/' + dirName + '.js', context);
-  this.template('_directive.jade', 'src/jade/templates/' + dirName + '.jade', context);
+  this.template('_directive.' + markup, 'src/markup/templates/' + dirName + '.' + markup, context);
   this.template('_spec.js', 'tests/unit/directives/' + dirName + '.spec.js', context);
 };

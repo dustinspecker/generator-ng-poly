@@ -7,6 +7,7 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend();
 
 Generator.prototype.writing = function writing() {
   var elementName = utils.hyphenName(this.name);
+  var markup = this.config.get('markup');
 
   var context = {
     elementName: elementName
@@ -15,6 +16,6 @@ Generator.prototype.writing = function writing() {
   var elementDir = 'src/components/' + elementName + '/';
   this.mkdir(elementDir);
   this.copy('element.less', elementDir + elementName + '.less');
-  this.template('_element.jade', elementDir + elementName + '.jade', context);
+  this.template('_element.' + markup, elementDir + elementName + '.' + markup, context);
   this.template('_element.js', elementDir + elementName + '.js', context);
 };
