@@ -148,6 +148,25 @@ describe('ng-poly generator', function () {
     });
   });
 
+  describe('filter generator', function () {
+    beforeEach(function (done) {
+      app = helpers.createGenerator('ng-poly:filter', ['../../filter'], 'filter-test');
+      done();
+    });
+
+    it('creates expected files', function (done) {
+      var expected = [
+        'src/js/filters/filterTest.js',
+        'tests/unit/filters/filterTest.spec.js'
+      ];
+
+      app.run([], function () {
+        helpers.assertFile(expected);
+        done();
+      });
+    });
+  });
+
   describe('provider generator', function () {
     beforeEach(function (done) {
       app = helpers.createGenerator('ng-poly:provider', ['../../provider'], 'provider-test');
