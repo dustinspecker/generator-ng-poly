@@ -1,16 +1,11 @@
 'use strict';
-var util = require('util')
-  , path = require('path')
+var path = require('path')
   , yeoman = require('yeoman-generator')
   , yosay = require('yosay')
   , chalk = require('chalk');
 
 
-var Generator = module.exports = function Generator(args, options) {
-  yeoman.generators.Base.apply(this, arguments);
-};
-
-util.inherits(Generator, yeoman.generators.Base);
+var Generator = module.exports = yeoman.generators.Base.extend();
 
 Generator.prototype.prompting = function prompting() {
   var done = this.async();
@@ -32,6 +27,8 @@ Generator.prototype.configuring = function configuring() {
   if (this.appName !== this._.last(this.destinationRoot().split(path.sep))) {
     this.destinationRoot(this.appName);
   }
+
+  this.config.save();
 
   this.context = { appName: this.appName };
 

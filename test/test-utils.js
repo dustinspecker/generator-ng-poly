@@ -2,6 +2,8 @@
 'use strict';
 var assert = require('assert')
   , expectRequire = require('a').expectRequire
+  , fs = require('fs')
+  , helpers = require('yeoman-generator').test
   , path = require('path')
   , utils = require('../utils');
 
@@ -80,9 +82,11 @@ describe('ng-poly generator', function () {
   });
 
   describe('get app name', function () {
+    // makes appNameReq dir because getAppName() moves up a directory
     it('retrieves app name from package.json', function () {
+      fs.mkdirSync(process.cwd() + '/appNameReq/');
       expectRequire(path.join(process.cwd(), 'package.json')).return({name: 'appName'});
-      assert(utils.getAppName() === 'appName');
+      assert(utils.getAppName(process.cwd() + '/appNameReq/') === 'appName');
     });
   });
 

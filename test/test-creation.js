@@ -1,7 +1,7 @@
 /*global describe, beforeEach, it */
 'use strict';
-var path = require('path');
-var helpers = require('yeoman-generator').test;
+var path = require('path')
+  , helpers = require('yeoman-generator').test;
 
 describe('ng-poly generator', function () {
   var app;
@@ -41,6 +41,7 @@ describe('ng-poly generator', function () {
       'tests/unit/controllers/MainCtrl.spec.js',
       '.editorconfig',
       '.jshintrc',
+      '.yo-rc.json',
       'bower.json',
       'Gulpfile.js',
       'package.json'

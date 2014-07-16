@@ -1,18 +1,12 @@
 'use strict';
-var util = require('util')
-  , utils = require('../utils')
+var utils = require('../utils')
   , yeoman = require('yeoman-generator');
 
 
-var Generator = module.exports = function Generator() {
-  yeoman.generators.NamedBase.apply(this, arguments);
-};
-
-util.inherits(Generator, yeoman.generators.NamedBase);
+var Generator = module.exports = yeoman.generators.NamedBase.extend();
 
 Generator.prototype.writing = function writing() {
-  // get app name
-  var appName = utils.getAppName();
+  var appName = utils.getAppName(this.config.path);
   var ctrlName = utils.ctrlName(this.name);
 
   var context = {

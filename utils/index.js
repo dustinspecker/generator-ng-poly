@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore.string')
+  , fs = require('fs')
   , path = require('path');
 
 
@@ -22,8 +23,10 @@ function ctrlName(name) {
 }
 
 // getters
-function getAppName() {
-  return require(path.join(process.cwd(), 'package.json')).name;
+function getAppName(yoRcAbsolutePath) {
+  // moves up a directory to get path of .yo-rc.json,
+  // which is same dir as package.json
+  return require(path.join(yoRcAbsolutePath, '../package.json')).name;
 }
 
 module.exports = {

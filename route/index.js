@@ -1,16 +1,11 @@
 'use strict';
-var util = require('util')
-  , utils = require('../utils')
+var utils = require('../utils')
   , fs = require('fs')
   , path = require('path')
   , yeoman = require('yeoman-generator');
 
 
-var Generator = module.exports = function Generator() {
-  yeoman.generators.NamedBase.apply(this, arguments);
-};
-
-util.inherits(Generator, yeoman.generators.NamedBase);
+var Generator = module.exports =yeoman.generators.NamedBase.extend();
 
 Generator.prototype.prompting = function prompting() {
   var done = this.async();
@@ -31,7 +26,7 @@ Generator.prototype.writing = function writing() {
   var ctrlName = utils.ctrlName(this.name);
 
   // load app.js to prepare adding new state
-  var filePath = path.join(process.cwd(), 'src/js/app.js')
+  var filePath = path.join(this.config.path, '../src/js/app.js')
     , file = fs.readFileSync(filePath, 'utf8')
 
   // find line to add new state
