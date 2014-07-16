@@ -23,6 +23,7 @@ Available generators:
   - [ng-poly:controller](#controller)
   - [ng-poly:directive](#directive)
   - [ng-poly:factory](#factory)
+  - [ng-poly:filter](#filter)
   - [ng-poly:provider](#provider)
   - [ng-poly:route](#route)
   - [ng-poly:service](#service)

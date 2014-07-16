@@ -14,9 +14,61 @@ Generator.prototype.prompting = function prompting() {
 
   this.prompt([{
     name: 'appName',
-    message: 'What is your app\'s name?'
+    message: 'What is the app\'s name?'
+  },
+  {
+    type: 'list',
+    name: 'markup',
+    message: 'What is the preferred markup language?',
+    choices: [
+      {
+        name: 'Jade',
+        value: 'jade',
+        checked: true
+      }
+    ]
+  },
+  {
+    type: 'list',
+    name: 'appScript',
+    message: 'What is the preferred application scripting language?',
+    choices: [
+      {
+        name: 'JavaScript',
+        value: 'js',
+        checked: true
+      }
+    ]
+  },
+  {
+    type: 'list',
+    name: 'testScript',
+    message: 'What is the preferred test scripting language?',
+    choices: [
+      {
+        name: 'JavaScript',
+        value: 'js',
+        checked: true
+      }
+    ]
+  },
+  {
+    type: 'list',
+    name: 'style',
+    message: 'What is the preferred style language?',
+    choices: [
+      {
+        name: 'LESS',
+        value: 'less',
+        checked: true
+      }
+    ]
   }], function (props) {
     this.appName = props.appName;
+    this.markup = props.markup;
+    this.appScript = props.appScript;
+    this.testScript = props.testScript;
+    this.style = props.style;
 
     done();
   }.bind(this));
@@ -28,6 +80,10 @@ Generator.prototype.configuring = function configuring() {
     this.destinationRoot(this.appName);
   }
 
+  this.config.set('markup', this.markup);
+  this.config.save('appScript', this.appScript);
+  this.config.save('testScript', this.testScript);
+  this.config.save('style', this.style);
   this.config.save();
 
   this.context = { appName: this.appName };
