@@ -3,16 +3,16 @@
 var path = require('path')
   , helpers = require('yeoman-generator').test;
 
-describe('ng-poly generator Jade', function () {
+describe('ng-poly generator CoffeeScript', function () {
   var expected = [
     // add files you expect to exist here.
-    'src/markup/index.jade',
-    'src/markup/views/main.jade',
+    'src/markup/index.html',
+    'src/markup/views/main.html',
     'src/js/app.js',
     'src/js/controllers/MainCtrl.js',
     'src/less/includes/variables.less',
     'src/less/style.less',
-    'tests/unit/controllers/MainCtrl.spec.js',
+    'tests/unit/controllers/MainCtrl.spec.coffee',
     '.editorconfig',
     '.jshintrc',
     '.yo-rc.json',
@@ -35,9 +35,9 @@ describe('ng-poly generator Jade', function () {
 
       helpers.mockPrompt(this.app, {
         'appName': true,
-        'markup': 'jade',
+        'markup': 'html',
         'appScript': 'js',
-        'testScript': 'js',
+        'testScript': 'coffee',
         'style': 'less'
       });
 
@@ -65,7 +65,7 @@ describe('ng-poly generator Jade', function () {
         this.app = helpers.createGenerator('ng-poly:constant', ['../../constant'], 'constant-test');
         helpers.assertFile(expected.concat(
           'src/js/constants/constantTest.js',
-          'tests/unit/constants/constantTest.spec.js'
+          'tests/unit/constants/constantTest.spec.coffee'
         ));
         done();
       }.bind(this));
@@ -82,7 +82,7 @@ describe('ng-poly generator Jade', function () {
       this.app.run([], function () {
         helpers.assertFile(expected.concat(
           'src/js/controllers/ControllerTestCtrl.js',
-          'tests/unit/controllers/ControllerTestCtrl.spec.js'
+          'tests/unit/controllers/ControllerTestCtrl.spec.coffee'
         ));
         done();
       }.bind(done));
@@ -98,9 +98,9 @@ describe('ng-poly generator Jade', function () {
     it('creates expected files', function (done) {
       this.app.run([], function () {
         helpers.assertFile(expected.concat(
-          'src/markup/templates/directiveTest.jade',
+          'src/markup/templates/directiveTest.html',
           'src/js/directives/directiveTest.js',
-          'tests/unit/directives/directiveTest.spec.js'
+          'tests/unit/directives/directiveTest.spec.coffee'
         ));
         done();
       });
@@ -117,7 +117,7 @@ describe('ng-poly generator Jade', function () {
       this.app.run([], function () {
         helpers.assertFile(expected.concat(
           'src/components/element-test/element-test.less',
-          'src/components/element-test/element-test.jade',
+          'src/components/element-test/element-test.html',
           'src/components/element-test/element-test.js'
         ));
         done();
@@ -135,7 +135,7 @@ describe('ng-poly generator Jade', function () {
       this.app.run([], function () {
         helpers.assertFile(expected.concat(
           'src/js/factories/factoryTest.js',
-          'tests/unit/factories/factoryTest.spec.js'
+          'tests/unit/factories/factoryTest.spec.coffee'
         ));
         done();
       });
@@ -152,7 +152,7 @@ describe('ng-poly generator Jade', function () {
       this.app.run([], function () {
         helpers.assertFile(expected.concat(
           'src/js/filters/filterTest.js',
-          'tests/unit/filters/filterTest.spec.js'
+          'tests/unit/filters/filterTest.spec.coffee'
         ));
         done();
       });
@@ -168,7 +168,7 @@ describe('ng-poly generator Jade', function () {
     it('creates expected files', function (done) {
       var expected = [
         'src/js/providers/providerTest.js',
-        'tests/unit/providers/providerTest.spec.js'
+        'tests/unit/providers/providerTest.spec.coffee'
       ];
 
       this.app.run([], function () {
@@ -189,10 +189,10 @@ describe('ng-poly generator Jade', function () {
 
     it('creates expected files', function (done) {
       var expected = [
-        'src/markup/views/routeTest.jade',
+        'src/markup/views/routeTest.html',
         'src/js/controllers/RouteTestCtrl.js',
         'src/js/app.js',
-        'tests/unit/controllers/RouteTestCtrl.spec.js'
+        'tests/unit/controllers/RouteTestCtrl.spec.coffee'
       ];
 
       this.app.run([], function () {
@@ -212,7 +212,7 @@ describe('ng-poly generator Jade', function () {
     it('creates expected files', function (done) {
       var expected = [
         'src/js/services/serviceTest.js',
-        'tests/unit/services/serviceTest.spec.js'
+        'tests/unit/services/serviceTest.spec.coffee'
       ];
 
       this.app.run([], function () {
@@ -231,7 +231,7 @@ describe('ng-poly generator Jade', function () {
     it('creates expected files', function (done) {
       var expected = [
         'src/js/values/valueTest.js',
-        'tests/unit/values/valueTest.spec.js'
+        'tests/unit/values/valueTest.spec.coffee'
       ];
 
       this.app.run([], function () {
@@ -249,7 +249,7 @@ describe('ng-poly generator Jade', function () {
 
     it('creates expected files', function (done) {
       var expected = [
-        'src/markup/views/viewTest.jade'
+        'src/markup/views/viewTest.html'
       ];
 
       this.app.run([], function () {

@@ -1,8 +1,7 @@
 'use strict';
 var path = require('path')
   , yeoman = require('yeoman-generator')
-  , yosay = require('yosay')
-  , chalk = require('chalk');
+  , yosay = require('yosay');
 
 
 var Generator = module.exports = yeoman.generators.Base.extend();
@@ -49,6 +48,10 @@ Generator.prototype.prompting = function prompting() {
     name: 'testScript',
     message: 'What is the preferred test scripting language?',
     choices: [
+      {
+        name: 'CoffeeScript',
+        value: 'coffee'
+      },
       {
         name: 'JavaScript',
         value: 'js',
@@ -127,5 +130,8 @@ Generator.prototype.install = function install() {
 };
 
 Generator.prototype.end = function end() {
+  // force save to guarantee config exists for controller
+  // tests randomly fail without this
+  this.config.forceSave();
   this.invoke('ng-poly:controller', { args: ['main'] });
 };

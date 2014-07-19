@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('underscore.string')
-  , fs = require('fs')
   , path = require('path');
 
 
@@ -16,7 +15,7 @@ function upperCamel(name) {
 
 function hyphenName(name) {
   return _.slugify(_.humanize(name));
-};
+}
 
 function ctrlName(name) {
   return upperCamel(name) + 'Ctrl';

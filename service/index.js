@@ -9,6 +9,7 @@ Generator.prototype.writing = function writing() {
   var appName = utils.getAppName(this.config.path);
   var serviceName = utils.lowerCamel(this.name);
   var upperServiceName = utils.upperCamel(this.name);
+  var testScript = this.config.get('testScript');
 
   var context = {
     appName: appName,
@@ -17,5 +18,5 @@ Generator.prototype.writing = function writing() {
   };
 
   this.template('_service.js', 'src/js/services/' + serviceName + '.js', context);
-  this.template('_spec.js', 'tests/unit/services/' + serviceName + '.spec.js', context);
+  this.template('_spec.' + testScript, 'tests/unit/services/' + serviceName + '.spec.' + testScript, context);
 };

@@ -1,9 +1,8 @@
-/*global describe, beforeEach, it */
+/*global describe, it */
 'use strict';
 var assert = require('assert')
   , expectRequire = require('a').expectRequire
   , fs = require('fs')
-  , helpers = require('yeoman-generator').test
   , path = require('path')
   , utils = require('../utils');
 

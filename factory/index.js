@@ -8,6 +8,7 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend();
 Generator.prototype.writing = function writing() {
   var appName = utils.getAppName(this.config.path);
   var factoryName = utils.lowerCamel(this.name);
+  var testScript = this.config.get('testScript');
 
   var context = {
     appName: appName,
@@ -15,5 +16,5 @@ Generator.prototype.writing = function writing() {
   };
 
   this.template('_factory.js', 'src/js/factories/' + factoryName + '.js', context);
-  this.template('_spec.js', 'tests/unit/factories/' + factoryName + '.spec.js', context);
+  this.template('_spec.' + testScript, 'tests/unit/factories/' + factoryName + '.spec.' + testScript, context);
 };

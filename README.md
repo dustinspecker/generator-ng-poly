@@ -4,11 +4,6 @@
 
 ## Usage
 
-Install `generator-ng-poly`:
-```
-npm install -g generator-ng-poly
-```
-
 Run `yo ng-poly`
 Yeoman will then ask for an app name.
 
@@ -36,7 +31,10 @@ Languages and Features supported:
   * Markup
     - Jade
     - HTML
-  * Application and Test Scripting languages
+  * Application scripting languages
+    - JavaScript
+  * Testing scripting
+    - CoffeeScript
     - JavaScript
   * Style languages
     - LESS

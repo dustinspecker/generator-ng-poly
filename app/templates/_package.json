@@ -5,6 +5,7 @@
   "devDependencies": {
     "gulp": "^3.8.5",
     "gulp-add-src": "^0.1.1",
+    "gulp-coffeelint": "^0.3.3",
     "gulp-connect": "^2.0.5",
     "gulp-inject": "^0.4.1",
     "gulp-jade": "^0.6.1",

@@ -2,6 +2,7 @@
 
 var gulp = require('gulp')
   , addSrc = require('gulp-add-src')
+  , coffeelint = require('gulp-coffeelint')
   , connect = require('gulp-connect')
   , inject = require('gulp-inject')
   , jade = require('gulp-jade')
@@ -42,7 +43,7 @@ var componentsBase = 'src/components/'
   , srcLessDir = 'src/less/'; // since we need to strictly specify style.less later
 
 // test files
-var unitTests = 'tests/unit/**/*.spec.js';
+var unitTests = 'tests/unit/**/*.spec.{coffee,js}';
 
 // build files
 var build = 'build/'
@@ -70,7 +71,8 @@ var karmaConf = {
   preprocessors: {
     'src/js/**/*.js': ['coverage'],
     'src/markup/templates/*.html': ['ng-html2js'],
-    'src/markup/templates/*.jade': ['ng-jade2js']
+    'src/markup/templates/*.jade': ['ng-jade2js'],
+    'tests/unit/**/*.spec.coffee': ['coffee']
   },
   ngHtml2JsPreprocessor: {
     stripPrefix: 'src/markup/'
@@ -136,11 +138,22 @@ gulp.task('js', ['clean', 'jshint'], function () {
     .pipe(gulp.dest('build/js'));
 });
 
+gulp.task('coffeelint', function () {
+  return gulp.src([
+    unitTests,
+    '!**/*.spec.js'
+    ])
+    .pipe(coffeelint())
+    .pipe(coffeelint.reporter())
+    .pipe(coffeelint.reporter('fail'));
+});
+
 gulp.task('jshint', function () {
   return gulp.src([
     componentsJs,
     srcJsFiles,
-    unitTests
+    unitTests,
+    '!**/*.spec.coffee'
     ])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
@@ -184,7 +197,7 @@ gulp.task('default', ['build'], function () {
   gulp.start('watch');
 });
 
-gulp.task('test', ['jshint'], function (done) {
+gulp.task('test', ['jshint', 'coffeelint'], function (done) {
   karma.start(_.assign({}, karmaConf), done);
 });
 

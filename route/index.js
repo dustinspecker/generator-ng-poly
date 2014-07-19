@@ -27,7 +27,7 @@ Generator.prototype.writing = function writing() {
 
   // load app.js to prepare adding new state
   var filePath = path.join(this.config.path, '../src/js/app.js')
-    , file = fs.readFileSync(filePath, 'utf8')
+    , file = fs.readFileSync(filePath, 'utf8');
 
   // find line to add new state
   var lines = file.split('\n')
