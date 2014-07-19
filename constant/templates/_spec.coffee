@@ -1,13 +1,13 @@
 ###global describe, beforeEach, it, expect, inject, module###
 'use strict'
 
-describe '<%= constantName %>', ->
+describe '<%= lowerCamel %>', ->
   constant = undefined
 
   beforeEach module '<%= appName %>'
 
-  beforeEach inject (<%= constantName %>) ->
-    constant = <%= constantName %>
+  beforeEach inject (<%= lowerCamel %>) ->
+    constant = <%= lowerCamel %>
 
   it 'should equal 0', ->
     expect(constant).toBe 0

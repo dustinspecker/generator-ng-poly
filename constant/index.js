@@ -1,20 +1,13 @@
 'use strict';
-var utils = require('../utils')
-  , yeoman = require('yeoman-generator');
+var genBase = require('../genBase');
 
 
-var Generator = module.exports = yeoman.generators.NamedBase.extend();
+var Generator = module.exports = genBase.extend();
 
 Generator.prototype.writing = function writing() {
-  var appName = utils.getAppName(this.config.path);
-  var constantName = utils.lowerCamel(this.name);
-  var testScript = this.config.get('testScript');
+  var config = this.getConfig();
 
-  var context = {
-    appName: appName,
-    constantName: constantName
-  };
-
-  this.template('_constant.js', 'src/js/constants/' + constantName + '.js', context);
-  this.template('_spec.' + testScript, 'tests/unit/constants/' + constantName + '.spec.' + testScript, context);
+  this.template('_constant.js', 'src/js/constants/' + config.lowerCamel + '.js', config);
+  this.template('_spec.' + config.testScript,
+    'tests/unit/constants/' + config.lowerCamel + '.spec.' + config.testScript, config);
 };

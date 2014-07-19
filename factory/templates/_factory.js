@@ -1,5 +1,5 @@
 'use strict';
 
-angular.module('<%= appName %>').factory('<%= factoryName %>', function () {
-  return '<%= factoryName %>';
+angular.module('<%= appName %>').factory('<%= lowerCamel %>', function () {
+  return '<%= lowerCamel %>';
 });

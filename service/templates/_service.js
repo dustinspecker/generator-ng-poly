@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('<%= appName %>').service('<%= serviceName %>', function () {
-  function <%= upperServiceName %> () {}
-  <%= upperServiceName %>.prototype.get = function () {
-    return '<%= serviceName %>';
+angular.module('<%= appName %>').service('<%= lowerCamel %>', function () {
+  function <%= upperCamel %> () {}
+  <%= upperCamel %>.prototype.get = function () {
+    return '<%= lowerCamel %>';
   };
 
-  return new <%= upperServiceName %>();
+  return new <%= upperCamel %>();
 });

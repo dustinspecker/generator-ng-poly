@@ -1,11 +1,10 @@
 'use strict';
-var utils = require('../utils')
-  , fs = require('fs')
-  , path = require('path')
-  , yeoman = require('yeoman-generator');
+var fs = require('fs')
+  , join = require('path').join
+  , genBase = require('../genBase');
 
 
-var Generator = module.exports =yeoman.generators.NamedBase.extend();
+var Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
   var done = this.async();
@@ -22,11 +21,10 @@ Generator.prototype.prompting = function prompting() {
 };
 
 Generator.prototype.writing = function writing() {
-  var viewName = utils.lowerCamel(this.name);
-  var ctrlName = utils.ctrlName(this.name);
+  var config = this.getConfig();
 
   // load app.js to prepare adding new state
-  var filePath = path.join(this.config.path, '../src/js/app.js')
+  var filePath = join(this.config.path, '../src/js/app.js')
     , file = fs.readFileSync(filePath, 'utf8');
 
   // find line to add new state
@@ -41,10 +39,10 @@ Generator.prototype.writing = function writing() {
   // create new state
   var newState = [
     '    })',
-    '    .state(\'' + viewName + '\', {',
+    '    .state(\'' + config.lowerCamel + '\', {',
     '      url: \'/' + this.url + '\',',
-    '      templateUrl: \'views/' + viewName + '.html\',',
-    '      controller: \'' + ctrlName + '\'',
+    '      templateUrl: \'views/' + config.lowerCamel + '.html\',',
+    '      controller: \'' + config.ctrlName + '\'',
   ];
 
   // insert new state and join all lines

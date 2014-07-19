@@ -1,13 +1,13 @@
 ###global describe, beforeEach, it, expect, inject, module###
 'use strict'
 
-describe '<%= serviceName %>', ->
+describe '<%= lowerCamel %>', ->
   service = undefined
 
   beforeEach module '<%= appName %>'
 
-  beforeEach inject (<%= serviceName %>) ->
-    service = <%= serviceName %>
+  beforeEach inject (<%= lowerCamel %>) ->
+    service = <%= lowerCamel %>
 
-  it 'should equal <%= serviceName %>', ->
-    expect(service.get()).toEqual '<%= serviceName %>'
+  it 'should equal <%= lowerCamel %>', ->
+    expect(service.get()).toEqual '<%= lowerCamel %>'

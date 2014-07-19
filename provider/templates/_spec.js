@@ -1,17 +1,17 @@
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('<%= providerName %>', function () {
+describe('<%= lowerCamel %>', function () {
   var provider;
 
   beforeEach(module('<%= appName %>'));
 
-  beforeEach(inject(function (<%= providerName %>) {
-    provider = <%= providerName %>;
+  beforeEach(inject(function (<%= lowerCamel %>) {
+    provider = <%= lowerCamel %>;
   }));
 
-  it('should equal <%= providerName %>', function () {
-    expect(provider.$get()).toEqual('<%= providerName %>');
+  it('should equal <%= lowerCamel %>', function () {
+    expect(provider.$get()).toEqual('<%= lowerCamel %>');
   });
 
 });

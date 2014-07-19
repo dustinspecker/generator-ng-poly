@@ -23,6 +23,8 @@
     "directive",
     "element",
     "factory",
+    "filter",
+    "genBase",
     "provider",
     "route",
     "service",
@@ -36,6 +38,7 @@
   ],
   "dependencies": {
     "chalk": "^0.5.1",
+    "class-extend": "^0.1.1",
     "underscore.string": "^2.3.3",
     "yeoman-generator": "^0.17.1",
     "yosay": "^0.3.0"

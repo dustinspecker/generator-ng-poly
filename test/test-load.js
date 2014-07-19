@@ -11,6 +11,7 @@ describe('ng-poly generator', function () {
     assert(require('../element') !== undefined);
     assert(require('../factory') !== undefined);
     assert(require('../filter') !== undefined);
+    assert(require('../genBase') !== undefined);
     assert(require('../provider') !== undefined);
     assert(require('../route') !== undefined);
     assert(require('../service') !== undefined);

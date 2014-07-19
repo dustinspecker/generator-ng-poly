@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('<%= appName %>').factory('<%= providerName %>', function () {
+angular.module('<%= appName %>').factory('<%= lowerCamel %>', function () {
   return {
     $get: function () {
-      return '<%= providerName %>';
+      return '<%= lowerCamel %>';
     }
   };
 });
