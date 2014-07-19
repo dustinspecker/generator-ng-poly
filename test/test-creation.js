@@ -9,14 +9,14 @@ describe('ng-poly generator', function () {
   // prompts to provide to ng-poly:app
   var prompts = [
   {
-    'appName': true,
+    'appName': 'temp',
     'markup': 'html',
     'appScript': 'js',
     'testScript': 'js',
     'style': 'less'
   },
   {
-    'appName': true,
+    'appName': 'temp',
     'markup': 'jade',
     'appScript': 'js',
     'testScript': 'coffee',
@@ -29,7 +29,7 @@ describe('ng-poly generator', function () {
         this.app = helpers.createGenerator('ng-poly:' + genName, deps, genName + '-test');
         if(mockPrompts) {
           helpers.mockPrompt(this.app, mockPrompts);
-        }            
+        }
         done();
       });
 
@@ -47,13 +47,12 @@ describe('ng-poly generator', function () {
 
       // expected files from ng-poly:app
       var expected = [
-        'src/markup/index.' + config.markup,
-        'src/markup/views/main.' + config.markup,
-        'src/js/app.' + config.appScript,
-        'src/js/controllers/MainCtrl.' + config.appScript,
-        'src/less/includes/variables.' + config.style,
-        'src/less/style.' + config.style,
-        'tests/unit/controllers/MainCtrl.spec.' + config.testScript,
+        'src/home/home.tpl.' + config.markup,
+        'src/home/home.' + config.style,
+        'src/home/HomeCtrl.' + config.appScript,
+        'src/home/HomeCtrl_test.' + config.testScript,
+        'src/app.' + config.appScript,
+        'src/index.' + config.markup,
         '.editorconfig',
         '.jshintrc',
         '.yo-rc.json',
@@ -71,6 +70,7 @@ describe('ng-poly generator', function () {
           this.app = helpers.createGenerator('ng-poly:app', [
             '../../app',
             '../../controller',
+            '../../module',
             '../../view'
           ]);
 
@@ -90,20 +90,26 @@ describe('ng-poly generator', function () {
       });
 
       testGenerator('constant', ['../../constant'], expected.concat(
-        'src/js/constants/constantTest.' + config.appScript,
-        'tests/unit/constants/constantTest.spec.' + config.testScript
-      ));
+        'src/test/constantTestConstant.' + config.appScript,
+        'src/test/constantTestConstant_test.' + config.testScript
+      ), {
+        module: 'test'
+      });
 
       testGenerator('controller', ['../../controller'], expected.concat(
-        'src/js/controllers/ControllerTestCtrl.' + config.appScript,
-        'tests/unit/controllers/ControllerTestCtrl.spec.' + config.testScript
-      ));
-
+        'src/test/ControllerTestCtrl.' + config.appScript,
+        'src/test/ControllerTestCtrl_test.' + config.testScript
+      ), {
+        module: 'test'
+      });
+      
       testGenerator('directive', ['../../directive'], expected.concat(
-        'src/markup/templates/directiveTest.' + config.markup,
-        'src/js/directives/directiveTest.' + config.appScript,
-        'tests/unit/directives/directiveTest.spec.' + config.testScript
-      ));
+        'src/test/directiveTestDirective.' + config.markup,
+        'src/test/directiveTestDirective.' + config.appScript,
+        'src/test/directiveTestDirective_test.' + config.testScript
+      ), {
+        module: 'test'
+      });
 
       testGenerator('element', ['../../element'], expected.concat(
         'src/components/element-test/element-test.' + config.style,
@@ -112,41 +118,63 @@ describe('ng-poly generator', function () {
       ));
 
       testGenerator('factory', ['../../factory'], expected.concat(
-        'src/js/factories/factoryTest.' + config.appScript,
-        'tests/unit/factories/factoryTest.spec.' + config.testScript
-      ));
+        'src/test/factoryTestFactory.' + config.appScript,
+        'src/test/factoryTestFactory_test.' + config.testScript
+      ), {
+        module: 'test'
+      });
 
       testGenerator('filter', ['../../filter'], expected.concat(
-        'src/js/filters/filterTest.' + config.appScript,
-        'tests/unit/filters/filterTest.spec.' + config.testScript
-      ));
+        'src/test/filterTestFilter.' + config.appScript,
+        'src/test/filterTestFilter_test.' + config.testScript
+      ), {
+        module: 'test'
+      });
+
+      testGenerator('module', ['../../module', '../../controller', '../../view'], expected.concat(
+        'src/test/module-test.' + config.appScript,
+        'src/test/ModuleTestCtrl.' + config.appScript,
+        'src/test/ModuleTestCtrl_test.' + config.testScript,
+        'src/test/moduleTest.tpl.' + config.markup
+      ), {
+        module: 'test'
+      });
 
       testGenerator('provider', ['../../provider'], expected.concat(
-        'src/js/providers/providerTest.' + config.appScript,
-        'tests/unit/providers/providerTest.spec.' + config.testScript
-      ));
+        'src/test/providerTestProvider.' + config.appScript,
+        'src/test/providerTestProvider_test.' + config.testScript
+      ), {
+        module: 'test'
+      });
 
       testGenerator('route', ['../../route', '../../controller', '../../view'], (
-        'src/markup/views/routeTest.' + config.markup,
-        'src/js/controllers/RouteTestCtrl.' + config.appScript,
-        'tests/unit/controllers/RouteTestCtrl.spec.' + config.testScript
+        'src/home/routeTest.tpl.' + config.markup,
+        'src/home/RouteTestCtrl.' + config.appScript,
+        'src/home/RouteTestCtrl_test.' + config.testScript
       ), {
+        'module': 'home',
         'url': 'value'
       });
 
       testGenerator('service', ['../../service'], expected.concat(
-        'src/js/services/serviceTest.' + config.appScript,
-        'tests/unit/services/serviceTest.spec.' + config.testScript
-      ));
+        'src/test/serviceTestService.' + config.appScript,
+        'src/test/serviceTestService_test.' + config.testScript
+      ), {
+        module: 'test'
+      });
 
       testGenerator('value', ['../../value'], expected.concat(
-        'src/js/values/valueTest.' + config.appScript,
-        'tests/unit/values/valueTest.spec.' + config.testScript
-      ));
+        'src/test/valueTestValue.' + config.appScript,
+        'src/test/valueTestValue_test.' + config.testScript
+      ), {
+        module: 'test'
+      });
 
       testGenerator('view', ['../../view'], expected.concat(
-        'src/markup/views/viewTest.' + config.markup
-      ));
+        'src/test/viewTest.tpl.' + config.markup
+      ), {
+        module: 'test'
+      });
 
     });
   });

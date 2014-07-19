@@ -10,10 +10,15 @@ Generator.prototype.prompting = function prompting() {
   var done = this.async();
 
   this.prompt([{
+    name: 'module',
+    message: 'Which module is this for?'
+  },
+  {
     name: 'url',
     message: 'What\'s the url for this state?',
-    default: this.name
+    default: this.name,
   }], function (props) {
+    this.module = props.module;
     this.url = props.url;
 
     done();
@@ -24,7 +29,7 @@ Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
   // load app.js to prepare adding new state
-  var filePath = join(this.config.path, '../src/js/app.js')
+  var filePath = join(this.config.path, '../src/' + this.module + '/' + (this.module ? this.module : 'app') + '.js')
     , file = fs.readFileSync(filePath, 'utf8');
 
   // find line to add new state
@@ -41,7 +46,7 @@ Generator.prototype.writing = function writing() {
     '    })',
     '    .state(\'' + config.lowerCamel + '\', {',
     '      url: \'/' + this.url + '\',',
-    '      templateUrl: \'views/' + config.lowerCamel + '.html\',',
+    '      templateUrl: \'' + this.module + '/' + config.lowerCamel + '.tpl.html\',',
     '      controller: \'' + config.ctrlName + '\'',
   ];
 
@@ -51,10 +56,24 @@ Generator.prototype.writing = function writing() {
   }).join('\n'));
 
   // save modifications
-  fs.writeFileSync(filePath, lines.join('\n'));  
+  fs.writeFileSync(filePath, lines.join('\n'));
 };
 
 Generator.prototype.end = function end() {
-  this.invoke('ng-poly:controller', { args: [this.name] });
-  this.invoke('ng-poly:view', { args: [this.name] });
+  this.invoke('ng-poly:controller', {
+    args: [this.name],
+    options: {
+      options: {
+        module: this.module
+      }
+    }
+  });
+  this.invoke('ng-poly:view', {
+    args: [this.name],
+    options: {
+      options: {
+        module: this.module
+      }
+    }
+  });
 };

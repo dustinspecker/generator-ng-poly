@@ -1,13 +1,7 @@
 'use strict';
 
-angular.module('<%= appName %>', ['ui.router']);
+angular.module('<%= moduleName %>', ['ui.router', 'home']);
 
-angular.module('<%= appName %>').config(function ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/');
-  $stateProvider
-    .state('index', {
-      url: '/',
-      templateUrl: 'views/main.html',
-      controller: 'MainCtrl'
-    });
+angular.module('<%= moduleName %>').config(function ($urlRouterProvider) {
+  $urlRouterProvider.otherwise('/home');
 });

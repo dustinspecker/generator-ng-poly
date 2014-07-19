@@ -1,15 +1,34 @@
 'use strict';
-var genBase = require('../genBase');
+var genBase = require('../genBase')
+  , path = require('path');
 
 
 var Generator = module.exports = genBase.extend();
 
+Generator.prototype.prompting = function prompting() {
+  var done = this.async();
+
+  this.prompt([{
+    name: 'module',
+    message: 'Which module is this for?',
+    default: this.name,
+    when: function () {
+      return !(this.options && this.options.options && this.options.options.module);
+    }.bind(this)
+  }], function (props) {
+    this.module = props.module || this.options.options.module;
+
+    done();
+  }.bind(this));
+};
+
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
+  config.moduleName = this.module;
 
-  this.template('_directive.js', 'src/js/directives/' + config.lowerCamel + '.js', config);
+  this.template('_directive.js', path.join('src', this.module, config.lowerCamel + 'Directive.js'), config);
   this.template('_directive.' + config.markup,
-    'src/markup/templates/' + config.lowerCamel + '.' + config.markup, config);
+    path.join('src', this.module, config.lowerCamel + 'Directive.' + config.markup), config);
   this.template('_spec.' + config.testScript,
-    'tests/unit/directives/' + config.lowerCamel + '.spec.' + config.testScript, config);
+    path.join('src', this.module, config.lowerCamel + 'Directive_test.' + config.testScript), config);
 };

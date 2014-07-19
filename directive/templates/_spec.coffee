@@ -5,7 +5,7 @@ describe '<%= lowerCamel %>', ->
   scope = undefined
   element = undefined
 
-  beforeEach module('<%= appName %>', 'templates/<%= lowerCamel %>.html')
+  beforeEach module('<%= appName %>', '<%= moduleName %>/<%= lowerCamel %>Directive.html')
 
   beforeEach inject ($compile, $rootScope) ->
     scope = $rootScope.$new()

@@ -37,19 +37,19 @@ var componentsBase = 'src/components/'
   , componentsMarkup = componentsDir
   , componentsJs = componentsDir + '*.js'
   , componentsLess = componentsDir + '*.less'
-  , srcMarkup = 'src/markup/**/'
-  , srcMarkupTemplates = 'src/markup/templates/' // used for karmaConf
-  , srcJsFiles = 'src/js/**/*.js'
-  , srcLessDir = 'src/less/'; // since we need to strictly specify style.less later
+  , srcMarkup = 'src/**/'
+  , srcMarkupTemplates = 'src/**/*Directive.{jade,html}' // used for karmaConf
+  , srcJsFiles = 'src/**/*.js'
+  , srcLessFiles = 'src/**/*.less'; // since we need to strictly specify style.less later
 
 // test files
-var unitTests = 'tests/unit/**/*.spec.{coffee,js}';
+var unitTests = 'src/**/*_test.{coffee,js}';
 
 // build files
 var build = 'build/'
   , buildComponents = build + 'components/'
-  , buildCss = build + 'css/'
-  , buildJs = build + 'js/';
+  , buildCss = build
+  , buildJs = build;
 
 var bowerDir = 'bower_components/';
 function prependBowerDir(file) {
@@ -65,20 +65,20 @@ var karmaConf = {
     'bower_components/angular-mocks/angular-mocks.js',
     srcJsFiles,
     unitTests,
-    srcMarkupTemplates + '*.{jade,html}'
+    srcMarkupTemplates
   ],
   reporters: ['failed', 'coverage'],
   preprocessors: {
-    'src/js/**/*.js': ['coverage'],
-    'src/markup/templates/*.html': ['ng-html2js'],
-    'src/markup/templates/*.jade': ['ng-jade2js'],
-    'tests/unit/**/*.spec.coffee': ['coffee']
+    'src/**/!(*_test)+(.js)': ['coverage'],
+    'src/*Directive.html': ['ng-html2js'],
+    'src/**/*Directive.jade': ['ng-jade2js'],
+    'src/**/*_test.coffee': ['coffee']
   },
   ngHtml2JsPreprocessor: {
-    stripPrefix: 'src/markup/'
+    stripPrefix: 'src/'
   },
   ngJade2JsPreprocessor: {
-    stripPrefix: 'src/markup/'
+    stripPrefix: 'src/'
   },
   singleRun: true
 };
@@ -119,7 +119,7 @@ gulp.task('inject', ['js', 'less', 'markup', 'components'], function () {
   return gulp.src(build + 'index.html')
     .pipe(inject(gulp.src([
       buildComponents + '**/*.html',
-      buildCss + '*.css',
+      buildCss + '**/*.css',
       buildJs + 'angular.js',
       buildJs + 'angular-ui-router.js',    
       buildJs + '**/*.js'
@@ -133,15 +133,16 @@ gulp.task('inject', ['js', 'less', 'markup', 'components'], function () {
 
 gulp.task('js', ['clean', 'jshint'], function () {
   return gulp.src([
-      srcJsFiles
+      srcJsFiles,
+      '!**/*_test.*'
     ].concat(injectableBowerComponents.map(prependBowerDir)))
-    .pipe(gulp.dest('build/js'));
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('coffeelint', function () {
   return gulp.src([
     unitTests,
-    '!**/*.spec.js'
+    '!**/*_test.js'
     ])
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
@@ -153,7 +154,7 @@ gulp.task('jshint', function () {
     componentsJs,
     srcJsFiles,
     unitTests,
-    '!**/*.spec.coffee'
+    '!**/*_test.coffee'
     ])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
@@ -162,10 +163,8 @@ gulp.task('jshint', function () {
 });
 
 gulp.task('less', ['clean'], function () {
-  return gulp.src(srcLessDir + 'style.less')
-    .pipe(less({
-      paths: [path.join(__dirname, srcLessDir, srcLessDir + 'includes')]
-    }))
+  return gulp.src(srcLessFiles)
+    .pipe(less())
     .pipe(gulp.dest(buildCss));
 });
 
@@ -203,5 +202,5 @@ gulp.task('test', ['jshint', 'coffeelint'], function (done) {
 
 gulp.task('watch', function () {
   gulp.watch([unitTests], ['test']);
-  gulp.watch([srcMarkup + '*.{html,jade}', srcJsFiles, srcLessDir + '**/*.less', componentsDir + '*.{html,jade,js,less}'], ['build']);
+  gulp.watch([srcMarkup + '*.{html,jade}', srcJsFiles, srcLessFiles, componentsDir + '*.{html,jade,js,less}'], ['build']);
 });

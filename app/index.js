@@ -11,6 +11,8 @@ Generator.prototype.prompting = function prompting() {
 
   this.log(yosay('Welcome to ngPoly!'));
 
+  // ask for app name
+  // get preferred langugaes
   this.prompt([{
     name: 'appName',
     message: 'What is the app\'s name?'
@@ -79,7 +81,13 @@ Generator.prototype.prompting = function prompting() {
 
     done();
   }.bind(this));
+
 };
+
+
+
+
+
 
 Generator.prototype.configuring = function configuring() {
   // create a directory with appName, unless user is in a directory named appName
@@ -87,14 +95,16 @@ Generator.prototype.configuring = function configuring() {
     this.destinationRoot(this.appName);
   }
 
+  // save config info
   this.config.set('markup', this.markup);
   this.config.set('appScript', this.appScript);
   this.config.set('testScript', this.testScript);
   this.config.set('style', this.style);
   this.config.save();
 
-  this.context = { appName: this.appName };
+  this.context = { appName: this.appName, moduleName: this.appName };
 
+  // copy over common files
   this.template('_bower.json', 'bower.json', this.context);
   this.template('_package.json', 'package.json', this.context);
   this.copy('.editorconfig', '.editorconfig');
@@ -105,22 +115,17 @@ Generator.prototype.configuring = function configuring() {
 Generator.prototype.writing = function writing() {
   var markup = this.config.get('markup');
 
-  this.mkdir('src/components/');
+  // create main module and index.html
+  this.template('_app.js', 'src/app.js', this.context);
+  this.template('_index.' + markup, 'src/index.' + markup, this.context);
 
-  this.mkdir('src/markup/');
-  this.template('_index.' + markup, 'src/markup/index.' + markup, this.context);
-  this.mkdir('src/markup/views/');
-  this.template('_main.' + markup, 'src/markup/views/main.' + markup, this.context);
+/*  // create a home module
+  this.mkdir('src/home');
+  this.template('_app.js', 'src/home/home.js', this.context);
 
-  this.mkdir('src/js/');
-  this.template('_app.js', 'src/js/app.js');
-
-  this.mkdir('src/less/');
-  this.copy('style.less', 'src/less/style.less');
-  this.mkdir('src/less/includes/');
-  this.copy('variables.less', 'src/less/includes/variables.less');
-
-  this.mkdir('tests/');
+  // create a home view, controller, and route
+  this.template('_index.' + markup, 'src/home/home.' + markup, this.context);
+  this.copy('style.less', 'src/home/home.less');*/
 };
 
 Generator.prototype.install = function install() {
@@ -133,5 +138,12 @@ Generator.prototype.end = function end() {
   // force save to guarantee config exists for controller
   // tests randomly fail without this
   this.config.forceSave();
-  this.invoke('ng-poly:controller', { args: ['main'] });
+  this.invoke('ng-poly:module', {
+    args: ['home'],
+    options: {
+      options: {
+        module: 'home',
+      }
+    }
+  });
 };
