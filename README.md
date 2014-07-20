@@ -1,11 +1,18 @@
-# generator-ng-poly [![Build Status](https://secure.travis-ci.org/dustinspecker/generator-ng-poly.png?branch=master)](https://travis-ci.org/dustinspecker/generator-ng-poly) [![Dependencies](https://david-dm.org/dustinspecker/generator-ng-poly.png)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=dependencies&view=table) [![DevDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/dev-status.png)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=devDependencies&view=table) [![PeerDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/peer-status.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=peerDependencies&view=table)
+# generator-ng-poly [![Build Status](https://secure.travis-ci.org/dustinspecker/generator-ng-poly.png?branch=master)](https://travis-ci.org/dustinspecker/generator-ng-poly)
+[![Dependencies](https://david-dm.org/dustinspecker/generator-ng-poly.png)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=dependencies&view=table) [![DevDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/dev-status.png)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=devDependencies&view=table) [![PeerDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/peer-status.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=peerDependencies&view=table)
 
 > [Yeoman](http://yeoman.io) generator for AngularJS and Polymer apps. A work in progress.
 
 ## Usage
 
+Install `generator-ng-poly`:
+
+````
+npm install -g generator-ng-poly
+````
+
 Run `yo ng-poly`
-Yeoman will then ask for an app name.
+Yeoman will then ask for an app name and language preferences.
 
 Run `gulp` to build.
 
@@ -19,6 +26,7 @@ Available generators:
   - [ng-poly:directive](#directive)
   - [ng-poly:factory](#factory)
   - [ng-poly:filter](#filter)
+  - [ng-poly:module](#module)
   - [ng-poly:provider](#provider)
   - [ng-poly:route](#route)
   - [ng-poly:service](#service)
