@@ -4,7 +4,7 @@
 describe '<%= lowerCamel %>', ->
   constant = undefined
 
-  beforeEach module '<%= appName %>'
+  beforeEach module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
 
   beforeEach inject (<%= lowerCamel %>) ->
     constant = <%= lowerCamel %>

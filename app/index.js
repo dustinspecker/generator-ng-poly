@@ -84,11 +84,6 @@ Generator.prototype.prompting = function prompting() {
 
 };
 
-
-
-
-
-
 Generator.prototype.configuring = function configuring() {
   // create a directory with appName, unless user is in a directory named appName
   if (this.appName !== this._.last(this.destinationRoot().split(path.sep))) {
@@ -109,6 +104,7 @@ Generator.prototype.configuring = function configuring() {
   this.template('_package.json', 'package.json', this.context);
   this.copy('.editorconfig', '.editorconfig');
   this.copy('gulpfile.js', 'Gulpfile.js');
+  this.copy('karma.config.json', 'karma.config.json');
   this.copy('.jshintrc', '.jshintrc');
 };
 

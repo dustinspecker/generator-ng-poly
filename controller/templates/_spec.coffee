@@ -4,7 +4,7 @@
 describe '<%= ctrlName %>', ->
   scope = undefined
 
-  beforeEach module '<%= appName %>'
+  beforeEach module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
 
   beforeEach inject ($rootScope, $controller) ->
     scope = $rootScope.$new()

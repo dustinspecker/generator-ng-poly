@@ -4,7 +4,7 @@
 describe('<%= lowerCamel %>', function () {
   var value;
 
-  beforeEach(module('<%= appName %>'));
+  beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
   beforeEach(inject(function (<%= lowerCamel %>) {
     value = <%= lowerCamel %>;

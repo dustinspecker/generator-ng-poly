@@ -2,6 +2,7 @@
 
 var gulp = require('gulp')
   , addSrc = require('gulp-add-src')
+  , angularSort = require('gulp-angular-filesort')
   , coffeelint = require('gulp-coffeelint')
   , connect = require('gulp-connect')
   , inject = require('gulp-inject')
@@ -12,9 +13,11 @@ var gulp = require('gulp')
   , plato = require('gulp-plato');
 
 var _ = require('lodash')
+  , fs = require('fs')
   , karma = require('karma').server
   , path = require('path')
-  , rimraf = require('rimraf');
+  , rimraf = require('rimraf')
+  , streamqueue = require('streamqueue');
 
 // bower assets to be inject into index.html
 // 'bower_components' is automatically prepended
@@ -56,7 +59,7 @@ function prependBowerDir(file) {
   return bowerDir + file;
 }
 
-var karmaConf = {
+var karmaConf2 = {
   browsers: ['PhantomJS'],
   frameworks: ['jasmine'],
   files: [
@@ -121,14 +124,51 @@ gulp.task('inject', ['js', 'less', 'markup', 'components'], function () {
       buildComponents + '**/*.html',
       buildCss + '**/*.css',
       buildJs + 'angular.js',
-      buildJs + 'angular-ui-router.js',    
-      buildJs + '**/*.js'
+      buildJs + 'platform.js',
+      buildComponents + '**/*.js'
       ], { read: false }), {
         addRootSlash: false,
         ignorePath: build
     }))
+    .pipe(gulp.dest(build));
+});
+
+gulp.task('angularInject', ['inject'], function () {
+  return gulp.src(build + 'index.html')
+    .pipe(inject(gulp.src([
+      build + '**/*.js',
+      '!' + buildComponents + '**/*',
+      '!' + build + 'angular.js',
+      '!' + build + 'platform.js',
+      '!**/*_test.*'
+    ]).pipe(angularSort()), { starttag: '<!-- inject:angular:{{ext}} -->', addRootSlash: false, ignorePath: build }))
     .pipe(gulp.dest(build))
     .pipe(connect.reload());
+});
+
+gulp.task('karmaInject', function () {
+  var stream = streamqueue({ objectMode: true});
+  stream.queue(gulp.src([
+    'bower_components/angular/angular.js',
+    'bower_components/angular-mocks/angular-mocks.js',
+    'src/**/*Directive.{html,jade}'
+    ]));
+  stream.queue(gulp.src([
+    'src/**/*.js',
+    '!src/components/**/*',
+    '!**/*_test.*',
+    'bower_components/angular-ui-router/release/angular-ui-router.js',
+    ]).pipe(angularSort()));
+  stream.queue(gulp.src([
+    'src/**/*_test.*'
+    ]));
+  return gulp.src('./karma.config.json')
+    .pipe(inject(stream.done(), 
+      { starttag: '"files": [', endtag: ']', addRootSlash: false, 
+      transform: function (filepath, file, i, length) {
+        return '  "' + filepath + '"' + (i + 1 < length ? ',' : '');
+      }}))
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('js', ['clean', 'jshint'], function () {
@@ -181,7 +221,7 @@ gulp.task('open', function () {
     .pipe(open('', {url: 'http://localhost:8080'}));
 });
 
-gulp.task('polymer', ['inject'], function () {
+gulp.task('polymer', ['angularInject'], function () {
   return gulp.src(bowerPolymerComponents.map(prependBowerDir), {
       base: bowerDir
     })
@@ -196,7 +236,8 @@ gulp.task('default', ['build'], function () {
   gulp.start('watch');
 });
 
-gulp.task('test', ['jshint', 'coffeelint'], function (done) {
+gulp.task('test', ['jshint', 'coffeelint', 'karmaInject'], function (done) {
+  var karmaConf = require('./karma.config.json');
   karma.start(_.assign({}, karmaConf), done);
 });
 

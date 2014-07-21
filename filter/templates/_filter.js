@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('<%= appName %>').filter('<%= lowerCamel %>', function () {
+angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').filter('<%= lowerCamel %>', function () {
   return function (input) {
     var temp = [];
     angular.forEach(input, function (item) {

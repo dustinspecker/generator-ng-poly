@@ -1,6 +1,7 @@
 'use strict';
 var genBase = require('../genBase')
-  , path = require('path');
+  , path = require('path')
+  , utils = require('../utils');
 
 
 var Generator = module.exports = genBase.extend();
@@ -25,7 +26,14 @@ Generator.prototype.prompting = function prompting() {
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
-  this.template('_factory.js', path.join('src', this.module, config.lowerCamel + 'Factory.js'), config);
+  utils.moduleExists(this.config.path, this.module);
+
+  var modules = utils.extractModuleNames(this.module);
+  config.moduleName = modules[0];
+  config.parentModuleName = modules[1];
+  config.modulePath = this.module.replace('.', '/');
+
+  this.template('_factory.js', path.join('src', config.modulePath, config.lowerCamel + 'Factory.js'), config);
   this.template('_spec.' + config.testScript,
-    path.join('src', this.module, config.lowerCamel + 'Factory_test.' + config.testScript), config);
+    path.join('src', config.modulePath, config.lowerCamel + 'Factory_test.' + config.testScript), config);
 };

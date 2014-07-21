@@ -1,0 +1,20 @@
+{
+  "browsers": ["PhantomJS"],
+  "frameworks": ["jasmine"],
+  "files": [
+  ],
+  "reporters": ["failed", "coverage"],
+  "preprocessors": {
+    "src/**/!(*_test)+(.js)": ["coverage"],
+    "src/**/*Directive.html": ["ng-html2js"],
+    "src/**/*Directive.jade": ["ng-jade2js"],
+    "src/**/*_test.coffee": ["coffee"]
+  },
+  "ngHtml2JsPreprocessor": {
+    "stripPrefix": "src/"
+  },
+  "ngJade2JsPreprocessor": {
+    "stripPrefix": "src/"
+  },
+  "singleRun": true
+}

@@ -4,7 +4,7 @@
 describe('<%= ctrlName %>', function () {
   var scope;
 
-  beforeEach(module('<%= appName %>'));
+  beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
   beforeEach(inject(function ($rootScope, $controller) {
     scope = $rootScope.$new();

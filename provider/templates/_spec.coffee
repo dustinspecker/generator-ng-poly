@@ -4,7 +4,7 @@
 describe '<%= lowerCamel %>', ->
   provider = undefined
 
-  beforeEach module '<%= appName %>'
+  beforeEach module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
 
   beforeEach inject (<%= lowerCamel %>) ->
     provider = <%= lowerCamel %>

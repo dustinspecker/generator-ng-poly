@@ -4,7 +4,7 @@
 describe '<%= lowerCamel %>', ->
   service = undefined
 
-  beforeEach module '<%= appName %>'
+  beforeEach module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
 
   beforeEach inject (<%= lowerCamel %>) ->
     service = <%= lowerCamel %>

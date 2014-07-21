@@ -25,19 +25,42 @@ Generator.prototype.prompting = function prompting() {
 
 Generator.prototype.writing = function writing() {
   this.context = this.getConfig();
-  this.context.moduleName = path.basename(this.name);
+
+  // if moduleName ends with a slash remove it
+  if (this.module.charAt(this.module.length-1) === '/' || this.module.charAt(this.module.length-1) === '\\') {
+    this.module = this.module.slice(0, this.module.length-1);
+  }
+
+  this.context.moduleName = path.basename(this.module);
   this.context.upperModule = utils.upperCamel(this.context.moduleName);
+  this.context.parentModuleName = null;
+  this.context.templateUrl = path.join(this.module).replace(/\\/g, '/');
 
-  this.mkdir('src/' + this.module);
-  this.template('_app.js', path.join('src', this.module, this.context.moduleName + '.js'), this.context);
+  // create new module directory
+  this.mkdir(path.join('src', this.module));
 
-  // load app.js to add new dependency
-  var filePath = path.join(this.config.path, '../src/app.js')
-    , file = fs.readFileSync(filePath, 'utf8');
+  var filePath, file;
+
+  // check if path and moduleName are the same
+  // if yes - get root app.js to prepare adding dep
+  // else - get parent app.js to prepare adding dep
+  if (this.context.moduleName === this.module) {
+    filePath = path.join(this.config.path, '../src/app.js');
+  } else {
+    var parentDir = path.resolve(path.join('src', this.module), '..');
+
+    // for templating to create a parent.child module name
+    this.context.parentModuleName = path.basename(parentDir);
+
+    filePath = path.join(parentDir, this.context.parentModuleName + '.js');
+  }
+
+  file = fs.readFileSync(filePath, 'utf8');
 
   // find line to add new dependency
   var lines = file.split('\n')
     , lineIndex = 0;
+
   lines.forEach(function (line, i) {
     // fine line that sets the dependencies of the module
     if (line.indexOf('angular.module') !== -1 && line.indexOf(']') !== -1) {
@@ -48,11 +71,25 @@ Generator.prototype.writing = function writing() {
   // remove closing bracket and on
   lines[lineIndex] = lines[lineIndex].slice(0, lines[lineIndex].indexOf(']'));
 
+  // determine if module has any other dependencies
+  // if yes, we need to add a , and space before the new depcency
+  if (lines[lineIndex].charAt(lines[lineIndex].length-1) !== '[') {
+    lines[lineIndex] = lines[lineIndex] + ', ';
+  }
+
   // add dependency and closing bracket
-  lines[lineIndex] = lines[lineIndex] + ', \'' + this.context.moduleName + '\']);';
+  // if parent module exists, make it part of module name
+  if (this.context.parentModuleName) {
+    lines[lineIndex] = lines[lineIndex] + '\'' + this.context.parentModuleName + '.' + this.context.moduleName + '\']);';
+  } else {
+    lines[lineIndex] = lines[lineIndex] + '\'' + this.context.moduleName + '\']);';
+  }
 
   // save modifications
   fs.writeFileSync(filePath, lines.join('\n'));
+
+  // create app.js
+  this.template('_app.js', path.join('src', this.module, this.context.moduleName + '.js'), this.context);
 };
 
 Generator.prototype.end = function end() {

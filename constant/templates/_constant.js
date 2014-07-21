@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('<%= appName %>').constant('<%= lowerCamel %>', 0);
+angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').constant('<%= lowerCamel %>', 0);

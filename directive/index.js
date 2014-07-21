@@ -1,6 +1,7 @@
 'use strict';
 var genBase = require('../genBase')
-  , path = require('path');
+  , path = require('path')
+  , utils = require('../utils');
 
 
 var Generator = module.exports = genBase.extend();
@@ -24,11 +25,17 @@ Generator.prototype.prompting = function prompting() {
 
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
-  config.moduleName = this.module;
 
-  this.template('_directive.js', path.join('src', this.module, config.lowerCamel + 'Directive.js'), config);
+  utils.moduleExists(this.config.path, this.module);
+
+  var modules = utils.extractModuleNames(this.module);
+  config.moduleName = modules[0];
+  config.parentModuleName = modules[1];
+  config.modulePath = this.module.replace('.', '/');
+
+  this.template('_directive.js', path.join('src', config.modulePath, config.lowerCamel + 'Directive.js'), config);
   this.template('_directive.' + config.markup,
-    path.join('src', this.module, config.lowerCamel + 'Directive.' + config.markup), config);
+    path.join('src', config.modulePath, config.lowerCamel + 'Directive.' + config.markup), config);
   this.template('_spec.' + config.testScript,
-    path.join('src', this.module, config.lowerCamel + 'Directive_test.' + config.testScript), config);
+    path.join('src', config.modulePath, config.lowerCamel + 'Directive_test.' + config.testScript), config);
 };

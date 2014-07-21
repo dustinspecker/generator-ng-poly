@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('<%= moduleName %>', []);
+angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', ['ui.router']);
 
-angular.module('<%= moduleName %>').config(function ($stateProvider) {
+angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').config(function ($stateProvider) {
   $stateProvider
     .state('<%= moduleName %>', {
       url: '/<%= moduleName %>',
-      templateUrl: '<%= moduleName %>/<%= moduleName %>.tpl.html',
+      templateUrl: '<%= templateUrl %>/<%= moduleName %>.tpl.html',
       controller: '<%= upperModule %>Ctrl'
     });
 });
