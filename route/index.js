@@ -54,7 +54,7 @@ Generator.prototype.writing = function writing() {
     '    })',
     '    .state(\'' + config.lowerCamel + '\', {',
     '      url: \'/' + this.url + '\',',
-    '      templateUrl: \'' + this.module + '/' + config.lowerCamel + '.tpl.html\',',
+    '      templateUrl: \'' + this.module + '/' + config.hyphenName + '.tpl.html\',',
     '      controller: \'' + config.ctrlName + '\'',
   ];
 
