@@ -126,7 +126,7 @@ describe('theHero', function () {
 ```
 
 ### Controller
-Geenrates a controller and its test.
+Genrates a controller and its test.
 
 Example:
 ```
