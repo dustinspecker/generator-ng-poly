@@ -6,8 +6,8 @@
   "reporters": ["failed", "coverage"],
   "preprocessors": {
     "src/**/!(*_test)+(.js)": ["coverage"],
-    "src/**/*Directive.html": ["ng-html2js"],
-    "src/**/*Directive.jade": ["ng-jade2js"],
+    "src/**/*-directive.tpl.html": ["ng-html2js"],
+    "src/**/*-directive.tpl.jade": ["ng-jade2js"],
     "src/**/*_test.coffee": ["coffee"]
   },
   "ngHtml2JsPreprocessor": {

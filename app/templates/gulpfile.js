@@ -41,7 +41,7 @@ var componentsBase = 'src/components/'
   , componentsJs = componentsDir + '*.js'
   , componentsLess = componentsDir + '*.less'
   , srcMarkup = 'src/**/'
-  , srcMarkupTemplates = 'src/**/*Directive.{jade,html}' // used for karmaConf
+  , srcMarkupTemplates = 'src/**/*-directive.tpl.{jade,html}' // used for karmaConf
   , srcJsFiles = 'src/**/*.js'
   , srcLessFiles = 'src/**/*.less'; // since we need to strictly specify style.less later
 
@@ -58,33 +58,6 @@ var bowerDir = 'bower_components/';
 function prependBowerDir(file) {
   return bowerDir + file;
 }
-
-var karmaConf2 = {
-  browsers: ['PhantomJS'],
-  frameworks: ['jasmine'],
-  files: [
-    'bower_components/angular/angular.js',
-    'bower_components/angular-ui-router/release/angular-ui-router.js',
-    'bower_components/angular-mocks/angular-mocks.js',
-    srcJsFiles,
-    unitTests,
-    srcMarkupTemplates
-  ],
-  reporters: ['failed', 'coverage'],
-  preprocessors: {
-    'src/**/!(*_test)+(.js)': ['coverage'],
-    'src/*Directive.html': ['ng-html2js'],
-    'src/**/*Directive.jade': ['ng-jade2js'],
-    'src/**/*_test.coffee': ['coffee']
-  },
-  ngHtml2JsPreprocessor: {
-    stripPrefix: 'src/'
-  },
-  ngJade2JsPreprocessor: {
-    stripPrefix: 'src/'
-  },
-  singleRun: true
-};
 
 gulp.task('clean', function (cb) {
   return rimraf('build', cb);
@@ -151,7 +124,7 @@ gulp.task('karmaInject', function () {
   stream.queue(gulp.src([
     'bower_components/angular/angular.js',
     'bower_components/angular-mocks/angular-mocks.js',
-    'src/**/*Directive.{html,jade}'
+    'src/**/*-directive.tpl.{html,jade}'
     ]));
   stream.queue(gulp.src([
     'src/**/*.js',

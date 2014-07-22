@@ -33,9 +33,9 @@ Generator.prototype.writing = function writing() {
   config.parentModuleName = modules[1];
   config.modulePath = this.module.replace('.', '/');
 
-  this.template('_directive.js', path.join('src', config.modulePath, config.lowerCamel + 'Directive.js'), config);
+  this.template('_directive.js', path.join('src', config.modulePath, config.hyphenName + '-directive.js'), config);
   this.template('_directive.' + config.markup,
-    path.join('src', config.modulePath, config.lowerCamel + 'Directive.' + config.markup), config);
+    path.join('src', config.modulePath, config.hyphenName + '-directive.tpl.' + config.markup), config);
   this.template('_spec.' + config.testScript,
-    path.join('src', config.modulePath, config.lowerCamel + 'Directive_test.' + config.testScript), config);
+    path.join('src', config.modulePath, config.hyphenName + '-directive_test.' + config.testScript), config);
 };

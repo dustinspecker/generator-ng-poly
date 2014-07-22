@@ -33,7 +33,7 @@ Generator.prototype.writing = function writing() {
   config.parentModuleName = modules[1];
   config.modulePath = this.module.replace('.', '/');
 
-  this.template('_factory.js', path.join('src', config.modulePath, config.lowerCamel + 'Factory.js'), config);
+  this.template('_factory.js', path.join('src', config.modulePath, config.hyphenName + '-factory.js'), config);
   this.template('_spec.' + config.testScript,
-    path.join('src', config.modulePath, config.lowerCamel + 'Factory_test.' + config.testScript), config);
+    path.join('src', config.modulePath, config.hyphenName + '-factory_test.' + config.testScript), config);
 };

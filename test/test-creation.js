@@ -49,8 +49,8 @@ describe('ng-poly generator', function () {
       var expected = [
         'src/home/home.tpl.' + config.markup,
         'src/home/home.' + config.style,
-        'src/home/HomeCtrl.' + config.appScript,
-        'src/home/HomeCtrl_test.' + config.testScript,
+        'src/home/home-controller.' + config.appScript,
+        'src/home/home-controller_test.' + config.testScript,
         'src/app.' + config.appScript,
         'src/index.' + config.markup,
         '.editorconfig',
@@ -90,23 +90,23 @@ describe('ng-poly generator', function () {
       });
 
       testGenerator('constant', ['../../constant'], expected.concat(
-        'src/home/constantTestConstant.' + config.appScript,
-        'src/home/constantTestConstant_test.' + config.testScript
+        'src/home/constant-test-constant.' + config.appScript,
+        'src/home/constant-test-constant_test.' + config.testScript
       ), {
         module: 'home'
       });
 
       testGenerator('controller', ['../../controller'], expected.concat(
-        'src/home/ControllerTestCtrl.' + config.appScript,
-        'src/home/ControllerTestCtrl_test.' + config.testScript
+        'src/home/controller-test-controller.' + config.appScript,
+        'src/home/controller-test-controller_test.' + config.testScript
       ), {
         module: 'home'
       });
       
       testGenerator('directive', ['../../directive'], expected.concat(
-        'src/home/directiveTestDirective.' + config.markup,
-        'src/home/directiveTestDirective.' + config.appScript,
-        'src/home/directiveTestDirective_test.' + config.testScript
+        'src/home/directive-test-directive.tpl.' + config.markup,
+        'src/home/directive-test-directive.' + config.appScript,
+        'src/home/directive-test-directive_test.' + config.testScript
       ), {
         module: 'home'
       });
@@ -118,58 +118,58 @@ describe('ng-poly generator', function () {
       ));
 
       testGenerator('factory', ['../../factory'], expected.concat(
-        'src/home/factoryTestFactory.' + config.appScript,
-        'src/home/factoryTestFactory_test.' + config.testScript
+        'src/home/factory-test-factory.' + config.appScript,
+        'src/home/factory-test-factory_test.' + config.testScript
       ), {
         module: 'home'
       });
 
       testGenerator('filter', ['../../filter'], expected.concat(
-        'src/home/filterTestFilter.' + config.appScript,
-        'src/home/filterTestFilter_test.' + config.testScript
+        'src/home/filter-test-filter.' + config.appScript,
+        'src/home/filter-test-filter_test.' + config.testScript
       ), {
         module: 'home'
       });
 
       testGenerator('module', ['../../module', '../../controller', '../../view'], expected.concat(
         'src/module-test/module-test.' + config.appScript,
-        'src/module-test/ModuleTestCtrl.' + config.appScript,
-        'src/module-test/ModuleTestCtrl_test.' + config.testScript,
-        'src/module-test/moduleTest.tpl.' + config.markup
+        'src/module-test/module-test-controller.' + config.appScript,
+        'src/module-test/module-test-controller_test.' + config.testScript,
+        'src/module-test/module-test.tpl.' + config.markup
       ));
 
       testGenerator('provider', ['../../provider'], expected.concat(
-        'src/home/providerTestProvider.' + config.appScript,
-        'src/home/providerTestProvider_test.' + config.testScript
+        'src/home/provider-test-provider.' + config.appScript,
+        'src/home/provider-test-provider_test.' + config.testScript
       ), {
         module: 'home'
       });
 
       testGenerator('route', ['../../route', '../../controller', '../../view'], (
-        'src/home/routeTest.tpl.' + config.markup,
-        'src/home/RouteTestCtrl.' + config.appScript,
-        'src/home/RouteTestCtrl_test.' + config.testScript
+        'src/home/route-test.tpl.' + config.markup,
+        'src/home/route-test-controller.' + config.appScript,
+        'src/home/route-test-controller_test.' + config.testScript
       ), {
         'module': 'home',
         'url': 'value'
       });
 
       testGenerator('service', ['../../service'], expected.concat(
-        'src/home/serviceTestService.' + config.appScript,
-        'src/home/serviceTestService_test.' + config.testScript
+        'src/home/service-test-service.' + config.appScript,
+        'src/home/service-test-service_test.' + config.testScript
       ), {
         module: 'home'
       });
 
       testGenerator('value', ['../../value'], expected.concat(
-        'src/home/valueTestValue.' + config.appScript,
-        'src/home/valueTestValue_test.' + config.testScript
+        'src/home/value-test-value.' + config.appScript,
+        'src/home/value-test-value_test.' + config.testScript
       ), {
         module: 'home'
       });
 
       testGenerator('view', ['../../view'], expected.concat(
-        'src/home/viewTest.tpl.' + config.markup
+        'src/home/view-test.tpl.' + config.markup
       ), {
         module: 'home'
       });

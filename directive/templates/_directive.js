@@ -4,7 +4,7 @@ angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= 
   return {
     restrict: 'AE',
     scope: {},
-    templateUrl: '<%= modulePath %>/<%= lowerCamel %>Directive.html', 
+    templateUrl: '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html', 
     replace: false,
     link: function (scope, element, attrs) {
       element.text('<%= lowerCamel %>\n' + scope + '\n' + attrs);

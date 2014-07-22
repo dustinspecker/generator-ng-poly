@@ -34,6 +34,6 @@ Generator.prototype.writing = function writing() {
   config.modulePath = this.module.replace('.', '/');
 
   this.template('_view.' + config.markup,
-    path.join('src', config.modulePath, config.lowerCamel + '.tpl.' + config.markup), config);
-  this.copy('style.less', path.join('src', config.modulePath, config.lowerCamel + '.less'));
+    path.join('src', config.modulePath, config.hyphenName + '.tpl.' + config.markup), config);
+  this.copy('style.less', path.join('src', config.modulePath, config.hyphenName + '.less'));
 };

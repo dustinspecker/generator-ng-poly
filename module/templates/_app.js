@@ -6,7 +6,7 @@ angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= 
   $stateProvider
     .state('<%= moduleName %>', {
       url: '/<%= moduleName %>',
-      templateUrl: '<%= templateUrl %>/<%= moduleName %>.tpl.html',
+      templateUrl: '<%= templateUrl %>/<%= hyphenName %>.tpl.html',
       controller: '<%= upperModule %>Ctrl'
     });
 });
