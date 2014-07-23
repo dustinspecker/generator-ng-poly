@@ -5,7 +5,7 @@ var utils = require('../utils')
 
 var Generator = module.exports = yeoman.generators.NamedBase.extend();
 
-Generator.prototype.askForModuleName = function askForModuleName() {
+Generator.prototype.askForModuleName = function askForModuleName(params) {
   var done = this.async();
 
   this.prompt([{
@@ -18,8 +18,16 @@ Generator.prototype.askForModuleName = function askForModuleName() {
     validate: function (input) {
       return utils.moduleExists(this.config.path, input);
     }.bind(this)
+  }, {
+    name: 'url',
+    message: 'What\'s the url for this state?',
+    default: this.name,
+    when: function() {
+      return (params && params.url === true);
+    }
   }], function (props) {
     this.module = props.module || this.options.options.module;
+    this.url = props.url;
 
     done();
   }.bind(this));

@@ -8,7 +8,7 @@ var fs = require('fs')
 var Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
-  this.askForModuleName();
+  this.askForModuleName({url: true});
 };
 
 Generator.prototype.writing = function writing() {
