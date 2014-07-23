@@ -11,7 +11,7 @@ describe('<%= lowerCamel %>', function () {
   }));
 
   it('should equal <%= lowerCamel %>', function () {
-    expect(provider.$get()).toEqual('<%= lowerCamel %>');
+    expect(provider).toEqual('<%= lowerCamel %>');
   });
 
 });

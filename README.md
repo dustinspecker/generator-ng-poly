@@ -389,7 +389,7 @@ Produces `src/module/bacon-provider.js`:
 ```javascript
 'use strict';
 
-angular.module('module').factory('bacon', function () {
+angular.module('module').provider('bacon', function () {
   return {
     $get: function () {
       return 'bacon';
@@ -413,7 +413,7 @@ describe('bacon', function () {
   }));
 
   it('should equal bacon', function () {
-    expect(provider.$get()).toEqual('bacon');
+    expect(provider).toEqual('bacon');
   });
 
 });

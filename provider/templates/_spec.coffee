@@ -10,4 +10,4 @@ describe '<%= lowerCamel %>', ->
     provider = <%= lowerCamel %>
 
   it 'should equal <%= lowerCamel %>', ->
-    expect(provider.$get()).toEqual '<%= lowerCamel %>'
+    expect(provider).toEqual '<%= lowerCamel %>'
