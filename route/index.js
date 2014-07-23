@@ -8,22 +8,7 @@ var fs = require('fs')
 var Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
-  var done = this.async();
-
-  this.prompt([{
-    name: 'module',
-    message: 'Which module is this for?'
-  },
-  {
-    name: 'url',
-    message: 'What\'s the url for this state?',
-    default: this.name,
-  }], function (props) {
-    this.module = props.module;
-    this.url = props.url;
-
-    done();
-  }.bind(this));
+  this.askForModuleName();
 };
 
 Generator.prototype.writing = function writing() {

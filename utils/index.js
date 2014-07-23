@@ -45,15 +45,6 @@ function extractBasedOnChar(string, symbol) {
   return modules;
 }
 
-function moduleExists(yoRcAbsolutePath, modulePath) {
-  // check if file exists
-  var yoPath = path.dirname(yoRcAbsolutePath);
-  var fullPath = path.join(yoPath, 'src', modulePath.replace('.','/'));
-  if (!fs.existsSync(fullPath)) {
-    throw 'INVALID MODULE REFERENCE: If path does exists, then provide entire module path';
-  }
-}
-
 function extractModuleNames(string) {
   // make sure name only uses periods or slashes
   if (string.indexOf('.') > -1 &&
@@ -73,6 +64,17 @@ function extractModuleNames(string) {
   }
 }
 
+function normalizeModulePath(modulePath) {
+  return modulePath.replace(/[.\\]/g, path.sep);
+}
+
+function moduleExists(yoRcAbsolutePath, modulePath) {
+  // check if file exists
+  var yoPath = path.dirname(yoRcAbsolutePath)
+    , fullPath = path.join(yoPath, 'src', normalizeModulePath(modulePath));
+
+  return fs.existsSync(fullPath);
+}
 
 module.exports = {
   lowerCamel: lowerCamel,

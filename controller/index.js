@@ -7,20 +7,7 @@ var genBase = require('../genBase')
 var Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
-  var done = this.async();
-
-  this.prompt([{
-    name: 'module',
-    message: 'Which module is this for?',
-    default: this.name,
-    when: function () {
-      return !(this.options && this.options.options && this.options.options.module);
-    }.bind(this)
-  }], function (props) {
-    this.module = props.module || this.options.options.module;
-
-    done();
-  }.bind(this));
+  this.askForModuleName();
 };
 
 Generator.prototype.writing = function writing() {
