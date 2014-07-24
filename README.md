@@ -1,4 +1,4 @@
-# generator-ng-poly [![Build Status](https://secure.travis-ci.org/dustinspecker/generator-ng-poly.png?branch=master)](https://travis-ci.org/dustinspecker/generator-ng-poly)
+# generator-ng-poly [![Build Status](https://secure.travis-ci.org/dustinspecker/generator-ng-poly.png?branch=master)](https://travis-ci.org/dustinspecker/generator-ng-poly) [![Coverage Status](https://coveralls.io/repos/dustinspecker/generator-ng-poly/badge.png?branch=master)](https://coveralls.io/r/dustinspecker/generator-ng-poly?branch=master)
 [![Dependencies](https://david-dm.org/dustinspecker/generator-ng-poly.png)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=dependencies&view=table) [![DevDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/dev-status.png)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=devDependencies&view=table) [![PeerDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/peer-status.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=peerDependencies&view=table)
 
 > [Yeoman](http://yeoman.io) generator for AngularJS and Polymer apps. A work in progress.
