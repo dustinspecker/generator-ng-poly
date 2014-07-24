@@ -97,7 +97,7 @@ gulp.task('inject', ['js', 'less', 'markup', 'components'], function () {
       buildComponents + '**/*.html',
       buildCss + '**/*.css',
       buildJs + 'angular.js',
-      buildJs + 'platform.js',
+      '!' + buildJs + 'platform.js',
       buildComponents + '**/*.js'
       ], { read: false }), {
         addRootSlash: false,
@@ -106,7 +106,17 @@ gulp.task('inject', ['js', 'less', 'markup', 'components'], function () {
     .pipe(gulp.dest(build));
 });
 
-gulp.task('angularInject', ['inject'], function () {
+gulp.task('headInject', ['inject'], function () {
+  return gulp.src(build + 'index.html')
+    .pipe(inject(gulp.src(buildJs + 'platform.js'), {
+      starttag: '<!-- inject:head:{{ext}} -->',
+      addRootSlash: false,
+      ignorePath: build
+    }))
+    .pipe(gulp.dest(build));
+});
+
+gulp.task('angularInject', ['headInject'], function () {
   return gulp.src(build + 'index.html')
     .pipe(inject(gulp.src([
       build + '**/*.js',
