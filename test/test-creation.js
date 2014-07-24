@@ -2,9 +2,68 @@
 'use strict';
 var join = require('path').join
   , assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test;
+  , helpers = require('yeoman-generator').test
+  , sinon = require('sinon');
 
 describe('ng-poly generator', function () {
+
+  // separate from other tests because it creates a child directory
+  // which messes up generator dependencies
+  describe('appName different than current directory', function () {
+    // expected files from ng-poly:app
+    var expected = [
+      'src/home/home.tpl.html',
+      'src/home/home.less',
+      'src/home/home-controller.js',
+      'src/home/home-controller_test.js',
+      'src/app.js',
+      'src/index.html',
+      '.editorconfig',
+      '.jshintrc',
+      '.yo-rc.json',
+      'bower.json',
+      'Gulpfile.js',
+      'package.json'
+    ];
+
+    beforeEach(function (done) {
+      helpers.testDirectory(join(__dirname, 'temp'), function (err) {
+        if (err) {
+          done(err);
+        }
+
+        this.app = helpers.createGenerator('ng-poly:app', [
+          '../../app',
+          '../../controller',
+          '../../module',
+          '../../view'
+        ]);
+
+        helpers.mockPrompt(this.app, {
+          'appName': 'testName',
+          'markup': 'html',
+          'appScript': 'js',
+          'testScript': 'js',
+          'style': 'less'
+        });
+
+        this.app.options['skip-install'] = false; // done to cover installDependencies() branch
+        this.app.installDependencies = sinon.spy(); // enables counting the number of function calls
+        this.app.run([], function () {
+          done();
+        });
+
+      }.bind(this));
+    });
+
+    it('should create expected files', function () {
+      assert.file(expected);
+    });
+
+    it('should call installDependencies once', function () {
+      assert(this.app.installDependencies.calledOnce);
+    });
+  });
 
   // prompts to provide to ng-poly:app
   var prompts = [
@@ -21,15 +80,37 @@ describe('ng-poly generator', function () {
     'appScript': 'js',
     'testScript': 'coffee',
     'style': 'less'
-  }];  
+  }];
 
   function testGenerator(genName, deps, expectedFiles, mockPrompts) {
-    describe(genName + ' generator', function () {
+    describe(genName + ' generator with args and prompts', function () {
       beforeEach(function (done) {
         this.app = helpers.createGenerator('ng-poly:' + genName, deps, genName + '-test');
-        if(mockPrompts) {
+        if (mockPrompts) {
           helpers.mockPrompt(this.app, mockPrompts);
         }
+        done();
+      });
+
+      it('should create expected files', function (done) {
+        this.app.run([], function () {
+          assert.file(expectedFiles);
+          done();
+        });
+      });
+    });
+
+    describe(genName + ' generator with args and options', function () {
+      beforeEach(function (done) {
+
+        // cover module scenario with / at end of name
+        // on the second prompt (uses Jade)
+        if (expectedFiles[0].indexOf('.jade') > -1) {
+          this.app = helpers.createGenerator('ng-poly:' + genName, deps, genName + '-test/', mockPrompts);
+        } else {
+          this.app = helpers.createGenerator('ng-poly:' + genName, deps, genName + '-test', mockPrompts);
+        }
+
         done();
       });
 

@@ -101,3 +101,36 @@ describe('file manipulation', function () {
   });
 
 });
+
+describe('file manipulation with no-home option', function () {
+  // generate default app with no home module
+  beforeEach(function (done) {
+    helpers.testDirectory(join(__dirname, 'temp'), function (err) {
+      if (err) {
+        done(err);
+      }
+
+      this.app = helpers.createGenerator('ng-poly:app', [
+        '../../app',
+        '../../controller',
+        '../../module',
+        '../../view'
+      ]);
+
+      helpers.mockPrompt(this.app, {
+        'appName': 'temp',
+        'markup': 'html',
+        'appScript': 'js',
+        'testScript': 'js',
+        'style': 'less'
+      });
+
+      this.app.options['skip-install'] = true;
+      this.app.options['no-home'] = true;
+      this.app.run([], function () {
+        done();
+      });
+
+    }.bind(this));
+  });
+});

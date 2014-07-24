@@ -7,20 +7,8 @@ var fs = require('fs')
 
 var Generator = module.exports = genBase.extend();
 
-Generator.prototype.prompting = function prompting() {
-  var done = this.async();
-
-  this.prompt([{
-    name: 'module',
-    message: 'What is the module\'s name?',
-    when: function () {
-      return !this.name;
-    }.bind(this)
-  }], function (props) {
-    this.module = props.module || this.name;
-
-    done();
-  }.bind(this));
+Generator.prototype.initialize = function initialize() {
+  this.module = this.name;
 };
 
 Generator.prototype.writing = function writing() {
@@ -72,11 +60,8 @@ Generator.prototype.writing = function writing() {
   // remove closing bracket and on
   lines[lineIndex] = lines[lineIndex].slice(0, lines[lineIndex].indexOf(']'));
 
-  // determine if module has any other dependencies
-  // if yes, we need to add a , and space before the new depcency
-  if (lines[lineIndex].charAt(lines[lineIndex].length-1) !== '[') {
-    lines[lineIndex] = lines[lineIndex] + ', ';
-  }
+  // presume module has at least one dependency (ui.router)
+  lines[lineIndex] = lines[lineIndex] + ', ';
 
   // add dependency and closing bracket
   // if parent module exists, make it part of module name

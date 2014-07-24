@@ -4,4 +4,4 @@ node_js:
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-ng-poly' ]; then cd .. && eval "mv $currentfolder generator-ng-poly" && cd generator-ng-poly; fi
-
+after_success: npm run-script coveralls

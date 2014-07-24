@@ -46,19 +46,10 @@ function extractBasedOnChar(string, symbol) {
 }
 
 function extractModuleNames(string) {
-  // make sure name only uses periods or slashes
-  if (string.indexOf('.') > -1 &&
-    (string.indexOf('\\') > -1 || string.indexOf('/') > -1)) {
-    throw 'INVALID MODULE NAME: Module name can only use path or module syntax.';
-  }
-
+  string = string.replace(/\\/g, '/');
   // uses module syntax
-  if (string.indexOf('.') > -1) {
-    return extractBasedOnChar(string, '.');
-  } else if (string.indexOf('/') > -1) {
+  if (string.indexOf('/') > -1) {
     return extractBasedOnChar(string, '/');
-  } else if (string.indexOf('\\') > -1) {
-    return extractBasedOnChar(string, '\\');
   } else {
     return [string, null];
   }

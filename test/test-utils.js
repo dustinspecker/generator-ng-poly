@@ -77,4 +77,14 @@ describe('ng-poly generator', function () {
     });
   });
 
+  describe('extractModuleNames', function () {
+    it('should extract modules with slashes in path', function () {
+      assert(JSON.stringify(utils.extractModuleNames('test/parent/child')) === JSON.stringify(['child','parent']));
+    });
+
+    it('should return module without slashes in path', function () {
+      assert(JSON.stringify(utils.extractModuleNames('test')) === JSON.stringify(['test', null]));
+    });
+  });
+
 });

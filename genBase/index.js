@@ -13,7 +13,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     message: 'Which module is this for?',
     default: this.name,
     when: function () {
-      return !(this.options && this.options.options && this.options.options.module);
+      return !((this.options && this.options.options && this.options.options.module) || (this.options && this.options.module));
     }.bind(this),
     validate: function (input) {
       return utils.moduleExists(this.config.path, input);
@@ -23,11 +23,11 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     message: 'What\'s the url for this state?',
     default: this.name,
     when: function() {
-      return (params && params.url === true);
-    }
+      return ((params && params.url === true) && !(this.options && this.options.url));
+    }.bind(this)
   }], function (props) {
-    this.module = props.module || this.options.options.module;
-    this.url = props.url;
+    this.module = props.module || this.options.module || this.options.options.module;
+    this.url = props.url || this.options.url;
 
     done();
   }.bind(this));

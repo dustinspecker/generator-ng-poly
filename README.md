@@ -51,12 +51,20 @@ Languages and Features supported:
   * Task runners
     - Gulp
 
-**All generators ask for a module name except app and element. All generators except app take a name as an argument. A name can be written with CamelCase or hyphens.**
 
 ### Gulp Tasks
 `gulp` will start a localhost and open in the default browser
 
 `gulp test` will run Jasmine tasks via Karma
+
+* * *
+**All generators ask for a module name except app and element. All generators except app take a name as an argument. A name can be written with CamelCase or hyphens.**
+
+Generators requiring a module can take a module option to bypass the prompt:
+```
+yo ng-poly:view --module=home/kitchen
+```
+* * *
 
 ### App
 Asks for application name and language preferences to scaffold out an application with a home module. Then installs npm and Bower dependencies.
@@ -84,7 +92,7 @@ root/
 ├── .jshintrc
 ├── .yo-rc.json
 ├── bower.json
-├── Gulpefile.js
+├── Gulpfile.js
 ├── karma.config.js
 └── package.json
 ```
@@ -422,6 +430,11 @@ describe('bacon', function () {
 ### Route
 Adds a new route and generates a controller and view. The name provided is used as state name. Yeoman will then ask for the module to add the route to and the URL for the route (default is the state name provided).
 
+Example:
+```
+yo ng-poly:route your-place
+```
+
 Updates `src/module/module.js`:
 ```javascript
 'use strict';
@@ -446,6 +459,13 @@ angular.module('module').config(function ($stateProvider) {
 Produces `src/module/your-place-controller.js`, `src/module/your-place-controller_test.js`, `src/module/your-place.tpl.html`, and `src/module/your-place.less`
 
 **Currently, the module must have an existing state for another to be added.**
+
+* * *
+The route generator can take a URL option, as well.
+```
+yo ng-poly:route --url=yourPlace
+```
+* * *
 
 ### Service
 Generates a service and its test.

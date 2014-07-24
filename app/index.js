@@ -134,6 +134,7 @@ Generator.prototype.end = function end() {
   // force save to guarantee config exists for controller
   // tests randomly fail without this
   this.config.forceSave();
+
   this.invoke('ng-poly:module', {
     args: ['home'],
     options: {
