@@ -20,7 +20,7 @@ Generator.prototype.writing = function writing() {
   }
 
   this.context.moduleName = path.basename(this.module);
-  this.context.hyphenModue = utils.hyphenName(this.context.moduleName);
+  this.context.hyphenModule = utils.hyphenName(this.context.moduleName);
   this.context.upperModule = utils.upperCamel(this.context.moduleName);
   this.context.parentModuleName = null;
   this.context.templateUrl = path.join(this.module).replace(/\\/g, '/');

@@ -33,18 +33,27 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
   }.bind(this));
 };
 
-Generator.prototype.getConfig = function getConfig() { 
-  return {
+Generator.prototype.getConfig = function getConfig() {
+  var config = {
     appName: utils.getAppName(this.config.path),
     ctrlName: utils.ctrlName(this.name),
     hyphenName: utils.hyphenName(this.name),
     lowerCamel: utils.lowerCamel(this.name),
     upperCamel: utils.upperCamel(this.name),
-    modulePath: this.module,
     markup: this.config.get('markup'),
     testScript: this.config.get('testScript'),
     testDir: this.config.get('testDir')
   };
+
+  if (this.module) {
+    utils.moduleExists(this.config.path, this.module);
+    var modules = utils.extractModuleNames(this.module);
+    config.modulePath= this.module.replace('.', '/');
+    config.moduleName= modules[0];
+    config.parentModuleName= modules[1];
+  }
+
+  return config;
 };
 
 Generator.extend = require('class-extend').extend;

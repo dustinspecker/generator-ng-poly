@@ -1,8 +1,7 @@
 'use strict';
 var fs = require('fs')
   , join = require('path').join
-  , genBase = require('../genBase')
-  , utils = require('../utils');
+  , genBase = require('../genBase');
 
 
 var Generator = module.exports = genBase.extend();
@@ -13,13 +12,6 @@ Generator.prototype.prompting = function prompting() {
 
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
-
-  utils.moduleExists(this.config.path, this.module);
-
-  var modules = utils.extractModuleNames(this.module);
-  config.moduleName = modules[0];
-  config.parentModuleName = modules[1];
-  config.modulePath = this.module.replace('.', '/');
 
   // load app.js to prepare adding new state
   var filePath = join(this.config.path, '../src/', config.modulePath, config.moduleName + '.js')
