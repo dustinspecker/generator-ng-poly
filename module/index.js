@@ -1,5 +1,6 @@
 'use strict';
-var fs = require('fs')
+var endOfLine = require('os').EOL
+  , fs = require('fs')
   , genBase = require('../genBase')
   , path = require('path')
   , utils = require('../utils');
@@ -47,7 +48,7 @@ Generator.prototype.writing = function writing() {
   file = fs.readFileSync(filePath, 'utf8');
 
   // find line to add new dependency
-  var lines = file.split('\n')
+  var lines = file.split(endOfLine)
     , angularDefinitionOpenLine = -1
     , angularDefinitionCloseLine = -1;
 
@@ -81,7 +82,7 @@ Generator.prototype.writing = function writing() {
   lines.splice(angularDefinitionCloseLine, 0, moduleName);
 
   // save modifications
-  fs.writeFileSync(filePath, lines.join('\n'));
+  fs.writeFileSync(filePath, lines.join(endOfLine));
 
   // create app.js
   this.template('_app.js', path.join('src', this.module, this.context.moduleName + '.js'), this.context);

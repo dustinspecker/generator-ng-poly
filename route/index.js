@@ -1,5 +1,6 @@
 'use strict';
-var fs = require('fs')
+var endOfLine = require('os').EOL
+  , fs = require('fs')
   , join = require('path').join
   , genBase = require('../genBase');
 
@@ -18,7 +19,7 @@ Generator.prototype.writing = function writing() {
     , file = fs.readFileSync(filePath, 'utf8');
 
   // find line to add new state
-  var lines = file.split('\n')
+  var lines = file.split(endOfLine)
     , lineIndex = 0;
   lines.forEach(function (line, i) {
     if (line.indexOf('controller:') !== -1) {
@@ -38,10 +39,10 @@ Generator.prototype.writing = function writing() {
   // insert new state and join all lines
   lines.splice(lineIndex+1, 0, newState.map(function (line) {
     return line;
-  }).join('\n'));
+  }).join(endOfLine));
 
   // save modifications
-  fs.writeFileSync(filePath, lines.join('\n'));
+  fs.writeFileSync(filePath, lines.join(endOfLine));
 };
 
 Generator.prototype.end = function end() {
