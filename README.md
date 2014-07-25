@@ -475,7 +475,7 @@ Example:
 yo ng-poly:service cheap-or-good
 ```
 
-Produces `src/moudle/cheap-or-good-service.js`:
+Produces `src/module/cheap-or-good-service.js`:
 ```javascript
 'use strict';
 

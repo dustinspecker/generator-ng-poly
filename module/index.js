@@ -48,28 +48,36 @@ Generator.prototype.writing = function writing() {
 
   // find line to add new dependency
   var lines = file.split('\n')
-    , lineIndex = 0;
+    , angularDefinitionOpenLine = -1
+    , angularDefinitionCloseLine = -1;
 
   lines.forEach(function (line, i) {
-    // fine line that sets the dependencies of the module
-    if (line.indexOf('angular.module') !== -1 && line.indexOf(']') !== -1) {
-      lineIndex = i;
+    // find line with angular.module('*', [
+    if (angularDefinitionOpenLine < 0 && line.indexOf('angular.module') > -1) {
+      angularDefinitionOpenLine = i;
+    }
+
+    // find line with closing ]);
+    if (angularDefinitionOpenLine > -1 && angularDefinitionCloseLine < 0 && line.indexOf(']);') > -1) {
+      angularDefinitionCloseLine = i;
     }
   });
 
-  // remove closing bracket and on
-  lines[lineIndex] = lines[lineIndex].slice(0, lines[lineIndex].indexOf(']'));
-
-  // presume module has at least one dependency (ui.router)
-  lines[lineIndex] = lines[lineIndex] + ', ';
-
-  // add dependency and closing bracket
+  // create moduleName
   // if parent module exists, make it part of module name
+  var moduleName;
   if (this.context.parentModuleName) {
-    lines[lineIndex] = lines[lineIndex] + '\'' + this.context.parentModuleName + '.' + this.context.moduleName + '\']);';
+    moduleName = '  \'' + this.context.parentModuleName + '.' + this.context.moduleName + '\'';
   } else {
-    lines[lineIndex] = lines[lineIndex] + '\'' + this.context.moduleName + '\']);';
+    moduleName =  '  \'' + this.context.moduleName + '\'';
   }
+
+  // remove new line and add a comma to the previous depdendency
+  lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1].slice(0, lines[angularDefinitionCloseLine-1].lastIndexOf('\n'));
+  lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1] + ',';
+
+  // insert new line and dependency
+  lines.splice(angularDefinitionCloseLine, 0, moduleName);
 
   // save modifications
   fs.writeFileSync(filePath, lines.join('\n'));

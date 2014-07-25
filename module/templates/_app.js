@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', ['ui.router']);
+angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', [
+  'ui.router'
+]);
 
 angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').config(function ($stateProvider) {
   $stateProvider

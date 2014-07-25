@@ -50,7 +50,8 @@ describe('file manipulation', function () {
     });
 
     it('should add test to src/app.js deps', function () {
-      assert.fileContent('src/app.js', /, \'test\'/);
+      assert.fileContent('src/app.js', /\'ui.router\',/);
+      assert.fileContent('src/app.js', /\'test\'/);
     });
 
     describe('adding a deep level module', function () {
@@ -67,11 +68,12 @@ describe('file manipulation', function () {
       });
 
       it('should add home.door to src/home/home.js deps', function () {
-        assert.fileContent('src/home/home.js', /, \'home.door\'/);
+        assert.fileContent('src/home/home.js', /\'ui.router\',/);
+        assert.fileContent('src/home/home.js', /\'home.door\'/);
       });
 
       it('should name module in src/home/door/door.js home.door', function () {
-        assert.fileContent('src/home/door/door.js', /angular.module\(\'home.door\'.*\);/);
+        assert.fileContent('src/home/door/door.js', /angular.module\(.[^$]*\'home.door\'/);
       });
     });
   });
@@ -100,37 +102,4 @@ describe('file manipulation', function () {
 
   });
 
-});
-
-describe('file manipulation with no-home option', function () {
-  // generate default app with no home module
-  beforeEach(function (done) {
-    helpers.testDirectory(join(__dirname, 'temp'), function (err) {
-      if (err) {
-        done(err);
-      }
-
-      this.app = helpers.createGenerator('ng-poly:app', [
-        '../../app',
-        '../../controller',
-        '../../module',
-        '../../view'
-      ]);
-
-      helpers.mockPrompt(this.app, {
-        'appName': 'temp',
-        'markup': 'html',
-        'appScript': 'js',
-        'testScript': 'js',
-        'style': 'less'
-      });
-
-      this.app.options['skip-install'] = true;
-      this.app.options['no-home'] = true;
-      this.app.run([], function () {
-        done();
-      });
-
-    }.bind(this));
-  });
 });
