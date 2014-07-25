@@ -67,7 +67,7 @@ yo ng-poly:view --module=home/kitchen
 * * *
 
 ### App
-Asks for application name and language preferences to scaffold out an application with a home module. Then installs npm and Bower dependencies.
+Asks for application name and language preferences to scaffold out an application with a home module. It will also ask if tests should be placed in the `src/` or `tests/` directory. Then installs npm and Bower dependencies.
 
 Example:
 ```
@@ -318,7 +318,9 @@ Produces `src/top/top.js`:
 ```javascript
 'use strict';
 
-angular.module('top', ['ui.router']);
+angular.module('top', [
+  'ui.router'
+]);
 
 angular.module('top').config(function ($stateProvider) {
   $stateProvider
@@ -336,7 +338,11 @@ Updates `src/app.js`:
 ```javascript
 'use strict';
 
-angular.module('module', ['ui.router', 'home', 'top']);
+angular.module('module', [
+  'ui.router',
+  'home',
+  'top'
+]);
 
 angular.module('module').config(function ($urlRouterProvider) {
   $urlRouterProvider.otherwise('/home');
@@ -356,7 +362,10 @@ Updates `src/top/top.js`:
 ```javascript
 'use strict';
 
-angular.module('top', ['ui.router', 'top.bottom']);
+angular.module('top', [
+  'ui.router',
+  'top.bottom'
+]);
 
 angular.module('top').config(function ($stateProvider) {
   $stateProvider
@@ -439,7 +448,9 @@ Updates `src/module/module.js`:
 ```javascript
 'use strict';
 
-angular.module('module', ['ui.router']);
+angular.module('module', [
+  'ui.router'
+]);
 
 angular.module('module').config(function ($stateProvider) {
   $stateProvider

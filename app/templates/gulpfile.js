@@ -46,7 +46,7 @@ var componentsBase = 'src/components/'
   , srcLessFiles = 'src/**/*.less'; // since we need to strictly specify style.less later
 
 // test files
-var unitTests = 'src/**/*_test.{coffee,js}';
+var unitTests = '{src,test}/**/*_test.{coffee,js}';
 
 // build files
 var build = 'build/'
@@ -143,7 +143,7 @@ gulp.task('karmaInject', function () {
     'bower_components/angular-ui-router/release/angular-ui-router.js',
     ]).pipe(angularSort()));
   stream.queue(gulp.src([
-    'src/**/*_test.*'
+    unitTests
     ]));
   return gulp.src('./karma.config.json')
     .pipe(inject(stream.done(), 

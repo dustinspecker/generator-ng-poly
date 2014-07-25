@@ -22,5 +22,5 @@ Generator.prototype.writing = function writing() {
 
   this.template('_service.js', path.join('src', config.modulePath, config.hyphenName + '-service.js'), config);
   this.template('_spec.' + config.testScript,
-    path.join('src', config.modulePath, config.hyphenName + '-service_test.' + config.testScript), config);
+    path.join(config.testDir, config.modulePath, config.hyphenName + '-service_test.' + config.testScript), config);
 };

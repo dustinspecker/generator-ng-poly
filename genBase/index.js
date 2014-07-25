@@ -42,7 +42,8 @@ Generator.prototype.getConfig = function getConfig() {
     upperCamel: utils.upperCamel(this.name),
     modulePath: this.module,
     markup: this.config.get('markup'),
-    testScript: this.config.get('testScript')
+    testScript: this.config.get('testScript'),
+    testDir: this.config.get('testDir')
   };
 };
 

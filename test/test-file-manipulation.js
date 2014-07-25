@@ -25,6 +25,7 @@ describe('file manipulation', function () {
         'markup': 'html',
         'appScript': 'js',
         'testScript': 'js',
+        'testDir': 'src',
         'style': 'less'
       });
 

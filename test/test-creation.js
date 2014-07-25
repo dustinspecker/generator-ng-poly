@@ -44,6 +44,7 @@ describe('ng-poly generator', function () {
           'markup': 'html',
           'appScript': 'js',
           'testScript': 'js',
+          'testDir': 'src',
           'style': 'less'
         });
 
@@ -72,6 +73,7 @@ describe('ng-poly generator', function () {
     'markup': 'html',
     'appScript': 'js',
     'testScript': 'js',
+    'testDir': 'src',
     'style': 'less'
   },
   {
@@ -79,6 +81,7 @@ describe('ng-poly generator', function () {
     'markup': 'jade',
     'appScript': 'js',
     'testScript': 'coffee',
+    'testDir': 'test',
     'style': 'less'
   }];
 
@@ -131,7 +134,7 @@ describe('ng-poly generator', function () {
         'src/home/home.tpl.' + config.markup,
         'src/home/home.' + config.style,
         'src/home/home-controller.' + config.appScript,
-        'src/home/home-controller_test.' + config.testScript,
+        config.testDir + '/home/home-controller_test.' + config.testScript,
         'src/app.' + config.appScript,
         'src/index.' + config.markup,
         '.editorconfig',
@@ -172,14 +175,14 @@ describe('ng-poly generator', function () {
 
       testGenerator('constant', ['../../constant'], expected.concat(
         'src/home/constant-test-constant.' + config.appScript,
-        'src/home/constant-test-constant_test.' + config.testScript
+        config.testDir + '/home/constant-test-constant_test.' + config.testScript
       ), {
         module: 'home'
       });
 
       testGenerator('controller', ['../../controller'], expected.concat(
         'src/home/controller-test-controller.' + config.appScript,
-        'src/home/controller-test-controller_test.' + config.testScript
+        config.testDir + '/home/controller-test-controller_test.' + config.testScript
       ), {
         module: 'home'
       });
@@ -187,7 +190,7 @@ describe('ng-poly generator', function () {
       testGenerator('directive', ['../../directive'], expected.concat(
         'src/home/directive-test-directive.tpl.' + config.markup,
         'src/home/directive-test-directive.' + config.appScript,
-        'src/home/directive-test-directive_test.' + config.testScript
+        config.testDir + '/home/directive-test-directive_test.' + config.testScript
       ), {
         module: 'home'
       });
@@ -200,14 +203,14 @@ describe('ng-poly generator', function () {
 
       testGenerator('factory', ['../../factory'], expected.concat(
         'src/home/factory-test-factory.' + config.appScript,
-        'src/home/factory-test-factory_test.' + config.testScript
+        config.testDir + '/home/factory-test-factory_test.' + config.testScript
       ), {
         module: 'home'
       });
 
       testGenerator('filter', ['../../filter'], expected.concat(
         'src/home/filter-test-filter.' + config.appScript,
-        'src/home/filter-test-filter_test.' + config.testScript
+        config.testDir + '/home/filter-test-filter_test.' + config.testScript
       ), {
         module: 'home'
       });
@@ -215,13 +218,13 @@ describe('ng-poly generator', function () {
       testGenerator('module', ['../../module', '../../controller', '../../view'], expected.concat(
         'src/module-test/module-test.' + config.appScript,
         'src/module-test/module-test-controller.' + config.appScript,
-        'src/module-test/module-test-controller_test.' + config.testScript,
+        config.testDir + '/module-test/module-test-controller_test.' + config.testScript,
         'src/module-test/module-test.tpl.' + config.markup
       ));
 
       testGenerator('provider', ['../../provider'], expected.concat(
         'src/home/provider-test-provider.' + config.appScript,
-        'src/home/provider-test-provider_test.' + config.testScript
+        config.testDir + '/home/provider-test-provider_test.' + config.testScript
       ), {
         module: 'home'
       });
@@ -229,7 +232,7 @@ describe('ng-poly generator', function () {
       testGenerator('route', ['../../route', '../../controller', '../../view'], (
         'src/home/route-test.tpl.' + config.markup,
         'src/home/route-test-controller.' + config.appScript,
-        'src/home/route-test-controller_test.' + config.testScript
+        config.testDir + '/home/route-test-controller_test.' + config.testScript
       ), {
         'module': 'home',
         'url': 'value'
@@ -237,14 +240,14 @@ describe('ng-poly generator', function () {
 
       testGenerator('service', ['../../service'], expected.concat(
         'src/home/service-test-service.' + config.appScript,
-        'src/home/service-test-service_test.' + config.testScript
+        config.testDir + '/home/service-test-service_test.' + config.testScript
       ), {
         module: 'home'
       });
 
       testGenerator('value', ['../../value'], expected.concat(
         'src/home/value-test-value.' + config.appScript,
-        'src/home/value-test-value_test.' + config.testScript
+        config.testDir + '/home/value-test-value_test.' + config.testScript
       ), {
         module: 'home'
       });

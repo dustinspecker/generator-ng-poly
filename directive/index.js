@@ -24,5 +24,5 @@ Generator.prototype.writing = function writing() {
   this.template('_directive.' + config.markup,
     path.join('src', config.modulePath, config.hyphenName + '-directive.tpl.' + config.markup), config);
   this.template('_spec.' + config.testScript,
-    path.join('src', config.modulePath, config.hyphenName + '-directive_test.' + config.testScript), config);
+    path.join(config.testDir, config.modulePath, config.hyphenName + '-directive_test.' + config.testScript), config);
 };

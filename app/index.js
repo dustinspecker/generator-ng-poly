@@ -63,6 +63,21 @@ Generator.prototype.prompting = function prompting() {
   },
   {
     type: 'list',
+    name: 'testDir',
+    message: 'Where should tests be saved?',
+    choices: [
+      {
+        name: 'src/',
+        value: 'src'
+      },
+      {
+        name: 'test/',
+        value: 'test'
+      }
+    ]
+  },
+  {
+    type: 'list',
     name: 'style',
     message: 'What is the preferred style language?',
     choices: [
@@ -77,6 +92,7 @@ Generator.prototype.prompting = function prompting() {
     this.markup = props.markup;
     this.appScript = props.appScript;
     this.testScript = props.testScript;
+    this.testDir = props.testDir;
     this.style = props.style;
 
     done();
@@ -94,6 +110,7 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('markup', this.markup);
   this.config.set('appScript', this.appScript);
   this.config.set('testScript', this.testScript);
+  this.config.set('testDir', this.testDir);
   this.config.set('style', this.style);
   this.config.save();
 
