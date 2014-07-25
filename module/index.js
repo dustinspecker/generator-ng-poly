@@ -73,8 +73,9 @@ Generator.prototype.writing = function writing() {
   }
 
   // remove new line and add a comma to the previous depdendency
-  lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1].slice(0, lines[angularDefinitionCloseLine-1].lastIndexOf('\n'));
-  lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1] + ',';
+  // slice at the last quote to remove the varying line endings
+  lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1].slice(0, lines[angularDefinitionCloseLine-1].lastIndexOf('\''));
+  lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1] + '\',';
 
   // insert new line and dependency
   lines.splice(angularDefinitionCloseLine, 0, moduleName);
