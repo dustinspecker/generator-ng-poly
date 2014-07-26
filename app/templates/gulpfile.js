@@ -83,22 +83,28 @@ gulp.task('clean', function (cb) {
 });
 
 gulp.task('components', ['clean', 'jshint'], function () {
-  gulp.src(componentsJs, {
-      base: componentsBase
-    })
-    .pipe(gulp.dest(buildComponents));
+  var assetsStream = streamqueue({ objectMode: true });
+  assetsStream.queue(gulp.src(componentsJs, {
+    base: componentsBase
+  }));
 
-  gulp.src(componentsLess, {
-      base: componentsBase
-    })
-    .pipe(less())
-    .pipe(gulp.dest(buildComponents));
+  assetsStream.queue(gulp.src(componentsLess, {
+    base: componentsBase
+  })
+    .pipe(less()));
 
-  return gulp.src(componentsMarkup + '*.jade', {
-      base: componentsBase
-    })
-    .pipe(jade())
-    .pipe(addSrc(componentsMarkup + '*.html'))
+  var markupStream = streamqueue({ objectMode: true });
+  markupStream.queue(gulp.src(componentsMarkup + '*.jade', {
+    base: componentsBase
+  })
+    .pipe(jade()));
+
+  markupStream.queue(gulp.src(componentsMarkup + '*.html', {
+    base: componentsBase
+  }));
+
+  return assetsStream.done()
+    .pipe(markupStream.done())
     .pipe(gulp.dest(buildComponents));
 });
 
@@ -146,6 +152,10 @@ gulp.task('angularInject', ['headInject'], function () {
       '!' + build + 'platform.js',
       '!**/*_test.*'
     ]).pipe(angularSort()), { starttag: '<!-- inject:angular:{{ext}} -->', addRootSlash: false, ignorePath: build }))
+    .pipe(gulpIf(isProd, htmlmin({
+      collapseWhitespace: true,
+      removeComments: true
+    })))
     .pipe(gulp.dest(build))
     .pipe(connect.reload());
 });
