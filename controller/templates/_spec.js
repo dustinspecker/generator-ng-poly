@@ -2,17 +2,17 @@
 'use strict';
 
 describe('<%= ctrlName %>', function () {
-  var scope;
+  <% if (controllerAs) { %>var ctrl;<% } else { %>var scope;<% } %>
 
   beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
   beforeEach(inject(function ($rootScope, $controller) {
-    scope = $rootScope.$new();
-    $controller('<%= ctrlName %>', {$scope: scope});
+    <% if (controllerAs) { %>ctrl = $controller('<%= ctrlName %>');<% } else { %>scope = $rootScope.$new();
+    $controller('<%= ctrlName %>', {$scope: scope});<% } %>
   }));
 
   it('should have ctrlName as <%= ctrlName %>', function () {
-    expect(scope.ctrlName).toEqual('<%= ctrlName %>');
+    <% if (controllerAs) { %>expect(ctrl.ctrlName).toEqual('<%= ctrlName %>');<% } else { %>expect(scope.ctrlName).toEqual('<%= ctrlName %>');<% } %>
   });
 
 });

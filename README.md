@@ -628,6 +628,70 @@ Produces `src/components/gold-silver/gold-silver.js`:
 
 **For the time being, the element generator is very experimental and not guaranteed to function properly.**
 
+* * *
+
+### Controller As Syntax
+
+This generator has support for the Controller As syntax. Yeoman will ask if this should be enabled when ng-poly:app is ran.
+
+This will generate controllers like:
+
+```javascript
+'use strict';
+
+angular.module('home').controller('HomeCtrl', function () {
+  this.ctrlName = 'HomeCtrl';
+});
+```
+
+...and their tests like:
+
+```javascript
+/*global describe, beforeEach, it, expect, inject, module*/
+'use strict';
+
+describe('HomeCtrl', function () {
+  var ctrl;
+
+  beforeEach(module('home'));
+
+  beforeEach(inject(function ($rootScope, $controller) {
+    ctrl = $controller('HomeCtrl');
+  }));
+
+  it('should have ctrlName as HomeCtrl', function () {
+    expect(ctrl.ctrlName).toEqual('HomeCtrl');
+  });
+
+});
+```
+
+It'll also modify the state's controller like:
+
+```javascript
+'use strict';
+
+angular.module('home', [
+  'ui.router'
+]);
+
+angular.module('home').config(function ($stateProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/home',
+      templateUrl: 'home/home.tpl.html',
+      controller: 'HomeCtrl as home'
+    });
+});
+```
+
+Lastly, views will be generated like:
+
+```html
+<h2>home</h2>
+<p>{{home.ctrlName}}</p>
+```
+
 ### License
 
 MIT

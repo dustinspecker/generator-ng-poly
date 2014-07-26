@@ -1,2 +1,2 @@
 <h2><%= lowerCamel %></h2>
-<p>{{ctrlName}}</p>
+<p>{{<% if (controllerAs) { %><%= lowerCamel %>.<% } %>ctrlName}}</p>

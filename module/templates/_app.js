@@ -9,6 +9,6 @@ angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= 
     .state('<%= moduleName %>', {
       url: '/<%= moduleName %>',
       templateUrl: '<%= templateUrl %>/<%= hyphenName %>.tpl.html',
-      controller: '<%= upperModule %>Ctrl'
+      controller: '<%= upperModule %>Ctrl<% if (controllerAs) { %> as <%= lowerCamel %><% } %>'
     });
 });

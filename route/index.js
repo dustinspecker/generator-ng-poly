@@ -53,9 +53,14 @@ Generator.prototype.writing = function writing() {
     '    })',
     '    .state(\'' + config.lowerCamel + '\', {',
     '      url: \'/' + this.url + '\',',
-    '      templateUrl: \'' + this.module + '/' + config.hyphenName + '.tpl.html\',',
-    '      controller: \'' + config.ctrlName + '\'',
+    '      templateUrl: \'' + this.module + '/' + config.hyphenName + '.tpl.html\','
   ];
+
+  if (config.controllerAs) {
+    newState.push('      controller: \'' + config.ctrlName + ' as ' + config.lowerCamel + '\'');
+  } else {
+    newState.push('      controller: \'' + config.ctrlName + '\'');
+  }
 
   // join the state
   // insert state above }); of the original last state

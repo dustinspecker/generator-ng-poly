@@ -4,7 +4,7 @@ var join = require('path').join
   , assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test;
 
-describe('file manipulation', function () {
+describe('module generator', function () {
 
   // generate default app
   beforeEach(function (done) {
@@ -24,6 +24,7 @@ describe('file manipulation', function () {
         'appName': 'temp',
         'markup': 'html',
         'appScript': 'js',
+        'controllerAs': false,
         'testScript': 'js',
         'testDir': 'src',
         'style': 'less'
@@ -54,53 +55,29 @@ describe('file manipulation', function () {
       assert.fileContent('src/app.js', /\'ui.router\',/);
       assert.fileContent('src/app.js', /\'test\'/);
     });
-
-    describe('adding a deep level module', function () {
-      beforeEach(function (done) {
-        this.app = helpers.createGenerator('ng-poly:module', [
-          '../../module',
-          '../../controller',
-          '../../view'
-        ], 'home/door');
-
-        this.app.run([], function () {
-          done();
-        });
-      });
-
-      it('should add home.door to src/home/home.js deps', function () {
-        assert.fileContent('src/home/home.js', /\'ui.router\',/);
-        assert.fileContent('src/home/home.js', /\'home.door\'/);
-      });
-
-      it('should name module in src/home/door/door.js home.door', function () {
-        assert.fileContent('src/home/door/door.js', /angular.module\(.[^$]*\'home.door\'/);
-      });
-    });
   });
 
-  describe('adding a new route', function () {
+  describe('adding a deep level module', function () {
     beforeEach(function (done) {
-      this.app = helpers.createGenerator('ng-poly:route', [
-        '../../route',
+      this.app = helpers.createGenerator('ng-poly:module', [
+        '../../module',
         '../../controller',
         '../../view'
-      ], 'test');
-
-      helpers.mockPrompt(this.app, {
-        module: 'home',
-        url: 'test'
-      });
+      ], 'home/door');
 
       this.app.run([], function () {
         done();
       });
     });
 
-    it('should add test state and url to src/home/home.js', function () {
-      assert.fileContent('src/home/home.js', /.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\'[^$]*}\)/);
+    it('should add home.door to src/home/home.js deps', function () {
+      assert.fileContent('src/home/home.js', /\'ui.router\',/);
+      assert.fileContent('src/home/home.js', /\'home.door\'/);
     });
 
+    it('should name module in src/home/door/door.js home.door', function () {
+      assert.fileContent('src/home/door/door.js', /angular.module\(.[^$]*\'home.door\'/);
+    });
   });
 
 });

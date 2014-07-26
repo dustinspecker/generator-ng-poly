@@ -46,6 +46,11 @@ Generator.prototype.prompting = function prompting() {
     ]
   },
   {
+    type: 'confirm',
+    name: 'controllerAs',
+    message: 'Want to use Controller As syntax?'
+  },
+  {
     type: 'list',
     name: 'testScript',
     message: 'What is the preferred test scripting language?',
@@ -91,6 +96,7 @@ Generator.prototype.prompting = function prompting() {
     this.appName = props.appName;
     this.markup = props.markup;
     this.appScript = props.appScript;
+    this.controllerAs = props.controllerAs;
     this.testScript = props.testScript;
     this.testDir = props.testDir;
     this.style = props.style;
@@ -109,6 +115,7 @@ Generator.prototype.configuring = function configuring() {
   // save config info
   this.config.set('markup', this.markup);
   this.config.set('appScript', this.appScript);
+  this.config.set('controllerAs', this.controllerAs);
   this.config.set('testScript', this.testScript);
   this.config.set('testDir', this.testDir);
   this.config.set('style', this.style);
