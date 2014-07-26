@@ -57,6 +57,8 @@ Languages and Features supported:
 
 `gulp test` will run Jasmine tasks via Karma
 
+Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
+
 * * *
 **All generators ask for a module name except app and element. All generators except app take a name as an argument. A name can be written with CamelCase or hyphens.**
 

@@ -4,26 +4,45 @@ var gulp = require('gulp')
   , addSrc = require('gulp-add-src')
   , angularSort = require('gulp-angular-filesort')
   , coffeelint = require('gulp-coffeelint')
+  , concat = require('gulp-concat')
   , connect = require('gulp-connect')
+  , cssmin = require('gulp-cssmin')
+  , gulpIf = require('gulp-if')
+  , htmlmin = require('gulp-htmlmin')
   , inject = require('gulp-inject')
   , jade = require('gulp-jade')
   , jshint = require('gulp-jshint')
   , less = require('gulp-less')
+  , ngAnnotate = require('gulp-ng-annotate')
   , open = require('gulp-open')
-  , plato = require('gulp-plato');
+  , plato = require('gulp-plato')
+  , uglify = require('gulp-uglify');
 
 var _ = require('lodash')
+  , args = require('yargs').argv
   , fs = require('fs')
   , karma = require('karma').server
   , path = require('path')
   , rimraf = require('rimraf')
   , streamqueue = require('streamqueue');
 
-// bower assets to be inject into index.html
+
+// args
+var isProd = args.stage === 'prod';
+
+// bower assets to be injected into index.html
 // 'bower_components' is automatically prepended
 var injectableBowerComponents = [
   'angular/angular.js',
   'angular-ui-router/release/angular-ui-router.js',
+  'platform/platform.js'
+];
+
+// minified bower assets to be injected into index.html
+// 'bower_components' is automatically prepended
+var minInjectableBowerComponents = [
+  'angular/angular.min.js',
+  'angular-ui-router/release/angular-ui-router.min.js',
   'platform/platform.js'
 ];
 
@@ -41,9 +60,9 @@ var componentsBase = 'src/components/'
   , componentsJs = componentsDir + '*.js'
   , componentsLess = componentsDir + '*.less'
   , srcMarkup = 'src/**/'
-  , srcMarkupTemplates = 'src/**/*-directive.tpl.{jade,html}' // used for karmaConf
+  , srcMarkupTemplates = 'src/!(components)+(**)/*-directive.tpl.{jade,html}' // used for karmaConf
   , srcJsFiles = 'src/**/*.js'
-  , srcLessFiles = 'src/**/*.less'; // since we need to strictly specify style.less later
+  , srcLessFiles = 'src/**/*.less';
 
 // test files
 var unitTests = '{src,test}/**/*_test.{coffee,js}';
@@ -97,6 +116,7 @@ gulp.task('inject', ['js', 'less', 'markup', 'components'], function () {
       buildComponents + '**/*.html',
       buildCss + '**/*.css',
       buildJs + 'angular.js',
+      buildJs + 'angular.min.js',
       '!' + buildJs + 'platform.js',
       buildComponents + '**/*.js'
       ], { read: false }), {
@@ -122,6 +142,7 @@ gulp.task('angularInject', ['headInject'], function () {
       build + '**/*.js',
       '!' + buildComponents + '**/*',
       '!' + build + 'angular.js',
+      '!' + build + 'angular.min.js',
       '!' + build + 'platform.js',
       '!**/*_test.*'
     ]).pipe(angularSort()), { starttag: '<!-- inject:angular:{{ext}} -->', addRootSlash: false, ignorePath: build }))
@@ -155,11 +176,25 @@ gulp.task('karmaInject', function () {
 });
 
 gulp.task('js', ['clean', 'jshint'], function () {
-  return gulp.src([
+  if (isProd) {
+    return gulp.src([
       srcJsFiles,
+      '!src/components/**/*',
+      '!**/*_test.*'
+    ]).pipe(angularSort())
+    .pipe(ngAnnotate())
+    .pipe(concat('app.js'))
+    .pipe(uglify())
+    .pipe(addSrc([].concat(minInjectableBowerComponents.map(prependBowerDir))))
+    .pipe(gulp.dest('build'));
+  } else {
+    return gulp.src([
+      srcJsFiles,
+      '!src/components/**/*',
       '!**/*_test.*'
     ].concat(injectableBowerComponents.map(prependBowerDir)))
     .pipe(gulp.dest('build'));
+  }
 });
 
 gulp.task('coffeelint', function () {
@@ -188,6 +223,8 @@ gulp.task('jshint', function () {
 gulp.task('less', ['clean'], function () {
   return gulp.src(srcLessFiles)
     .pipe(less())
+    .pipe(gulpIf(isProd, concat('style.css')))
+    .pipe(gulpIf(isProd, cssmin()))
     .pipe(gulp.dest(buildCss));
 });
 
@@ -195,6 +232,7 @@ gulp.task('markup', ['clean'], function () {
   return gulp.src(srcMarkup + '*.jade')
     .pipe(jade())
     .pipe(addSrc(srcMarkup + '*.html'))
+    .pipe(gulpIf(isProd, htmlmin({collapseWhitespace: true})))
     .pipe(gulp.dest(build));
 });
 
