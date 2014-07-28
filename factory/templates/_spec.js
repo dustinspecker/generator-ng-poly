@@ -10,8 +10,12 @@ describe('<%= upperCamel %>', function () {
     factory = <%= upperCamel %>;
   }));
 
-  it('should equal 0', function () {
-    expect(factory).toEqual('<%= upperCamel %>');
+  it('should have someValue be <%= upperCamel %>', function () {
+    expect(factory.someValue).toEqual('<%= upperCamel %>');
+  });
+
+  it('should have someMethod return <%= upperCamel %>', function () {
+    expect(factory.someMethod()).toEqual('<%= upperCamel %>');
   });
 
 });

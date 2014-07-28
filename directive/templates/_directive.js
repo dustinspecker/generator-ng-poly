@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').directive('<%= lowerCamel %>', function () {
+angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').directive('<%= lowerCamel %>', function <% if (namedFunc) { %><%= lowerCamel %><% } %>() {
   return {
     restrict: 'AE',
     scope: {},

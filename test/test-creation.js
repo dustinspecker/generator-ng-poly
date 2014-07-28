@@ -44,6 +44,7 @@ describe('ng-poly generator', function () {
           'markup': 'html',
           'appScript': 'js',
           'controllerAs': false,
+          'namedFunc': true,
           'testScript': 'js',
           'testDir': 'src',
           'style': 'less'
@@ -74,6 +75,7 @@ describe('ng-poly generator', function () {
     'markup': 'html',
     'appScript': 'js',
     'controllerAs': false,
+    'namedFunc': true,
     'testScript': 'js',
     'testDir': 'src',
     'style': 'less'
@@ -83,6 +85,7 @@ describe('ng-poly generator', function () {
     'markup': 'jade',
     'appScript': 'js',
     'controllerAs': true,
+    'namedFunc': true,
     'testScript': 'coffee',
     'testDir': 'test',
     'style': 'less'

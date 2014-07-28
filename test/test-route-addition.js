@@ -26,6 +26,7 @@ describe('route generator', function () {
           'markup': 'html',
           'appScript': 'js',
           'controllerAs': false,
+          'namedFunc': true,
           'testScript': 'js',
           'testDir': 'src',
           'style': 'less'
@@ -78,6 +79,7 @@ describe('route generator', function () {
           'markup': 'html',
           'appScript': 'js',
           'controllerAs': true,
+          'namedFunc': true,
           'testScript': 'js',
           'testDir': 'src',
           'style': 'less'

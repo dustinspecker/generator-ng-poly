@@ -4,7 +4,7 @@ angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= 
   'ui.router'
 ]);
 
-angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').config(function ($stateProvider) {
+angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').config(function <% if (namedFunc) { %>config<% } %>($stateProvider) {
   $stateProvider
     .state('<%= moduleName %>', {
       url: '/<%= moduleName %>',

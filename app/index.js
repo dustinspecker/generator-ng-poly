@@ -48,7 +48,14 @@ Generator.prototype.prompting = function prompting() {
   {
     type: 'confirm',
     name: 'controllerAs',
-    message: 'Want to use Controller As syntax?'
+    message: 'Want to use Controller As syntax?',
+    default: true
+  },
+  {
+    type: 'confirm',
+    name: 'namedFunc',
+    message: 'Want to use named functions?',
+    default: true
   },
   {
     type: 'list',
@@ -73,7 +80,8 @@ Generator.prototype.prompting = function prompting() {
     choices: [
       {
         name: 'src/',
-        value: 'src'
+        value: 'src',
+        checked: true
       },
       {
         name: 'test/',
@@ -97,6 +105,7 @@ Generator.prototype.prompting = function prompting() {
     this.markup = props.markup;
     this.appScript = props.appScript;
     this.controllerAs = props.controllerAs;
+    this.namedFunc = props.namedFunc;
     this.testScript = props.testScript;
     this.testDir = props.testDir;
     this.style = props.style;
@@ -116,12 +125,17 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('markup', this.markup);
   this.config.set('appScript', this.appScript);
   this.config.set('controllerAs', this.controllerAs);
+  this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
   this.config.set('testDir', this.testDir);
   this.config.set('style', this.style);
   this.config.save();
 
-  this.context = { appName: this.appName, moduleName: this.appName };
+  this.context = { 
+    appName: this.appName,
+    moduleName: this.appName,
+    namedFunc: this.namedFunc
+  };
 
   // copy over common files
   this.template('_bower.json', 'bower.json', this.context);

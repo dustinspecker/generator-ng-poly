@@ -9,5 +9,8 @@ describe '<%= upperCamel %>', ->
   beforeEach inject (<%= upperCamel %>) ->
     factory = <%= upperCamel %>
 
-  it 'should equal 0', ->
-    expect(factory).toEqual '<%= upperCamel %>'
+  it 'should have someValue be <%= upperCamel %>', ->
+    expect(factory.someValue).toEqual '<%= upperCamel %>'
+
+  it 'should have someMethod return <%= upperCamel %>', ->
+    expect(factory.someMethod()).toEqual '<%= upperCamel %>'

@@ -242,8 +242,13 @@ Produces `src/module/cake-factory.js`:
 ```javascript
 'use strict';
 
-angular.module('module').factory('Cake', function () {
-  return 'Cake';
+angular.module('module').factory('Cake', function() {
+  var CakeBase = {};
+  CakeBase.someValue = 'Cake';
+  CakeBase.someMethod = function () {
+    return 'Cake';
+  };
+  return CakeBase;
 });
 ```
 
@@ -261,8 +266,12 @@ describe('Cake', function () {
     factory = Cake;
   }));
 
-  it('should equal 0', function () {
-    expect(factory).toEqual('Cake');
+  it('should have someValue be Cake', function () {
+    expect(factory.someValue).toEqual('Cake');
+  });
+
+  it('should have someMethod return Cake', function () {
+    expect(factory.someMethod()).toEqual('Cake');
   });
 
 });
@@ -493,12 +502,12 @@ Produces `src/module/cheap-or-good-service.js`:
 'use strict';
 
 angular.module('module').service('CheapOrGood', function () {
-  function CheapOrGood () {}
-  CheapOrGood.prototype.get = function () {
+  function CheapOrGoodBase() {}
+  CheapOrGoodBase.prototype.get = function () {
     return 'CheapOrGood';
   };
 
-  return new CheapOrGood();
+  return new CheapOrGoodBase();
 });
 ```
 
@@ -634,7 +643,7 @@ Produces `src/components/gold-silver/gold-silver.js`:
 
 ### Controller As Syntax
 
-This generator has support for the Controller As syntax. Yeoman will ask if this should be enabled when ng-poly:app is ran.
+This generator has support for the Controller As syntax. Yeoman will ask if this should be enabled when `ng-poly:app` is ran.
 
 This will generate controllers like:
 
@@ -692,6 +701,25 @@ Lastly, views will be generated like:
 ```html
 <h2>home</h2>
 <p>{{home.ctrlName}}</p>
+```
+
+### Named functions
+
+The generator will ask when `ng-poly:app` is ran if it should use named functions or anonymous functions. Named functions create a stack trace that is easier to understand.
+
+If enabled, the app source code will have named functions, such as:
+
+```javascript
+'use strict';
+
+angular.module('module').factory('Cake', function Cake() {
+  var CakeBase = {};
+  CakeBase.someValue = 'Cake';
+  CakeBase.someMethod = function someMethod() {
+    return 'Cake';
+  };
+  return CakeBase;
+});
 ```
 
 ### License

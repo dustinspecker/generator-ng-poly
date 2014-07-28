@@ -25,6 +25,7 @@ describe('module generator', function () {
         'markup': 'html',
         'appScript': 'js',
         'controllerAs': false,
+        'namedFunc': true,
         'testScript': 'js',
         'testDir': 'src',
         'style': 'less'
