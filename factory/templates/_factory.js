@@ -1,6 +1,16 @@
 'use strict';<% if (passFunc) { %>
 
-/* @ngInject */
+/**
+ * @ngdoc service
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.factory:<%= upperCamel %>
+ * @function
+ * 
+ * @description
+ * 
+ *
+ * @ngInject
+ *
+ */
 function <%= upperCamel %>() {
   var <%= upperCamel %>Base = {};
   <%= upperCamel %>Base.someValue = '<%= upperCamel %>';
@@ -10,7 +20,15 @@ function <%= upperCamel %>() {
   return <%= upperCamel %>Base;
 }<% } %>
 
-angular
+<% if (!passFunc) { %>/**
+ * @ngdoc service
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.factory:<%= upperCamel %>
+ * 
+ * @description
+ * 
+ *
+ */
+<% } %>angular
   .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
   .factory('<%= upperCamel %>', <%= upperCamel %>);<% } else { %>
   .factory('<%= upperCamel %>', function <% if (namedFunc) { %><%= upperCamel %><% } %>() {

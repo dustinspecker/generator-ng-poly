@@ -1,6 +1,15 @@
 'use strict';<% if (passFunc) { %>
 
-/* @ngInject */
+/**
+ * @ngdoc service
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.provider:<%= upperCamel %>
+ * @function
+ *
+ * @description
+ *
+ * @ngInject 
+ *
+ */
 function <%= upperCamel %>() {
   return {
     $get: function () {
@@ -9,7 +18,16 @@ function <%= upperCamel %>() {
   };
 }<% } %>
 
-angular
+<% if (!passFunc) { %>/**
+ * @ngdoc service
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.provider:<%= upperCamel %>
+ * @function
+ *
+ * @description
+ *
+ *
+ */
+<% } %>angular
   .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
   .provider('<%= upperCamel %>', <%= upperCamel %>);<% } else { %>
   .provider('<%= upperCamel %>', function <% if (namedFunc) { %><%= upperCamel %><% } %>() {

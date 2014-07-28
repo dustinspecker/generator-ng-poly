@@ -80,7 +80,7 @@ describe('route generator', function () {
           'markup': 'html',
           'appScript': 'js',
           'controllerAs': true,
-          'passFunc': true,
+          'passFunc': false,
           'namedFunc': true,
           'testScript': 'js',
           'testDir': 'src',

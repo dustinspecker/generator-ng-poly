@@ -1,11 +1,30 @@
 'use strict';<% if (passFunc) { %>
 
-/* @ngInject */
+/* @ngdoc object
+ * @name <%= moduleName %>
+ * @requires $urlRouterProvider
+ *
+ * @description
+ *
+ *
+ * @ngInject
+ *
+ */
 function config($urlRouterProvider) {
   $urlRouterProvider.otherwise('/home');
 }<% } %>
 
-angular
+<% if (!passFunc) { %>/* @ngdoc object
+ * @name <%= moduleName %>
+ * @requires $urlRouterProvider
+ *
+ * @description
+ *
+ *
+ * @ngInject
+ *
+ */
+<% } %>angular
   .module('<%= moduleName %>', [
     'ui.router'
   ]);

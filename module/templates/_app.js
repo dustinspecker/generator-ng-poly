@@ -1,6 +1,15 @@
 'use strict';<% if (passFunc) { %>
 
-/* @ngInject */
+/* @ngdoc object
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>
+ * @requires $stateProvider
+ *
+ * @description
+ *
+ *
+ * @ngInject
+ *
+ */
 function config($stateProvider) {
   $stateProvider
     .state('<%= moduleName %>', {
@@ -10,7 +19,15 @@ function config($stateProvider) {
     });
 }<% } %>
 
-angular
+<% if (!passFunc) { %>/* @ngdoc object
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>
+ * @requires $stateProvider
+ *
+ * @description
+ *
+ *
+ */
+<% } %>angular
   .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', [
     'ui.router'
   ]);

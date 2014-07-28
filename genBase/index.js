@@ -37,6 +37,7 @@ Generator.prototype.getConfig = function getConfig() {
   var config = {
     appName: utils.getAppName(this.config.path),
     ctrlName: utils.ctrlName(this.name),
+    humanName: utils.humanName(this.name),
     hyphenName: utils.hyphenName(this.name),
     lowerCamel: utils.lowerCamel(this.name),
     upperCamel: utils.upperCamel(this.name),

@@ -111,6 +111,14 @@ Produces `src/module/the-hero-constant.js`:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc service
+ * @name module.constant:TheHero
+ *
+ * @description
+ *
+ *
+ */
 angular
   .module('module')
   .constant('TheHero', 0);
@@ -149,6 +157,15 @@ Produces `src/module/micro-controller.js`:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc object
+ * @name module.controller:MicroCtrl
+ * @requires $scope 
+ * 
+ * @description
+ * 
+ *
+ */
 angular
   .module('module')
   .controller('MicroCtrl', function ($scope) {
@@ -190,6 +207,23 @@ Produces `src/module/fancy-button-directive.js`:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name module.directive:fancyButton
+ * @restrict EA 
+ * @element
+ * 
+ * @description
+ * Change the element's text to fancyButton\nscope\nattrs
+ *
+ * @example
+   <example module="module">
+     <file name="index.html">
+      <fancy-button></fancy-button>
+     </file>
+   </example>
+ * 
+ */
 angular
   .module('module')
   .directive('fancyButton', function () {
@@ -248,9 +282,17 @@ Produces `src/module/cake-factory.js`:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc service
+ * @name module.factory:Cake
+ * 
+ * @description
+ * 
+ *
+ */
 angular
   .module('module')
-  .factory('Cake', function() {
+  .factory('Cake', function () {
     var CakeBase = {};
     CakeBase.someValue = 'Cake';
     CakeBase.someMethod = function () {
@@ -297,6 +339,17 @@ Produces `src/module/coffee-filter.js`:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc filter
+ * @name module.filter:coffee
+ *
+ * @description
+ *
+ *
+ * @param {Array} input The array of numbers to filter
+ * @returns {Array} The filtered array
+ *
+ */
 angular
   .module('module')
   .filter('coffee', function () {
@@ -339,6 +392,14 @@ Produces `src/top/top.js`:
 ```javascript
 'use strict';
 
+/* @ngdoc object
+ * @name top
+ * @requires $stateProvider
+ *
+ * @description
+ *
+ *
+ */
 angular
   .module('top', [
     'ui.router'
@@ -362,15 +423,23 @@ Updates `src/app.js`:
 ```javascript
 'use strict';
 
+/* @ngdoc object
+ * @name track
+ * @requires $urlRouterProvider
+ *
+ * @description
+ *
+ *
+ */
 angular
-  .module('module', [
+  .module('track', [
     'ui.router',
     'home',
     'top'
   ]);
 
 angular
-  .module('module')
+  .module('track')
   .config(function ($urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
   });
@@ -389,6 +458,14 @@ Updates `src/top/top.js`:
 ```javascript
 'use strict';
 
+/* @ngdoc object
+ * @name top
+ * @requires $stateProvider
+ *
+ * @description
+ *
+ *
+ */
 angular
   .module('top', [
     'ui.router',
@@ -436,6 +513,15 @@ Produces `src/module/bacon-provider.js`:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc service
+ * @name module.provider:Bacon
+ * @function
+ *
+ * @description
+ *
+ *
+ */
 angular
   .module('module')
   .provider('Bacon', function () {
@@ -480,6 +566,16 @@ Updates `src/module/module.js`:
 ```javascript
 'use strict';
 
+/* @ngdoc object
+ * @name module
+ * @requires $stateProvider
+ *
+ * @description
+ *
+ *
+ * @ngInject
+ *
+ */
 angular
   .module('module', [
     'ui.router'
@@ -493,11 +589,11 @@ angular
         url: '/module',
         templateUrl: 'module/module.tpl.html',
         controller: 'ModuleCtrl'
-      })
-      .state('yourPlace', {
-        url: '/yourPlace',
-        templateUrl: 'module/your-place.tpl.html',
-        controller: 'YourPlaceCtrl'
+    })
+    .state('yourPlace', {
+      url: '/yourPlace',
+      templateUrl: 'module/your-place.tpl.html',
+      controller: 'YourPlaceCtrl'
       });
   });
 ```
@@ -525,6 +621,15 @@ Produces `src/module/cheap-or-good-service.js`:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc service
+ * @name module.service:CheapOrGood
+ * @function
+ *
+ * @description
+ *
+ *
+ */
 angular
   .module('module')
   .service('CheapOrGood', function () {
@@ -570,6 +675,14 @@ Produces `src/module/morals-value.js`:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc service
+ * @name module.constant:Morals
+ *
+ * @description
+ *
+ *
+ */
 angular
   .module('module')
   .value('Morals', 0);
@@ -678,6 +791,14 @@ This will generate controllers like:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc object
+ * @name home.controller:HomeCtrl
+ * 
+ * @description
+ * 
+ *
+ */
 angular
   .module('home')
   .controller('HomeCtrl', function () {
@@ -712,6 +833,16 @@ It'll also modify the state's controller like:
 ```javascript
 'use strict';
 
+/* @ngdoc object
+ * @name home
+ * @requires $stateProvider
+ *
+ * @description
+ *
+ *
+ * @ngInject
+ *
+ */
 angular
   .module('home', [
     'ui.router'
@@ -745,7 +876,17 @@ If enabled, the app source code will pass functions, such as:
 ```javascript
 'use strict';
 
-/* @ngInject */
+/**
+ * @ngdoc object
+ * @name home.controller:HomeCtrl
+ * @function
+ * 
+ * @description
+ * 
+ *
+ * @ngInject
+ *
+ */
 function HomeCtrl() {
   this.ctrlName = 'HomeCtrl';
 }
@@ -766,16 +907,29 @@ If enabled, the app source code will have named functions, such as:
 ```javascript
 'use strict';
 
+/**
+ * @ngdoc service
+ * @name module.factory:Cake
+ * @function
+ * 
+ * @description
+ * 
+ *
+ * @ngInject
+ *
+ */
+function Cake() {
+  var CakeBase = {};
+  CakeBase.someValue = 'Cake';
+  CakeBase.someMethod = function someMethod() {
+    return 'Cake';
+  };
+  return CakeBase;
+}
+
 angular
   .module('module')
-  .factory('Cake', function Cake() {
-    var CakeBase = {};
-    CakeBase.someValue = 'Cake';
-    CakeBase.someMethod = function someMethod() {
-      return 'Cake';
-    };
-    return CakeBase;
-  });
+  .factory('Cake', Cake);
 ```
 
 ### License

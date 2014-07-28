@@ -1,6 +1,15 @@
 'use strict';<% if (passFunc) { %>
 
-/* @ngInject */
+/**
+ * @ngdoc service
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.service:<%= upperCamel %>
+ * @function
+ *
+ * @description
+ *
+ * @ngInject 
+ *
+ */
 function <%= upperCamel %>() {
   function <%= upperCamel %>Base() {}
   <%= upperCamel %>Base.prototype.get = function <% if (namedFunc) { %>get<% } %>() {
@@ -10,7 +19,16 @@ function <%= upperCamel %>() {
   return new <%= upperCamel %>Base();
 }<% } %>
 
-angular
+<% if (!passFunc) { %>/**
+ * @ngdoc service
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.service:<%= upperCamel %>
+ * @function
+ *
+ * @description
+ *
+ *
+ */
+<% } %>angular
   .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
   .service('<%= upperCamel %>', <%= upperCamel %>);<% } else { %>
   .service('<%= upperCamel %>', function <% if (namedFunc) { %><%= upperCamel %><% } %>() {

@@ -41,6 +41,24 @@ describe('ng-poly generator', function () {
     });
   });
 
+  describe('humanize name', function () {
+    it('should transform name with hyphens', function () {
+      assert(utils.humanName('test-name') === 'Test name');
+    });
+
+    it('should transform upper camel name', function () {
+      assert(utils.humanName('TestName') === 'Test name');
+    });
+
+    it('should transform underscore', function () {
+      assert(utils.humanName('test_name') === 'Test name');
+    });
+
+    it('should transform mixed', function () {
+      assert(utils.humanName('Test_name-fancy') === 'Test name fancy');
+    });
+  });
+
   describe('hyphen name', function () {
     it('should transform name with hyphens', function () {
       assert(utils.hyphenName('test-name') === 'test-name');

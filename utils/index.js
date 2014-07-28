@@ -13,6 +13,10 @@ function upperCamel(name) {
   return _.classify(_.slugify(_.humanize(name)));
 }
 
+function humanName(name) {
+  return _.humanize(name);
+}
+
 function hyphenName(name) {
   return _.slugify(_.humanize(name));
 }
@@ -70,6 +74,7 @@ function moduleExists(yoRcAbsolutePath, modulePath) {
 module.exports = {
   lowerCamel: lowerCamel,
   upperCamel: upperCamel,
+  humanName: humanName,
   hyphenName: hyphenName,
   ctrlName: ctrlName,
   getAppName: getAppName,
