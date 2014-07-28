@@ -195,9 +195,9 @@ gulp.task('js', ['clean', 'jshint'], function () {
       '!**/*_test.*'
     ]).pipe(angularSort())
     .pipe(ngAnnotate())
-    .pipe(concat('app.js'))
     .pipe(header('!function() {'))
     .pipe(footer('}();'))
+    .pipe(concat('app.js'))
     .pipe(uglify())
     .pipe(addSrc([].concat(minInjectableBowerComponents.map(prependBowerDir))))
     .pipe(gulp.dest('build'));
@@ -206,7 +206,10 @@ gulp.task('js', ['clean', 'jshint'], function () {
       srcJsFiles,
       '!src/components/**/*',
       '!**/*_test.*'
-    ].concat(injectableBowerComponents.map(prependBowerDir)))
+    ])
+    .pipe(header('!function() {'))
+    .pipe(footer('}();'))
+    .pipe(addSrc([].concat(injectableBowerComponents.map(prependBowerDir))))
     .pipe(gulp.dest('build'));
   }
 });

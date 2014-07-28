@@ -53,6 +53,12 @@ Generator.prototype.prompting = function prompting() {
   },
   {
     type: 'confirm',
+    name: 'passFunc',
+    message: 'Should functions be passed instead of assigned as callbacks?',
+    default: true
+  },
+  {
+    type: 'confirm',
     name: 'namedFunc',
     message: 'Want to use named functions?',
     default: true
@@ -105,6 +111,7 @@ Generator.prototype.prompting = function prompting() {
     this.markup = props.markup;
     this.appScript = props.appScript;
     this.controllerAs = props.controllerAs;
+    this.passFunc = props.passFunc;
     this.namedFunc = props.namedFunc;
     this.testScript = props.testScript;
     this.testDir = props.testDir;
@@ -125,6 +132,7 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('markup', this.markup);
   this.config.set('appScript', this.appScript);
   this.config.set('controllerAs', this.controllerAs);
+  this.config.set('passFunc', this.passFunc);
   this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
   this.config.set('testDir', this.testDir);
@@ -134,6 +142,7 @@ Generator.prototype.configuring = function configuring() {
   this.context = { 
     appName: this.appName,
     moduleName: this.appName,
+    passFunc: this.passFunc,
     namedFunc: this.namedFunc
   };
 

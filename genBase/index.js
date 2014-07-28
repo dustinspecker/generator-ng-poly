@@ -42,6 +42,7 @@ Generator.prototype.getConfig = function getConfig() {
     upperCamel: utils.upperCamel(this.name),
     markup: this.config.get('markup'),
     controllerAs: this.config.get('controllerAs'),
+    passFunc: this.config.get('passFunc'),
     namedFunc: this.config.get('namedFunc'),
     testScript: this.config.get('testScript'),
     testDir: this.config.get('testDir')

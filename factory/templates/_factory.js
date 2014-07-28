@@ -1,7 +1,18 @@
-'use strict';
+'use strict';<% if (passFunc) { %>
+
+/* @ngInject */
+function <%= upperCamel %>() {
+  var <%= upperCamel %>Base = {};
+  <%= upperCamel %>Base.someValue = '<%= upperCamel %>';
+  <%= upperCamel %>Base.someMethod = function <% if (namedFunc) { %>someMethod<% } %>() {
+    return '<%= upperCamel %>';
+  };
+  return <%= upperCamel %>Base;
+}<% } %>
 
 angular
-  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
+  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
+  .factory('<%= upperCamel %>', <%= upperCamel %>);<% } else { %>
   .factory('<%= upperCamel %>', function <% if (namedFunc) { %><%= upperCamel %><% } %>() {
     var <%= upperCamel %>Base = {};
     <%= upperCamel %>Base.someValue = '<%= upperCamel %>';
@@ -9,4 +20,4 @@ angular
       return '<%= upperCamel %>';
     };
     return <%= upperCamel %>Base;
-  });
+  });<% } %>

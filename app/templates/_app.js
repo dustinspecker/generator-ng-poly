@@ -1,4 +1,9 @@
-'use strict';
+'use strict';<% if (passFunc) { %>
+
+/* @ngInject */
+function config($urlRouterProvider) {
+  $urlRouterProvider.otherwise('/home');
+}<% } %>
 
 angular
   .module('<%= moduleName %>', [
@@ -6,7 +11,8 @@ angular
   ]);
 
 angular
-  .module('<%= moduleName %>')
+  .module('<%= moduleName %>')<% if (passFunc) { %>
+  .config(config);<% } else { %>
   .config(function <% if (namedFunc) { %>config<% } %>($urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
-  });
+  });<% } %>

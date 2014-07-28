@@ -736,6 +736,27 @@ Lastly, views will be generated like:
 <p>{{home.ctrlName}}</p>
 ```
 
+### Pass functions
+
+The generator will ask when `ng-poly:app` is ran if it should pass functions or assign as callbacks.
+
+If enabled, the app source code will pass functions, such as:
+
+```javascript
+'use strict';
+
+/* @ngInject */
+function HomeCtrl() {
+  this.ctrlName = 'HomeCtrl';
+}
+
+angular
+  .module('home')
+  .controller('HomeCtrl', HomeCtrl);
+```
+
+**Gulp will automatically surround each file with an IIFE to prevent polluting the global scope and the collision of names.**
+
 ### Named functions
 
 The generator will ask when `ng-poly:app` is ran if it should use named functions or anonymous functions. Named functions create a stack trace that is easier to understand.
