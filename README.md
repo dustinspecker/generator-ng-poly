@@ -111,7 +111,9 @@ Produces `src/module/the-hero-constant.js`:
 ```javascript
 'use strict';
 
-angular.module('module').constant('TheHero', 0);
+angular
+  .module('module')
+  .constant('TheHero', 0);
 ```
 
 Produces `src/module/the-hero-constant_test.js`:
@@ -147,9 +149,11 @@ Produces `src/module/micro-controller.js`:
 ```javascript
 'use strict';
 
-angular.module('module').controller('MicroCtrl', function ($scope) {
-  $scope.ctrlName = 'MicroCtrl';
-});
+angular
+  .module('module')
+  .controller('MicroCtrl', function ($scope) {
+    $scope.ctrlName = 'MicroCtrl';
+  });
 ```
 
 Produces `src/module/micro-controller_test.js`:
@@ -186,17 +190,19 @@ Produces `src/module/fancy-button-directive.js`:
 ```javascript
 'use strict';
 
-angular.module('module').directive('fancyButton', function () {
-  return {
-    restrict: 'AE',
-    scope: {},
-    templateUrl: 'module/fancy-button-directive.tpl.html', 
-    replace: false,
-    link: function (scope, element, attrs) {
-      element.text('fancyButton\n' + scope + '\n' + attrs);
-    }
-  };
-});
+angular
+  .module('module')
+  .directive('fancyButton', function () {
+    return {
+      restrict: 'AE',
+      scope: {},
+      templateUrl: 'module/fancy-button-directive.tpl.html', 
+      replace: false,
+      link: function (scope, element, attrs) {
+        element.text('fancyButton\n' + scope + '\n' + attrs);
+      }
+    };
+  });
 ```
 
 Produces `src/module/fancy-button-directive.tpl.html`:
@@ -242,14 +248,16 @@ Produces `src/module/cake-factory.js`:
 ```javascript
 'use strict';
 
-angular.module('module').factory('Cake', function() {
-  var CakeBase = {};
-  CakeBase.someValue = 'Cake';
-  CakeBase.someMethod = function () {
-    return 'Cake';
-  };
-  return CakeBase;
-});
+angular
+  .module('module')
+  .factory('Cake', function() {
+    var CakeBase = {};
+    CakeBase.someValue = 'Cake';
+    CakeBase.someMethod = function () {
+      return 'Cake';
+    };
+    return CakeBase;
+  });
 ```
 
 Produces `src/module/Cake-factory_test.js`:
@@ -289,17 +297,19 @@ Produces `src/module/coffee-filter.js`:
 ```javascript
 'use strict';
 
-angular.module('module').filter('coffee', function () {
-  return function (input) {
-    var temp = [];
-    angular.forEach(input, function (item) {
-      if(item > 3) {
-        temp.push(item);
-      }
-    });
-    return temp;
-  };
-});
+angular
+  .module('module')
+  .filter('coffee', function () {
+    return function (input) {
+      var temp = [];
+      angular.forEach(input, function (item) {
+        if(item > 3) {
+          temp.push(item);
+        }
+      });
+      return temp;
+    };
+  });
 ```
 
 Produces `src/module/coffee-filter_test.js`:
@@ -329,18 +339,21 @@ Produces `src/top/top.js`:
 ```javascript
 'use strict';
 
-angular.module('top', [
-  'ui.router'
-]);
+angular
+  .module('top', [
+    'ui.router'
+  ]);
 
-angular.module('top').config(function ($stateProvider) {
-  $stateProvider
-    .state('top', {
-      url: '/top',
-      templateUrl: 'top/top.tpl.html',
-      controller: 'TopCtrl'
-    });
-});
+angular
+  .module('top')
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('top', {
+        url: '/top',
+        templateUrl: 'top/top.tpl.html',
+        controller: 'TopCtrl'
+      });
+  });
 ```
 
 Produces `src/top/top-controller.js`, `src/top/top-controller_test.js`, `src/top/top.tpl.html`, `src/top/top.less`
@@ -349,15 +362,18 @@ Updates `src/app.js`:
 ```javascript
 'use strict';
 
-angular.module('module', [
-  'ui.router',
-  'home',
-  'top'
-]);
+angular
+  .module('module', [
+    'ui.router',
+    'home',
+    'top'
+  ]);
 
-angular.module('module').config(function ($urlRouterProvider) {
-  $urlRouterProvider.otherwise('/home');
-});
+angular
+  .module('module')
+  .config(function ($urlRouterProvider) {
+    $urlRouterProvider.otherwise('/home');
+  });
 ```
 
 * * *
@@ -373,19 +389,22 @@ Updates `src/top/top.js`:
 ```javascript
 'use strict';
 
-angular.module('top', [
-  'ui.router',
-  'top.bottom'
-]);
+angular
+  .module('top', [
+    'ui.router',
+    'top.bottom'
+  ]);
 
-angular.module('top').config(function ($stateProvider) {
-  $stateProvider
-    .state('top', {
-      url: '/top',
-      templateUrl: 'top/top.tpl.html',
-      controller: 'TopCtrl'
-    });
-});
+angular
+  .module('top')
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('top', {
+        url: '/top',
+        templateUrl: 'top/top.tpl.html',
+        controller: 'TopCtrl'
+      });
+  });
 ```
 
 **Notice the module in `src/top/bottom/` is called 'top.bottom'. All tests in this directory use this nomenclature, as well.**
@@ -417,13 +436,15 @@ Produces `src/module/bacon-provider.js`:
 ```javascript
 'use strict';
 
-angular.module('module').provider('Bacon', function () {
-  return {
-    $get: function () {
-      return 'Bacon';
-    }
-  };
-});
+angular
+  .module('module')
+  .provider('Bacon', function () {
+    return {
+      $get: function () {
+        return 'Bacon';
+      }
+    };
+  });
 ```
 
 Produces `src/module/Bacon-provider_test.js`:
@@ -459,23 +480,26 @@ Updates `src/module/module.js`:
 ```javascript
 'use strict';
 
-angular.module('module', [
-  'ui.router'
-]);
+angular
+  .module('module', [
+    'ui.router'
+  ]);
 
-angular.module('module').config(function ($stateProvider) {
-  $stateProvider
-    .state('module', {
-      url: '/module',
-      templateUrl: 'module/module.tpl.html',
-      controller: 'ModuleCtrl'
-    })
-    .state('yourPlace', {
-      url: '/yourPlace',
-      templateUrl: 'module/your-place.tpl.html',
-      controller: 'YourPlaceCtrl'
-    });
-});
+angular
+  .module('module')
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('module', {
+        url: '/module',
+        templateUrl: 'module/module.tpl.html',
+        controller: 'ModuleCtrl'
+      })
+      .state('yourPlace', {
+        url: '/yourPlace',
+        templateUrl: 'module/your-place.tpl.html',
+        controller: 'YourPlaceCtrl'
+      });
+  });
 ```
 
 Produces `src/module/your-place-controller.js`, `src/module/your-place-controller_test.js`, `src/module/your-place.tpl.html`, and `src/module/your-place.less`
@@ -501,14 +525,16 @@ Produces `src/module/cheap-or-good-service.js`:
 ```javascript
 'use strict';
 
-angular.module('module').service('CheapOrGood', function () {
-  function CheapOrGoodBase() {}
-  CheapOrGoodBase.prototype.get = function () {
-    return 'CheapOrGood';
-  };
+angular
+  .module('module')
+  .service('CheapOrGood', function () {
+    function CheapOrGoodBase() {}
+    CheapOrGoodBase.prototype.get = function () {
+      return 'CheapOrGood';
+    };
 
-  return new CheapOrGoodBase();
-});
+    return new CheapOrGoodBase();
+  });
 ```
 
 Produces `src/module/cheap-or-good-service_test.js`:
@@ -544,7 +570,9 @@ Produces `src/module/morals-value.js`:
 ```javascript
 'use strict';
 
-angular.module('module').value('Morals', 0);
+angular
+  .module('module')
+  .value('Morals', 0);
 ```
 
 Produces `src/module/Morals-value_test.js`:
@@ -650,9 +678,11 @@ This will generate controllers like:
 ```javascript
 'use strict';
 
-angular.module('home').controller('HomeCtrl', function () {
-  this.ctrlName = 'HomeCtrl';
-});
+angular
+  .module('home')
+  .controller('HomeCtrl', function () {
+    this.ctrlName = 'HomeCtrl';
+  });
 ```
 
 ...and their tests like:
@@ -682,18 +712,21 @@ It'll also modify the state's controller like:
 ```javascript
 'use strict';
 
-angular.module('home', [
-  'ui.router'
-]);
+angular
+  .module('home', [
+    'ui.router'
+  ]);
 
-angular.module('home').config(function ($stateProvider) {
-  $stateProvider
-    .state('home', {
-      url: '/home',
-      templateUrl: 'home/home.tpl.html',
-      controller: 'HomeCtrl as home'
-    });
-});
+angular
+  .module('home')
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('home', {
+        url: '/home',
+        templateUrl: 'home/home.tpl.html',
+        controller: 'HomeCtrl as home'
+      });
+  });
 ```
 
 Lastly, views will be generated like:
@@ -712,14 +745,16 @@ If enabled, the app source code will have named functions, such as:
 ```javascript
 'use strict';
 
-angular.module('module').factory('Cake', function Cake() {
-  var CakeBase = {};
-  CakeBase.someValue = 'Cake';
-  CakeBase.someMethod = function someMethod() {
-    return 'Cake';
-  };
-  return CakeBase;
-});
+angular
+  .module('module')
+  .factory('Cake', function Cake() {
+    var CakeBase = {};
+    CakeBase.someValue = 'Cake';
+    CakeBase.someMethod = function someMethod() {
+      return 'Cake';
+    };
+    return CakeBase;
+  });
 ```
 
 ### License
