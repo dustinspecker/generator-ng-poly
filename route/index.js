@@ -50,16 +50,16 @@ Generator.prototype.writing = function writing() {
 
   // create new state
   var newState = [
-    '    })',
-    '    .state(\'' + config.lowerCamel + '\', {',
-    '      url: \'/' + this.url + '\',',
-    '      templateUrl: \'' + this.module + '/' + config.hyphenName + '.tpl.html\','
+    '      })',
+    '      .state(\'' + config.lowerCamel + '\', {',
+    '        url: \'/' + this.url + '\',',
+    '        templateUrl: \'' + this.module + '/' + config.hyphenName + '.tpl.html\','
   ];
 
   if (config.controllerAs) {
-    newState.push('      controller: \'' + config.ctrlName + ' as ' + config.lowerCamel + '\'');
+    newState.push('        controller: \'' + config.ctrlName + ' as ' + config.lowerCamel + '\'');
   } else {
-    newState.push('      controller: \'' + config.ctrlName + '\'');
+    newState.push('        controller: \'' + config.ctrlName + '\'');
   }
 
   // join the state

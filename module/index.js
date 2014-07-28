@@ -54,7 +54,7 @@ Generator.prototype.writing = function writing() {
 
   lines.forEach(function (line, i) {
     // find line with angular.module('*', [
-    if (angularDefinitionOpenLine < 0 && line.indexOf('angular.module') > -1) {
+    if (angularDefinitionOpenLine < 0 && line.indexOf('.module') > -1) {
       angularDefinitionOpenLine = i;
     }
 
@@ -68,9 +68,9 @@ Generator.prototype.writing = function writing() {
   // if parent module exists, make it part of module name
   var moduleName;
   if (this.context.parentModuleName) {
-    moduleName = '  \'' + this.context.parentModuleName + '.' + this.context.moduleName + '\'';
+    moduleName = '    \'' + this.context.parentModuleName + '.' + this.context.moduleName + '\'';
   } else {
-    moduleName =  '  \'' + this.context.moduleName + '\'';
+    moduleName =  '    \'' + this.context.moduleName + '\'';
   }
 
   // remove new line and add a comma to the previous depdendency

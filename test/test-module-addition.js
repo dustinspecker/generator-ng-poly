@@ -53,8 +53,8 @@ describe('module generator', function () {
     });
 
     it('should add test to src/app.js deps', function () {
-      assert.fileContent('src/app.js', /\'ui.router\',/);
-      assert.fileContent('src/app.js', /\'test\'/);
+      assert.fileContent('src/app.js', /    \'ui.router\',/);
+      assert.fileContent('src/app.js', /    \'test\'/);
     });
   });
 
@@ -72,12 +72,12 @@ describe('module generator', function () {
     });
 
     it('should add home.door to src/home/home.js deps', function () {
-      assert.fileContent('src/home/home.js', /\'ui.router\',/);
-      assert.fileContent('src/home/home.js', /\'home.door\'/);
+      assert.fileContent('src/home/home.js', /    \'ui.router\',/);
+      assert.fileContent('src/home/home.js', /    \'home.door\'/);
     });
 
     it('should name module in src/home/door/door.js home.door', function () {
-      assert.fileContent('src/home/door/door.js', /angular.module\(.[^$]*\'home.door\'/);
+      assert.fileContent('src/home/door/door.js', /angular[^$]*.module\(.[^$]*\'home.door\'/);
     });
   });
 

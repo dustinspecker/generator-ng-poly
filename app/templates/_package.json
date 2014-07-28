@@ -1,6 +1,9 @@
 {
   "name": "<%= appName %>",
   "version": "0.0.0",
+  "scripts": {
+    "test": "gulp test"
+  },
   "dependencies": {},
   "devDependencies": {
     "gulp": "^3.8.5",
