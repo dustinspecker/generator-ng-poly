@@ -111,7 +111,7 @@ Produces `src/module/the-hero-constant.js`:
 ```javascript
 'use strict';
 
-angular.module('module').constant('theHero', 0);
+angular.module('module').constant('TheHero', 0);
 ```
 
 Produces `src/module/the-hero-constant_test.js`:
@@ -119,13 +119,13 @@ Produces `src/module/the-hero-constant_test.js`:
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('theHero', function () {
+describe('TheHero', function () {
   var constant;
 
   beforeEach(module('module'));
 
-  beforeEach(inject(function (theHero) {
-    constant = theHero;
+  beforeEach(inject(function (TheHero) {
+    constant = TheHero;
   }));
 
   it('should equal 0', function () {
@@ -242,27 +242,27 @@ Produces `src/module/cake-factory.js`:
 ```javascript
 'use strict';
 
-angular.module('module').factory('cake', function () {
-  return 'cake';
+angular.module('module').factory('Cake', function () {
+  return 'Cake';
 });
 ```
 
-Produces `src/module/cake-factory_test.js`:
+Produces `src/module/Cake-factory_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('cake', function () {
+describe('Cake', function () {
   var factory;
 
   beforeEach(module('module'));
 
-  beforeEach(inject(function (cake) {
-    factory = cake;
+  beforeEach(inject(function (Cake) {
+    factory = Cake;
   }));
 
   it('should equal 0', function () {
-    expect(factory).toEqual('cake');
+    expect(factory).toEqual('Cake');
   });
 
 });
@@ -408,31 +408,31 @@ Produces `src/module/bacon-provider.js`:
 ```javascript
 'use strict';
 
-angular.module('module').provider('bacon', function () {
+angular.module('module').provider('Bacon', function () {
   return {
     $get: function () {
-      return 'bacon';
+      return 'Bacon';
     }
   };
 });
 ```
 
-Produces `src/module/bacon-provider_test.js`:
+Produces `src/module/Bacon-provider_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('bacon', function () {
+describe('Bacon', function () {
   var provider;
 
   beforeEach(module('module'));
 
-  beforeEach(inject(function (bacon) {
-    provider = bacon;
+  beforeEach(inject(function (Bacon) {
+    provider = Bacon;
   }));
 
-  it('should equal bacon', function () {
-    expect(provider).toEqual('bacon');
+  it('should equal Bacon', function () {
+    expect(provider).toEqual('Bacon');
   });
 
 });
@@ -492,10 +492,10 @@ Produces `src/module/cheap-or-good-service.js`:
 ```javascript
 'use strict';
 
-angular.module('module').service('cheapOrGood', function () {
+angular.module('module').service('CheapOrGood', function () {
   function CheapOrGood () {}
   CheapOrGood.prototype.get = function () {
-    return 'cheapOrGood';
+    return 'CheapOrGood';
   };
 
   return new CheapOrGood();
@@ -507,17 +507,17 @@ Produces `src/module/cheap-or-good-service_test.js`:
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('cheapOrGood', function () {
+describe('CheapOrGood', function () {
   var service;
 
   beforeEach(module('module'));
 
-  beforeEach(inject(function (cheapOrGood) {
-    service = cheapOrGood;
+  beforeEach(inject(function (CheapOrGood) {
+    service = CheapOrGood;
   }));
 
-  it('should equal cheapOrGood', function () {
-    expect(service.get()).toEqual('cheapOrGood');
+  it('should equal CheapOrGood', function () {
+    expect(service.get()).toEqual('CheapOrGood');
   });
 
 });
@@ -535,21 +535,21 @@ Produces `src/module/morals-value.js`:
 ```javascript
 'use strict';
 
-angular.module('module').value('morals', 0);
+angular.module('module').value('Morals', 0);
 ```
 
-Produces `src/module/morals-value_test.js`:
+Produces `src/module/Morals-value_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('morals', function () {
+describe('Morals', function () {
   var value;
 
   beforeEach(module('module'));
 
-  beforeEach(inject(function (morals) {
-    value = morals;
+  beforeEach(inject(function (Morals) {
+    value = Morals;
   }));
 
   it('should equal 0', function () {

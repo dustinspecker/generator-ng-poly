@@ -1,17 +1,17 @@
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('<%= lowerCamel %>', function () {
+describe('<%= upperCamel %>', function () {
   var provider;
 
   beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
-  beforeEach(inject(function (<%= lowerCamel %>) {
-    provider = <%= lowerCamel %>;
+  beforeEach(inject(function (<%= upperCamel %>) {
+    provider = <%= upperCamel %>;
   }));
 
-  it('should equal <%= lowerCamel %>', function () {
-    expect(provider).toEqual('<%= lowerCamel %>');
+  it('should equal <%= upperCamel %>', function () {
+    expect(provider).toEqual('<%= upperCamel %>');
   });
 
 });

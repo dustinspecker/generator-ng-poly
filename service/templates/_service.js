@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').service('<%= lowerCamel %>', function () {
+angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').service('<%= upperCamel %>', function () {
   function <%= upperCamel %> () {}
   <%= upperCamel %>.prototype.get = function () {
-    return '<%= lowerCamel %>';
+    return '<%= upperCamel %>';
   };
 
   return new <%= upperCamel %>();

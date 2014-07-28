@@ -1,13 +1,13 @@
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('<%= lowerCamel %>', function () {
+describe('<%= upperCamel %>', function () {
   var value;
 
   beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
-  beforeEach(inject(function (<%= lowerCamel %>) {
-    value = <%= lowerCamel %>;
+  beforeEach(inject(function (<%= upperCamel %>) {
+    value = <%= upperCamel %>;
   }));
 
   it('should equal 0', function () {

@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').provider('<%= lowerCamel %>', function () {
+angular.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>').provider('<%= upperCamel %>', function () {
   return {
     $get: function () {
-      return '<%= lowerCamel %>';
+      return '<%= upperCamel %>';
     }
   };
 });

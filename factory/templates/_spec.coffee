@@ -1,13 +1,13 @@
 ###global describe, beforeEach, it, expect, inject, module###
 'use strict'
 
-describe '<%= lowerCamel %>', ->
+describe '<%= upperCamel %>', ->
   factory = undefined
 
   beforeEach module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
 
-  beforeEach inject (<%= lowerCamel %>) ->
-    factory = <%= lowerCamel %>
+  beforeEach inject (<%= upperCamel %>) ->
+    factory = <%= upperCamel %>
 
   it 'should equal 0', ->
-    expect(factory).toEqual '<%= lowerCamel %>'
+    expect(factory).toEqual '<%= upperCamel %>'
