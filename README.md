@@ -738,7 +738,7 @@ Lastly, views will be generated like:
 
 ### Pass functions
 
-The generator will ask when `ng-poly:app` is ran if it should pass functions or assign as callbacks.
+The generator will ask when `ng-poly:app` is ran if it should pass defined functions instead of defining inline.
 
 If enabled, the app source code will pass functions, such as:
 

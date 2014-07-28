@@ -54,7 +54,7 @@ Generator.prototype.prompting = function prompting() {
   {
     type: 'confirm',
     name: 'passFunc',
-    message: 'Should functions be passed instead of assigned as callbacks?',
+    message: 'Should functions be defined and passed instead of defined inline (in callbacks)?',
     default: true
   },
   {
