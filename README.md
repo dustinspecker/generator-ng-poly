@@ -424,7 +424,7 @@ Updates `src/app.js`:
 'use strict';
 
 /* @ngdoc object
- * @name track
+ * @name module
  * @requires $urlRouterProvider
  *
  * @description
@@ -432,14 +432,14 @@ Updates `src/app.js`:
  *
  */
 angular
-  .module('track', [
+  .module('module', [
     'ui.router',
     'home',
     'top'
   ]);
 
 angular
-  .module('track')
+  .module('module')
   .config(function ($urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
   });
