@@ -912,6 +912,7 @@ The generator will ask when `ng-poly:app` is ran if it should pass defined funct
 If enabled, the app source code will pass functions, such as:
 
 ```javascript
+(function () {
 'use strict';
 
 /**
@@ -932,9 +933,9 @@ function HomeCtrl() {
 angular
   .module('home')
   .controller('HomeCtrl', HomeCtrl);
-```
 
-**Gulp will automatically surround each file with an IIFE to prevent polluting the global scope and the collision of names.**
+})();
+```
 
 ### Named functions
 
@@ -943,6 +944,7 @@ The generator will ask when `ng-poly:app` is ran if it should use named function
 If enabled, the app source code will have named functions, such as:
 
 ```javascript
+(function () {
 'use strict';
 
 /**
@@ -968,6 +970,8 @@ function Cake() {
 angular
   .module('module')
   .factory('Cake', Cake);
+
+})();
 ```
 
 ### License
