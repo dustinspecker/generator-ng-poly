@@ -643,7 +643,7 @@ Produces `app/module/your-place-controller.js`, `app/module/your-place-controlle
 * * *
 The route generator can take a URL option, as well.
 ```
-yo ng-poly:route --url=yourPlace
+yo ng-poly:route --url=/yourPlace
 ```
 * * *
 

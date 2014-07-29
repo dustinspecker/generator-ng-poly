@@ -31,6 +31,10 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     this.module = props.module || this.options.module || this.options.options.module;
     this.url = props.url || this.options.url;
 
+    if (this.url && (this.url.charAt(0) !== '/' || this.url.charAt(0) !== '\\')) {
+      this.url = '/' + this.url;
+    }
+
     done();
   }.bind(this));
 };
