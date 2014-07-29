@@ -1,4 +1,5 @@
-'use strict';<% if (passFunc) { %>
+<% if (passFunc) { %>(function () {
+<% } %>'use strict';<% if (passFunc) { %>
 
 /* @ngdoc object
  * @name <%= moduleName %>
@@ -35,3 +36,5 @@ angular
   .config(function <% if (namedFunc) { %>config<% } %>($urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
   });<% } %>
+<% if (passFunc) { %>
+})();<% } %>

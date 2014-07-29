@@ -7,9 +7,7 @@ var gulp = require('gulp')
   , concat = require('gulp-concat')
   , connect = require('gulp-connect')
   , cssmin = require('gulp-cssmin')
-  , footer = require('gulp-footer')
   , gulpIf = require('gulp-if')
-  , header = require('gulp-header')
   , htmlmin = require('gulp-htmlmin')
   , inject = require('gulp-inject')
   , jade = require('gulp-jade')
@@ -197,8 +195,6 @@ gulp.task('js', ['clean', 'jshint'], function () {
       '!**/*_test.*'
     ]).pipe(angularSort())
     .pipe(ngAnnotate())
-    .pipe(header('!function() {'))
-    .pipe(footer('}();'))
     .pipe(concat('app.js'))
     .pipe(uglify())
     .pipe(addSrc([].concat(minInjectableBowerComponents.map(prependBowerDir))))
@@ -209,8 +205,6 @@ gulp.task('js', ['clean', 'jshint'], function () {
       '!src/components/**/*',
       '!**/*_test.*'
     ])
-    .pipe(header('!function() {'))
-    .pipe(footer('}();'))
     .pipe(addSrc([].concat(injectableBowerComponents.map(prependBowerDir))))
     .pipe(gulp.dest('build'));
   }

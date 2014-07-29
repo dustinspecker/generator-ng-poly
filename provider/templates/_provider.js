@@ -1,4 +1,5 @@
-'use strict';<% if (passFunc) { %>
+<% if (passFunc) { %>(function () {
+<% } %>'use strict';<% if (passFunc) { %>
 
 /**
  * @ngdoc service
@@ -37,3 +38,5 @@ function <%= upperCamel %>() {
       }
     };
   });<% } %>
+<% if (passFunc) { %>
+})();<% } %>

@@ -1,4 +1,5 @@
-'use strict';<% if (passFunc) { %>
+<% if (passFunc) { %>(function () {
+<% } %>'use strict';<% if (passFunc) { %>
 
 /* @ngdoc object
  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>
@@ -43,3 +44,5 @@ angular
         controller: '<%= upperModule %>Ctrl<% if (controllerAs) { %> as <%= lowerCamel %><% } %>'
       });
   });<% } %>
+<% if (passFunc) { %>
+})();<% } %>

@@ -1,4 +1,5 @@
-'use strict';<% if (passFunc) { %>
+<% if (passFunc) { %>(function () {
+<% } %>'use strict';<% if (passFunc) { %>
 
 /**
  * @ngdoc directive
@@ -63,3 +64,5 @@ function <%= lowerCamel %>() {
       }
     };
   });<% } %>
+<% if (passFunc) { %>
+})();<% } %>

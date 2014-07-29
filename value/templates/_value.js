@@ -1,4 +1,5 @@
-'use strict';
+<% if (passFunc) { %>(function () {
+<% } %>'use strict';
 
 /**
  * @ngdoc service
@@ -11,3 +12,5 @@
 angular
   .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
   .value('<%= upperCamel %>', 0);
+<% if (passFunc) { %>
+})();<% } %>

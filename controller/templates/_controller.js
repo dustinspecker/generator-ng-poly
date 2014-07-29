@@ -1,4 +1,5 @@
-'use strict';<% if (passFunc) { %>
+<% if (passFunc) { %>(function () {
+<% } %>'use strict';<% if (passFunc) { %>
 
 /**
  * @ngdoc object
@@ -31,3 +32,5 @@ function <%= ctrlName %>(<% if (!controllerAs) { %>$scope<% } %>) {
   .controller('<%= ctrlName %>', function <% if (namedFunc) { %><%= ctrlName %><% } %>(<% if (!controllerAs) { %>$scope<% } %>) {
     <% if (controllerAs) { %>this.ctrlName = '<%= ctrlName %>';<% } else { %>$scope.ctrlName = '<%= ctrlName %>';<% } %>
   });<% } %>
+<% if (passFunc) { %>
+})();<% } %>
