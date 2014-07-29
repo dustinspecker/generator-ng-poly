@@ -27,7 +27,7 @@ Generator.prototype.writing = function writing() {
   this.context.templateUrl = path.join(this.module).replace(/\\/g, '/');
 
   // create new module directory
-  this.mkdir(path.join('src', this.module));
+  this.mkdir(path.join('app', this.module));
 
   var filePath, file;
 
@@ -35,9 +35,9 @@ Generator.prototype.writing = function writing() {
   // if yes - get root app.js to prepare adding dep
   // else - get parent app.js to prepare adding dep
   if (this.context.moduleName === this.module) {
-    filePath = path.join(this.config.path, '../src/app.js');
+    filePath = path.join(this.config.path, '../app/app.js');
   } else {
-    var parentDir = path.resolve(path.join('src', this.module), '..');
+    var parentDir = path.resolve(path.join('app', this.module), '..');
 
     // for templating to create a parent.child module name
     this.context.parentModuleName = path.basename(parentDir);
@@ -85,7 +85,7 @@ Generator.prototype.writing = function writing() {
   fs.writeFileSync(filePath, lines.join(endOfLine));
 
   // create app.js
-  this.template('_app.js', path.join('src', this.module, this.context.moduleName + '.js'), this.context);
+  this.template('_app.js', path.join('app', this.module, this.context.moduleName + '.js'), this.context);
 
 
   // config for e2e test templates

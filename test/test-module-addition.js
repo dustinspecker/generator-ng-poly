@@ -28,7 +28,7 @@ describe('module generator', function () {
         'passFunc': true,
         'namedFunc': true,
         'testScript': 'js',
-        'testDir': 'src',
+        'testDir': 'app',
         'style': 'less'
       });
 
@@ -53,9 +53,9 @@ describe('module generator', function () {
       });
     });
 
-    it('should add test to src/app.js deps', function () {
-      assert.fileContent('src/app.js', /    \'ui.router\',/);
-      assert.fileContent('src/app.js', /    \'test\'/);
+    it('should add test to app/app.js deps', function () {
+      assert.fileContent('app/app.js', /    \'ui.router\',/);
+      assert.fileContent('app/app.js', /    \'test\'/);
     });
   });
 
@@ -72,13 +72,13 @@ describe('module generator', function () {
       });
     });
 
-    it('should add home.door to src/home/home.js deps', function () {
-      assert.fileContent('src/home/home.js', /    \'ui.router\',/);
-      assert.fileContent('src/home/home.js', /    \'home.door\'/);
+    it('should add home.door to app/home/home.js deps', function () {
+      assert.fileContent('app/home/home.js', /    \'ui.router\',/);
+      assert.fileContent('app/home/home.js', /    \'home.door\'/);
     });
 
-    it('should name module in src/home/door/door.js home.door', function () {
-      assert.fileContent('src/home/door/door.js', /angular[^$]*.module\(.[^$]*\'home.door\'/);
+    it('should name module in app/home/door/door.js home.door', function () {
+      assert.fileContent('app/home/door/door.js', /angular[^$]*.module\(.[^$]*\'home.door\'/);
     });
   });
 

@@ -29,7 +29,7 @@ describe('route generator', function () {
           'passFunc': true,
           'namedFunc': true,
           'testScript': 'js',
-          'testDir': 'src',
+          'testDir': 'app',
           'style': 'less'
         });
 
@@ -41,7 +41,7 @@ describe('route generator', function () {
       }.bind(this));
     });
 
-    it('should add test state and url to src/home/home.js', function (done) {
+    it('should add test state and url to app/home/home.js', function (done) {
       this.app = helpers.createGenerator('ng-poly:route', [
         '../../route',
         '../../controller',
@@ -54,7 +54,7 @@ describe('route generator', function () {
       });
 
       this.app.run([], function () {
-        assert.fileContent('src/home/home.js', /.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\'[^$]*}\)/);
+        assert.fileContent('app/home/home.js', /.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\'[^$]*}\)/);
         done();
       });
     });
@@ -83,7 +83,7 @@ describe('route generator', function () {
           'passFunc': false,
           'namedFunc': true,
           'testScript': 'js',
-          'testDir': 'src',
+          'testDir': 'app',
           'style': 'less'
         });
 
@@ -95,7 +95,7 @@ describe('route generator', function () {
       }.bind(this));
     });
 
-    it('should add test state and url to src/home/home.js', function (done) {
+    it('should add test state and url to app/home/home.js', function (done) {
       this.app = helpers.createGenerator('ng-poly:route', [
         '../../route',
         '../../controller',
@@ -108,7 +108,7 @@ describe('route generator', function () {
       });
 
       this.app.run([], function () {
-        assert.fileContent('src/home/home.js', /.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl as test\'[^$]*}\)/);
+        assert.fileContent('app/home/home.js', /.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl as test\'[^$]*}\)/);
         done();
       });
     });

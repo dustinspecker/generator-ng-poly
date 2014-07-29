@@ -13,6 +13,6 @@ Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
   this.template('_view.' + config.markup,
-    path.join('src', config.modulePath, config.hyphenName + '.tpl.' + config.markup), config);
-  this.copy('style.less', path.join('src', config.modulePath, config.hyphenName + '.less'));
+    path.join('app', config.modulePath, config.hyphenName + '.tpl.' + config.markup), config);
+  this.copy('style.less', path.join('app', config.modulePath, config.hyphenName + '.less'));
 };

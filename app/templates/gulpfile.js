@@ -56,18 +56,18 @@ var bowerPolymerComponents = [
 ];
 
 // src files
-var componentsBase = 'src/components/'
+var componentsBase = 'app/components/'
   , componentsDir = componentsBase + '**/'
   , componentsMarkup = componentsDir
   , componentsJs = componentsDir + '*.js'
   , componentsLess = componentsDir + '*.less'
-  , srcMarkup = 'src/**/'
-  , srcMarkupTemplates = 'src/!(components)+(**)/*-directive.tpl.{jade,html}' // used for karmaConf
-  , srcJsFiles = 'src/**/*.js'
-  , srcLessFiles = 'src/**/*.less';
+  , srcMarkup = 'app/**/'
+  , srcMarkupTemplates = 'app/!(components)+(**)/*-directive.tpl.{jade,html}' // used for karmaConf
+  , srcJsFiles = 'app/**/*.js'
+  , srcLessFiles = 'app/**/*.less';
 
 // test files
-var unitTests = '{src,test}/**/*_test.{coffee,js}';
+var unitTests = '{app,test}/**/*_test.{coffee,js}';
 
 // build files
 var build = 'build/'
@@ -167,11 +167,11 @@ gulp.task('karmaInject', function () {
   stream.queue(gulp.src([
     'bower_components/angular/angular.js',
     'bower_components/angular-mocks/angular-mocks.js',
-    'src/**/*-directive.tpl.{html,jade}'
+    'app/**/*-directive.tpl.{html,jade}'
     ]));
   stream.queue(gulp.src([
-    'src/**/*.js',
-    '!src/components/**/*',
+    'app/**/*.js',
+    '!app/components/**/*',
     '!**/*_test.*',
     'bower_components/angular-ui-router/release/angular-ui-router.js',
     ]).pipe(angularSort()));
@@ -191,7 +191,7 @@ gulp.task('js', ['clean', 'jshint'], function () {
   if (isProd) {
     return gulp.src([
       srcJsFiles,
-      '!src/components/**/*',
+      '!app/components/**/*',
       '!**/*_test.*'
     ]).pipe(angularSort())
     .pipe(ngAnnotate())
@@ -205,7 +205,7 @@ gulp.task('js', ['clean', 'jshint'], function () {
       '!src/components/**/*',
       '!**/*_test.*'
     ])
-    .pipe(addSrc([].concat(injectableBowerComponents.map(prependBowerDir))))
+    .pipe(addapp([].concat(injectableBowerComponents.map(prependBowerDir))))
     .pipe(gulp.dest('build'));
   }
 });

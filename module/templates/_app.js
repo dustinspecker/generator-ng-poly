@@ -15,8 +15,8 @@ function config($stateProvider) {
   $stateProvider
     .state('<%= moduleName %>', {
       url: '/<%= moduleName %>',
-      templateUrl: '<%= templateUrl %>/<%= hyphenName %>.tpl.html',
-      controller: '<%= upperModule %>Ctrl<% if (controllerAs) { %> as <%= lowerCamel %><% } %>'
+      templateUrl: '<%= templateUrl %>/<%= moduleName %>.tpl.html',
+      controller: '<%= upperModule %>Ctrl<% if (controllerAs) { %> as <%= moduleName %><% } %>'
     });
 }<% } %>
 
@@ -40,8 +40,8 @@ angular
     $stateProvider
       .state('<%= moduleName %>', {
         url: '/<%= moduleName %>',
-        templateUrl: '<%= templateUrl %>/<%= hyphenName %>.tpl.html',
-        controller: '<%= upperModule %>Ctrl<% if (controllerAs) { %> as <%= lowerCamel %><% } %>'
+        templateUrl: '<%= templateUrl %>/<%= moduleName %>.tpl.html',
+        controller: '<%= upperModule %>Ctrl<% if (controllerAs) { %> as <%= moduleName %><% } %>'
       });
   });<% } %>
 <% if (passFunc) { %>

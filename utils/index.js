@@ -66,7 +66,7 @@ function normalizeModulePath(modulePath) {
 function moduleExists(yoRcAbsolutePath, modulePath) {
   // check if file exists
   var yoPath = path.dirname(yoRcAbsolutePath)
-    , fullPath = path.join(yoPath, 'src', normalizeModulePath(modulePath));
+    , fullPath = path.join(yoPath, 'app', normalizeModulePath(modulePath));
 
   return fs.existsSync(fullPath);
 }

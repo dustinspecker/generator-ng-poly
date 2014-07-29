@@ -7,7 +7,7 @@ var Generator = module.exports = genBase.extend();
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
-  var elementDir = 'src/components/' + config.hyphenName + '/';
+  var elementDir = 'app/components/' + config.hyphenName + '/';
   this.mkdir(elementDir);
   this.copy('element.less', elementDir + config.hyphenName + '.less');
   this.template('_element.' + config.markup, elementDir + config.hyphenName + '.' + config.markup, config);

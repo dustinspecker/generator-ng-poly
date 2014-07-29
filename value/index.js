@@ -12,7 +12,7 @@ Generator.prototype.prompting = function prompting() {
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
-  this.template('_value.js', path.join('src', config.modulePath, config.hyphenName + '-value.js'), config);
+  this.template('_value.js', path.join('app', config.modulePath, config.hyphenName + '-value.js'), config);
   this.template('_spec.' + config.testScript,
     path.join(config.testDir, config.modulePath, config.hyphenName + '-value_test.' + config.testScript), config);
 };

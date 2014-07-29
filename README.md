@@ -69,7 +69,7 @@ yo ng-poly:view --module=home/kitchen
 * * *
 
 ### App
-Asks for application name and language preferences to scaffold out an application with a home module. It will also ask if tests should be placed in the `src/` or `tests/` directory. Then installs npm and Bower dependencies.
+Asks for application name and language preferences to scaffold out an application with a home module. It will also ask if tests should be placed in the `app/` or `tests/` directory. Then installs npm and Bower dependencies.
 
 Example:
 ```
@@ -79,13 +79,7 @@ yo ng-poly
 Produces:
 ```
 root/
-├── bower_components/
-├── node_modules/
-├── e2e/
-│   └── home/
-│       ├── home.po.{coffee,js}
-│       └── home_test.{coffee,js}
-├── src/
+├── app/
 │   ├── home/
 │   │   ├── home.js
 │   │   ├── home.less
@@ -94,6 +88,12 @@ root/
 │   │   └── home-controller_test.{coffee,js}
 │   ├── app.js
 │   └── index.{html,jade}
+├── bower_components/
+├── e2e/
+│   └── home/
+│       ├── home.po.{coffee,js}
+│       └── home_test.{coffee,js}
+├── node_modules/
 ├── .editorconfig
 ├── .jshintrc
 ├── .yo-rc.json
@@ -113,7 +113,7 @@ Example:
 yo ng-poly:constant theHero
 ```
 
-Produces `src/module/the-hero-constant.js`:
+Produces `app/module/the-hero-constant.js`:
 ```javascript
 'use strict';
 
@@ -130,7 +130,7 @@ angular
   .constant('TheHero', 0);
 ```
 
-Produces `src/module/the-hero-constant_test.js`:
+Produces `app/module/the-hero-constant_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
@@ -159,7 +159,7 @@ Example:
 yo ng-poly:controller micro
 ```
 
-Produces `src/module/micro-controller.js`:
+Produces `app/module/micro-controller.js`:
 ```javascript
 'use strict';
 
@@ -179,7 +179,7 @@ angular
   });
 ```
 
-Produces `src/module/micro-controller_test.js`:
+Produces `app/module/micro-controller_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
@@ -209,7 +209,7 @@ Example:
 yo ng-poly:directive fancy-button
 ```
 
-Produces `src/module/fancy-button-directive.js`:
+Produces `app/module/fancy-button-directive.js`:
 ```javascript
 'use strict';
 
@@ -245,12 +245,12 @@ angular
   });
 ```
 
-Produces `src/module/fancy-button-directive.tpl.html`:
+Produces `app/module/fancy-button-directive.tpl.html`:
 ```html
 <div></div>
 ```
 
-Produces `src/module/fancy-button-directive_test.js`:
+Produces `app/module/fancy-button-directive_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
@@ -284,7 +284,7 @@ Example:
 yo ng-poly:factory cake
 ```
 
-Produces `src/module/cake-factory.js`:
+Produces `app/module/cake-factory.js`:
 ```javascript
 'use strict';
 
@@ -308,7 +308,7 @@ angular
   });
 ```
 
-Produces `src/module/Cake-factory_test.js`:
+Produces `app/module/Cake-factory_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
@@ -341,7 +341,7 @@ Example:
 yo ng-poly:filter coffee
 ```
 
-Produces `src/module/coffee-filter.js`:
+Produces `app/module/coffee-filter.js`:
 ```javascript
 'use strict';
 
@@ -371,7 +371,7 @@ angular
   });
 ```
 
-Produces `src/module/coffee-filter_test.js`:
+Produces `app/module/coffee-filter_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
@@ -394,7 +394,7 @@ Generates a new module, view, and controller. Updates parent module's dependenci
 yo ng-poly:module top
 ```
 
-Produces `src/top/top.js`:
+Produces `app/top/top.js`:
 ```javascript
 'use strict';
 
@@ -423,9 +423,9 @@ angular
   });
 ```
 
-Produces `src/top/top-controller.js`, `src/top/top-controller_test.js`, `src/top/top.tpl.html`, `src/top/top.less`, `e2e/top/top.po.js`, `e2e/top/top_test.js`
+Produces `app/top/top-controller.js`, `app/top/top-controller_test.js`, `app/top/top.tpl.html`, `app/top/top.less`, `e2e/top/top.po.js`, `e2e/top/top_test.js`
 
-Updates `src/app.js`:
+Updates `app/app.js`:
 ```javascript
 'use strict';
 
@@ -458,9 +458,9 @@ angular
 yo ng-poly:module top/bottom
 ```
 
-Produces `src/top/bottom/bottom.js`, `src/top/bottom/bottom-controller.js`, `src/top/bottom/bottom-controller_test.js`, `src/top/bottom/bottom.tpl.html`, `src/top/bottom/bottom.less`, `e2e/bottom/bottom.po.js`, `e2e/bottom/bottom_test.js`
+Produces `app/top/bottom/bottom.js`, `app/top/bottom/bottom-controller.js`, `app/top/bottom/bottom-controller_test.js`, `app/top/bottom/bottom.tpl.html`, `app/top/bottom/bottom.less`, `e2e/bottom/bottom.po.js`, `e2e/bottom/bottom_test.js`
 
-Updates `src/top/top.js`:
+Updates `app/top/top.js`:
 ```javascript
 'use strict';
 
@@ -490,7 +490,7 @@ angular
   });
 ```
 
-**Notice the module in `src/top/bottom/` is called 'top.bottom'. All tests in this directory use this nomenclature, as well.**
+**Notice the module in `app/top/bottom/` is called 'top.bottom'. All tests in this directory use this nomenclature, as well.**
 
 * * *
 **Deeper Level Example:**
@@ -498,7 +498,7 @@ angular
 yo ng-poly:module top/bottom/bottomest
 ```
 
-Produces 'bottom.bottomest' module, a controller, controller test, style, and a view in `src/top/bottom/bottomest/`
+Produces 'bottom.bottomest' module, a controller, controller test, style, and a view in `app/top/bottom/bottomest/`
 
 Updates 'top.bottom' module with the new 'bottom.bottemest' module as a dependency.
 
@@ -515,7 +515,7 @@ Example:
 yo ng-poly:provider bacon
 ```
 
-Produces `src/module/bacon-provider.js`:
+Produces `app/module/bacon-provider.js`:
 ```javascript
 'use strict';
 
@@ -539,7 +539,7 @@ angular
   });
 ```
 
-Produces `src/module/Bacon-provider_test.js`:
+Produces `app/module/Bacon-provider_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
@@ -568,7 +568,7 @@ Example:
 yo ng-poly:route your-place
 ```
 
-Updates `src/module/module.js`:
+Updates `app/module/module.js`:
 ```javascript
 'use strict';
 
@@ -636,7 +636,7 @@ describe('Your place page', function () {
 });
 ```
 
-Produces `src/module/your-place-controller.js`, `src/module/your-place-controller_test.js`, `src/module/your-place.tpl.html`, and `src/module/your-place.less`
+Produces `app/module/your-place-controller.js`, `app/module/your-place-controller_test.js`, `app/module/your-place.tpl.html`, and `app/module/your-place.less`
 
 **Currently, the module must have an existing state for another to be added.**
 
@@ -655,7 +655,7 @@ Example:
 yo ng-poly:service cheap-or-good
 ```
 
-Produces `src/module/cheap-or-good-service.js`:
+Produces `app/module/cheap-or-good-service.js`:
 ```javascript
 'use strict';
 
@@ -680,7 +680,7 @@ angular
   });
 ```
 
-Produces `src/module/cheap-or-good-service_test.js`:
+Produces `app/module/cheap-or-good-service_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
@@ -709,7 +709,7 @@ Example:
 yo ng-poly:value morals
 ```
 
-Produces `src/module/morals-value.js`:
+Produces `app/module/morals-value.js`:
 ```javascript
 'use strict';
 
@@ -726,7 +726,7 @@ angular
   .value('Morals', 0);
 ```
 
-Produces `src/module/Morals-value_test.js`:
+Produces `app/module/Morals-value_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
@@ -755,13 +755,13 @@ Example:
 yo ng-poly:view nice
 ```
 
-Produces `src/module/nice-view.tpl.html`:
+Produces `app/module/nice-view.tpl.html`:
 ```html
 <h2>nice</h2>
 <p>{{ctrlName}}</p>
 ```
 
-Produces `src/module/nice-view.less`:
+Produces `app/module/nice-view.less`:
 ```css
 @bg-color: #E5E5E5;
 
@@ -778,7 +778,7 @@ Example:
 yo ng-poly:element gold-silver
 ```
 
-Produces `src/components/gold-silver/gold-silver.less`:
+Produces `app/components/gold-silver/gold-silver.less`:
 ```css
 :host {
   height: 100px;
@@ -787,7 +787,7 @@ Produces `src/components/gold-silver/gold-silver.less`:
 }
 ```
 
-Produces `src/components/gold-silver/gold-silver.html`:
+Produces `app/components/gold-silver/gold-silver.html`:
 ```html
 <link rel='import' href='../polymer/polymer.html'>
 
@@ -801,7 +801,7 @@ Produces `src/components/gold-silver/gold-silver.html`:
 </polymer-element>
 ```
 
-Produces `src/components/gold-silver/gold-silver.js`:
+Produces `app/components/gold-silver/gold-silver.js`:
 ```javascript
 /*global Polymer*/
 'use strict';

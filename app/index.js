@@ -85,8 +85,8 @@ Generator.prototype.prompting = function prompting() {
     message: 'Where should tests be saved?',
     choices: [
       {
-        name: 'src/',
-        value: 'src',
+        name: 'app/',
+        value: 'app',
         checked: true
       },
       {
@@ -160,16 +160,8 @@ Generator.prototype.writing = function writing() {
   var markup = this.config.get('markup');
 
   // create main module and index.html
-  this.template('_app.js', 'src/app.js', this.context);
-  this.template('_index.' + markup, 'src/index.' + markup, this.context);
-
-/*  // create a home module
-  this.mkdir('src/home');
-  this.template('_app.js', 'src/home/home.js', this.context);
-
-  // create a home view, controller, and route
-  this.template('_index.' + markup, 'src/home/home.' + markup, this.context);
-  this.copy('style.less', 'src/home/home.less');*/
+  this.template('_app.js', 'app/app.js', this.context);
+  this.template('_index.' + markup, 'app/index.' + markup, this.context);
 };
 
 Generator.prototype.install = function install() {

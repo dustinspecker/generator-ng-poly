@@ -5,16 +5,16 @@
   ],
   "reporters": ["failed", "coverage"],
   "preprocessors": {
-    "src/**/!(*_test)+(.js)": ["coverage"],
-    "src/**/*-directive.tpl.html": ["ng-html2js"],
-    "src/**/*-directive.tpl.jade": ["ng-jade2js"],
+    "app/**/!(*_test)+(.js)": ["coverage"],
+    "app/**/*-directive.tpl.html": ["ng-html2js"],
+    "app/**/*-directive.tpl.jade": ["ng-jade2js"],
     "**/*_test.coffee": ["coffee"]
   },
   "ngHtml2JsPreprocessor": {
-    "stripPrefix": "src/"
+    "stripPrefix": "app/"
   },
   "ngJade2JsPreprocessor": {
-    "stripPrefix": "src/"
+    "stripPrefix": "app/"
   },
   "singleRun": true
 }
