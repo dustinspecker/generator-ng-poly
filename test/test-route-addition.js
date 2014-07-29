@@ -50,7 +50,7 @@ describe('route generator', function () {
 
       helpers.mockPrompt(this.app, {
         module: 'home',
-        url: 'test'
+        url: '/test'
       });
 
       this.app.run([], function () {
@@ -104,7 +104,7 @@ describe('route generator', function () {
 
       helpers.mockPrompt(this.app, {
         module: 'home',
-        url: 'test'
+        url: '/test'
       });
 
       this.app.run([], function () {

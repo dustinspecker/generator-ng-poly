@@ -21,7 +21,9 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
   }, {
     name: 'url',
     message: 'What\'s the url for this state?',
-    default: this.name,
+    default: function () {
+      return '/' + utils.lowerCamel(this.name);
+    }.bind(this),
     when: function() {
       return ((params && params.url === true) && !(this.options && this.options.url));
     }.bind(this)

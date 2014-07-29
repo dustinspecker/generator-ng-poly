@@ -52,7 +52,7 @@ Generator.prototype.writing = function writing() {
   var newState = [
     '    })',
     '    .state(\'' + config.lowerCamel + '\', {',
-    '      url: \'/' + this.url + '\',',
+    '      url: \'' + this.url + '\',',
     '      templateUrl: \'' + this.module + '/' + config.hyphenName + '.tpl.html\','
   ];
 
