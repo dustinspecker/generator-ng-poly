@@ -57,6 +57,10 @@ Languages and Features supported:
 
 `gulp test` will run Jasmine tasks via Karma
 
+`gulp webdriver_update` will download the Selenium server standalone and Chrome driver for e2e testing
+
+`gulp e2e_test` will run e2e_tests via Protractor (must start a localhost before running e2e tests)
+
 Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
 
 * * *
