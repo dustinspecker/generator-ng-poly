@@ -152,6 +152,7 @@ Generator.prototype.configuring = function configuring() {
   this.copy('.editorconfig', '.editorconfig');
   this.copy('gulpfile.js', 'Gulpfile.js');
   this.copy('karma.config.json', 'karma.config.json');
+  this.copy('protractor.config.js', 'protractor.config.js');
   this.copy('.jshintrc', '.jshintrc');
 };
 

@@ -18,7 +18,9 @@ var gulp = require('gulp')
   , ngAnnotate = require('gulp-ng-annotate')
   , open = require('gulp-open')
   , plato = require('gulp-plato')
-  , uglify = require('gulp-uglify');
+  , protractor = require('gulp-protractor').protractor
+  , uglify = require('gulp-uglify')
+  , webdriver_update = require('gulp-protractor').webdriver_update;
 
 var _ = require('lodash')
   , args = require('yargs').argv
@@ -217,9 +219,16 @@ gulp.task('js', ['clean', 'jshint'], function () {
 gulp.task('coffeelint', function () {
   return gulp.src([
     unitTests,
+    'e2e/**/*.coffee',
     '!**/*_test.js'
     ])
-    .pipe(coffeelint())
+    .pipe(coffeelint({
+      opt: {
+        no_backticks: {
+          level: 'ignore'
+        }
+      }
+    }))
     .pipe(coffeelint.reporter())
     .pipe(coffeelint.reporter('fail'));
 });
@@ -229,6 +238,7 @@ gulp.task('jshint', function () {
     componentsJs,
     srcJsFiles,
     unitTests,
+    'e2e/*.js',
     '!**/*_test.coffee'
     ])
     .pipe(jshint())
@@ -265,6 +275,18 @@ gulp.task('polymer', ['angularInject'], function () {
     })
     .pipe(gulp.dest(buildComponents));
 });
+
+gulp.task('e2e_test', ['jshint', 'coffeelint'], function () {
+  return gulp.src(['e2e/**/*_test.{coffee,js}'])
+    .pipe(protractor({
+      configFile: 'protractor.config.js'
+    }))
+    .on('error', function (e) {
+      console.log(e);
+    });
+});
+
+gulp.task('webdriver_update', webdriver_update);
 
 gulp.task('build', ['polymer']);
 

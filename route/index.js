@@ -77,6 +77,14 @@ Generator.prototype.writing = function writing() {
 
   // save modifications
   fs.writeFileSync(filePath, lines.join(endOfLine));
+
+  // e2e testing
+  // create page object model
+  this.template('page.po.' + config.testScript,
+    join('e2e', config.hyphenName, config.hyphenName + '.po.' + config.testScript), config);
+  // create test
+  this.template('page_test.' + config.testScript,
+    join('e2e', config.hyphenName, config.hyphenName + '_test.' + config.testScript), config);
 };
 
 Generator.prototype.end = function end() {

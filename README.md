@@ -81,6 +81,10 @@ Produces:
 root/
 ├── bower_components/
 ├── node_modules/
+├── e2e/
+│   └── home/
+│       ├── home.po.{coffee,js}
+│       └── home_test.{coffee,js}
 ├── src/
 │   ├── home/
 │   │   ├── home.js
@@ -95,8 +99,10 @@ root/
 ├── .yo-rc.json
 ├── bower.json
 ├── Gulpfile.js
-├── karma.config.js
-└── package.json
+├── karma.config.json
+├── package.json
+└── protractor.config.js
+
 ```
 
 ### Constant
@@ -417,7 +423,7 @@ angular
   });
 ```
 
-Produces `src/top/top-controller.js`, `src/top/top-controller_test.js`, `src/top/top.tpl.html`, `src/top/top.less`
+Produces `src/top/top-controller.js`, `src/top/top-controller_test.js`, `src/top/top.tpl.html`, `src/top/top.less`, `e2e/top/top.po.js`, `e2e/top/top_test.js`
 
 Updates `src/app.js`:
 ```javascript
@@ -452,7 +458,7 @@ angular
 yo ng-poly:module top/bottom
 ```
 
-Produces `src/top/bottom/bottom.js`, `src/top/bottom/bottom-controller.js`, `src/top/bottom/bottom-controller_test.js`, `src/top/bottom/bottom.tpl.html`, `src/top/bottom/bottom.less`
+Produces `src/top/bottom/bottom.js`, `src/top/bottom/bottom-controller.js`, `src/top/bottom/bottom-controller_test.js`, `src/top/bottom/bottom.tpl.html`, `src/top/bottom/bottom.less`, `e2e/bottom/bottom.po.js`, `e2e/bottom/bottom_test.js`
 
 Updates `src/top/top.js`:
 ```javascript
@@ -555,7 +561,7 @@ describe('Bacon', function () {
 ```
 
 ### Route
-Adds a new route and generates a controller and view. The name provided is used as state name. Yeoman will then ask for the module to add the route to and the URL for the route (default is the state name provided).
+Adds a new route and generates a controller and view. The name provided is used as state name. Yeoman will then ask for the module to add the route to and the URL for the route (default is the state name provided). It will also generate an e2e test and a Page Object model for the new route.
 
 Example:
 ```
@@ -596,6 +602,38 @@ angular
       controller: 'YourPlaceCtrl'
       });
   });
+```
+
+Produces `e2e/your-place/your-place.po.js`:
+```javascript
+/*global element, by*/
+'use strict';
+
+var YourPlacePage = function () {
+  this.text = element(by.tagName('p'));
+  this.heading = element(by.tagName('h2'));
+};
+
+module.exports = new YourPlacePage();
+```
+
+Produces `e2e/your-place/your-place_test.js`:
+```javascript
+/*global describe, beforeEach, it, browser, expect */
+'use strict';
+
+describe('Your place page', function () {
+  var yourPlacePage = require('./your-place.po');
+
+  beforeEach(function () {
+    browser.get('http://localhost:8080/#/yourPlace');
+  });
+
+  it('should say YourPlaceCtrl', function() {
+    expect(yourPlacePage.heading.getText()).toEqual('yourPlace');
+    expect(yourPlacePage.text.getText()).toEqual('YourPlaceCtrl');
+  });
+});
 ```
 
 Produces `src/module/your-place-controller.js`, `src/module/your-place-controller_test.js`, `src/module/your-place.tpl.html`, and `src/module/your-place.less`

@@ -12,6 +12,8 @@ describe('ng-poly generator', function () {
   describe('appName different than current directory', function () {
     // expected files from ng-poly:app
     var expected = [
+      'e2e/home/home.po.js',
+      'e2e/home/home_test.js',
       'src/home/home.tpl.html',
       'src/home/home.less',
       'src/home/home-controller.js',
@@ -23,7 +25,9 @@ describe('ng-poly generator', function () {
       '.yo-rc.json',
       'bower.json',
       'Gulpfile.js',
-      'package.json'
+      'karma.config.json',
+      'package.json',
+      'protractor.config.js'
     ];
 
     beforeEach(function (done) {
@@ -117,7 +121,7 @@ describe('ng-poly generator', function () {
 
         // cover module scenario with / at end of name
         // on the second prompt (uses Jade)
-        if (expectedFiles[0].indexOf('.jade') > -1) {
+        if (expectedFiles[2].indexOf('.jade') > -1) {
           this.app = helpers.createGenerator('ng-poly:' + genName, deps, genName + '-test/', mockPrompts);
         } else {
           this.app = helpers.createGenerator('ng-poly:' + genName, deps, genName + '-test', mockPrompts);
@@ -140,6 +144,8 @@ describe('ng-poly generator', function () {
 
       // expected files from ng-poly:app
       var expected = [
+        'e2e/home/home.po.' + config.testScript,
+        'e2e/home/home_test.' + config.testScript,
         'src/home/home.tpl.' + config.markup,
         'src/home/home.' + config.style,
         'src/home/home-controller.' + config.appScript,
@@ -151,7 +157,9 @@ describe('ng-poly generator', function () {
         '.yo-rc.json',
         'bower.json',
         'Gulpfile.js',
-        'package.json'
+        'karma.config.json',
+        'package.json',
+        'protractor.config.js'
       ];
 
       beforeEach(function (done) {
