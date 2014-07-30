@@ -112,7 +112,7 @@ root/
 ├── .yo-rc.json
 ├── bower.json
 ├── Gulpfile.js
-├── karma.config.json
+├── karma.config.js
 ├── package.json
 └── protractor.config.js
 
