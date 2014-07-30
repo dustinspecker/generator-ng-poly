@@ -1,7 +1,13 @@
-# generator-ng-poly [![Build Status](https://travis-ci.org/dustinspecker/generator-ng-poly.svg?branch=v0.0.9)](https://travis-ci.org/dustinspecker/generator-ng-poly) [![Coverage Status](https://img.shields.io/coveralls/dustinspecker/generator-ng-poly.svg)](https://coveralls.io/r/dustinspecker/generator-ng-poly?branch=master)
+# generator-ng-poly [![NPM version](https://badge.fury.io/js/generator-ng-poly.svg)](http://badge.fury.io/js/generator-ng-poly) [![Build Status](https://travis-ci.org/dustinspecker/generator-ng-poly.svg?branch=v0.0.9)](https://travis-ci.org/dustinspecker/generator-ng-poly) [![Coverage Status](https://img.shields.io/coveralls/dustinspecker/generator-ng-poly.svg)](https://coveralls.io/r/dustinspecker/generator-ng-poly?branch=master)
 [![Dependencies](https://david-dm.org/dustinspecker/generator-ng-poly.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=dependencies&view=table) [![DevDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/dev-status.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=devDependencies&view=table) [![PeerDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/peer-status.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=peerDependencies&view=table)
 
-> [Yeoman](http://yeoman.io) generator for AngularJS and Polymer apps. A work in progress.
+> [Yeoman](http://yeoman.io) generator for AngularJS and Polymer apps.
+
+## Purpose
+
+This generator focuses on organizing Angular components by feature (home, about, video player, etc.) instead of by type (controller, service, directive, etc.) to encourage the development of self-contained, reusable components.
+
+A typical workflow with this generator consists of creating an Angular module ([ng-poly:module](#module)) and then generating controllers, directives, etc. for this module to create a new feature.
 
 ## Usage
 
@@ -41,13 +47,15 @@ Languages and Features supported:
     - HTML
   * Application scripting languages
     - JavaScript
-  * Testing scripting
+  * Testing scripting languages
     - CoffeeScript
     - JavaScript
   * Style languages
     - LESS
   * Unit testing
     - Jasmine (Karma as the test runner) for AngularJS
+  * e2e testing
+    - Protractor for AngularJS
   * Task runners
     - Gulp
 
@@ -55,13 +63,14 @@ Languages and Features supported:
 ### Gulp Tasks
 `gulp` will start a localhost and open in the default browser
 
+Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
+
 `gulp test` will run Jasmine tasks via Karma
 
 `gulp webdriver_update` will download the Selenium server standalone and Chrome driver for e2e testing
 
 `gulp e2e_test` will run e2e_tests via Protractor (must start a localhost before running e2e tests)
 
-Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
 
 * * *
 **All generators ask for a module name except app and element. All generators except app take a name as an argument. A name can be written with CamelCase or hyphens.**
@@ -238,7 +247,7 @@ angular
   .module('module')
   .directive('fancyButton', function () {
     return {
-      restrict: 'AE',
+      restrict: 'EA',
       scope: {},
       templateUrl: 'module/fancy-button-directive.tpl.html', 
       replace: false,

@@ -178,11 +178,11 @@ gulp.task('karmaInject', function () {
   stream.queue(gulp.src([
     unitTests
     ]));
-  return gulp.src('./karma.config.json')
+  return gulp.src('./karma.config.js')
     .pipe(inject(stream.done(), 
-      { starttag: '"files": [', endtag: ']', addRootSlash: false, 
+      { starttag: 'files: [', endtag: ']', addRootSlash: false, 
       transform: function (filepath, file, i, length) {
-        return '  "' + filepath + '"' + (i + 1 < length ? ',' : '');
+        return '  \'' + filepath + '\'' + (i + 1 < length ? ',' : '');
       }}))
     .pipe(gulp.dest('./'));
 });
@@ -232,6 +232,9 @@ gulp.task('jshint', function () {
     componentsJs,
     srcJsFiles,
     unitTests,
+    'Gulpefile.js',
+    'karma.config.js',
+    'protractor.config.js',
     'e2e/*.js',
     '!**/*_test.coffee'
     ])
@@ -291,7 +294,7 @@ gulp.task('default', ['build'], function () {
 });
 
 gulp.task('test', ['jshint', 'coffeelint', 'karmaInject'], function (done) {
-  var karmaConf = require('./karma.config.json');
+  var karmaConf = require('./karma.config.js');
   karma.start(_.assign({}, karmaConf), done);
 });
 
