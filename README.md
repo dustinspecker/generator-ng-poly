@@ -65,11 +65,11 @@ Languages and Features supported:
 
 Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
 
-`gulp test` will run Jasmine tasks via Karma
+`gulp unitTest` will run Jasmine tests via Karma
 
-`gulp webdriver_update` will download the Selenium server standalone and Chrome driver for e2e testing
+`gulp webdriverUpdate` will download the Selenium server standalone and Chrome driver for e2e testing
 
-`gulp e2e_test` will run e2e_tests via Protractor (must start a localhost before running e2e tests)
+`gulp e2eTest` will run e2e tests via Protractor (must start a localhost before running `gulp e2eTest`)
 
 
 * * *
