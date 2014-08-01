@@ -1,8 +1,8 @@
 'use strict';
-var endOfLine = require('os').EOL
-  , fs = require('fs')
+var fs = require('fs')
   , join = require('path').join
-  , genBase = require('../genBase');
+  , genBase = require('../genBase')
+  , utils = require('../utils');
 
 
 var Generator = module.exports = genBase.extend();
@@ -18,65 +18,16 @@ Generator.prototype.writing = function writing() {
   var filePath = join(this.config.path, '../app/', config.modulePath, config.moduleName + '.js')
     , file = fs.readFileSync(filePath, 'utf8');
 
-  // find line to add new state
-  var lines = file.split(endOfLine)
-    , stateStartIndex = -1
-    , stateEndIndex = -1
-    , braceCount = 0; // {}
-  lines.forEach(function (line, i) {
-    // look for .state and set stateStartIndex
-    if (line.indexOf('.state(') > -1) {
-      stateStartIndex = i;
-    }
-
-    // open braces add to braceCount
-    if (stateStartIndex > -1 && line.indexOf('{') > -1) {
-      braceCount++;
-    }
-
-    // close braces subract from braceCount
-    if (stateStartIndex > -1 && line.indexOf('}') > -1) {
-      braceCount--;
-    }
-
-    // when braceCount = 0 the end of the state has been reached
-    // set stateEndIndex
-    if (stateStartIndex > -1 && braceCount === 0) {
-      stateEndIndex = i;
-    }
-
-    // loop through everything to append new route at the end
-  });
-
-  // create new state
-  var newState = [
-    '    })',
-    '    .state(\'' + config.lowerCamel + '\', {',
-    '      url: \'' + this.url + '\',',
-    '      templateUrl: \'' + this.module + '/' + config.hyphenName + '.tpl.html\','
-  ];
-
-  if (config.controllerAs) {
-    newState.push('      controller: \'' + config.ctrlName + ' as ' + config.lowerCamel + '\'');
-  } else {
-    newState.push('      controller: \'' + config.ctrlName + '\'');
-  }
-
-  // prepend another two spaces to each line if not passing functions
-  if (config.passFunc) {
-    newState.map(function (line) {
-      return '  ' + line;
-    });
-  }
-
-  // join the state
-  // insert state above }); of the original last state
-  lines.splice(stateEndIndex, 0, newState.map(function (line) {
-    return line;
-  }).join(endOfLine));
+  var newState = {
+    module: this.module,
+    url: this.url,
+    lowerCamel: config.lowerCamel,
+    hyphenName: config.hyphenName,
+    ctrlName: config.ctrlName
+  };
 
   // save modifications
-  fs.writeFileSync(filePath, lines.join(endOfLine));
+  fs.writeFileSync(filePath, utils.addRoute(file, newState, config.controllerAs, config.passFunc));
 
   // e2e testing
   // create page object model

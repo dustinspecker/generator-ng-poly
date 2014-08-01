@@ -4,6 +4,10 @@ var genBase = require('../genBase');
 
 var Generator = module.exports = genBase.extend();
 
+Generator.prototype.initialize = function initialize() {
+
+};
+
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 

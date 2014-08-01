@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('underscore.string')
+  , endOfLine = require('os').EOL
   , fs = require('fs')
   , path = require('path');
 
@@ -71,6 +72,73 @@ function moduleExists(yoRcAbsolutePath, modulePath) {
   return fs.existsSync(fullPath);
 }
 
+function addRoute(fileContents, state, controllerAs, passFunc) {
+  // find line to add new state
+  var lines = fileContents.split(endOfLine)
+    , stateStartIndex = -1
+    , stateEndIndex = -1
+    , braceCount = 0; // {}
+  lines.forEach(function (line, i) {
+    // look for .state and set stateStartIndex
+    if (line.indexOf('.state(') > -1) {
+      stateStartIndex = i;
+    }
+
+    // open braces add to braceCount
+    if (stateStartIndex > -1 && line.indexOf('{') > -1) {
+      braceCount++;
+    }
+
+    // close braces subract from braceCount
+    if (stateStartIndex > -1 && line.indexOf('}') > -1) {
+      braceCount--;
+    }
+
+    // when braceCount = 0 the end of the state has been reached
+    // set stateEndIndex
+    if (stateStartIndex > -1 && braceCount === 0) {
+      stateEndIndex = i;
+    }
+
+    // loop through everything to append new route at the end
+  });
+
+  // create new state
+  var newState = [
+    '    })',
+    '    .state(\'' + state.lowerCamel + '\', {',
+    '      url: \'' + state.url + '\',',
+    '      templateUrl: \'' + state.module + '/' + state.hyphenName + '.tpl.html\','
+  ];
+
+  if (controllerAs) {
+    newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+  } else {
+    newState.push('      controller: \'' + state.ctrlName + '\'');
+  }
+
+  // prepend another two spaces to each line if not passing functions
+  if (passFunc) {
+    newState.map(function (line) {
+      return '  ' + line;
+    });
+  }
+
+  // join the state
+  // insert state above }); of the original last state
+  lines.splice(stateEndIndex, 0, newState.map(function (line) {
+    return line;
+  }).join(endOfLine));
+
+  return lines.join(endOfLine);
+}
+
+function checkElementName(name) {
+  if (name.indexOf('-') < 1 || name.indexOf('-') === name.length-1) {
+    throw 'Element name must have a hyphen (-) in it.';
+  }
+}
+
 module.exports = {
   lowerCamel: lowerCamel,
   upperCamel: upperCamel,
@@ -79,5 +147,7 @@ module.exports = {
   ctrlName: ctrlName,
   getAppName: getAppName,
   moduleExists: moduleExists,
-  extractModuleNames: extractModuleNames
+  extractModuleNames: extractModuleNames,
+  addRoute: addRoute,
+  checkElementName: checkElementName
 };
