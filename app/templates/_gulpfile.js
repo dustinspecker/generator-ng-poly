@@ -63,7 +63,12 @@ var isProd = args.stage === 'prod';
 // bower assets to be injected into index.html
 // 'bower_components' is automatically prepended
 var injectableBowerComponents = [
-  'angular/angular.js',
+  'angular/angular.js',<% if (bower.indexOf('animate') > -1) { %>
+  'angular-animate/angular-animate.js',<% } %><% if (bower.indexOf('cookies') > -1) { %>
+  'angular-cookies/angular-cookies.js',<% } %><% if (bower.indexOf('resource') > -1) { %>
+  'angular-resource/angular-resource.js',<% } %><% if (bower.indexOf('sanitize') > -1) { %>
+  'angular-sanitize/angular-sanitize.js',<% } %><% if (bower.indexOf('touch') > -1) { %>
+  'angular-touch/angular-touch.js',<% } %>
   'angular-ui-router/release/angular-ui-router.js',
   'platform/platform.js'
 ];
@@ -71,7 +76,12 @@ var injectableBowerComponents = [
 // minified bower assets to be injected into index.html
 // 'bower_components' is automatically prepended
 var minInjectableBowerComponents = [
-  'angular/angular.min.js',
+  'angular/angular.min.js',<% if (bower.indexOf('animate') > -1) { %>
+  'angular-animate/angular-animate.min.js',<% } %><% if (bower.indexOf('cookies') > -1) { %>
+  'angular-cookies/angular-cookies.min.js',<% } %><% if (bower.indexOf('resource') > -1) { %>
+  'angular-resource/angular-resource.min.js',<% } %><% if (bower.indexOf('sanitize') > -1) { %>
+  'angular-sanitize/angular-sanitize.min.js',<% } %><% if (bower.indexOf('touch') > -1) { %>
+  'angular-touch/angular-touch.min.js',<% } %>
   'angular-ui-router/release/angular-ui-router.min.js',
   'platform/platform.js'
 ];
@@ -302,7 +312,12 @@ gulp.task('karmaInject', function () {
   stream.queue(gulp.src([
     appBase + '**/*.js',
     '!' + componentsBase + '**/*',
-    '!**/*_test.*',
+    '!**/*_test.*',<% if (bower.indexOf('animate') > -1) { %>
+    bowerDir + 'angular-animate/angular-animate.js',<% } %><% if (bower.indexOf('cookies') > -1) { %>
+    bowerDir + 'angular-cookies/angular-cookies.js',<% } %><% if (bower.indexOf('resource') > -1) { %>
+    bowerDir + 'angular-resource/angular-resource.js',<% } %><% if (bower.indexOf('sanitize') > -1) { %>
+    bowerDir + 'angular-sanitize/angular-sanitize.js',<% } %><% if (bower.indexOf('touch') > -1) { %>
+    bowerDir + 'angular-touch/angular-touch.js',<% } %>
     bowerDir + 'angular-ui-router/release/angular-ui-router.js',
   ]).pipe(angularSort()));
 
@@ -314,7 +329,7 @@ gulp.task('karmaInject', function () {
     .pipe(inject(stream.done(), {
       starttag: 'files: [',
       endtag: ']',
-      addRootSlash: false, 
+      addRootSlash: false,
       transform: function (filepath, file, i, length) {
         return '  \'' + filepath + '\'' + (i + 1 < length ? ',' : '');
     }}))

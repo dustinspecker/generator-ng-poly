@@ -106,6 +106,33 @@ Generator.prototype.prompting = function prompting() {
         checked: true
       }
     ]
+  },
+  {
+    type: 'checkbox',
+    name: 'bower',
+    message: 'Which additonal Bower components should be installed?',
+    choices: [
+      {
+        name: 'Angular Animate',
+        value: 'animate'
+      },
+      {
+        name: 'Angular Cookies',
+        value: 'cookies'
+      },
+      {
+        name: 'Angular Resource',
+        value: 'resource'
+      },
+      {
+        name: 'Angular Sanitize',
+        value: 'sanitize'
+      },
+      {
+        name: 'Angular Touch',
+        value: 'touch'
+      }
+    ]
   }], function (props) {
     this.appName = props.appName;
     this.markup = props.markup;
@@ -116,6 +143,7 @@ Generator.prototype.prompting = function prompting() {
     this.testScript = props.testScript;
     this.testDir = props.testDir;
     this.style = props.style;
+    this.bower = props.bower.join(',');
 
     done();
   }.bind(this));
@@ -139,18 +167,19 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('style', this.style);
   this.config.save();
 
-  this.context = { 
+  this.context = {
     appName: this.appName,
     moduleName: this.appName,
     passFunc: this.passFunc,
-    namedFunc: this.namedFunc
+    namedFunc: this.namedFunc,
+    bower: this.bower
   };
 
   // copy over common files
   this.template('_bower.json', 'bower.json', this.context);
   this.template('_package.json', 'package.json', this.context);
   this.copy('.editorconfig', '.editorconfig');
-  this.copy('gulpfile.js', 'Gulpfile.js');
+  this.template('_gulpfile.js', 'Gulpfile.js', this.context);
   this.copy('karma.config.js', 'karma.config.js');
   this.copy('protractor.config.js', 'protractor.config.js');
   this.copy('.jshintrc', '.jshintrc');

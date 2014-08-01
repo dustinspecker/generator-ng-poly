@@ -52,7 +52,8 @@ describe('ng-poly generator', function () {
           'namedFunc': true,
           'testScript': 'js',
           'testDir': 'app',
-          'style': 'less'
+          'style': 'less',
+          'bower': []
         });
 
         this.app.options['skip-install'] = false; // done to cover installDependencies() branch
@@ -84,7 +85,8 @@ describe('ng-poly generator', function () {
     'namedFunc': true,
     'testScript': 'js',
     'testDir': 'app',
-    'style': 'less'
+    'style': 'less',
+    'bower': []
   },
   {
     'appName': 'temp',
@@ -95,7 +97,8 @@ describe('ng-poly generator', function () {
     'namedFunc': true,
     'testScript': 'coffee',
     'testDir': 'test',
-    'style': 'less'
+    'style': 'less',
+    'bower': []
   }];
 
   function testGenerator(genName, deps, expectedFiles, mockPrompts) {
@@ -203,7 +206,7 @@ describe('ng-poly generator', function () {
       ), {
         module: 'home'
       });
-      
+
       testGenerator('directive', ['../../directive'], expected.concat(
         'app/home/directive-test-directive.tpl.' + config.markup,
         'app/home/directive-test-directive.' + config.appScript,

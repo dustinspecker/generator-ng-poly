@@ -82,7 +82,7 @@ yo ng-poly:view --module=home/kitchen
 * * *
 
 ### App
-Asks for application name and language preferences to scaffold out an application with a home module. It will also ask if tests should be placed in the `app/` or `tests/` directory. Then installs npm and Bower dependencies.
+Asks for application name and language preferences to scaffold out an application with a home module. It will also ask if tests should be placed in the `app/` or `tests/` directory. It'll ask for some additional Bower dependencies and then install npm and Bower dependencies.
 
 Example:
 ```

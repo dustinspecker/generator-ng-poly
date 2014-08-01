@@ -29,7 +29,8 @@ describe('module generator', function () {
         'namedFunc': true,
         'testScript': 'js',
         'testDir': 'app',
-        'style': 'less'
+        'style': 'less',
+        'bower': []
       });
 
       this.app.options['skip-install'] = true;
