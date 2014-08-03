@@ -53,42 +53,18 @@ Generator.prototype.writing = function writing() {
 
   // create app.js
   this.template('_app.js', path.join('app', this.module, this.context.moduleName + '.js'), this.context);
-
-
-  // config for e2e test templates
-  var config = {
-    hyphenName: utils.hyphenName(this.context.moduleName),
-    humanName: utils.humanName(this.context.moduleName),
-    lowerCamel: utils.lowerCamel(this.context.moduleName),
-    upperCamel: utils.upperCamel(this.context.moduleName),
-    ctrlName: utils.ctrlName(this.context.moduleName)
-  };
-
-  // e2e testing
-  // create page object model
-  this.sourceRoot(path.join(__dirname, '../route/templates/'));
-  this.template('page.po.' + this.context.testScript,
-    path.join('e2e', config.hyphenName, config.hyphenName + '.po.' + this.context.testScript), config);
-  // create test
-  this.template('page_test.' + this.context.testScript,
-    path.join('e2e', config.hyphenName, config.hyphenName + '_test.' + this.context.testScript), config);
 };
 
 Generator.prototype.end = function end() {
-  this.invoke('ng-poly:controller', {
-    args: [this.context.moduleName],
-    options: {
+  if (this.options && !this.options.empty) {
+    this.invoke('ng-poly:route', {
+      args: [this.context.moduleName],
       options: {
-        module: this.module
+        options: {
+          module: this.module,
+          url: '/' + this.context.moduleName
+        }
       }
-    }
-  });
-  this.invoke('ng-poly:view', {
-    args: [this.context.moduleName],
-    options: {
-      options: {
-        module: this.module
-      }
-    }
-  });
+    });
+  }
 };

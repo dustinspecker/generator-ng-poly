@@ -25,11 +25,12 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
       return '/' + utils.lowerCamel(this.name);
     }.bind(this),
     when: function() {
-      return ((params && params.url === true) && !(this.options && this.options.url));
+      return ( (params && params.url === true) && 
+        !( (this.options && this.options.url) || (this.options && this.options.options && this.options.options.url) ) );
     }.bind(this)
   }], function (props) {
     this.module = props.module || this.options.module || this.options.options.module;
-    this.url = props.url || this.options.url;
+    this.url = props.url || this.options.url || this.options.options.url;
 
     if (this.url && (this.url.charAt(0) !== '/' && this.url.charAt(0) !== '\\')) {
       this.url = '/' + this.url;

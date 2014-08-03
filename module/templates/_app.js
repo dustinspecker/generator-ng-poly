@@ -3,7 +3,6 @@
 
 /* @ngdoc object
  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>
- * @requires $stateProvider
  *
  * @description
  *
@@ -11,13 +10,7 @@
  * @ngInject
  *
  */
-function config($stateProvider) {
-  $stateProvider
-    .state('<%= moduleName %>', {
-      url: '/<%= moduleName %>',
-      templateUrl: '<%= templateUrl %>/<%= moduleName %>.tpl.html',
-      controller: '<%= upperModule %>Ctrl<% if (controllerAs) { %> as <%= moduleName %><% } %>'
-    });
+function config() {
 }<% } %>
 
 <% if (!passFunc) { %>/* @ngdoc object
@@ -30,19 +23,12 @@ function config($stateProvider) {
  */
 <% } %>angular
   .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', [
-    'ui.router'
   ]);
 
 angular
   .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
   .config(config);<% } else { %>
-  .config(function <% if (namedFunc) { %>config<% } %>($stateProvider) {
-    $stateProvider
-      .state('<%= moduleName %>', {
-        url: '/<%= moduleName %>',
-        templateUrl: '<%= templateUrl %>/<%= moduleName %>.tpl.html',
-        controller: '<%= upperModule %>Ctrl<% if (controllerAs) { %> as <%= moduleName %><% } %>'
-      });
+  .config(function <% if (namedFunc) { %>config<% } %>() {
   });<% } %>
 <% if (passFunc) { %>
 })();<% } %>

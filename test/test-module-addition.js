@@ -15,8 +15,9 @@ describe('module generator', function () {
 
       this.app = helpers.createGenerator('ng-poly:app', [
         '../../app',
-        '../../controller',
         '../../module',
+        '../../route',
+        '../../controller',
         '../../view'
       ]);
 
@@ -41,10 +42,39 @@ describe('module generator', function () {
     }.bind(this));
   });
 
+  describe('adding a new empty module', function () {
+    beforeEach(function (done) {
+      this.app = helpers.createGenerator('ng-poly:module', [
+        '../../module',
+        '../../route',
+        '../../controller',
+        '../../view'
+      ], 'test');
+      this.app.options.empty = true;
+      this.app.run([], function () {
+        done();
+      });
+    });
+
+    it('should not create a controller and view', function (done) {
+      this.app.run([], function () {
+        assert.noFile([
+          'app/test/test-controller.js',
+          'app/test/test-controller_test.js',
+          'app/test/test.tpl.html',
+          'e2e/test/test.po.js',
+          'e2e/test/test_test.js'
+        ]);
+        done();
+      });
+    });
+  });
+
   describe('adding a new module', function () {
     beforeEach(function (done) {
       this.app = helpers.createGenerator('ng-poly:module', [
         '../../module',
+        '../../route',
         '../../controller',
         '../../view'
       ], 'test');
@@ -64,6 +94,7 @@ describe('module generator', function () {
     beforeEach(function (done) {
       this.app = helpers.createGenerator('ng-poly:module', [
         '../../module',
+        '../../route',
         '../../controller',
         '../../view'
       ], 'home/door');

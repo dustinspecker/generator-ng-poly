@@ -11,7 +11,7 @@
  * @ngInject
  *
  */
-function config() {
+function config(testParam) {
 }
 
 angular

@@ -73,7 +73,7 @@ function moduleExists(yoRcAbsolutePath, modulePath) {
 }
 
 function dependencyExists(fileContents, dependency) {
-  var regex = new RegExp('.module\\(\'[^$]*\', \\[[^$]*\'' + dependency + '\'[^$]*\\]\\);');
+  var regex = new RegExp('[.]module\\(\'[^$]*\', \\[[^$]*\'' + dependency + '\'[^$]*\\]\\);');
   return regex.test(fileContents);
 }
 
@@ -116,7 +116,7 @@ function addRoute(fileContents, state, controllerAs, passFunc) {
   }
 
   // check if $stateProvider is passed to config
-  var regex = /function[^$]*\([^$]*$stateProvider[^$]*\)/;
+  var regex = /function.*\(.*\$stateProvider.*\)/;
   var addStateProvider = !regex.test(fileContents);
 
   // find line to add new state
@@ -135,7 +135,10 @@ function addRoute(fileContents, state, controllerAs, passFunc) {
         } else {
           lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $stateProvider) {';
         }
-        configFunctionIndex = i;
+    }
+
+    if (line.indexOf('function config(') > -1 || line.indexOf('.config(function') > -1) {
+      configFunctionIndex = i;
     }
 
     // look for .state and set stateStartIndex

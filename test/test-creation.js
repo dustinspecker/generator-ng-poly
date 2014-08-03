@@ -38,8 +38,9 @@ describe('ng-poly generator', function () {
 
         this.app = helpers.createGenerator('ng-poly:app', [
           '../../app',
-          '../../controller',
           '../../module',
+          '../../route',
+          '../../controller',
           '../../view'
         ]);
 
@@ -173,8 +174,9 @@ describe('ng-poly generator', function () {
 
           this.app = helpers.createGenerator('ng-poly:app', [
             '../../app',
-            '../../controller',
             '../../module',
+            '../../route',
+            '../../controller',
             '../../view'
           ]);
 
@@ -235,7 +237,7 @@ describe('ng-poly generator', function () {
         module: 'home'
       });
 
-      testGenerator('module', ['../../module', '../../controller', '../../view'], expected.concat(
+      testGenerator('module', ['../../module', '../../route', '../../controller', '../../view'], expected.concat(
         'app/module-test/module-test.' + config.appScript,
         'app/module-test/module-test-controller.' + config.appScript,
         config.testDir + '/module-test/module-test-controller_test.' + config.testScript,

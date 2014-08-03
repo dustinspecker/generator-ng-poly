@@ -400,7 +400,7 @@ describe('coffee', function () {
 ```
 
 ### Module
-Generates a new module, view, and controller. Updates parent module's dependencies.
+Generates a new module and create a new route. Updates parent module's dependencies.
 
 **Top Level Example:**
 ```
@@ -413,7 +413,6 @@ Produces `app/top/top.js`:
 
 /* @ngdoc object
  * @name top
- * @requires $stateProvider
  *
  * @description
  *
@@ -519,6 +518,33 @@ Updates 'top.bottom' module with the new 'bottom.bottemest' module as a dependen
 **Deeperestier Level Example:**
 
 It just keeps going...
+
+* * *
+**Empty modules**
+
+By running `ng-poly:module newHome --empty` a module without a route will be created as such:
+```javascript
+'use strict';
+
+/* @ngdoc object
+ * @name newHome
+ *
+ * @description
+ *
+ *
+ * @ngInject
+ *
+ */
+angular
+  .module('newHome', [
+  ]);
+
+angular
+  .module('newHome')
+  .config(function () {
+  });
+```
+**It is still possible to add a route to this module via [ng-poly:route](#route).** The route subgenerator will also add the ui.router dependency and $stateProvider paramater for the config function.
 
 ### Provider
 Generates a provider and its test.
