@@ -98,7 +98,7 @@ describe('ng-poly generator', function () {
     'namedFunc': true,
     'testScript': 'coffee',
     'testDir': 'test',
-    'style': 'less',
+    'style': 'styl',
     'bower': []
   }];
 
@@ -241,7 +241,8 @@ describe('ng-poly generator', function () {
         'app/module-test/module-test.' + config.appScript,
         'app/module-test/module-test-controller.' + config.appScript,
         config.testDir + '/module-test/module-test-controller_test.' + config.testScript,
-        'app/module-test/module-test.tpl.' + config.markup
+        'app/module-test/module-test.tpl.' + config.markup,
+        'app/module-test/module-test.' + config.style
       ));
 
       testGenerator('provider', ['../../provider'], expected.concat(
@@ -275,7 +276,8 @@ describe('ng-poly generator', function () {
       });
 
       testGenerator('view', ['../../view'], expected.concat(
-        'app/home/view-test.tpl.' + config.markup
+        'app/home/view-test.tpl.' + config.markup,
+        'app/home/view-test.' + config.style
       ), {
         module: 'home'
       });

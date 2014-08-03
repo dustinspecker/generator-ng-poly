@@ -52,6 +52,7 @@ Generator.prototype.getConfig = function getConfig() {
     controllerAs: this.config.get('controllerAs'),
     passFunc: this.config.get('passFunc'),
     namedFunc: this.config.get('namedFunc'),
+    style: this.config.get('style'),
     testScript: this.config.get('testScript'),
     testDir: this.config.get('testDir')
   };

@@ -52,6 +52,7 @@ Languages and Features supported:
     - JavaScript
   * Style languages
     - LESS
+    - Stylus
   * Unit testing
     - Jasmine (Karma as the test runner) for AngularJS
   * e2e testing
@@ -81,6 +82,8 @@ yo ng-poly:view --module=home/kitchen
 ```
 * * *
 
+**Examples are shown with HTML, LESS, and JavaScript as the app configuration.**
+
 ### App
 Asks for application name and language preferences to scaffold out an application with a home module. It will also ask if tests should be placed in the `app/` or `tests/` directory. It'll ask for some additional Bower dependencies and then install npm and Bower dependencies.
 
@@ -95,7 +98,7 @@ root/
 ├── app/
 │   ├── home/
 │   │   ├── home.js
-│   │   ├── home.less
+│   │   ├── home.{less,styl}
 │   │   ├── home.tpl.{html,jade}
 │   │   ├── home-controller.js
 │   │   └── home-controller_test.{coffee,js}

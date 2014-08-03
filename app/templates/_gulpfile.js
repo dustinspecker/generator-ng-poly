@@ -18,6 +18,7 @@ var gulp = require('gulp')
   , open = require('gulp-open')
   , plato = require('gulp-plato')
   , protractor = require('gulp-protractor').protractor
+  , stylus = require('gulp-stylus')
   , uglify = require('gulp-uglify')
   /* jshint -W106 */
   , webdriverUpdate = require('gulp-protractor').webdriver_update;
@@ -34,13 +35,13 @@ var _ = require('lodash')
 var appBase = 'app/'
   , appMarkupFiles = appBase + '**/*.{html,jade}'
   , appScriptFiles = appBase + '**/*.js'
-  , appStyleFiles = appBase + '**/*.less';
+  , appStyleFiles = appBase + '**/*.{less,styl}';
 
 // custom component locations
 var componentsBase = appBase + 'components/'
   , componentsMarkupFiles = componentsBase + '**/*.{html,jade}'
   , componentsScriptFiles = componentsBase + '**/*.js'
-  , componentsStyleFiles = componentsBase + '**/*.less';
+  , componentsStyleFiles = componentsBase + '**/*.{less,styl}';
 
 // e2e test locations
 var e2ePoFiles = 'e2e/**/*.po.{coffee,js}'
@@ -63,12 +64,12 @@ var isProd = args.stage === 'prod';
 // bower assets to be injected into index.html
 // 'bower_components' is automatically prepended
 var injectableBowerComponents = [
-  'angular/angular.js',<% if (bower.indexOf('animate') > -1) { %>
-  'angular-animate/angular-animate.js',<% } %><% if (bower.indexOf('cookies') > -1) { %>
-  'angular-cookies/angular-cookies.js',<% } %><% if (bower.indexOf('resource') > -1) { %>
-  'angular-resource/angular-resource.js',<% } %><% if (bower.indexOf('sanitize') > -1) { %>
-  'angular-sanitize/angular-sanitize.js',<% } %><% if (bower.indexOf('touch') > -1) { %>
-  'angular-touch/angular-touch.js',<% } %>
+  'angular/angular.js',
+  'angular-animate/angular-animate.js',
+  'angular-cookies/angular-cookies.js',
+  'angular-resource/angular-resource.js',
+  'angular-sanitize/angular-sanitize.js',
+  'angular-touch/angular-touch.js',
   'angular-ui-router/release/angular-ui-router.js',
   'platform/platform.js'
 ];
@@ -76,12 +77,12 @@ var injectableBowerComponents = [
 // minified bower assets to be injected into index.html
 // 'bower_components' is automatically prepended
 var minInjectableBowerComponents = [
-  'angular/angular.min.js',<% if (bower.indexOf('animate') > -1) { %>
-  'angular-animate/angular-animate.min.js',<% } %><% if (bower.indexOf('cookies') > -1) { %>
-  'angular-cookies/angular-cookies.min.js',<% } %><% if (bower.indexOf('resource') > -1) { %>
-  'angular-resource/angular-resource.min.js',<% } %><% if (bower.indexOf('sanitize') > -1) { %>
-  'angular-sanitize/angular-sanitize.min.js',<% } %><% if (bower.indexOf('touch') > -1) { %>
-  'angular-touch/angular-touch.min.js',<% } %>
+  'angular/angular.min.js',
+  'angular-animate/angular-animate.min.js',
+  'angular-cookies/angular-cookies.min.js',
+  'angular-resource/angular-resource.min.js',
+  'angular-sanitize/angular-sanitize.min.js',
+  'angular-touch/angular-touch.min.js',
   'angular-ui-router/release/angular-ui-router.min.js',
   'platform/platform.js'
 ];
@@ -183,10 +184,19 @@ gulp.task('components', ['clean', 'jshint'], function () {
   ;
 
   // less
-  stream.queue(gulp.src(
-    componentsStyleFiles
-  , { base: componentsBase })
+  stream.queue(gulp.src([
+    componentsStyleFiles,
+    '!**/*.styl'
+  ], { base: componentsBase })
     .pipe(less()))
+  ;
+
+  // stylus
+  stream.queue(gulp.src([
+    componentsStyleFiles,
+    '!**/*.less'
+  ], { base: componentsBase })
+    .pipe(stylus()))
   ;
 
   return stream.done()
@@ -221,11 +231,28 @@ gulp.task('scripts', ['clean', 'jshint'], function () {
 });
 
 gulp.task('style', ['clean'], function () {
-  return gulp.src([
+  var stream = streamqueue({ objectMode: true });
+
+  // less
+  stream.queue(gulp.src([
     appStyleFiles,
+    '!**/*.styl',
     '!' + componentsBase + '**/*'
   ])
-    .pipe(less())
+    .pipe(less()))
+  ;
+
+  // stylus
+  stream.queue(gulp.src([
+    appStyleFiles,
+    '!**/*.less',
+    '!' + componentsBase + '**/*'
+  ])
+    .pipe(stylus()))
+  ;
+
+
+  return stream.done()
     .pipe(gulpIf(isProd, concat('style.css')))
     .pipe(gulpIf(isProd, cssmin()))
     .pipe(gulp.dest(build))
@@ -312,12 +339,12 @@ gulp.task('karmaInject', function () {
   stream.queue(gulp.src([
     appBase + '**/*.js',
     '!' + componentsBase + '**/*',
-    '!**/*_test.*',<% if (bower.indexOf('animate') > -1) { %>
-    bowerDir + 'angular-animate/angular-animate.js',<% } %><% if (bower.indexOf('cookies') > -1) { %>
-    bowerDir + 'angular-cookies/angular-cookies.js',<% } %><% if (bower.indexOf('resource') > -1) { %>
-    bowerDir + 'angular-resource/angular-resource.js',<% } %><% if (bower.indexOf('sanitize') > -1) { %>
-    bowerDir + 'angular-sanitize/angular-sanitize.js',<% } %><% if (bower.indexOf('touch') > -1) { %>
-    bowerDir + 'angular-touch/angular-touch.js',<% } %>
+    '!**/*_test.*',
+    bowerDir + 'angular-animate/angular-animate.js',
+    bowerDir + 'angular-cookies/angular-cookies.js',
+    bowerDir + 'angular-resource/angular-resource.js',
+    bowerDir + 'angular-sanitize/angular-sanitize.js',
+    bowerDir + 'angular-touch/angular-touch.js',
     bowerDir + 'angular-ui-router/release/angular-ui-router.js',
   ]).pipe(angularSort()));
 

@@ -9,7 +9,7 @@ Generator.prototype.writing = function writing() {
 
   var elementDir = 'app/components/' + config.hyphenName + '/';
   this.mkdir(elementDir);
-  this.copy('element.less', elementDir + config.hyphenName + '.less');
+  this.copy('element.' + config.style, elementDir + config.hyphenName + '.' + config.style);
   this.template('_element.' + config.markup, elementDir + config.hyphenName + '.' + config.markup, config);
   this.template('_element.js', elementDir + config.hyphenName + '.js', config);
 };

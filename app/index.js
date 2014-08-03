@@ -104,6 +104,10 @@ Generator.prototype.prompting = function prompting() {
         name: 'LESS',
         value: 'less',
         checked: true
+      },
+      {
+        name: 'Stylus',
+        value: 'styl'
       }
     ]
   },

@@ -14,5 +14,5 @@ Generator.prototype.writing = function writing() {
 
   this.template('_view.' + config.markup,
     path.join('app', config.modulePath, config.hyphenName + '.tpl.' + config.markup), config);
-  this.copy('style.less', path.join('app', config.modulePath, config.hyphenName + '.less'));
+  this.copy('style.' + config.style, path.join('app', config.modulePath, config.hyphenName + '.' + config.style));
 };
