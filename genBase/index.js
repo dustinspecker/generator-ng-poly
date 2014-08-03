@@ -41,28 +41,20 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
 };
 
 Generator.prototype.getConfig = function getConfig() {
-  var config = {
-    appName: utils.getAppName(this.config.path),
-    ctrlName: utils.ctrlName(this.name),
-    humanName: utils.humanName(this.name),
-    hyphenName: utils.hyphenName(this.name),
-    lowerCamel: utils.lowerCamel(this.name),
-    upperCamel: utils.upperCamel(this.name),
-    markup: this.config.get('markup'),
-    controllerAs: this.config.get('controllerAs'),
-    passFunc: this.config.get('passFunc'),
-    namedFunc: this.config.get('namedFunc'),
-    style: this.config.get('style'),
-    testScript: this.config.get('testScript'),
-    testDir: this.config.get('testDir')
-  };
+  var config = this.config.getAll();
+  config.appName = utils.getAppName(this.config.path);
+  config.ctrlName = utils.ctrlName(this.name);
+  config.humanName = utils.humanName(this.name);
+  config.hyphenName = utils.hyphenName(this.name);
+  config.lowerCamel = utils.lowerCamel(this.name);
+  config.upperCamel = utils.upperCamel(this.name);
 
   if (this.module) {
     utils.moduleExists(this.config.path, this.module);
     var modules = utils.extractModuleNames(this.module);
-    config.modulePath= this.module.replace('.', '/');
-    config.moduleName= modules[0];
-    config.parentModuleName= modules[1];
+    config.modulePath = this.module.replace('.', '/');
+    config.moduleName = modules[0];
+    config.parentModuleName = modules[1];
   }
 
   return config;
