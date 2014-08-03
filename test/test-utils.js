@@ -1,4 +1,4 @@
-/*global describe, it */
+/*global describe, beforeEach, it */
 'use strict';
 var assert = require('assert')
   , fs = require('fs')
@@ -107,31 +107,18 @@ describe('Utils', function () {
     });
   });
 
-  describe('addRoute', function () {
-    it('should add new state without controllerAS', function () {
-      var fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app.js'), 'utf8');
-      var newState = {
-        module:'home',
-        url: 'test',
-        lowerCamel: 'test',
-        hyphenName: 'test',
-        ctrlName: 'TestCtrl'
-      };
-      assert(utils.addRoute(fileContents, newState, false, false),
-        /.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\'[^$]*}\)/);
+  describe('dependencyExists', function () {
+    var fileContents;
+    beforeEach(function () {
+      fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.js'), 'utf8');
     });
 
-    it('should add new state with controllerAS', function () {
-      var fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app.js'), 'utf8');
-      var newState = {
-        module:'home',
-        url: 'test',
-        lowerCamel: 'test',
-        hyphenName: 'test',
-        ctrlName: 'TestCtrl'
-      };
-      assert(utils.addRoute(fileContents, newState, true, true),
-        /.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl as test\'[^$]*}\)/);
+    it('should find existing dependency', function () {
+      assert(utils.dependencyExists(fileContents, 'ui.router') === true);
+    });
+
+    it('should not find non-existing dependency', function () {
+      assert(utils.dependencyExists(fileContents, 'ngResource') === false);
     });
   });
 

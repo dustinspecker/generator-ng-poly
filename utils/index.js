@@ -72,13 +72,72 @@ function moduleExists(yoRcAbsolutePath, modulePath) {
   return fs.existsSync(fullPath);
 }
 
+function dependencyExists(fileContents, dependency) {
+  var regex = new RegExp('.module\\(\'[^$]*\', \\[[^$]*\'' + dependency + '\'[^$]*\\]\\);');
+  return regex.test(fileContents);
+}
+
+function addDependency(fileContents, dependency) {
+  // find line to add new dependency
+  var lines = fileContents.split(endOfLine)
+    , angularDefinitionOpenLine = -1
+    , angularDefinitionCloseLine = -1;
+
+  lines.forEach(function (line, i) {
+    // find line with angular.module('*', [
+    if (angularDefinitionOpenLine < 0 && line.indexOf('.module') > -1) {
+      angularDefinitionOpenLine = i;
+    }
+
+    // find line with closing ]);
+    if (angularDefinitionOpenLine > -1 && angularDefinitionCloseLine < 0 && line.indexOf(']);') > -1) {
+      angularDefinitionCloseLine = i;
+    }
+  });
+
+  // if there is a previous dependency
+  // remove new line and add a comma to the previous depdendency
+  // slice at the last quote to remove the varying line endings
+  if (angularDefinitionCloseLine > angularDefinitionOpenLine + 1) {
+    lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1].slice(0, lines[angularDefinitionCloseLine-1].lastIndexOf('\''));
+    lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1] + '\',';
+  }
+
+  // insert new line and dependency
+  lines.splice(angularDefinitionCloseLine, 0, '    \'' + dependency + '\'');
+
+  return lines.join(endOfLine);
+}
+
 function addRoute(fileContents, state, controllerAs, passFunc) {
+  // if file doesn't have ui.router as a dependency, add it
+  if (!dependencyExists(fileContents, 'ui.router')) {
+    fileContents = addDependency(fileContents, 'ui.router');
+  }
+
+  // check if $stateProvider is passed to config
+  var regex = /function[^$]*\([^$]*$stateProvider[^$]*\)/;
+  var addStateProvider = !regex.test(fileContents);
+
   // find line to add new state
   var lines = fileContents.split(endOfLine)
     , stateStartIndex = -1
     , stateEndIndex = -1
-    , braceCount = 0; // {}
+    , braceCount = 0 // {}
+    , configFunctionIndex = -1;
   lines.forEach(function (line, i) {
+    // add $stateProvider if needed
+    if ( (addStateProvider && passFunc && line.indexOf('function config(') > -1) ||
+      (addStateProvider && !passFunc && line.indexOf('.config(function') > -1) ) {
+        // check if function has a parameter already
+        if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$stateProvider) {';
+        } else {
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $stateProvider) {';
+        }
+        configFunctionIndex = i;
+    }
+
     // look for .state and set stateStartIndex
     if (line.indexOf('.state(') > -1) {
       stateStartIndex = i;
@@ -103,32 +162,66 @@ function addRoute(fileContents, state, controllerAs, passFunc) {
     // loop through everything to append new route at the end
   });
 
-  // create new state
-  var newState = [
-    '    })',
-    '    .state(\'' + state.lowerCamel + '\', {',
-    '      url: \'' + state.url + '\',',
-    '      templateUrl: \'' + state.module + '/' + state.hyphenName + '.tpl.html\','
-  ];
+  // has existing state
+  var newState;
+  if (stateStartIndex > -1) {
+    // create new state
+    newState = [
+      '    })',
+      '    .state(\'' + state.lowerCamel + '\', {',
+      '      url: \'' + state.url + '\',',
+      '      templateUrl: \'' + state.module + '/' + state.hyphenName + '.tpl.html\','
+    ];
 
-  if (controllerAs) {
-    newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+    if (controllerAs) {
+      newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+    } else {
+      newState.push('      controller: \'' + state.ctrlName + '\'');
+    }
+
+    // prepend another two spaces to each line if not passing functions
+    if (!passFunc) {
+      newState = newState.map(function (newStateLine) {
+        return '  ' + newStateLine;
+      });
+    }
+
+    // join the state
+    // insert state above }); of the original last state
+    lines.splice(stateEndIndex, 0, newState.map(function (newStateLine) {
+      return newStateLine;
+    }).join(endOfLine));
   } else {
-    newState.push('      controller: \'' + state.ctrlName + '\'');
-  }
+    // no existing state
+    newState = [
+      '  $stateProvider',
+      '    .state(\'' + state.lowerCamel + '\', {',
+      '      url: \'' + state.url + '\',',
+      '      templateUrl: \'' + state.module + '/' + state.hyphenName + '.tpl.html\',',
+    ];
 
-  // prepend another two spaces to each line if not passing functions
-  if (passFunc) {
-    newState.map(function (line) {
-      return '  ' + line;
-    });
-  }
+    // add controller
+    if (controllerAs) {
+      newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+    } else {
+      newState.push('      controller: \'' + state.ctrlName + '\'');
+    }
 
-  // join the state
-  // insert state above }); of the original last state
-  lines.splice(stateEndIndex, 0, newState.map(function (line) {
-    return line;
-  }).join(endOfLine));
+    // close state
+    newState.push('    });');
+
+    // prepend another two spaces to each line if not passing functions
+    if (!passFunc) {
+      newState = newState.map(function (newStateLine) {
+        return '  ' + newStateLine;
+      });
+    }
+
+    // insert the first state at top of config function
+    lines.splice(configFunctionIndex+1, 0, newState.map(function (newStateLine) {
+      return newStateLine;
+    }).join(endOfLine));
+  }
 
   return lines.join(endOfLine);
 }
@@ -149,5 +242,7 @@ module.exports = {
   moduleExists: moduleExists,
   extractModuleNames: extractModuleNames,
   addRoute: addRoute,
+  dependencyExists: dependencyExists,
+  addDependency: addDependency,
   checkElementName: checkElementName
 };

@@ -1,6 +1,5 @@
 'use strict';
-var endOfLine = require('os').EOL
-  , fs = require('fs')
+var fs = require('fs')
   , genBase = require('../genBase')
   , path = require('path')
   , utils = require('../utils');
@@ -47,42 +46,10 @@ Generator.prototype.writing = function writing() {
 
   file = fs.readFileSync(filePath, 'utf8');
 
-  // find line to add new dependency
-  var lines = file.split(endOfLine)
-    , angularDefinitionOpenLine = -1
-    , angularDefinitionCloseLine = -1;
-
-  lines.forEach(function (line, i) {
-    // find line with angular.module('*', [
-    if (angularDefinitionOpenLine < 0 && line.indexOf('.module') > -1) {
-      angularDefinitionOpenLine = i;
-    }
-
-    // find line with closing ]);
-    if (angularDefinitionOpenLine > -1 && angularDefinitionCloseLine < 0 && line.indexOf(']);') > -1) {
-      angularDefinitionCloseLine = i;
-    }
-  });
-
-  // create moduleName
-  // if parent module exists, make it part of module name
-  var moduleName;
-  if (this.context.parentModuleName) {
-    moduleName = '    \'' + this.context.parentModuleName + '.' + this.context.moduleName + '\'';
-  } else {
-    moduleName =  '    \'' + this.context.moduleName + '\'';
-  }
-
-  // remove new line and add a comma to the previous depdendency
-  // slice at the last quote to remove the varying line endings
-  lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1].slice(0, lines[angularDefinitionCloseLine-1].lastIndexOf('\''));
-  lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1] + '\',';
-
-  // insert new line and dependency
-  lines.splice(angularDefinitionCloseLine, 0, moduleName);
-
   // save modifications
-  fs.writeFileSync(filePath, lines.join(endOfLine));
+  var depName = (this.context.parentModuleName) ? this.context.parentModuleName + '.' : '';
+  depName += this.context.moduleName;
+  fs.writeFileSync(filePath, utils.addDependency(file, depName));
 
   // create app.js
   this.template('_app.js', path.join('app', this.module, this.context.moduleName + '.js'), this.context);
