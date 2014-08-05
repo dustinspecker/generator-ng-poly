@@ -193,8 +193,10 @@ Generator.prototype.writing = function writing() {
   var markup = this.config.get('markup');
 
   // create main module and index.html
-  this.template('_app.js', 'app/app.js', this.context);
-  this.template('_index.' + markup, 'app/index.' + markup, this.context);
+  this.template('_app.js',
+    path.join('app', 'app.js'), this.context);
+  this.template('_index.' + markup,
+    path.join('app', 'index.' + markup), this.context);
 };
 
 Generator.prototype.install = function install() {
