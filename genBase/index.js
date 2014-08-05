@@ -13,7 +13,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     message: 'Which module is this for?',
     default: this.name,
     when: function () {
-      return !(this.options && this.options.module)
+      return !(this.options && this.options.module);
     }.bind(this),
     validate: function (input) {
       return utils.moduleExists(this.config.path, input);
