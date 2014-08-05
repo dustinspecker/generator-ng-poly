@@ -13,7 +13,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     message: 'Which module is this for?',
     default: this.name,
     when: function () {
-      return !((this.options && this.options.options && this.options.options.module) || (this.options && this.options.module));
+      return !(this.options && this.options.module)
     }.bind(this),
     validate: function (input) {
       return utils.moduleExists(this.config.path, input);
@@ -25,25 +25,22 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
       return '/' + utils.lowerCamel(this.name);
     }.bind(this),
     when: function() {
-      return ( (params && params.url) && 
-        !( (this.options && this.options.url) || (this.options && this.options.options && this.options.options.url) ) );
+      return ( (params && params.url) && !(this.options && this.options.url) );
     }.bind(this)
   }, {
     name: 'templateUrl',
     message: 'What\'s the templateURL for this state?',
     default: function (answers) {
-      var module = answers.module || this.options.module || this.options.options.module;
+      var module = answers.module || this.options.module;
       return module + '/' + this.name + '.tpl.html';
     }.bind(this),
     when: function () {
-      return ( (params && params.templateUrl) &&
-        !( (this.options && this.options.templateUrl) ||
-          (this.options && this.options.options && this.options.options.templateUrl ) ) );
+      return ( (params && params.templateUrl) && !(this.options && this.options.templateUrl) );
     }.bind(this)
   }], function (props) {
-    this.module = props.module || this.options.module || (this.options.options && this.options.options.module);
-    this.url = props.url || this.options.url || (this.options.options && this.options.options.url);
-    this.templateUrl = props.templateUrl || this.options.templateUrl || (this.options.options && this.options.options.templateUrl);
+    this.module = props.module || this.options.module;
+    this.url = props.url || this.options.url;
+    this.templateUrl = props.templateUrl || this.options.templateUrl;
 
     if (this.url && (this.url.charAt(0) !== '/' && this.url.charAt(0) !== '\\')) {
       this.url = '/' + this.url;

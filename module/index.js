@@ -57,14 +57,12 @@ Generator.prototype.writing = function writing() {
 
 Generator.prototype.end = function end() {
   if (this.options && !this.options.empty) {
-    this.invoke('ng-poly:route', {
+    this.composeWith('ng-poly:route', {
       args: [this.context.moduleName],
       options: {
-        options: {
-          module: this.module,
-          url: '/' + this.context.moduleName,
-          templateUrl: this.module + '/' + this.context.moduleName + '.tpl.html'
-        }
+        module: this.module,
+        url: '/' + this.context.moduleName,
+        templateUrl: this.module + '/' + this.context.moduleName + '.tpl.html'
       }
     });
   }

@@ -210,12 +210,10 @@ Generator.prototype.end = function end() {
   // tests randomly fail without this
   this.config.forceSave();
 
-  this.invoke('ng-poly:module', {
+  this.composeWith('ng-poly:module', {
     args: ['home'],
     options: {
-      options: {
-        module: 'home'
-      }
+      module: 'home'
     }
   });
 };

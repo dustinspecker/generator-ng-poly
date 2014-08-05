@@ -40,20 +40,16 @@ Generator.prototype.writing = function writing() {
 };
 
 Generator.prototype.end = function end() {
-  this.invoke('ng-poly:controller', {
+  this.composeWith('ng-poly:controller', {
     args: [this.name],
     options: {
-      options: {
-        module: this.module
-      }
+      module: this.module
     }
   });
-  this.invoke('ng-poly:view', {
+  this.composeWith('ng-poly:view', {
     args: [path.basename(this.templateUrl)],
     options: {
-      options: {
-        module: this.module
-      }
+      module: this.module
     }
   });
 };
