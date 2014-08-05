@@ -62,7 +62,8 @@ Generator.prototype.end = function end() {
       options: {
         options: {
           module: this.module,
-          url: '/' + this.context.moduleName
+          url: '/' + this.context.moduleName,
+          templateUrl: this.module + '/' + this.context.moduleName + '.tpl.html'
         }
       }
     });

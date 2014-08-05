@@ -1,6 +1,6 @@
 'use strict';
 var fs = require('fs')
-  , join = require('path').join
+  , path = require('path')
   , genBase = require('../genBase')
   , utils = require('../utils');
 
@@ -8,14 +8,14 @@ var fs = require('fs')
 var Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
-  this.askForModuleName({url: true});
+  this.askForModuleName({ url: true, templateUrl: true });
 };
 
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
   // load app.js to prepare adding new state
-  var filePath = join(this.config.path, '../app/', config.modulePath, config.moduleName + '.js')
+  var filePath = path.join(this.config.path, '../app/', config.modulePath, config.moduleName + '.js')
     , file = fs.readFileSync(filePath, 'utf8');
 
   var newState = {
@@ -23,7 +23,8 @@ Generator.prototype.writing = function writing() {
     url: this.url,
     lowerCamel: config.lowerCamel,
     hyphenName: config.hyphenName,
-    ctrlName: config.ctrlName
+    ctrlName: config.ctrlName,
+    templateUrl: this.templateUrl
   };
 
   // save modifications
@@ -32,10 +33,10 @@ Generator.prototype.writing = function writing() {
   // e2e testing
   // create page object model
   this.template('page.po.' + config.testScript,
-    join('e2e', config.hyphenName, config.hyphenName + '.po.' + config.testScript), config);
+    path.join('e2e', config.hyphenName, config.hyphenName + '.po.' + config.testScript), config);
   // create test
   this.template('page_test.' + config.testScript,
-    join('e2e', config.hyphenName, config.hyphenName + '_test.' + config.testScript), config);
+    path.join('e2e', config.hyphenName, config.hyphenName + '_test.' + config.testScript), config);
 };
 
 Generator.prototype.end = function end() {
@@ -48,7 +49,7 @@ Generator.prototype.end = function end() {
     }
   });
   this.invoke('ng-poly:view', {
-    args: [this.name],
+    args: [path.basename(this.templateUrl)],
     options: {
       options: {
         module: this.module

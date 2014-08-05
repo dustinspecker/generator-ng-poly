@@ -603,7 +603,7 @@ describe('Bacon', function () {
 ```
 
 ### Route
-Adds a new route and generates a controller and view. The name provided is used as state name. Yeoman will then ask for the module to add the route to and the URL for the route (default is the state name provided). It will also generate an e2e test and a Page Object model for the new route.
+Adds a new route and generates a controller and view. The name provided is used as state name. Yeoman will then ask for the module to add the route to, the URL for the route, and the templateUrl. It will also generate an e2e test and a Page Object model for the new route.
 
 Example:
 ```
@@ -637,11 +637,11 @@ angular
         url: '/module',
         templateUrl: 'module/module.tpl.html',
         controller: 'ModuleCtrl'
-    })
-    .state('yourPlace', {
-      url: '/yourPlace',
-      templateUrl: 'module/your-place.tpl.html',
-      controller: 'YourPlaceCtrl'
+      })
+      .state('yourPlace', {
+        url: '/yourPlace',
+        templateUrl: 'module/your-place.tpl.html',
+        controller: 'YourPlaceCtrl'
       });
   });
 ```
@@ -683,10 +683,11 @@ Produces `app/module/your-place-controller.js`, `app/module/your-place-controlle
 **Currently, the module must have an existing state for another to be added.**
 
 * * *
-The route generator can take a URL option, as well.
+The route generator can take URL and templateUrl options, as well.
 ```
-yo ng-poly:route --url=/yourPlace
+yo ng-poly:route --url=yourPlace --templateUrl=your-place
 ```
+The URL will automatically be prepended with `/` and and the templateUrl will be appended with `.tpl.html`.
 * * *
 
 ### Service

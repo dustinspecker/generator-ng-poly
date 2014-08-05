@@ -212,7 +212,7 @@ Generator.prototype.end = function end() {
     args: ['home'],
     options: {
       options: {
-        module: 'home',
+        module: 'home'
       }
     }
   });

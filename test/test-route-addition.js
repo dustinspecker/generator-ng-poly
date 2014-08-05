@@ -11,7 +11,8 @@ describe('addRoute', function () {
     url: '/test',
     lowerCamel: 'test',
     hyphenName: 'test',
-    ctrlName: 'TestCtrl'
+    ctrlName: 'TestCtrl',
+    templateUrl: 'home/test.tpl.html'
   };
 
   describe('controllerAs', function () {

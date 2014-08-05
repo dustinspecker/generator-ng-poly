@@ -173,7 +173,7 @@ function addRoute(fileContents, state, controllerAs, passFunc) {
       '    })',
       '    .state(\'' + state.lowerCamel + '\', {',
       '      url: \'' + state.url + '\',',
-      '      templateUrl: \'' + state.module + '/' + state.hyphenName + '.tpl.html\','
+      '      templateUrl: \'' + state.templateUrl + '\','
     ];
 
     if (controllerAs) {

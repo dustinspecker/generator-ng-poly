@@ -12,7 +12,25 @@ Generator.prototype.prompting = function prompting() {
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
+  var markupFile = this.name;
+
+  // if last character is a slash, remove it
+  if (markupFile.charAt(markupFile.length - 1) === '/') {
+    markupFile = markupFile.slice(0, markupFile.length - 1);
+  }
+
+  // if markupFile doesn't end with .tpl.html, append it
+  if (!/[.]tpl[.]html$/.test(this.name)) {
+    markupFile = markupFile + '.tpl.html';
+  }
+
+  // create the style file
+  var styleFile = markupFile.replace(/tpl[.]html$/, config.style);
+
+  // replace file extension with markup type being used
+  markupFile = markupFile.replace(/html$/, config.markup);
+
   this.template('_view.' + config.markup,
-    path.join('app', config.modulePath, config.hyphenName + '.tpl.' + config.markup), config);
-  this.copy('style.' + config.style, path.join('app', config.modulePath, config.hyphenName + '.' + config.style));
+    path.join('app', config.modulePath, markupFile), config);
+  this.copy('style.' + config.style, path.join('app', config.modulePath, styleFile));
 };

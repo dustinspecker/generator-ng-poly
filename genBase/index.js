@@ -20,17 +20,30 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     }.bind(this)
   }, {
     name: 'url',
-    message: 'What\'s the url for this state?',
+    message: 'What\'s the URL for this state?',
     default: function () {
       return '/' + utils.lowerCamel(this.name);
     }.bind(this),
     when: function() {
-      return ( (params && params.url === true) && 
+      return ( (params && params.url) && 
         !( (this.options && this.options.url) || (this.options && this.options.options && this.options.options.url) ) );
     }.bind(this)
+  }, {
+    name: 'templateUrl',
+    message: 'What\'s the templateURL for this state?',
+    default: function (answers) {
+      var module = answers.module || this.options.module || this.options.options.module;
+      return module + '/' + this.name + '.tpl.html';
+    }.bind(this),
+    when: function () {
+      return ( (params && params.templateUrl) &&
+        !( (this.options && this.options.templateUrl) ||
+          (this.options && this.options.options && this.options.options.templateUrl ) ) );
+    }.bind(this)
   }], function (props) {
-    this.module = props.module || this.options.module || this.options.options.module;
-    this.url = props.url || this.options.url || this.options.options.url;
+    this.module = props.module || this.options.module || (this.options.options && this.options.options.module);
+    this.url = props.url || this.options.url || (this.options.options && this.options.options.url);
+    this.templateUrl = props.templateUrl || this.options.templateUrl || (this.options.options && this.options.options.templateUrl);
 
     if (this.url && (this.url.charAt(0) !== '/' && this.url.charAt(0) !== '\\')) {
       this.url = '/' + this.url;
