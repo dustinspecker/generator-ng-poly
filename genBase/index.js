@@ -35,15 +35,21 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
       return module + '/' + this.name + '.tpl.html';
     }.bind(this),
     when: function () {
-      return ( (params && params.templateUrl) && !(this.options && this.options.templateUrl) );
+      return ( (params && params.templateUrl) && !(this.options && this.options['template-url']) );
     }.bind(this)
   }], function (props) {
     this.module = props.module || this.options.module;
     this.url = props.url || this.options.url;
-    this.templateUrl = props.templateUrl || this.options.templateUrl;
+    this.templateUrl = props.templateUrl || this.options['template-url'];
 
+    // prepend slash if missing
     if (this.url && (this.url.charAt(0) !== '/' && this.url.charAt(0) !== '\\')) {
       this.url = '/' + this.url;
+    }
+
+    // append .tpl.html if not existing
+    if (!/[.]tpl[.]html$/.test(this.templateUrl)) {
+      this.templateUrl = this.templateUrl + '.tpl.html';
     }
 
     done();
@@ -51,13 +57,23 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
 };
 
 Generator.prototype.getConfig = function getConfig() {
-  var config = this.config.getAll();
-  config.appName = utils.getAppName(this.config.path);
-  config.ctrlName = utils.ctrlName(this.name);
-  config.humanName = utils.humanName(this.name);
-  config.hyphenName = utils.hyphenName(this.name);
-  config.lowerCamel = utils.lowerCamel(this.name);
-  config.upperCamel = utils.upperCamel(this.name);
+  var config = {
+    markup: this.options.markup || this.config.get('markup'),
+    appScript: this.options['app-script'] || this.config.get('appScript'),
+    controllerAs: this.options['controller-as'] || this.config.get('controllerAs'),
+    passFunc: this.options['pass-func'] || this.config.get('passFunc'),
+    namedFunc: this.options['named-func'] || this.config.get('namedFunc'),
+    testScript: this.options['test-script'] || this.config.get('testScript'),
+    testDir: this.options['test-dir'] || this.config.get('testDir'),
+    style: this.options.style || this.config.get('style'),
+
+    appName: utils.getAppName(this.config.path),
+    ctrlName: utils.ctrlName(this.name),
+    humanName: utils.humanName(this.name),
+    hyphenName: utils.hyphenName(this.name),
+    lowerCamel: utils.lowerCamel(this.name),
+    upperCamel: utils.upperCamel(this.name)
+  };
 
   if (this.module) {
     utils.moduleExists(this.config.path, this.module);

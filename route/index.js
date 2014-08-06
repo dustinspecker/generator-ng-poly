@@ -43,13 +43,31 @@ Generator.prototype.end = function end() {
   this.composeWith('ng-poly:controller', {
     args: [this.name],
     options: {
-      module: this.module
+      module: this.module,
+
+      markup: this.options.markup,
+      'app-script': this.options['app-script'],
+      'controller-as': this.options['controller-as'],
+      'pass-func': this.options['pass-func'],
+      'named-func': this.options['named-func'],
+      'test-script': this.options['test-script'],
+      'test-dir': this.options['test-dir'],
+      style: this.options.style
     }
   });
   this.composeWith('ng-poly:view', {
     args: [path.basename(this.templateUrl)],
     options: {
-      module: this.module
+      module: this.module,
+
+      markup: this.options.markup,
+      'app-script': this.options['app-script'],
+      'controller-as': this.options['controller-as'],
+      'pass-func': this.options['pass-func'],
+      'named-func': this.options['named-func'],
+      'test-script': this.options['test-script'],
+      'test-dir': this.options['test-dir'],
+      style: this.options.style
     }
   });
 };

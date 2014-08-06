@@ -258,6 +258,7 @@ describe('ng-poly generator', function () {
         config.testDir + '/home/route-test-controller_test.' + config.testScript
       ), {
         'module': 'home',
+        'template-url': 'value',
         'url': 'value'
       });
 

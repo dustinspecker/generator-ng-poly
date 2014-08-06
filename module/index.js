@@ -62,7 +62,16 @@ Generator.prototype.end = function end() {
       options: {
         module: this.module,
         url: '/' + this.context.moduleName,
-        templateUrl: this.module + '/' + this.context.moduleName + '.tpl.html'
+        'template-url': this.module + '/' + this.context.moduleName + '.tpl.html',
+
+        markup: this.options.markup,
+        'app-script': this.options['app-script'],
+        'controller-as': this.options['controller-as'],
+        'pass-func': this.options['pass-func'],
+        'named-func': this.options['named-func'],
+        'test-script': this.options['test-script'],
+        'test-dir': this.options['test-dir'],
+        style: this.options.style
       }
     });
   }
