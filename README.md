@@ -26,7 +26,7 @@ Run `gulp` to build.
 
 Available generators:
 * AngularJS
-  - [ng-poly](#app) (aka [ng-poly:app](#app))
+  - [ng-poly](#app) (a.k.a. [ng-poly:app](#app))
   - [ng-poly:constant](#constant)
   - [ng-poly:controller](#controller)
   - [ng-poly:directive](#directive)

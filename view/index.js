@@ -24,6 +24,12 @@ Generator.prototype.writing = function writing() {
     markupFile = markupFile + '.tpl.html';
   }
 
+  // remove tplhtml from lowerCamel
+  config.lowerCamel = config.lowerCamel.replace(/tplhtml$/, '');
+
+  // remove tplhtml from ctrlName
+  config.ctrlName = config.ctrlName.replace(/tplhtml$/, '');
+
   // create the style file
   var styleFile = markupFile.replace(/tpl[.]html$/, config.style);
 
