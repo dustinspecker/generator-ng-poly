@@ -6,7 +6,6 @@ var gulp = require('gulp')
   , angularSort = require('gulp-angular-filesort')
   , coffeelint = require('gulp-coffeelint')
   , concat = require('gulp-concat')
-  , connect = require('gulp-connect')
   , cssmin = require('gulp-cssmin')
   , gulpIf = require('gulp-if')
   , htmlmin = require('gulp-htmlmin')
@@ -15,7 +14,6 @@ var gulp = require('gulp')
   , jshint = require('gulp-jshint')
   , less = require('gulp-less')
   , ngAnnotate = require('gulp-ng-annotate')
-  , open = require('gulp-open')
   , plato = require('gulp-plato')
   , prefix = require('gulp-autoprefixer')
   , protractor = require('gulp-protractor').protractor
@@ -28,6 +26,7 @@ var gulp = require('gulp')
 // other node modules
 var _ = require('lodash')
   , args = require('yargs').argv
+  , browserSync = require('browser-sync')
   , karma = require('karma').server
   , rimraf = require('rimraf')
   , streamqueue = require('streamqueue');
@@ -100,23 +99,17 @@ function prependBowerDir(file) {
   return bowerDir + file;
 }
 
-gulp.task('connect', function () {
-  connect.server({
-    root: build,
-    port: 8080,
-    livereload: true
-  });
-});
-
-gulp.task('open', function () {
-  // A file must be specified as the src when running options.url or gulp will overlook the task.
-  return gulp.src('Gulpfile.js')
-    .pipe(open('', {url: 'http://localhost:8080'}));
-});
-
 gulp.task('watch', function () {
   gulp.watch([unitTestsFiles], ['unitTest']);
-  gulp.watch([appMarkupFiles, appScriptFiles, appStyleFiles, componentsBase + '**/*'], ['build']);
+  gulp.watch([appMarkupFiles, appScriptFiles, appStyleFiles, componentsBase + '**/*'], ['angularInject', 'polymer', browserSync.reload]);
+});
+
+gulp.task('browser-sync', function () {
+  browserSync({
+    server: {
+      baseDir: build
+    }
+  });
 });
 
 gulp.task('clean', function (cb) {
@@ -320,7 +313,6 @@ gulp.task('angularInject', ['headInject'], function () {
       removeComments: true
     })))
     .pipe(gulp.dest(build))
-    .pipe(connect.reload())
   ;
 });
 
@@ -385,10 +377,11 @@ gulp.task('e2eTest', ['jshint', 'coffeelint'], function () {
 
 gulp.task('webdriverUpdate', webdriverUpdate);
 
-gulp.task('build', ['angularInject', 'polymer'], function () {
-  gulp.start('connect');
-  gulp.start('open');
+gulp.task('dev', ['build', 'browser-sync'], function () {
   gulp.start('watch');
 });
 
-gulp.task('default', ['build']);
+gulp.task('build', ['angularInject', 'polymer'], function () {
+});
+
+gulp.task('default', ['dev']);

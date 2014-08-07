@@ -20,7 +20,7 @@ npm install -g generator-ng-poly
 Run `yo ng-poly`
 Yeoman will then ask for an app name and language preferences.
 
-Run `gulp` to build.
+Run `gulp` to build and start the development environment.
 
 ## Generators
 
@@ -71,6 +71,8 @@ Languages and Features supported:
 `gulp` will start a localhost and open in the default browser
 
 Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
+
+`gulp build` will compile the assets
 
 `gulp unitTest` will run Jasmine tests via Karma
 
