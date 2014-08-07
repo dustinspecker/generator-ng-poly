@@ -17,6 +17,7 @@ var gulp = require('gulp')
   , ngAnnotate = require('gulp-ng-annotate')
   , open = require('gulp-open')
   , plato = require('gulp-plato')
+  , prefix = require('gulp-autoprefixer')
   , protractor = require('gulp-protractor').protractor
   , stylus = require('gulp-stylus')
   , uglify = require('gulp-uglify')
@@ -188,7 +189,8 @@ gulp.task('components', ['clean', 'jshint'], function () {
     componentsStyleFiles,
     '!**/*.styl'
   ], { base: componentsBase })
-    .pipe(less()))
+    .pipe(less())
+    .pipe(prefix()))
   ;
 
   // stylus
@@ -196,7 +198,8 @@ gulp.task('components', ['clean', 'jshint'], function () {
     componentsStyleFiles,
     '!**/*.less'
   ], { base: componentsBase })
-    .pipe(stylus()))
+    .pipe(stylus())
+    .pipe(prefix()))
   ;
 
   return stream.done()
@@ -253,6 +256,7 @@ gulp.task('style', ['clean'], function () {
 
 
   return stream.done()
+    .pipe(prefix())
     .pipe(gulpIf(isProd, concat('style.css')))
     .pipe(gulpIf(isProd, cssmin()))
     .pipe(gulp.dest(build))
