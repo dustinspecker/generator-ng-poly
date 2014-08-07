@@ -68,11 +68,13 @@ Languages and Features supported:
 
 
 ### Gulp Tasks
-`gulp` will start a localhost and open in the default browser
+`gulp` will start a localhost and open in the default browser 
 
 Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
 
 `gulp build` will compile the assets
+
+`gulp dev` will call the build task and setup the development environment
 
 `gulp unitTest` will run Jasmine tests via Karma
 
