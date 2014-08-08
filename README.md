@@ -9,6 +9,8 @@ This generator focuses on organizing Angular components by feature (home, about,
 
 A typical workflow with this generator consists of creating an Angular module ([ng-poly:module](#module)) and then generating controllers, directives, etc. for this module to create a new feature.
 
+**Polymer is just an added feature, but it isn't required to utilize this generator.**
+
 ## Usage
 
 Install `generator-ng-poly`:
@@ -52,6 +54,7 @@ Languages and Features supported:
     - JavaScript
   * Style languages
     - LESS
+    - SASS
     - Stylus
   * Unit testing
     - Jasmine (Karma as the test runner) for AngularJS
@@ -108,7 +111,7 @@ root/
 ├── app/
 │   ├── home/
 │   │   ├── home.js
-│   │   ├── home.{less,styl}
+│   │   ├── home.{less,scss,styl}
 │   │   ├── home.tpl.{html,jade}
 │   │   ├── home-controller.js
 │   │   └── home-controller_test.{coffee,js}
@@ -823,6 +826,8 @@ body {
 }
 ```
 
+* * *
+
 ### Element
 Generates a Polymer element.
 
@@ -869,8 +874,6 @@ Produces `app/components/gold-silver/gold-silver.js`:
 }());
 ```
 
-**For the time being, the element generator is very experimental and not guaranteed to function properly.**
-
 * * *
 
 ## Configurations
@@ -882,7 +885,7 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 | Option | Possible Values|
 | ------ | -------------- |
 | markup | html, jade|
-| style | less, styl|
+| style | less, scss, styl|
 | test-dir | src, test|
 | test-script | coffee, js|
 | controller-as | true, false |

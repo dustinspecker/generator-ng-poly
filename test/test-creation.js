@@ -100,6 +100,18 @@ describe('ng-poly generator', function () {
     'testDir': 'test',
     'style': 'styl',
     'bower': []
+  },
+  {
+    'appName': 'temp',
+    'markup': 'jade',
+    'appScript': 'js',
+    'controllerAs': true,
+    'passFunc': true,
+    'namedFunc': true,
+    'testScript': 'coffee',
+    'testDir': 'test',
+    'style': 'scss',
+    'bower': []
   }];
 
   function testGenerator(genName, deps, expectedFiles, mockPrompts) {

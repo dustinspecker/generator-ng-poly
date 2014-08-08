@@ -17,6 +17,7 @@ var gulp = require('gulp')
   , plato = require('gulp-plato')
   , prefix = require('gulp-autoprefixer')
   , protractor = require('gulp-protractor').protractor
+  , sass = require('gulp-sass')
   , stylus = require('gulp-stylus')
   , uglify = require('gulp-uglify')
   /* jshint -W106 */
@@ -35,13 +36,13 @@ var _ = require('lodash')
 var appBase = 'app/'
   , appMarkupFiles = appBase + '**/*.{html,jade}'
   , appScriptFiles = appBase + '**/*.js'
-  , appStyleFiles = appBase + '**/*.{less,styl}';
+  , appStyleFiles = appBase + '**/*.{less,scss,styl}';
 
 // custom component locations
 var componentsBase = appBase + 'components/'
   , componentsMarkupFiles = componentsBase + '**/*.{html,jade}'
   , componentsScriptFiles = componentsBase + '**/*.js'
-  , componentsStyleFiles = componentsBase + '**/*.{less,styl}';
+  , componentsStyleFiles = componentsBase + '**/*.{less,scss,styl}';
 
 // e2e test locations
 var e2ePoFiles = 'e2e/**/*.po.{coffee,js}'
@@ -180,16 +181,25 @@ gulp.task('components', ['clean', 'jshint'], function () {
   // less
   stream.queue(gulp.src([
     componentsStyleFiles,
-    '!**/*.styl'
+    '!**/*.{scss,styl}'
   ], { base: componentsBase })
     .pipe(less())
+    .pipe(prefix()))
+  ;
+
+  // sass
+  stream.queue(gulp.src([
+    componentsStyleFiles,
+    '!**/*.{less,styl}',
+  ], { base: componentsBase })
+    .pipe(sass())
     .pipe(prefix()))
   ;
 
   // stylus
   stream.queue(gulp.src([
     componentsStyleFiles,
-    '!**/*.less'
+    '!**/*.{less,scss}'
   ], { base: componentsBase })
     .pipe(stylus())
     .pipe(prefix()))
@@ -232,21 +242,29 @@ gulp.task('style', ['clean'], function () {
   // less
   stream.queue(gulp.src([
     appStyleFiles,
-    '!**/*.styl',
+    '!**/*.{scss,styl}',
     '!' + componentsBase + '**/*'
   ])
     .pipe(less()))
   ;
 
+  // sass
+  stream.queue(gulp.src([
+    appStyleFiles,
+    '!**/*.{less,styl}',
+    '!' + componentsBase + '**/*'
+  ])
+    .pipe(sass()))
+  ;
+
   // stylus
   stream.queue(gulp.src([
     appStyleFiles,
-    '!**/*.less',
+    '!**/*.{less,scss}',
     '!' + componentsBase + '**/*'
   ])
     .pipe(stylus()))
   ;
-
 
   return stream.done()
     .pipe(prefix())

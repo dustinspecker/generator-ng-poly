@@ -60,7 +60,7 @@ Generator.prototype.prompting = function prompting() {
   {
     type: 'confirm',
     name: 'namedFunc',
-    message: 'Want to use named functions?',
+    message: 'Want to use named functions instead of anonymous?',
     default: true
   },
   {
@@ -104,6 +104,10 @@ Generator.prototype.prompting = function prompting() {
         name: 'LESS',
         value: 'less',
         checked: true
+      },
+      {
+        name: 'SASS',
+        value: 'scss'
       },
       {
         name: 'Stylus',
