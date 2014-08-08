@@ -54,7 +54,7 @@ Languages and Features supported:
     - JavaScript
   * Style languages
     - LESS
-    - SASS
+    - SCSS
     - Stylus
   * Unit testing
     - Jasmine (Karma as the test runner) for AngularJS
