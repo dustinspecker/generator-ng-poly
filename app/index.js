@@ -106,7 +106,7 @@ Generator.prototype.prompting = function prompting() {
         checked: true
       },
       {
-        name: 'SASS',
+        name: 'SCSS',
         value: 'scss'
       },
       {
@@ -114,6 +114,12 @@ Generator.prototype.prompting = function prompting() {
         value: 'styl'
       }
     ]
+  },
+  {
+    type: 'confirm',
+    name: 'polymer',
+    message: 'Should Polymer support be enabled?',
+    default: true
   },
   {
     type: 'checkbox',
@@ -151,6 +157,7 @@ Generator.prototype.prompting = function prompting() {
     this.testScript = props.testScript;
     this.testDir = props.testDir;
     this.style = props.style;
+    this.polymer = props.polymer;
     this.bower = props.bower.join(',');
 
     done();
@@ -180,6 +187,7 @@ Generator.prototype.configuring = function configuring() {
     moduleName: this.appName,
     passFunc: this.passFunc,
     namedFunc: this.namedFunc,
+    polymer: this.polymer,
     bower: this.bower
   };
 

@@ -38,13 +38,13 @@ var appBase = 'app/'
   , appScriptFiles = appBase + '**/*.js'
   , appStyleFiles = appBase + '**/*.{less,scss,styl}';
 
-// custom component locations
+<% if (polymer) { %>// custom component locations
 var componentsBase = appBase + 'components/'
   , componentsMarkupFiles = componentsBase + '**/*.{html,jade}'
   , componentsScriptFiles = componentsBase + '**/*.js'
   , componentsStyleFiles = componentsBase + '**/*.{less,scss,styl}';
 
-// e2e test locations
+<% } %>// e2e test locations
 var e2ePoFiles = 'e2e/**/*.po.{coffee,js}'
   , e2eTestsFiles = 'e2e/**/*_test.{coffee,js}'
   , protractorConfig = 'protractor.config.js';
@@ -55,8 +55,8 @@ var unitTestsFiles = '{app,test}/**/*_test.{coffee,js}'
 
 // build locations
 var build = 'build/'
-  , buildComponents = build + 'components/'
-  , buildCss = build
+<% if (polymer) { %>  , buildComponents = build + 'components/'
+<% } %>  , buildCss = build
   , buildJs = build;
 
 // passed arguments
@@ -65,44 +65,44 @@ var isProd = args.stage === 'prod';
 // bower assets to be injected into index.html
 // 'bower_components' is automatically prepended
 var injectableBowerComponents = [
-  'angular/angular.js',
-  'angular-animate/angular-animate.js',
-  'angular-cookies/angular-cookies.js',
-  'angular-resource/angular-resource.js',
-  'angular-sanitize/angular-sanitize.js',
-  'angular-touch/angular-touch.js',
-  'angular-ui-router/release/angular-ui-router.js',
-  'platform/platform.js'
+  'angular/angular.js'<% if (bower.length > 0 || polymer) { %>,<% } %><% if (bower.indexOf('animate') > -1) { %>
+  'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
+  'angular-cookies/angular-cookies.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
+  'angular-resource/angular-resource.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
+  'angular-sanitize/angular-sanitize.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
+  'angular-touch/angular-touch.js'<% } %>,
+  'angular-ui-router/release/angular-ui-router.js'<% if (polymer) { %>,
+  'platform/platform.js'<% } %>
 ];
 
 // minified bower assets to be injected into index.html
 // 'bower_components' is automatically prepended
 var minInjectableBowerComponents = [
-  'angular/angular.min.js',
-  'angular-animate/angular-animate.min.js',
-  'angular-cookies/angular-cookies.min.js',
-  'angular-resource/angular-resource.min.js',
-  'angular-sanitize/angular-sanitize.min.js',
-  'angular-touch/angular-touch.min.js',
-  'angular-ui-router/release/angular-ui-router.min.js',
-  'platform/platform.js'
+  'angular/angular.min.js'<% if (bower.length > 0 || polymer) { %>,<% } %><% if (bower.indexOf('animate') > -1) { %>
+  'angular-animate/angular-animate.min.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
+  'angular-cookies/angular-cookies.min.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
+  'angular-resource/angular-resource.min.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
+  'angular-sanitize/angular-sanitize.min.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
+  'angular-touch/angular-touch.min.js'<% } %>,
+  'angular-ui-router/release/angular-ui-router.min.js'<% if (polymer) { %>,
+  'platform/platform.js'<% } %>
 ];
 
-// bower polymer components that do not need to be injected into index.html
+<% if (polymer) { %>// bower polymer components that do not need to be injected into index.html
 // 'bower_components' is automatically prepended
 var bowerPolymerComponents = [
   'polymer/polymer.{js,html}',
   'polymer/layout.html'
 ];
 
-var bowerDir = 'bower_components/';
+<% } %>var bowerDir = 'bower_components/';
 function prependBowerDir(file) {
   return bowerDir + file;
 }
 
 gulp.task('watch', function () {
   gulp.watch([unitTestsFiles], ['unitTest']);
-  gulp.watch([appMarkupFiles, appScriptFiles, appStyleFiles, componentsBase + '**/*'], ['angularInject', 'polymer', browserSync.reload]);
+  gulp.watch([appMarkupFiles, appScriptFiles, appStyleFiles<% if (polymer) { %>, componentsBase + '**/*'<% } %>], ['angularInject'<% if (polymer) { %>, 'polymer'<% } %>, browserSync.reload]);
 });
 
 gulp.task('browser-sync', function () {
@@ -138,8 +138,8 @@ gulp.task('coffeelint', function () {
 
 gulp.task('jshint', function () {
   return gulp.src([
-    appScriptFiles,
-    componentsScriptFiles,
+    appScriptFiles<% if (polymer) { %>,
+    componentsScriptFiles<% } %>,
     e2ePoFiles,
     e2eTestsFiles,
     karmaConfig,
@@ -155,7 +155,7 @@ gulp.task('jshint', function () {
   ;
 });
 
-gulp.task('components', ['clean', 'jshint'], function () {
+<% if (polymer) { %>gulp.task('components', ['clean', 'jshint'], function () {
   var stream = streamqueue({ objectMode: true });
 
   // jade
@@ -210,11 +210,11 @@ gulp.task('components', ['clean', 'jshint'], function () {
   ;
 });
 
-gulp.task('scripts', ['clean', 'jshint'], function () {
+<% } %>gulp.task('scripts', ['clean', 'jshint'], function () {
   if (isProd) {
     return gulp.src([
-      appScriptFiles,
-      '!' + componentsBase + '**/*',
+      appScriptFiles<% if (polymer) { %>,
+      '!' + componentsBase + '**/*'<% } %>,
       '!' + unitTestsFiles
     ])
       .pipe(angularSort())
@@ -225,8 +225,8 @@ gulp.task('scripts', ['clean', 'jshint'], function () {
       .pipe(gulp.dest(buildJs));
   } else {
     return gulp.src([
-      appScriptFiles,
-      '!' + componentsBase + '**/*',
+      appScriptFiles<% if (polymer) { %>,
+      '!' + componentsBase + '**/*'<% } %>,
       '!' + unitTestsFiles
     ])
       .pipe(addSrc([].concat(injectableBowerComponents.map(prependBowerDir))))
@@ -242,8 +242,8 @@ gulp.task('style', ['clean'], function () {
   // less
   stream.queue(gulp.src([
     appStyleFiles,
-    '!**/*.{scss,styl}',
-    '!' + componentsBase + '**/*'
+    '!**/*.{scss,styl}'<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>
   ])
     .pipe(less()))
   ;
@@ -251,8 +251,8 @@ gulp.task('style', ['clean'], function () {
   // sass
   stream.queue(gulp.src([
     appStyleFiles,
-    '!**/*.{less,styl}',
-    '!' + componentsBase + '**/*'
+    '!**/*.{less,styl}'<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>
   ])
     .pipe(sass()))
   ;
@@ -260,8 +260,8 @@ gulp.task('style', ['clean'], function () {
   // stylus
   stream.queue(gulp.src([
     appStyleFiles,
-    '!**/*.{less,scss}',
-    '!' + componentsBase + '**/*'
+    '!**/*.{less,scss}'<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>
   ])
     .pipe(stylus()))
   ;
@@ -276,25 +276,25 @@ gulp.task('style', ['clean'], function () {
 
 gulp.task('markup', ['clean'], function () {
   return gulp.src([
-    appMarkupFiles,
-    '!' + componentsBase + '**/*',
+    appMarkupFiles<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>,
     '!**/*.html'
   ])
     .pipe(jade())
     .pipe(addSrc([
-      appMarkupFiles,
-      '!' + componentsBase + '**/*',
+      appMarkupFiles<% if (polymer) { %>,
+      '!' + componentsBase + '**/*'<% } %>,
       '!**/*.jade'
     ]))
     .pipe(gulp.dest(build))
   ;
 });
 
-gulp.task('inject', ['components', 'markup', 'scripts', 'style'], function () {
+gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts', 'style'], function () {
   return gulp.src(build + 'index.html')
     .pipe(inject(gulp.src([
-      buildComponents + '**/*.html',
-      buildCss + '**/*.css',
+      <% if (polymer) { %>buildComponents + '**/*.html',
+      <% } %>buildCss + '**/*.css',
       buildJs + 'angular.js',
       buildJs + 'angular.min.js'
     ], { read: false }), {
@@ -305,7 +305,7 @@ gulp.task('inject', ['components', 'markup', 'scripts', 'style'], function () {
   ;
 });
 
-gulp.task('headInject', ['inject'], function () {
+<% if (polymer) { %>gulp.task('headInject', ['inject'], function () {
   return gulp.src(build + 'index.html')
     .pipe(inject(gulp.src(buildJs + 'platform.js'), {
       starttag: '<!-- inject:head:{{ext}} -->',
@@ -316,14 +316,14 @@ gulp.task('headInject', ['inject'], function () {
   ;
 });
 
-gulp.task('angularInject', ['headInject'], function () {
+<% } %>gulp.task('angularInject', [<% if (polymer) { %>'headInject'<% } else { %>'inject'<% } %>], function () {
   return gulp.src(build + 'index.html')
     .pipe(inject(gulp.src([
-      buildJs + '**/*.js',
-      '!' + buildComponents + '**/*',
+      buildJs + '**/*.js'<% if (polymer) { %>,
+      '!' + buildComponents + '**/*'<% } %>,
       '!' + buildJs + 'angular.js',
-      '!' + buildJs + 'angular.min.js',
-      '!' + buildJs + 'platform.js',
+      '!' + buildJs + 'angular.min.js'<% if (polymer) { %>,
+      '!' + buildJs + 'platform.js'<% } %>,
       '!**/*_test.*'
     ]).pipe(angularSort()), { starttag: '<!-- inject:angular:{{ext}} -->', addRootSlash: false, ignorePath: build }))
     .pipe(gulpIf(isProd, htmlmin({
@@ -334,7 +334,7 @@ gulp.task('angularInject', ['headInject'], function () {
   ;
 });
 
-gulp.task('polymer', ['inject'], function () {
+<% if (polymer) { %>gulp.task('polymer', ['inject'], function () {
   return gulp.src(bowerPolymerComponents.map(prependBowerDir), {
       base: bowerDir
     })
@@ -342,7 +342,7 @@ gulp.task('polymer', ['inject'], function () {
   ;
 });
 
-gulp.task('karmaInject', function () {
+<% } %>gulp.task('karmaInject', function () {
   var stream = streamqueue({ objectMode: true});
   stream.queue(gulp.src([
     bowerDir + 'angular/angular.js',
@@ -351,14 +351,14 @@ gulp.task('karmaInject', function () {
   ]));
 
   stream.queue(gulp.src([
-    appBase + '**/*.js',
-    '!' + componentsBase + '**/*',
-    '!**/*_test.*',
-    bowerDir + 'angular-animate/angular-animate.js',
-    bowerDir + 'angular-cookies/angular-cookies.js',
-    bowerDir + 'angular-resource/angular-resource.js',
-    bowerDir + 'angular-sanitize/angular-sanitize.js',
-    bowerDir + 'angular-touch/angular-touch.js',
+    appBase + '**/*.js'<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>,
+    '!**/*_test.*'<% if (bower.indexOf('animate') > -1) { %>,
+    bowerDir + 'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
+    bowerDir + 'angular-cookies/angular-cookies.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
+    bowerDir + 'angular-resource/angular-resource.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
+    bowerDir + 'angular-sanitize/angular-sanitize.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
+    bowerDir + 'angular-touch/angular-touch.js'<% } %>,
     bowerDir + 'angular-ui-router/release/angular-ui-router.js',
   ]).pipe(angularSort()));
 
@@ -399,7 +399,7 @@ gulp.task('dev', ['build', 'browser-sync'], function () {
   gulp.start('watch');
 });
 
-gulp.task('build', ['angularInject', 'polymer'], function () {
+gulp.task('build', ['angularInject'<% if (polymer) { %>, 'polymer'<% } %>], function () {
 });
 
 gulp.task('default', ['dev']);
