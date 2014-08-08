@@ -5,7 +5,7 @@ describe('<%= humanName %> page', function () {
   var <%= lowerCamel %>Page = require('./<%= hyphenName %>.po');
 
   beforeEach(function () {
-    browser.get('http://localhost:8080/#/<%= lowerCamel %>');
+    browser.get('http://localhost:3000/#/<%= lowerCamel %>');
   });
 
   it('should say <%= ctrlName %>', function() {

@@ -5,7 +5,7 @@ describe '<%= humanName %> page', ->
   <%= lowerCamel %>Page = require './<%= hyphenName %>.po'
 
   beforeEach ->
-    browser.get 'http://localhost:8080/#/<%= lowerCamel %>'
+    browser.get 'http://localhost:3000/#/<%= lowerCamel %>'
 
   it 'should say <%= ctrlName %>', ->
     expect(<%= lowerCamel %>Page.heading.getText()).toEqual '<%= lowerCamel %>'
