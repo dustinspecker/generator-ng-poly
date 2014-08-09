@@ -91,7 +91,7 @@ Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
 
 Generators requiring a module can take a module option to bypass the prompt:
 ```
-yo ng-poly:view --module=home/kitchen
+yo ng-poly:view newView --module=home/kitchen
 ```
 * * *
 

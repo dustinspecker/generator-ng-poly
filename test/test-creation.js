@@ -207,11 +207,12 @@ describe('ng-poly generator', function () {
         done();
       });
 
+      // module name has trailing slash to test trailing slash in genBase
       testGenerator('constant', ['../../constant'], expected.concat(
         'app/home/constant-test-constant.' + config.appScript,
         config.testDir + '/home/constant-test-constant_test.' + config.testScript
       ), {
-        module: 'home'
+        module: 'home/'
       });
 
       testGenerator('controller', ['../../controller'], expected.concat(

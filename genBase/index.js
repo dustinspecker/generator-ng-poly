@@ -11,7 +11,9 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
   this.prompt([{
     name: 'module',
     message: 'Which module is this for?',
-    default: this.name,
+    default: function () {
+      return this.config.get('lastUsedModule');
+    }.bind(this),
     when: function () {
       return !(this.options && this.options.module);
     }.bind(this),
@@ -41,6 +43,15 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     this.module = props.module || this.options.module;
     this.url = props.url || this.options.url;
     this.templateUrl = props.templateUrl || this.options['template-url'];
+
+    // if moduleName ends with a slash remove it
+    if (this.module.charAt(this.module.length-1) === '/' || this.module.charAt(this.module.length-1) === '\\') {
+      this.module = this.module.slice(0, this.module.length-1);
+    }
+
+    // save this module to suggest later
+    this.config.set('lastUsedModule', this.module);
+    this.config.forceSave();
 
     // prepend slash if missing
     if (this.url && (this.url.charAt(0) !== '/' && this.url.charAt(0) !== '\\')) {
