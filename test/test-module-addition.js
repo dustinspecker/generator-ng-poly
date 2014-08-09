@@ -1,4 +1,4 @@
-/*global describe, beforeEach, it */
+/*global describe, before, beforeEach, it */
 'use strict';
 var join = require('path').join
   , assert = require('yeoman-generator').assert
@@ -70,6 +70,7 @@ describe('module generator', function () {
     });
   });
 
+  // trailing slash to test trailing slash removal
   describe('adding a new module', function () {
     beforeEach(function (done) {
       this.app = helpers.createGenerator('ng-poly:module', [
@@ -77,7 +78,7 @@ describe('module generator', function () {
         '../../route',
         '../../controller',
         '../../view'
-      ], 'test');
+      ], 'test/');
 
       this.app.run([], function () {
         done();
@@ -104,8 +105,11 @@ describe('module generator', function () {
       });
     });
 
-    it('should add home.door to app/home/home.js deps', function () {
+    it('should add comma to ui.router in app/home/home.js deps', function () {
       assert.fileContent('app/home/home.js', /    \'ui.router\',/);
+    });
+
+    it('should add home.door to app/home/home.js deps', function () {
       assert.fileContent('app/home/home.js', /    \'home.door\'/);
     });
 

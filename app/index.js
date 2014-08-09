@@ -180,6 +180,7 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('testScript', this.testScript);
   this.config.set('testDir', this.testDir);
   this.config.set('style', this.style);
+  this.config.set('lastUsedModule', 'home');
   this.config.save();
 
   this.context = {
@@ -225,7 +226,14 @@ Generator.prototype.end = function end() {
   this.composeWith('ng-poly:module', {
     args: ['home'],
     options: {
-      module: 'home'
+      module: 'home',
+      markup: this.markup,
+      style: this.style,
+      'test-dir': this.testDir,
+      'test-script': this.testScript,
+      'controller-as': this.controllerAs,
+      'pass-func': this.passFunc,
+      'named-func': this.namedFunc
     }
   });
 };

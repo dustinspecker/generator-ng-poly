@@ -1,5 +1,6 @@
 'use strict';
-var utils = require('../utils')
+var findup = require('findup-sync')
+  , utils = require('../utils')
   , yeoman = require('yeoman-generator');
 
 

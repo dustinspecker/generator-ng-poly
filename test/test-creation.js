@@ -30,7 +30,7 @@ describe('ng-poly generator', function () {
       'protractor.config.js'
     ];
 
-    beforeEach(function (done) {
+    before(function (done) {
       helpers.testDirectory(join(__dirname, 'temp'), function (err) {
         if (err) {
           done(err);
@@ -178,7 +178,7 @@ describe('ng-poly generator', function () {
         'protractor.config.js'
       ];
 
-      beforeEach(function (done) {
+      before(function (done) {
         helpers.testDirectory(join(__dirname, 'temp'), function (err) {
           if (err) {
             done(err);
@@ -249,14 +249,6 @@ describe('ng-poly generator', function () {
       ), {
         module: 'home'
       });
-
-      testGenerator('module', ['../../module', '../../route', '../../controller', '../../view'], expected.concat(
-        'app/module-test/module-test.' + config.appScript,
-        'app/module-test/module-test-controller.' + config.appScript,
-        config.testDir + '/module-test/module-test-controller_test.' + config.testScript,
-        'app/module-test/module-test.tpl.' + config.markup,
-        'app/module-test/module-test.' + config.style
-      ));
 
       testGenerator('provider', ['../../provider'], expected.concat(
         'app/home/provider-test-provider.' + config.appScript,

@@ -14,12 +14,6 @@ Generator.prototype.initialize = function initialize() {
   if (this.module.charAt(this.module.length-1) === '/' || this.module.charAt(this.module.length-1) === '\\') {
     this.module = this.module.slice(0, this.module.length-1);
   }
-
-  // save this module to suggest later
-  this.config.set('lastUsedModule', this.module);
-
-  // prevents done() from being called out of sync
-  this.config.forceSave();
 };
 
 Generator.prototype.writing = function writing() {
@@ -62,6 +56,12 @@ Generator.prototype.writing = function writing() {
 };
 
 Generator.prototype.end = function end() {
+  // save this module to suggest later
+  this.config.set('lastUsedModule', this.module);
+
+  // prevents done() from being called out of sync
+  this.config.forceSave();
+
   if (this.options && !this.options.empty) {
     this.composeWith('ng-poly:route', {
       args: [this.context.moduleName],
