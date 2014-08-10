@@ -54,6 +54,9 @@ Generator.prototype.end = function end() {
       'test-dir': this.options['test-dir'],
       style: this.options.style
     }
+  }, {
+    local: require.resolve('../controller'),
+    link: 'strong'
   });
   this.composeWith('ng-poly:view', {
     args: [path.basename(this.templateUrl)],
@@ -69,5 +72,8 @@ Generator.prototype.end = function end() {
       'test-dir': this.options['test-dir'],
       style: this.options.style
     }
+  }, {
+    local: require.resolve('../view'),
+    link: 'strong'
   });
 };

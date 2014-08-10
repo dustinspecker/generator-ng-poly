@@ -1,10 +1,18 @@
 'use strict';
-var path = require('path')
+var findup = require('findup-sync')
+  , path = require('path')
   , yeoman = require('yeoman-generator')
   , yosay = require('yosay');
 
 
 var Generator = module.exports = yeoman.generators.Base.extend();
+
+/*Generator.prototype.intitialize = function intitialize() {
+  // this overwrites the default the .yo-rc.json file
+  // a default is provided so that the module subgen will run
+  // by being able to find the .yo-rc file
+  this.options.force = true;
+};*/
 
 Generator.prototype.prompting = function prompting() {
   var done = this.async();
@@ -181,7 +189,10 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('testDir', this.testDir);
   this.config.set('style', this.style);
   this.config.set('lastUsedModule', 'home');
-  this.config.save();
+
+  // force save to guarantee config exists for controller
+  // tests randomly fail without this
+  this.config.forceSave();
 
   this.context = {
     appName: this.appName,
@@ -203,7 +214,7 @@ Generator.prototype.configuring = function configuring() {
 };
 
 Generator.prototype.writing = function writing() {
-  var markup = this.config.get('markup');
+  var markup = this.markup;
 
   // create main module and index.html
   this.template('_app.js',
@@ -219,10 +230,6 @@ Generator.prototype.install = function install() {
 };
 
 Generator.prototype.end = function end() {
-  // force save to guarantee config exists for controller
-  // tests randomly fail without this
-  this.config.forceSave();
-
   this.composeWith('ng-poly:module', {
     args: ['home'],
     options: {
@@ -235,5 +242,8 @@ Generator.prototype.end = function end() {
       'pass-func': this.passFunc,
       'named-func': this.namedFunc
     }
+  }, {
+    local: require.resolve('../module'),
+    link: 'strong'
   });
 };

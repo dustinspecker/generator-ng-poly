@@ -79,6 +79,9 @@ Generator.prototype.end = function end() {
         'test-dir': this.options['test-dir'],
         style: this.options.style
       }
+    }, {
+      local: require.resolve('../route'),
+      link: 'strong'
     });
   }
 };
