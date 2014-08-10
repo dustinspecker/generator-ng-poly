@@ -1,0 +1,8 @@
+%link{rel: "import", href: "../polymer/polymer.html"}
+
+%polymer-element{name: "<%= hyphenName %>"}
+  %template
+    %link{rel: "stylesheet", href: "<%= hyphenName %>.css"}
+    %div {{name}}
+
+  %script{src: "<%= hyphenName %>.js"}

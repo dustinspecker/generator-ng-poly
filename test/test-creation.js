@@ -103,7 +103,7 @@ describe('ng-poly generator', function () {
   },
   {
     'appName': 'temp3',
-    'markup': 'jade',
+    'markup': 'haml',
     'appScript': 'js',
     'controllerAs': true,
     'passFunc': true,

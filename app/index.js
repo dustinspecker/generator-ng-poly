@@ -30,6 +30,10 @@ Generator.prototype.prompting = function prompting() {
     message: 'What is the preferred markup language?',
     choices: [
       {
+        name: 'HAML',
+        value: 'haml'
+      },
+      {
         name: 'HTML',
         value: 'html'
       },

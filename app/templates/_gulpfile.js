@@ -8,6 +8,7 @@ var gulp = require('gulp')
   , concat = require('gulp-concat')
   , cssmin = require('gulp-cssmin')
   , gulpIf = require('gulp-if')
+  , haml = require('gulp-haml')
   , htmlmin = require('gulp-htmlmin')
   , inject = require('gulp-inject')
   , jade = require('gulp-jade')
@@ -34,13 +35,13 @@ var _ = require('lodash')
 
 // app src locations
 var appBase = 'app/'
-  , appMarkupFiles = appBase + '**/*.{html,jade}'
+  , appMarkupFiles = appBase + '**/*.{haml,html,jade}'
   , appScriptFiles = appBase + '**/*.js'
   , appStyleFiles = appBase + '**/*.{less,scss,styl}';
 
 <% if (polymer) { %>// custom component locations
 var componentsBase = appBase + 'components/'
-  , componentsMarkupFiles = componentsBase + '**/*.{html,jade}'
+  , componentsMarkupFiles = componentsBase + '**/*.{haml,html,jade}'
   , componentsScriptFiles = componentsBase + '**/*.js'
   , componentsStyleFiles = componentsBase + '**/*.{less,scss,styl}';
 
@@ -158,19 +159,27 @@ gulp.task('jshint', function () {
 <% if (polymer) { %>gulp.task('components', ['clean', 'jshint'], function () {
   var stream = streamqueue({ objectMode: true });
 
-  // jade
+  // haml
   stream.queue(gulp.src([
     componentsMarkupFiles,
-    '!**/*.html'
+    '!**/*.{html,jade}'
   ], { base: componentsBase })
-    .pipe(jade()))
+    .pipe(haml()))
   ;
 
   // html
   stream.queue(gulp.src([
     componentsMarkupFiles,
-    '!**/*.jade'
+    '!**/*.{haml,jade}'
   ], { base: componentsBase }));
+
+  // jade
+  stream.queue(gulp.src([
+    componentsMarkupFiles,
+    '!**/*.{haml,html}'
+  ], { base: componentsBase })
+    .pipe(jade()))
+  ;
 
   // js
   stream.queue(gulp.src(
@@ -275,19 +284,36 @@ gulp.task('style', ['clean'], function () {
 });
 
 gulp.task('markup', ['clean'], function () {
-  return gulp.src([
+  var stream = streamqueue({ objectMode: true });
+
+  // haml
+  stream.queue(gulp.src([
+    appMarkupFiles,<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>,
+    '!**/*.{html,jade}'
+  ])
+    .pipe(haml()))
+  ;
+
+  // html
+  stream.queue(gulp.src([
     appMarkupFiles<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>,
-    '!**/*.html'
+    '!**/*.{haml,jade}'
+  ]));
+
+  // jade
+  stream.queue(gulp.src([
+    appMarkupFiles<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>,
+    '!**/*.{haml,html}'
   ])
-    .pipe(jade())
-    .pipe(addSrc([
-      appMarkupFiles<% if (polymer) { %>,
-      '!' + componentsBase + '**/*'<% } %>,
-      '!**/*.jade'
-    ]))
-    .pipe(gulp.dest(build))
+    .pipe(jade()))
   ;
+
+  return stream.done()
+    .pipe(gulp.dest(build));
+
 });
 
 gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts', 'style'], function () {
@@ -347,7 +373,7 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
   stream.queue(gulp.src([
     bowerDir + 'angular/angular.js',
     bowerDir + 'angular-mocks/angular-mocks.js',
-    appBase + '**/*-directive.tpl.{html,jade}'
+    appBase + '**/*-directive.tpl.{haml,html,jade}'
   ]));
 
   stream.queue(gulp.src([

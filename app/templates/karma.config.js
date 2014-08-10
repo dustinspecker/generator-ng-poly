@@ -6,9 +6,13 @@ module.exports = {
   reporters: ['failed', 'coverage'],
   preprocessors: {
     'app/**/!(*_test)+(.js)': ['coverage'],
+    'app/**/*-directive.tpl.haml': ['ng-haml2js'],
     'app/**/*-directive.tpl.html': ['ng-html2js'],
     'app/**/*-directive.tpl.jade': ['ng-jade2js'],
     '**/*_test.coffee': ['coffee']
+  },
+  ngHaml2JsPreprocessor: {
+    'stripPrefix': 'app/'
   },
   ngHtml2JsPreprocessor: {
     'stripPrefix': 'app/'
