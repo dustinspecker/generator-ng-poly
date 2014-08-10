@@ -27,7 +27,8 @@ function config($urlRouterProvider) {
  */
 <% } %>angular
   .module('<%= moduleName %>', [
-    'ui.router'
+    'ui.router'<% if (framework === 'angularstrap') { %>,
+    'mgcrea.ngStrap'<% } %>
   ]);
 
 angular

@@ -66,11 +66,13 @@ var isProd = args.stage === 'prod';
 // bower assets to be injected into index.html
 // 'bower_components' is automatically prepended
 var injectableBowerComponents = [
-  'angular/angular.js'<% if (bower.length > 0 || polymer) { %>,<% } %><% if (bower.indexOf('animate') > -1) { %>
+  'angular/angular.js'<% if (bower.indexOf('animate') > -1) { %>,
   'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
   'angular-cookies/angular-cookies.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
   'angular-resource/angular-resource.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
-  'angular-sanitize/angular-sanitize.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
+  'angular-sanitize/angular-sanitize.js'<% } %><% if (framework === 'angularstrap') { %>,
+  'angular-strap/dist/angular-strap.js',
+  'angular-strap/dist/angular-strap.tpl.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
   'angular-touch/angular-touch.js'<% } %>,
   'angular-ui-router/release/angular-ui-router.js'<% if (polymer) { %>,
   'platform/platform.js'<% } %>
@@ -79,11 +81,13 @@ var injectableBowerComponents = [
 // minified bower assets to be injected into index.html
 // 'bower_components' is automatically prepended
 var minInjectableBowerComponents = [
-  'angular/angular.min.js'<% if (bower.length > 0 || polymer) { %>,<% } %><% if (bower.indexOf('animate') > -1) { %>
+  'angular/angular.min.js'<% if (bower.indexOf('animate') > -1) { %>,
   'angular-animate/angular-animate.min.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
   'angular-cookies/angular-cookies.min.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
   'angular-resource/angular-resource.min.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
-  'angular-sanitize/angular-sanitize.min.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
+  'angular-sanitize/angular-sanitize.min.js'<% } %><% if (framework === 'angularstrap') { %>,
+  'angular-strap/dist/angular-strap.min.js',
+  'angular-strap/dist/angular-strap.tpl.min.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
   'angular-touch/angular-touch.min.js'<% } %>,
   'angular-ui-router/release/angular-ui-router.min.js'<% if (polymer) { %>,
   'platform/platform.js'<% } %>
@@ -250,11 +254,16 @@ gulp.task('style', ['clean'], function () {
 
   // less
   stream.queue(gulp.src([
-    appStyleFiles,
+    appStyleFiles,<% if (framework === 'angularstrap') { %>
+    bowerDir + 'bootstrap/less/bootstrap.less',<% } %>
     '!**/*.{scss,styl}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
-    .pipe(less()))
+    .pipe(less(<% if (framework === 'angularstrap') { %>{
+      paths: [
+        bowerDir + 'bootstrap/less/**/*.less'
+      ]
+    }<% } %>)))
   ;
 
   // sass
@@ -383,9 +392,11 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
     bowerDir + 'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
     bowerDir + 'angular-cookies/angular-cookies.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
     bowerDir + 'angular-resource/angular-resource.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
-    bowerDir + 'angular-sanitize/angular-sanitize.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
+    bowerDir + 'angular-sanitize/angular-sanitize.js'<% } %><% if (framework === 'angularstrap') { %>,
+    bowerDir + 'angular-strap/dist/angular-strap.js',
+    bowerDir + 'angular-strap/dist/angular-strap.tpl.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
     bowerDir + 'angular-touch/angular-touch.js'<% } %>,
-    bowerDir + 'angular-ui-router/release/angular-ui-router.js',
+    bowerDir + 'angular-ui-router/release/angular-ui-router.js'
   ]).pipe(angularSort()));
 
   stream.queue(gulp.src([

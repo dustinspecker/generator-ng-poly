@@ -133,6 +133,21 @@ Generator.prototype.prompting = function prompting() {
     default: true
   },
   {
+    type: 'list',
+    name: 'framework',
+    message: 'Should a framework be setup?',
+    choices: [
+      {
+        name: 'none',
+        value: 'none'
+      },
+      {
+        name: 'Bootstrap with AngularStrap',
+        value: 'angularstrap'
+      }
+    ]
+  },
+  {
     type: 'checkbox',
     name: 'bower',
     message: 'Which additonal Bower components should be installed?',
@@ -169,6 +184,7 @@ Generator.prototype.prompting = function prompting() {
     this.testDir = props.testDir;
     this.style = props.style;
     this.polymer = props.polymer;
+    this.framework = props.framework;
     this.bower = props.bower.join(',');
 
     done();
@@ -203,6 +219,7 @@ Generator.prototype.configuring = function configuring() {
     passFunc: this.passFunc,
     namedFunc: this.namedFunc,
     polymer: this.polymer,
+    framework: this.framework,
     bower: this.bower
   };
 
