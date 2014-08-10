@@ -1,4 +1,4 @@
-/*global describe, before, beforeEach, it */
+/*global describe, beforeEach, it */
 'use strict';
 var join = require('path').join
   , assert = require('yeoman-generator').assert

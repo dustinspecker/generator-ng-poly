@@ -1,6 +1,5 @@
 'use strict';
-var findup = require('findup-sync')
-  , path = require('path')
+var path = require('path')
   , yeoman = require('yeoman-generator')
   , yosay = require('yosay');
 
