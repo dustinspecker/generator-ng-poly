@@ -45,8 +45,9 @@ Available generators:
 
 Languages and Features supported:
   * Markup
-    - Jade
+    - HAML
     - HTML
+    - Jade
   * Application scripting languages
     - JavaScript
   * Testing scripting languages
@@ -112,11 +113,11 @@ root/
 │   ├── home/
 │   │   ├── home.js
 │   │   ├── home.{less,scss,styl}
-│   │   ├── home.tpl.{html,jade}
+│   │   ├── home.tpl.{haml,html,jade}
 │   │   ├── home-controller.js
 │   │   └── home-controller_test.{coffee,js}
 │   ├── app.js
-│   └── index.{html,jade}
+│   └── index.{haml,html,jade}
 ├── bower_components/
 ├── e2e/
 │   └── home/
@@ -303,7 +304,7 @@ describe('fancyButton', function () {
 
 });
 ```
-**The directive's template (HTML or Jade) is converted to a temporary module automatically for testing.**
+**The directive's template (HAML, HTML, or Jade) is converted to a temporary module automatically for testing.**
 
 ### Factory
 Generates a factory and its test.
@@ -884,7 +885,7 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 
 | Option | Possible Values|
 | ------ | -------------- |
-| markup | html, jade|
+| markup | haml, html, jade|
 | style | less, scss, styl|
 | test-dir | src, test|
 | test-script | coffee, js|
