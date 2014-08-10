@@ -53,6 +53,8 @@ Languages and Features supported:
   * Testing scripting languages
     - CoffeeScript
     - JavaScript
+  * Frameworks
+    - Bootstrap with AngularStrap
   * Style languages
     - LESS
     - SCSS
