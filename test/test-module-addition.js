@@ -8,7 +8,7 @@ describe('module generator', function () {
 
   // generate default app
   beforeEach(function (done) {
-    helpers.testDirectory(join(__dirname, 'temp'), function (err) {
+    helpers.testDirectory(join(__dirname, 'module-temp'), function (err) {
       if (err) {
         done(err);
       }
@@ -22,7 +22,7 @@ describe('module generator', function () {
       ]);
 
       helpers.mockPrompt(this.app, {
-        'appName': 'temp',
+        'appName': 'module-temp',
         'markup': 'html',
         'appScript': 'js',
         'controllerAs': false,

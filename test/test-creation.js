@@ -78,7 +78,7 @@ describe('ng-poly generator', function () {
   // prompts to provide to ng-poly:app
   var prompts = [
   {
-    'appName': 'temp',
+    'appName': 'temp1',
     'markup': 'html',
     'appScript': 'js',
     'controllerAs': false,
@@ -90,7 +90,7 @@ describe('ng-poly generator', function () {
     'bower': []
   },
   {
-    'appName': 'temp',
+    'appName': 'temp2',
     'markup': 'jade',
     'appScript': 'js',
     'controllerAs': true,
@@ -102,7 +102,7 @@ describe('ng-poly generator', function () {
     'bower': []
   },
   {
-    'appName': 'temp',
+    'appName': 'temp3',
     'markup': 'jade',
     'appScript': 'js',
     'controllerAs': true,
@@ -179,7 +179,7 @@ describe('ng-poly generator', function () {
       ];
 
       before(function (done) {
-        helpers.testDirectory(join(__dirname, 'temp'), function (err) {
+        helpers.testDirectory(join(__dirname, config.appName), function (err) {
           if (err) {
             done(err);
           }
