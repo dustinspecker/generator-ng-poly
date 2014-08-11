@@ -57,7 +57,8 @@ var unitTestsFiles = '{app,test}/**/*_test.{coffee,js}'
 // build locations
 var build = 'build/'
 <% if (polymer) { %>  , buildComponents = build + 'components/'
-<% } %>  , buildCss = build
+<% } %><% if (framework === 'angularstrap') { %>  , buildFonts = build + 'fonts/'
+<% } %>  , buildCss = build + 'css/'
   , buildJs = build;
 
 // passed arguments
@@ -223,6 +224,13 @@ gulp.task('jshint', function () {
   ;
 });
 
+<% } %><% if (framework === 'angularstrap') { %>gulp.task('fonts', ['clean'], function () {
+  return gulp.src([
+    bowerDir + 'bootstrap/dist/fonts/**'
+  ])
+    .pipe(gulp.dest(buildFonts));
+});
+
 <% } %>gulp.task('scripts', ['clean', 'jshint'], function () {
   if (isProd) {
     return gulp.src([
@@ -246,7 +254,6 @@ gulp.task('jshint', function () {
       .pipe(gulp.dest(buildJs))
     ;
   }
-
 });
 
 gulp.task('style', ['clean'], function () {
@@ -288,7 +295,7 @@ gulp.task('style', ['clean'], function () {
     .pipe(prefix())
     .pipe(gulpIf(isProd, concat('style.css')))
     .pipe(gulpIf(isProd, cssmin()))
-    .pipe(gulp.dest(build))
+    .pipe(gulp.dest(buildCss))
   ;
 });
 
@@ -436,7 +443,7 @@ gulp.task('dev', ['build', 'browser-sync'], function () {
   gulp.start('watch');
 });
 
-gulp.task('build', ['angularInject'<% if (polymer) { %>, 'polymer'<% } %>], function () {
+gulp.task('build', ['angularInject'<% if (framework === 'angularstrap') { %>, 'fonts'<% } %><% if (polymer) { %>, 'polymer'<% } %>], function () {
 });
 
 gulp.task('default', ['dev']);
