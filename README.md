@@ -55,6 +55,7 @@ Languages and Features supported:
     - JavaScript
   * Frameworks
     - Bootstrap with AngularStrap
+    - Foundation with Angular Foundation
   * Style languages
     - LESS
     - SCSS

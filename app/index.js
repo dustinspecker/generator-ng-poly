@@ -144,6 +144,10 @@ Generator.prototype.prompting = function prompting() {
       {
         name: 'Bootstrap with AngularStrap',
         value: 'angularstrap'
+      },
+      {
+        name: 'Foundation with Angular Foundation',
+        value: 'foundation'
       }
     ]
   },

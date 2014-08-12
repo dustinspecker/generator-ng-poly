@@ -28,7 +28,8 @@ function config($urlRouterProvider) {
 <% } %>angular
   .module('<%= moduleName %>', [
     'ui.router'<% if (framework === 'angularstrap') { %>,
-    'mgcrea.ngStrap'<% } %>
+    'mgcrea.ngStrap'<% } %><% if (framework === 'foundation') { %>,
+    'mm.foundation'<% } %>
   ]);
 
 angular

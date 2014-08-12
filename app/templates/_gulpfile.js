@@ -69,7 +69,8 @@ var isProd = args.stage === 'prod';
 var injectableBowerComponents = [
   'angular/angular.js'<% if (bower.indexOf('animate') > -1) { %>,
   'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
-  'angular-cookies/angular-cookies.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
+  'angular-cookies/angular-cookies.js'<% } %><% if (framework === 'foundation') { %>,
+  'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
   'angular-resource/angular-resource.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
   'angular-sanitize/angular-sanitize.js'<% } %><% if (framework === 'angularstrap') { %>,
   'angular-strap/dist/angular-strap.js',
@@ -84,7 +85,8 @@ var injectableBowerComponents = [
 var minInjectableBowerComponents = [
   'angular/angular.min.js'<% if (bower.indexOf('animate') > -1) { %>,
   'angular-animate/angular-animate.min.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
-  'angular-cookies/angular-cookies.min.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
+  'angular-cookies/angular-cookies.min.js'<% } %><% if (framework === 'foundation') { %>,
+  'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
   'angular-resource/angular-resource.min.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
   'angular-sanitize/angular-sanitize.min.js'<% } %><% if (framework === 'angularstrap') { %>,
   'angular-strap/dist/angular-strap.min.js',
@@ -275,7 +277,8 @@ gulp.task('style', ['clean'], function () {
 
   // sass
   stream.queue(gulp.src([
-    appStyleFiles,
+    appStyleFiles,<% if (framework === 'foundation') { %>
+    bowerDir + 'foundation/scss/**/*.scss',<% } %>
     '!**/*.{less,styl}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
@@ -397,7 +400,8 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
     '!' + componentsBase + '**/*'<% } %>,
     '!**/*_test.*'<% if (bower.indexOf('animate') > -1) { %>,
     bowerDir + 'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
-    bowerDir + 'angular-cookies/angular-cookies.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
+    bowerDir + 'angular-cookies/angular-cookies.js'<% } %><% if (framework === 'foundation') { %>,
+    bowerDir + 'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
     bowerDir + 'angular-resource/angular-resource.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
     bowerDir + 'angular-sanitize/angular-sanitize.js'<% } %><% if (framework === 'angularstrap') { %>,
     bowerDir + 'angular-strap/dist/angular-strap.js',
