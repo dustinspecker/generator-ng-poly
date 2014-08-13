@@ -59,7 +59,7 @@ var build = 'build/'
 <% if (polymer) { %>  , buildComponents = build + 'components/'
 <% } %><% if (framework === 'angularstrap') { %>  , buildFonts = build + 'fonts/'
 <% } %>  , buildCss = build + 'css/'
-  , buildJs = build;
+  , buildJs = build + 'js/';
 
 // passed arguments
 var isProd = args.stage === 'prod';
