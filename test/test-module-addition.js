@@ -1,4 +1,4 @@
-/*global describe, beforeEach, it */
+/*global describe, before, it */
 'use strict';
 var join = require('path').join
   , assert = require('yeoman-generator').assert
@@ -7,7 +7,7 @@ var join = require('path').join
 describe('module generator', function () {
 
   // generate default app
-  beforeEach(function (done) {
+  before(function (done) {
     helpers.testDirectory(join(__dirname, 'module-temp'), function (err) {
       if (err) {
         done(err);
@@ -43,7 +43,7 @@ describe('module generator', function () {
   });
 
   describe('adding a new empty module', function () {
-    beforeEach(function (done) {
+    before(function (done) {
       this.app = helpers.createGenerator('ng-poly:module', [
         '../../module',
         '../../route',
@@ -72,7 +72,7 @@ describe('module generator', function () {
 
   // trailing slash to test trailing slash removal
   describe('adding a new module', function () {
-    beforeEach(function (done) {
+    before(function (done) {
       this.app = helpers.createGenerator('ng-poly:module', [
         '../../module',
         '../../route',
@@ -85,14 +85,17 @@ describe('module generator', function () {
       });
     });
 
-    it('should add test to app/app.js deps', function () {
+    it('should add comma to ui.router in app/app.js', function () {
       assert.fileContent('app/app.js', /    \'ui.router\',/);
+    });
+
+    it('should add test to app/app.js deps', function () {
       assert.fileContent('app/app.js', /    \'test\'/);
     });
   });
 
   describe('adding a deep level module', function () {
-    beforeEach(function (done) {
+    before(function (done) {
       this.app = helpers.createGenerator('ng-poly:module', [
         '../../module',
         '../../route',
