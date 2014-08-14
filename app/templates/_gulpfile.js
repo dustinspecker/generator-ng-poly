@@ -263,9 +263,9 @@ gulp.task('style', ['clean'], function () {
 
   // less
   stream.queue(gulp.src([
-    appStyleFiles,<% if (framework === 'angularstrap') { %>
-    bowerDir + 'bootstrap/less/bootstrap.less',<% } %>
-    '!**/*.{scss,styl}'<% if (polymer) { %>,
+    <% if (framework === 'angularstrap') { %>bowerDir + 'bootstrap/less/bootstrap.less',<% } %>
+    '!**/*.{scss,styl}',
+    appStyleFiles<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
     .pipe(less(<% if (framework === 'angularstrap') { %>{
@@ -277,8 +277,8 @@ gulp.task('style', ['clean'], function () {
 
   // sass
   stream.queue(gulp.src([
-    appStyleFiles,<% if (framework === 'foundation') { %>
-    bowerDir + 'foundation/scss/**/*.scss',<% } %>
+    <% if (framework === 'foundation') { %>bowerDir + 'foundation/scss/**/*.scss',<% } %>
+    appStyleFiles,
     '!**/*.{less,styl}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
