@@ -266,23 +266,42 @@ gulp.task('jshint', function () {
 gulp.task('style', ['clean'], function () {
   var stream = streamqueue({ objectMode: true });
 
-  // less
+  <% if (framework !== 'none') { %>// load frameworks first, so that when concating custom CSS overrides frameworks<% } %><% if (framework === 'angularstrap') { %>
   stream.queue(gulp.src([
-    <% if (framework === 'angularstrap') { %>bowerDir + 'bootstrap/less/bootstrap.less',<% } %>
-    '!**/*.{css,scss,styl}',
-    appStyleFiles<% if (polymer) { %>,
-    '!' + componentsBase + '**/*'<% } %>
+    bowerDir + 'bootstrap/less/bootstrap.less'
   ])
-    .pipe(less(<% if (framework === 'angularstrap') { %>{
+    .pipe(less({
       paths: [
         bowerDir + 'bootstrap/less/**/*.less'
       ]
-    }<% } %>)))
+    })))
+  ;
+
+  <% } %><% if (framework === 'foundation') { %>
+  stream.queue(gulp.src([
+    bowerDir + 'foundation/scss/**/*.scss'
+  ])
+    .pipe(sass()))
+  ;
+
+  <% } %>// css
+  stream.queue(gulp.src([
+    appStyleFiles,
+    '!**/*.{less,scss,styl}'<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>
+  ]));
+
+  // less
+  stream.queue(gulp.src([
+    appStyleFiles,
+    '!**/*.{css,scss,styl}'<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>
+  ])
+    .pipe(less()))
   ;
 
   // sass
   stream.queue(gulp.src([
-    <% if (framework === 'foundation') { %>bowerDir + 'foundation/scss/**/*.scss',<% } %>
     appStyleFiles,
     '!**/*.{css,less,styl}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
@@ -298,13 +317,6 @@ gulp.task('style', ['clean'], function () {
   ])
     .pipe(stylus()))
   ;
-
-  // css
-  stream.queue(gulp.src([
-    appStyleFiles,
-    '!**/*.{less,scss,styl}'<% if (polymer) { %>,
-    '!' + componentsBase + '**/*'<% } %>
-  ]));
 
   return stream.done()
     .pipe(prefix())
