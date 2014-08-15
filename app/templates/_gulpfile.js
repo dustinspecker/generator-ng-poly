@@ -362,7 +362,10 @@ gulp.task('markup', ['clean'], function () {
 gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts', 'style'], function () {
   return gulp.src(build + 'index.html')
     .pipe(inject(gulp.src([
-      <% if (polymer) { %>buildComponents + '**/*.html',
+      <% if (framework === 'angularstrap') { %>buildCss + 'bootstrap.css',
+      <% } %><% if (framework === 'foundation') { %>buildCss + 'normalize.css',
+      buildCss + 'foundation.css',
+      <% } %><% if (polymer) { %>buildComponents + '**/*.html',
       <% } %>buildCss + '**/*.css',
       buildJs + 'angular.js',
       buildJs + 'angular.min.js'
