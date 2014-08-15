@@ -57,6 +57,7 @@ Languages and Features supported:
     - Bootstrap with AngularStrap
     - Foundation with Angular Foundation
   * Style languages
+    - CSS
     - LESS
     - SCSS
     - Stylus
@@ -115,7 +116,7 @@ root/
 ├── app/
 │   ├── home/
 │   │   ├── home.js
-│   │   ├── home.{less,scss,styl}
+│   │   ├── home.{css,less,scss,styl}
 │   │   ├── home.tpl.{haml,html,jade}
 │   │   ├── home-controller.js
 │   │   └── home-controller_test.{coffee,js}
@@ -889,7 +890,7 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 | Option | Possible Values|
 | ------ | -------------- |
 | markup | haml, html, jade|
-| style | less, scss, styl|
+| style | css, less, scss, styl|
 | test-dir | src, test|
 | test-script | coffee, js|
 | controller-as | true, false |

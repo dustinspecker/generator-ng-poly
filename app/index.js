@@ -112,6 +112,10 @@ Generator.prototype.prompting = function prompting() {
     message: 'What is the preferred style language?',
     choices: [
       {
+        name: 'CSS',
+        value: 'css'
+      },
+      {
         name: 'LESS',
         value: 'less',
         checked: true

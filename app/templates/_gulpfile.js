@@ -37,13 +37,13 @@ var _ = require('lodash')
 var appBase = 'app/'
   , appMarkupFiles = appBase + '**/*.{haml,html,jade}'
   , appScriptFiles = appBase + '**/*.js'
-  , appStyleFiles = appBase + '**/*.{less,scss,styl}';
+  , appStyleFiles = appBase + '**/*.{css,less,scss,styl}';
 
 <% if (polymer) { %>// custom component locations
 var componentsBase = appBase + 'components/'
   , componentsMarkupFiles = componentsBase + '**/*.{haml,html,jade}'
   , componentsScriptFiles = componentsBase + '**/*.js'
-  , componentsStyleFiles = componentsBase + '**/*.{less,scss,styl}';
+  , componentsStyleFiles = componentsBase + '**/*.{css,less,scss,styl}';
 
 <% } %>// e2e test locations
 var e2ePoFiles = 'e2e/**/*.po.{coffee,js}'
@@ -194,10 +194,16 @@ gulp.task('jshint', function () {
   , { base: componentsBase }))
   ;
 
+  // css
+  stream.queue(gulp.src([
+    componentsStyleFiles,
+    '!**/*.{less,scss,styl}'
+  ], { base: componentsBase }));
+
   // less
   stream.queue(gulp.src([
     componentsStyleFiles,
-    '!**/*.{scss,styl}'
+    '!**/*.{css,scss,styl}'
   ], { base: componentsBase })
     .pipe(less())
     .pipe(prefix()))
@@ -206,7 +212,7 @@ gulp.task('jshint', function () {
   // sass
   stream.queue(gulp.src([
     componentsStyleFiles,
-    '!**/*.{less,styl}',
+    '!**/*.{css,less,styl}',
   ], { base: componentsBase })
     .pipe(sass())
     .pipe(prefix()))
@@ -215,15 +221,14 @@ gulp.task('jshint', function () {
   // stylus
   stream.queue(gulp.src([
     componentsStyleFiles,
-    '!**/*.{less,scss}'
+    '!**/*.{css,less,scss}'
   ], { base: componentsBase })
     .pipe(stylus())
     .pipe(prefix()))
   ;
 
   return stream.done()
-    .pipe(gulp.dest(buildComponents))
-  ;
+    .pipe(gulp.dest(buildComponents));
 });
 
 <% } %><% if (framework === 'angularstrap') { %>gulp.task('fonts', ['clean'], function () {
@@ -264,7 +269,7 @@ gulp.task('style', ['clean'], function () {
   // less
   stream.queue(gulp.src([
     <% if (framework === 'angularstrap') { %>bowerDir + 'bootstrap/less/bootstrap.less',<% } %>
-    '!**/*.{scss,styl}',
+    '!**/*.{css,scss,styl}',
     appStyleFiles<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
@@ -279,7 +284,7 @@ gulp.task('style', ['clean'], function () {
   stream.queue(gulp.src([
     <% if (framework === 'foundation') { %>bowerDir + 'foundation/scss/**/*.scss',<% } %>
     appStyleFiles,
-    '!**/*.{less,styl}'<% if (polymer) { %>,
+    '!**/*.{css,less,styl}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
     .pipe(sass()))
@@ -288,11 +293,18 @@ gulp.task('style', ['clean'], function () {
   // stylus
   stream.queue(gulp.src([
     appStyleFiles,
-    '!**/*.{less,scss}'<% if (polymer) { %>,
+    '!**/*.{css,less,scss}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
     .pipe(stylus()))
   ;
+
+  // css
+  stream.queue(gulp.src([
+    appStyleFiles,
+    '!**/*.{less,scss,styl}'<% if (polymer) { %>,
+    '!' + componentsBase + '**/*'<% } %>
+  ]));
 
   return stream.done()
     .pipe(prefix())
