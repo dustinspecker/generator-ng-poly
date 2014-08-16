@@ -135,7 +135,8 @@ root/
 ├── Gulpfile.js
 ├── karma.config.js
 ├── package.json
-└── protractor.config.js
+├── protractor.config.js
+└── README.md
 
 ```
 

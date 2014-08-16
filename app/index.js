@@ -232,13 +232,14 @@ Generator.prototype.configuring = function configuring() {
   };
 
   // copy over common files
-  this.template('_bower.json', 'bower.json', this.context);
-  this.template('_package.json', 'package.json', this.context);
   this.copy('.editorconfig', '.editorconfig');
+  this.copy('.jshintrc', '.jshintrc');
+  this.template('_bower.json', 'bower.json', this.context);
   this.template('_gulpfile.js', 'Gulpfile.js', this.context);
   this.copy('karma.config.js', 'karma.config.js');
+  this.template('_package.json', 'package.json', this.context);
   this.copy('protractor.config.js', 'protractor.config.js');
-  this.copy('.jshintrc', '.jshintrc');
+  this.template('_readme.md', 'README.md');
 };
 
 Generator.prototype.writing = function writing() {

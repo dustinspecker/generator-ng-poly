@@ -27,7 +27,8 @@ describe('ng-poly generator', function () {
       'Gulpfile.js',
       'karma.config.js',
       'package.json',
-      'protractor.config.js'
+      'protractor.config.js',
+      'README.md'
     ];
 
     before(function (done) {
@@ -187,7 +188,8 @@ describe('ng-poly generator', function () {
         'Gulpfile.js',
         'karma.config.js',
         'package.json',
-        'protractor.config.js'
+        'protractor.config.js',
+        'README.md'
       ];
 
       before(function (done) {
