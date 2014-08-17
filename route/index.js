@@ -28,7 +28,13 @@ Generator.prototype.writing = function writing() {
   };
 
   // save modifications
-  fs.writeFileSync(filePath, utils.addRoute(file, newState, config.controllerAs, config.passFunc));
+  var newRouteConfig = {
+    controllerAs: config.controllerAs,
+    passFunc: config.passFunc,
+    ngRoute: config.ngRoute
+  };
+  console.log(JSON.stringify(newRouteConfig));
+  fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
 
   // e2e testing
   // create page object model
@@ -70,6 +76,7 @@ Generator.prototype.end = function end() {
       'named-func': this.options['named-func'],
       'test-script': this.options['test-script'],
       'test-dir': this.options['test-dir'],
+      'ng-route': this.options['ng-route'],
       style: this.options.style
     }
   }, {

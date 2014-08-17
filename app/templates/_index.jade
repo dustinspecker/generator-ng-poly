@@ -11,7 +11,7 @@ html(lang='en' data-ng-app='<%= appName %>')
     |<!-- endinject -->
   body
 
-    div(data-ui-view)
+    div(data-<% if (ngRoute) { %>ng<% } else { %>ui<% } %>-view)
 
     |<!-- inject:js -->
     |<!-- endinject -->

@@ -11,7 +11,7 @@
   <!-- endinject -->
 </head>
 <body>
-  <div data-ui-view>
+  <div data-<% if (ngRoute) { %>ng<% } else { %>ui<% } %>-view>
 
   </div>
   <!-- inject:js -->

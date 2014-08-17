@@ -156,6 +156,12 @@ Generator.prototype.prompting = function prompting() {
     ]
   },
   {
+    type: 'confirm',
+    name: 'ngRoute',
+    message: 'Should ngRoute be used instead of UI Router?',
+    default: false
+  },
+  {
     type: 'checkbox',
     name: 'bower',
     message: 'Which additonal Bower components should be installed?',
@@ -192,6 +198,7 @@ Generator.prototype.prompting = function prompting() {
     this.testDir = props.testDir;
     this.style = props.style;
     this.polymer = props.polymer;
+    this.ngRoute = props.ngRoute;
     this.framework = props.framework;
     this.bower = props.bower.join(',');
 
@@ -215,6 +222,7 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('testScript', this.testScript);
   this.config.set('testDir', this.testDir);
   this.config.set('style', this.style);
+  this.config.set('ngRoute', this.ngRoute);
   this.config.set('lastUsedModule', 'home');
 
   // force save to guarantee config exists for controller
@@ -228,6 +236,7 @@ Generator.prototype.configuring = function configuring() {
     namedFunc: this.namedFunc,
     polymer: this.polymer,
     framework: this.framework,
+    ngRoute: this.ngRoute,
     bower: this.bower
   };
 
@@ -269,7 +278,8 @@ Generator.prototype.end = function end() {
       'test-script': this.testScript,
       'controller-as': this.controllerAs,
       'pass-func': this.passFunc,
-      'named-func': this.namedFunc
+      'named-func': this.namedFunc,
+      'ng-route': this.ngRoute
     }
   }, {
     local: require.resolve('../module'),

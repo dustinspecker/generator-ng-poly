@@ -77,6 +77,7 @@ Generator.prototype.end = function end() {
         'named-func': this.options['named-func'],
         'test-script': this.options['test-script'],
         'test-dir': this.options['test-dir'],
+        'ng-route': this.options['ng-route'],
         style: this.options.style
       }
     }, {

@@ -22,16 +22,16 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     }.bind(this)
   }, {
     name: 'url',
-    message: 'What\'s the URL for this state?',
+    message: 'What\'s the URL for this route?',
     default: function () {
       return '/' + utils.lowerCamel(this.name);
     }.bind(this),
     when: function() {
-      return ( (params && params.url) && !(this.options && this.options.url) );
+      return ( (params && params.url) && !this.config.get('ngRoute') && !(this.options && this.options.url) );
     }.bind(this)
   }, {
     name: 'templateUrl',
-    message: 'What\'s the templateURL for this state?',
+    message: 'What\'s the templateURL for this route?',
     default: function (answers) {
       var module = answers.module || this.options.module;
       return module + '/' + this.name + '.tpl.html';
@@ -41,7 +41,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     }.bind(this)
   }], function (props) {
     this.module = props.module || this.options.module;
-    this.url = props.url || this.options.url;
+    this.url = props.url || this.options.url || this.name;
     this.templateUrl = props.templateUrl || this.options['template-url'];
 
     // if moduleName ends with a slash remove it
@@ -77,6 +77,7 @@ Generator.prototype.getConfig = function getConfig() {
     testScript: this.options['test-script'] || this.config.get('testScript'),
     testDir: this.options['test-dir'] || this.config.get('testDir'),
     style: this.options.style || this.config.get('style'),
+    ngRoute: this.options['ng-route'] || this.config.get('ngRoute'),
 
     appName: utils.getAppName(this.config.path),
     ctrlName: utils.ctrlName(this.name),

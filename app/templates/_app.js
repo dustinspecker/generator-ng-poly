@@ -3,7 +3,7 @@
 
 /* @ngdoc object
  * @name <%= moduleName %>
- * @requires $urlRouterProvider
+ * @requires <% if (ngRoute) { %>$routeProvider<% } else { %>$urlRouterProvider<% } %>
  *
  * @description
  *
@@ -11,13 +11,15 @@
  * @ngInject
  *
  */
-function config($urlRouterProvider) {
-  $urlRouterProvider.otherwise('/home');
+function config(<% if (ngRoute) { %>$routeProvider<% } else { %>$urlRouterProvider<% } %>) {
+  <% if (ngRoute) { %>$routeProvider.otherwise({
+    redirectTo: '/home'
+  });<% } else { %>$urlRouterProvider.otherwise('/home');<% } %>
 }<% } %>
 
 <% if (!passFunc) { %>/* @ngdoc object
  * @name <%= moduleName %>
- * @requires $urlRouterProvider
+ * @requires <% if (ngRoute) { %>$routeProvider<% } else { %>$urlRouterProvider<% } %>
  *
  * @description
  *
@@ -27,7 +29,7 @@ function config($urlRouterProvider) {
  */
 <% } %>angular
   .module('<%= moduleName %>', [
-    'ui.router'<% if (framework === 'angularstrap') { %>,
+    <% if (ngRoute) { %>'ngRoute'<% } else { %>'ui.router'<% } %><% if (framework === 'angularstrap') { %>,
     'mgcrea.ngStrap'<% } %><% if (framework === 'foundation') { %>,
     'mm.foundation'<% } %>
   ]);
@@ -35,8 +37,10 @@ function config($urlRouterProvider) {
 angular
   .module('<%= moduleName %>')<% if (passFunc) { %>
   .config(config);<% } else { %>
-  .config(function <% if (namedFunc) { %>config<% } %>($urlRouterProvider) {
-    $urlRouterProvider.otherwise('/home');
+  .config(function <% if (namedFunc) { %>config<% } %>(<% if (ngRoute) { %>$routeProvider<% } else { %>$urlRouterProvider<% } %>) {
+    <% if (ngRoute) { %>$routeProvider.otherwise({
+      redirectTo: '/home'
+    });<% } else { %>$urlRouterProvider.otherwise('/home');<% } %>
   });<% } %>
 <% if (passFunc) { %>
 })();<% } %>

@@ -56,6 +56,9 @@ Languages and Features supported:
   * Frameworks
     - Bootstrap with AngularStrap
     - Foundation with Angular Foundation
+  * Routers
+    - ngRoute
+    - UI Router
   * Style languages
     - CSS
     - LESS
@@ -100,7 +103,7 @@ yo ng-poly:view newView --module=home/kitchen
 ```
 * * *
 
-**Examples are shown with HTML, LESS, and JavaScript as the app configuration.**
+**Examples are shown with HTML, LESS, JavaScript, and UI Router as the app configuration.**
 
 ### App
 Asks for application name and language preferences to scaffold out an application with a home module. It will also ask if tests should be placed in the `app/` or `tests/` directory. It'll ask for some additional Bower dependencies and then install npm and Bower dependencies.
@@ -897,6 +900,9 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 | controller-as | true, false |
 | pass-func | true, false |
 | named-func | true, false |
+| ng-route | true, false|
+
+**It's not recommended to mix ngRoute and UI Router, but it's possible.**
 
 ### Controller As Syntax
 

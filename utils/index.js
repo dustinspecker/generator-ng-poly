@@ -109,31 +109,35 @@ function addDependency(fileContents, dependency) {
   return lines.join(endOfLine);
 }
 
-function addRoute(fileContents, state, controllerAs, passFunc) {
-  // if file doesn't have ui.router as a dependency, add it
-  if (!dependencyExists(fileContents, 'ui.router')) {
-    fileContents = addDependency(fileContents, 'ui.router');
+function addRoute(fileContents, state, config) {
+  var dependency = config.ngRoute ? 'ngRoute' : 'ui.router';
+  var param = config.ngRoute ? 'routeProvider' : 'stateProvider';
+  var newRoute = config.ngRoute ? 'when' : 'state';
+
+  // if file doesn't have the dependency, add it
+  if (!dependencyExists(fileContents, dependency)) {
+    fileContents = addDependency(fileContents, dependency);
   }
 
   // check if $stateProvider is passed to config
-  var regex = /function.*\(.*\$stateProvider.*\)/;
-  var addStateProvider = !regex.test(fileContents);
+  var regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)');
+  var addParam = !regex.test(fileContents);
 
   // find line to add new state
   var lines = fileContents.split(endOfLine)
-    , stateStartIndex = -1
-    , stateEndIndex = -1
+    , routeStartIndex = -1
+    , routeEndIndex = -1
     , braceCount = 0 // {}
     , configFunctionIndex = -1;
   lines.forEach(function (line, i) {
     // add $stateProvider if needed
-    if ( (addStateProvider && passFunc && line.indexOf('function config(') > -1) ||
-      (addStateProvider && !passFunc && line.indexOf('.config(function') > -1) ) {
+    if ( (addParam && config.passFunc && line.indexOf('function config(') > -1) ||
+      (addParam && !config.passFunc && line.indexOf('.config(function') > -1) ) {
         // check if function has a parameter already
         if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$stateProvider) {';
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') {';
         } else {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $stateProvider) {';
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') {';
         }
     }
 
@@ -141,25 +145,25 @@ function addRoute(fileContents, state, controllerAs, passFunc) {
       configFunctionIndex = i;
     }
 
-    // look for .state and set stateStartIndex
-    if (line.indexOf('.state(') > -1) {
-      stateStartIndex = i;
+    // look for .state and set routeStartIndex
+    if (line.indexOf('.' + newRoute + '(') > -1) {
+      routeStartIndex = i;
     }
 
     // open braces add to braceCount
-    if (stateStartIndex > -1 && line.indexOf('{') > -1) {
+    if (routeStartIndex > -1 && line.indexOf('{') > -1) {
       braceCount++;
     }
 
     // close braces subract from braceCount
-    if (stateStartIndex > -1 && line.indexOf('}') > -1) {
+    if (routeStartIndex > -1 && line.indexOf('}') > -1) {
       braceCount--;
     }
 
     // when braceCount = 0 the end of the state has been reached
-    // set stateEndIndex
-    if (stateStartIndex > -1 && braceCount === 0) {
-      stateEndIndex = i;
+    // set routeEndIndex
+    if (routeStartIndex > -1 && braceCount === 0) {
+      routeEndIndex = i;
     }
 
     // loop through everything to append new route at the end
@@ -167,23 +171,36 @@ function addRoute(fileContents, state, controllerAs, passFunc) {
 
   // has existing state
   var newState;
-  if (stateStartIndex > -1) {
+  if (routeStartIndex > -1) {
     // create new state
-    newState = [
-      '    })',
-      '    .state(\'' + state.lowerCamel + '\', {',
-      '      url: \'' + state.url + '\',',
-      '      templateUrl: \'' + state.templateUrl + '\','
-    ];
+    if (config.ngRoute) {
+      newState = [
+        '    })',
+        '    .when(\'' + state.url + '\', {',
+        '      templateUrl: \'' + state.templateUrl + '\','
+      ];
+    } else {
+      newState = [
+        '    })',
+        '    .state(\'' + state.lowerCamel + '\', {',
+        '      url: \'' + state.url + '\',',
+        '      templateUrl: \'' + state.templateUrl + '\','
+      ];
+    }
 
-    if (controllerAs) {
-      newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+    if (config.controllerAs) {
+      if (config.ngRoute) {
+        newState.push('      controller: \'' + state.ctrlName + '\',');
+        newState.push('      controllerAs: \'' + state.lowerCamel + '\'');
+      } else {
+        newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+      }
     } else {
       newState.push('      controller: \'' + state.ctrlName + '\'');
     }
 
     // prepend another two spaces to each line if not passing functions
-    if (!passFunc) {
+    if (!config.passFunc) {
       newState = newState.map(function (newStateLine) {
         return '  ' + newStateLine;
       });
@@ -191,21 +208,34 @@ function addRoute(fileContents, state, controllerAs, passFunc) {
 
     // join the state
     // insert state above }); of the original last state
-    lines.splice(stateEndIndex, 0, newState.map(function (newStateLine) {
+    lines.splice(routeEndIndex, 0, newState.map(function (newStateLine) {
       return newStateLine;
     }).join(endOfLine));
   } else {
     // no existing state
-    newState = [
-      '  $stateProvider',
-      '    .state(\'' + state.lowerCamel + '\', {',
-      '      url: \'' + state.url + '\',',
-      '      templateUrl: \'' + state.module + '/' + state.hyphenName + '.tpl.html\',',
-    ];
+    if (config.ngRoute) {
+      newState = [
+        '  $routeProvider',
+        '    .when(\'' + state.url + '\', {',
+        '      templateUrl: \'' + state.templateUrl + '\','
+      ];
+    } else {
+      newState = [
+        '  $stateProvider',
+        '    .state(\'' + state.lowerCamel + '\', {',
+        '      url: \'' + state.url + '\',',
+        '      templateUrl: \'' + state.module + '/' + state.hyphenName + '.tpl.html\',',
+      ];
+    }
 
     // add controller
-    if (controllerAs) {
-      newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+    if (config.controllerAs) {
+      if (config.ngRoute) {
+        newState.push('      controller: \'' + state.ctrlName + '\',');
+        newState.push('      controllerAs: \'' + state.lowerCamel + '\'');
+      } else {
+        newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+      }
     } else {
       newState.push('      controller: \'' + state.ctrlName + '\'');
     }
@@ -214,7 +244,7 @@ function addRoute(fileContents, state, controllerAs, passFunc) {
     newState.push('    });');
 
     // prepend another two spaces to each line if not passing functions
-    if (!passFunc) {
+    if (!config.passFunc) {
       newState = newState.map(function (newStateLine) {
         return '  ' + newStateLine;
       });
