@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "angular": "~1.2.21"<% if (bower.indexOf('animate') > -1) { %>,
-    "angular-animate": "~1.2.21"<% } %><% if (bower.indexOf('cookies') > -1) { %>,
+    "angular-animate": "~1.2.21"<% } %><% if (framework === 'uibootstrap') { %>,
+    "angular-bootstrap": "~0.11.0"<% } %><% if (bower.indexOf('cookies') > -1) { %>,
     "angular-cookies": "~1.2.21"<% } %><% if (framework === 'foundation') { %>,
     "angular-foundation": "~0.3.0"<% } %><% if (bower.indexOf('resource') > -1) { %>,
     "angular-resource": "~1.2.21"<% } %><% if(ngRoute) { %>,
@@ -11,7 +12,7 @@
     "angular-sanitize": "~1.2.21"<% } %><% if (framework === 'angularstrap') { %>,
     "angular-strap": "~2.0.5"<% } %><% if (bower.indexOf('touch') > -1) { %>,
     "angular-touch": "~1.2.21"<% } %><% if (!ngRoute) { %>,
-    "angular-ui-router": "~0.2.10"<% } %><% if (framework === 'angularstrap') { %>,
+    "angular-ui-router": "~0.2.10"<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>,
     "bootstrap": "~3.2.0"<% } %><% if (framework === 'foundation') { %>,
     "foundation": "~5.3.3"<% } %><% if (polymer) { %>,
     "polymer": "Polymer/polymer#~0.3.3",

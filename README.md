@@ -55,9 +55,10 @@ Languages and Features supported:
     - JavaScript
   * Frameworks
     - Bootstrap with AngularStrap
+    - Bootstrap with UI Bootstrap
     - Foundation with Angular Foundation
   * Routers
-    - ngRoute
+    - Angular Route
     - UI Router
   * Style languages
     - CSS

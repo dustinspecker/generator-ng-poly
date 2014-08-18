@@ -57,7 +57,7 @@ var unitTestsFiles = '{app,test}/**/*_test.{coffee,js}'
 // build locations
 var build = 'build/'
 <% if (polymer) { %>  , buildComponents = build + 'components/'
-<% } %><% if (framework === 'angularstrap') { %>  , buildFonts = build + 'fonts/'
+<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>  , buildFonts = build + 'fonts/'
 <% } %>  , buildCss = build + 'css/'
   , buildJs = build + 'js/';
 
@@ -68,7 +68,8 @@ var isProd = args.stage === 'prod';
 // 'bower_components' is automatically prepended
 var injectableBowerComponents = [
   'angular/angular.js'<% if (bower.indexOf('animate') > -1) { %>,
-  'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
+  'angular-animate/angular-animate.js'<% } %><% if (framework === 'uibootstrap') { %>,
+  'angular-bootstrap/ui-bootstrap-tpls.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
   'angular-cookies/angular-cookies.js'<% } %><% if (framework === 'foundation') { %>,
   'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
   'angular-resource/angular-resource.js'<% } %><% if (ngRoute) { %>,
@@ -85,7 +86,8 @@ var injectableBowerComponents = [
 // 'bower_components' is automatically prepended
 var minInjectableBowerComponents = [
   'angular/angular.min.js'<% if (bower.indexOf('animate') > -1) { %>,
-  'angular-animate/angular-animate.min.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
+  'angular-animate/angular-animate.min.js'<% } %><% if (framework === 'uibootstrap') { %>,
+  'angular-bootstrap/ui-bootstrap-tpls.min.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
   'angular-cookies/angular-cookies.min.js'<% } %><% if (framework === 'foundation') { %>,
   'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
   'angular-resource/angular-resource.min.js'<% } %><% if (ngRoute) { %>,
@@ -233,7 +235,7 @@ gulp.task('jshint', function () {
     .pipe(gulp.dest(buildComponents));
 });
 
-<% } %><% if (framework === 'angularstrap') { %>gulp.task('fonts', ['clean'], function () {
+<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>gulp.task('fonts', ['clean'], function () {
   return gulp.src([
     bowerDir + 'bootstrap/dist/fonts/**'
   ])
@@ -268,7 +270,7 @@ gulp.task('jshint', function () {
 gulp.task('style', ['clean'], function () {
   var stream = streamqueue({ objectMode: true });
 
-  <% if (framework !== 'none') { %>// load frameworks first, so that when concating custom CSS overrides frameworks<% } %><% if (framework === 'angularstrap') { %>
+  <% if (framework !== 'none') { %>// load frameworks first, so that when concating custom CSS overrides frameworks<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>
   stream.queue(gulp.src([
     bowerDir + 'bootstrap/less/bootstrap.less'
   ])
@@ -364,7 +366,7 @@ gulp.task('markup', ['clean'], function () {
 gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts', 'style'], function () {
   return gulp.src(build + 'index.html')
     .pipe(inject(gulp.src([
-      <% if (framework === 'angularstrap') { %>buildCss + 'bootstrap.css',
+      <% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>buildCss + 'bootstrap.css',
       <% } %><% if (framework === 'foundation') { %>buildCss + 'normalize.css',
       buildCss + 'foundation.css',
       <% } %><% if (polymer) { %>buildComponents + '**/*.html',
@@ -429,7 +431,8 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
     '!' + componentsBase + '**/*'<% } %>,
     '!**/*_test.*'<% if (bower.indexOf('animate') > -1) { %>,
     bowerDir + 'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
-    bowerDir + 'angular-cookies/angular-cookies.js'<% } %><% if (framework === 'foundation') { %>,
+    bowerDir + 'angular-cookies/angular-cookies.js'<% } %><% if (framework === 'uibootstrap') { %>,
+    bowerDir + 'angular-bootstrap/ui-bootstrap.tpls.js'<% } %><% if (framework === 'foundation') { %>,
     bowerDir + 'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
     bowerDir + 'angular-resource/angular-resource.js'<% } %><% if (ngRoute) { %>,
     bowerDir + 'angular-route/angular-route.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
@@ -477,7 +480,7 @@ gulp.task('dev', ['build', 'browser-sync'], function () {
   gulp.start('watch');
 });
 
-gulp.task('build', ['angularInject'<% if (framework === 'angularstrap') { %>, 'fonts'<% } %><% if (polymer) { %>, 'polymer'<% } %>], function () {
+gulp.task('build', ['angularInject'<% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>, 'fonts'<% } %><% if (polymer) { %>, 'polymer'<% } %>], function () {
 });
 
 gulp.task('default', ['dev']);
