@@ -112,7 +112,7 @@ function prependBowerDir(file) {
 
 gulp.task('watch', function () {
   gulp.watch([unitTestsFiles], ['unitTest']);
-  gulp.watch([appMarkupFiles, appScriptFiles, appStyleFiles<% if (polymer) { %>, componentsBase + '**/*'<% } %>], ['angularInject'<% if (polymer) { %>, 'polymer'<% } %>, browserSync.reload]);
+  gulp.watch([appMarkupFiles, appScriptFiles, appStyleFiles<% if (polymer) { %>, componentsBase + '**/*'<% } %>], ['build', browserSync.reload]);
 });
 
 gulp.task('browser-sync', function () {
