@@ -45,32 +45,33 @@ Available generators:
 
 Languages and Features supported:
   * Markup
-    - HAML
-    - HTML
-    - Jade
+    - HAML, HTML, Jade
   * Application scripting languages
     - JavaScript
   * Testing scripting languages
-    - CoffeeScript
-    - JavaScript
-  * Frameworks
-    - Bootstrap with AngularStrap
-    - Bootstrap with UI Bootstrap
-    - Foundation with Angular Foundation
-  * Routers
-    - Angular Route
-    - UI Router
+    - CoffeeScript, JavaScript
   * Style languages
-    - CSS
-    - LESS
-    - SCSS
-    - Stylus
+    - CSS, LESS, SCSS, Stylus
+  * Routers
+    - Angular Route, UI Router
   * Unit testing
     - Jasmine (Karma as the test runner) for AngularJS
   * e2e testing
     - Protractor for AngularJS
+  * Frameworks
+    - Bootstrap with AngularStrap
+    - Bootstrap with UI Bootstrap
+    - Foundation with Angular Foundation
+  * Polymer
+    - Core, Paper
   * Task runners
     - Gulp
+  * Other supported Bower packages:
+    - Angular Animate
+    - Angular Cookies
+    - Angular Resource
+    - Angular Sanitize
+    - Angular Touch
 
 [Configurations](#configurations):
   * Syntax
