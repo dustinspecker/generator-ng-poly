@@ -113,6 +113,7 @@ function prependBowerDir(file) {
 }
 
 gulp.task('watch', function () {
+  browserSync.reload();
   gulp.watch([unitTestsFiles], ['unitTest']);
   gulp.watch([appMarkupFiles, appScriptFiles, appStyleFiles<% if (polymer) { %>, componentsBase + '**/*'<% } %>], ['build', browserSync.reload]);
 });
