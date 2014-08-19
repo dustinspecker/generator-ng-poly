@@ -69,10 +69,8 @@ describe('addRoute using UI Router', function () {
       });
 
       it('should add state', function () {
-        var newContents = utils.addRoute(fileContents, newState, config);
-        console.log(newContents);
         assert(/\$stateProvider[^$]*.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\'[^$]*}\)/
-          .test(newContents));
+          .test(utils.addRoute(fileContents, newState, config)));
       });
     });
 

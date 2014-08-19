@@ -33,7 +33,6 @@ Generator.prototype.writing = function writing() {
     passFunc: config.passFunc,
     ngRoute: config.ngRoute
   };
-  console.log(JSON.stringify(newRouteConfig));
   fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
 
   // e2e testing
