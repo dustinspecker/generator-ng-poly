@@ -29,13 +29,13 @@ describe('addRoute using UI Router', function () {
     });
 
     it('should add new state without controllerAS', function () {
-      assert(/.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\'[^$]*}\)/
+      assert(/.state\(\'test\', {[\n\r]*        url: \'\/test\',[\n\r]*        templateUrl: \'home\/test.tpl.html\',[\n\r]*        controller: \'TestCtrl\'[^$]*}\)/
         .test(utils.addRoute(fileContents, newState, config)));
     });
 
     it('should add new state with controllerAs', function () {
       config.controllerAs = true;
-      assert(/.state\(\'test\', {[^$]*url: \'\/test\',[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl as test\'[^$]*}\)/
+      assert(/.state\(\'test\', {[\n\r]*        url: \'\/test\',[\n\r]*        templateUrl: \'home\/test.tpl.html\',[\n\r]*        controller: \'TestCtrl as test\'[^$]*}\)/
         .test(utils.addRoute(fileContents, newState, config)));
     });
 
@@ -69,7 +69,7 @@ describe('addRoute using UI Router', function () {
       });
 
       it('should add state', function () {
-        assert(/\$stateProvider[^$]*.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\'[^$]*}\)/
+        assert(/\$stateProvider[\n\r]*    .state\(\'test\', {[\n\r]*      url: \'\/test\',[\n\r]*      templateUrl: \'home\/test.tpl.html\',[\n\r]*      controller: \'TestCtrl\'[^$]*}\)/
           .test(utils.addRoute(fileContents, newState, config)));
       });
     });
@@ -99,7 +99,7 @@ describe('addRoute using UI Router', function () {
 
       it('should add state with controllerAs', function () {
         config.controllerAs = true;
-        assert(/\$stateProvider[^$]*.state\(\'test\', {[^$]*url: \'\/test\'.[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl as test\'[^$]*}\)/
+        assert(/\$stateProvider[\n\r]*      .state\(\'test\', {[\n\r]*        url: \'\/test\',[\n\r]*        templateUrl: \'home\/test.tpl.html\',[\n\r]*        controller: \'TestCtrl as test\'[^$]*}\)/
           .test(utils.addRoute(fileContents, newState, config)));
       });
     });
@@ -122,13 +122,13 @@ describe('addRoute using ngRoute', function () {
     });
 
     it('should add new when without controllerAS', function () {
-      assert(/.when\(\'\/test\', {[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\'[^$]*}\)/
+      assert(/.when\(\'\/test\', {[\n\r]*        templateUrl: \'home\/test.tpl.html\',[\n\r]*        controller: \'TestCtrl\'[^$]*}\)/
         .test(utils.addRoute(fileContents, newState, config)));
     });
 
     it('should add new when with controllerAs', function () {
       config.controllerAs = true;
-      assert(/.when\(\'\/test\', {[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\',[^$]*controllerAs: \'test\'[^$]*}\)/
+      assert(/.when\(\'\/test\', {[\n\r]*        templateUrl: \'home\/test.tpl.html\',[\n\r]*        controller: \'TestCtrl\',[\n\r]*        controllerAs: \'test\'[^$]*}\)/
         .test(utils.addRoute(fileContents, newState, config)));
     });
 
@@ -162,7 +162,7 @@ describe('addRoute using ngRoute', function () {
       });
 
       it('should add when', function () {
-         assert(/\$routeProvider[^$]*.when\(\'\/test\', {[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\'[^$]*}\)/
+         assert(/\$routeProvider[\n\r]*    .when\(\'\/test\', {[\n\r]*      templateUrl: \'home\/test.tpl.html\',[\n\r]*      controller: \'TestCtrl\'[^$]*}\)/
             .test(utils.addRoute(fileContents, newState, config)));
       });
     });
@@ -192,7 +192,7 @@ describe('addRoute using ngRoute', function () {
 
       it('should add when with controllerAs', function () {
         config.controllerAs = true;
-        assert(/\$routeProvider[^$]*.when\(\'\/test\', {[^$]*templateUrl: \'home\/test.tpl.html\',[^$]*controller: \'TestCtrl\',[^$]*controllerAs: \'test\'[^$]*}\)/
+        assert(/\$routeProvider[\n\r]*      .when\(\'\/test\', {[\n\r]*        templateUrl: \'home\/test.tpl.html\',[\n\r]*        controller: \'TestCtrl\',[\n\r]*        controllerAs: \'test\'[^$]*}\)/
           .test(utils.addRoute(fileContents, newState, config)));
       });
     });
