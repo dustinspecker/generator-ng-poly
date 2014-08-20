@@ -61,7 +61,10 @@ function extractModuleNames(string) {
 }
 
 function normalizeModulePath(modulePath) {
-  return modulePath.replace(/[.\\]/g, path.sep);
+  modulePath = modulePath.replace(/[\\\/]/g, path.sep);
+  modulePath = modulePath.split(path.sep).map(hyphenName).join(path.sep);
+
+  return modulePath;
 }
 
 function moduleExists(yoRcAbsolutePath, modulePath) {
@@ -224,7 +227,7 @@ function addRoute(fileContents, state, config) {
         '  $stateProvider',
         '    .state(\'' + state.lowerCamel + '\', {',
         '      url: \'' + state.url + '\',',
-        '      templateUrl: \'' + state.module + '/' + state.hyphenName + '.tpl.html\',',
+        '      templateUrl: \'' + state.templateUrl + '\','
       ];
     }
 
@@ -272,6 +275,7 @@ module.exports = {
   hyphenName: hyphenName,
   ctrlName: ctrlName,
   getAppName: getAppName,
+  normalizeModulePath: normalizeModulePath,
   moduleExists: moduleExists,
   extractModuleNames: extractModuleNames,
   addRoute: addRoute,

@@ -34,7 +34,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     message: 'What\'s the templateURL for this route?',
     default: function (answers) {
       var module = answers.module || this.options.module;
-      return module + '/' + this.name + '.tpl.html';
+      return utils.normalizeModulePath(module) + '/' + this.name + '.tpl.html';
     }.bind(this),
     when: function () {
       return ( (params && params.templateUrl) && !(this.options && this.options['template-url']) );
@@ -90,7 +90,7 @@ Generator.prototype.getConfig = function getConfig() {
   if (this.module) {
     utils.moduleExists(this.config.path, this.module);
     var modules = utils.extractModuleNames(this.module);
-    config.modulePath = this.module.replace('.', '/');
+    config.modulePath = utils.normalizeModulePath(this.module.replace('.', '/'));
     config.moduleName = modules[0];
     config.parentModuleName = modules[1];
   }

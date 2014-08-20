@@ -20,13 +20,16 @@ Generator.prototype.writing = function writing() {
   this.context = this.getConfig();
 
   this.context.moduleName = path.basename(this.module);
+  this.context.lowerCamel = utils.lowerCamel(this.context.moduleName);
   this.context.hyphenModule = utils.hyphenName(this.context.moduleName);
   this.context.upperModule = utils.upperCamel(this.context.moduleName);
   this.context.parentModuleName = null;
   this.context.templateUrl = path.join(this.module).replace(/\\/g, '/');
+  console.log('module:' + this.module);
+  this.context.modulePath = utils.normalizeModulePath(this.module);
 
   // create new module directory
-  this.mkdir(path.join('app', this.module));
+  this.mkdir(path.join('app', this.context.modulePath));
 
   var filePath, file;
 
@@ -36,7 +39,7 @@ Generator.prototype.writing = function writing() {
   if (this.context.moduleName === this.module) {
     filePath = path.join(this.config.path, '../app/app.js');
   } else {
-    var parentDir = path.resolve(path.join('app', this.module), '..');
+    var parentDir = path.resolve(path.join('app', this.context.modulePath), '..');
 
     // for templating to create a parent.child module name
     this.context.parentModuleName = path.basename(parentDir);
@@ -48,11 +51,11 @@ Generator.prototype.writing = function writing() {
 
   // save modifications
   var depName = (this.context.parentModuleName) ? this.context.parentModuleName + '.' : '';
-  depName += this.context.moduleName;
+  depName += this.context.lowerCamel;
   fs.writeFileSync(filePath, utils.addDependency(file, depName));
 
   // create app.js
-  this.template('_app.js', path.join('app', this.module, this.context.moduleName + '.js'), this.context);
+  this.template('_app.js', path.join('app', this.context.modulePath, this.context.hyphenModule + '.js'), this.context);
 };
 
 Generator.prototype.end = function end() {
@@ -67,8 +70,8 @@ Generator.prototype.end = function end() {
       args: [this.context.moduleName],
       options: {
         module: this.module,
-        url: '/' + this.context.moduleName,
-        'template-url': this.module + '/' + this.context.moduleName + '.tpl.html',
+        url: '/' + this.context.lowerCamel,
+        'template-url': this.context.modulePath + '/' + this.context.hyphenModule + '.tpl.html',
 
         markup: this.options.markup,
         'app-script': this.options['app-script'],

@@ -49,7 +49,7 @@ describe('module generator', function () {
         '../../route',
         '../../controller',
         '../../view'
-      ], 'test');
+      ], 'testGroup');
       this.app.options.empty = true;
       this.app.run([], function () {
         done();
@@ -59,11 +59,11 @@ describe('module generator', function () {
     it('should not create a controller and view', function (done) {
       this.app.run([], function () {
         assert.noFile([
-          'app/test/test-controller.js',
-          'app/test/test-controller_test.js',
-          'app/test/test.tpl.html',
-          'e2e/test/test.po.js',
-          'e2e/test/test_test.js'
+          'app/test-group/test-group-controller.js',
+          'app/test-group/test-group-controller_test.js',
+          'app/test-group/test-group.tpl.html',
+          'e2e/test-group/test-group.po.js',
+          'e2e/test-group/test-group_test.js'
         ]);
         done();
       });

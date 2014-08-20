@@ -15,7 +15,7 @@ Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
   // load app.js to prepare adding new state
-  var filePath = path.join(this.config.path, '../app/', config.modulePath, config.moduleName + '.js')
+  var filePath = path.join(this.config.path, '../app/', config.modulePath, utils.hyphenName(config.moduleName) + '.js')
     , file = fs.readFileSync(filePath, 'utf8');
 
   var newState = {
