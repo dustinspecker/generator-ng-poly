@@ -3,6 +3,7 @@
 
 /* @ngdoc object
  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>
+ * @requires <% if (ngRoute) { %>$routeProvider<% } else { %>$urlRouterProvider<% } %>
  *
  * @description
  *
@@ -15,7 +16,7 @@ function config() {
 
 <% if (!passFunc) { %>/* @ngdoc object
  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>
- * @requires $stateProvider
+ * @requires <% if (ngRoute) { %>$routeProvider<% } else { %>$urlRouterProvider<% } %>
  *
  * @description
  *
