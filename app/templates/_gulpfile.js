@@ -10,6 +10,7 @@ var gulp = require('gulp')
   , gulpIf = require('gulp-if')
   , haml = require('gulp-haml')
   , htmlmin = require('gulp-htmlmin')
+  , imagemin = require('gulp-imagemin')
   , inject = require('gulp-inject')
   , jade = require('gulp-jade')
   , jshint = require('gulp-jshint')
@@ -35,6 +36,7 @@ var _ = require('lodash')
 
 // app src locations
 var appBase = 'app/'
+  , appImageFiles = appBase + 'images/**/*'
   , appMarkupFiles = appBase + '**/*.{haml,html,jade}'
   , appScriptFiles = appBase + '**/*.js'
   , appStyleFiles = appBase + '**/*.{css,less,scss,styl}';
@@ -59,6 +61,7 @@ var build = 'build/'
 <% if (polymer) { %>  , buildComponents = build + 'components/'
 <% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>  , buildFonts = build + 'fonts/'
 <% } %>  , buildCss = build + 'css/'
+  , buildImages = build + 'images/'
   , buildJs = build + 'js/';
 
 // passed arguments
@@ -243,7 +246,15 @@ gulp.task('jshint', function () {
     .pipe(gulp.dest(buildFonts));
 });
 
-<% } %>gulp.task('scripts', ['clean', 'jshint'], function () {
+<% } %>gulp.task('images', ['clean'], function () {
+  return gulp.src([
+    appImageFiles
+  ])
+    .pipe(imagemin())
+    .pipe(gulp.dest(buildImages));
+});
+
+gulp.task('scripts', ['clean', 'jshint'], function () {
   if (isProd) {
     return gulp.src([
       appScriptFiles<% if (polymer) { %>,
@@ -481,7 +492,7 @@ gulp.task('dev', ['build', 'browser-sync'], function () {
   gulp.start('watch');
 });
 
-gulp.task('build', ['angularInject'<% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>, 'fonts'<% } %><% if (polymer) { %>, 'polymer'<% } %>], function () {
+gulp.task('build', ['angularInject'<% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>, 'fonts'<% } %>, 'images'<% if (polymer) { %>, 'polymer'<% } %>], function () {
 });
 
 gulp.task('default', ['dev']);

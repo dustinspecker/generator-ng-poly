@@ -258,11 +258,15 @@ Generator.prototype.configuring = function configuring() {
 Generator.prototype.writing = function writing() {
   var markup = this.markup;
 
+  this.mkdir('app');
+
   // create main module and index.html
   this.template('_app.js',
     path.join('app', 'app.js'), this.context);
   this.template('_index.' + markup,
     path.join('app', 'index.' + markup), this.context);
+
+  this.mkdir(path.join('app', 'images'));
 };
 
 Generator.prototype.install = function install() {
