@@ -189,6 +189,18 @@ Generator.prototype.prompting = function prompting() {
       {
         name: 'Angular Touch',
         value: 'touch'
+      },
+      {
+        name: 'Font Awesome',
+        value: 'fontawesome'
+      },
+      {
+        name: 'Lo-Dash',
+        value: 'lodash'
+      },
+      {
+        name: 'Restangular (installs Lo-Dash)',
+        value: 'restangular'
       }
     ]
   }], function (props) {

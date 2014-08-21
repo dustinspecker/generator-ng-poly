@@ -82,8 +82,10 @@ var injectableBowerComponents = [
   'angular-strap/dist/angular-strap.js',
   'angular-strap/dist/angular-strap.tpl.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
   'angular-touch/angular-touch.js'<% } %><% if (!ngRoute) { %>,
-  'angular-ui-router/release/angular-ui-router.js'<% } %><% if (polymer) { %>,
-  'platform/platform.js'<% } %>
+  'angular-ui-router/release/angular-ui-router.js'<% } %><% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>,
+  'lodash/dist/lodash.js'<% } %><% if (polymer) { %>,
+  'platform/platform.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
+  'restangular/dist/restangular.js'<% } %>
 ];
 
 // minified bower assets to be injected into index.html
@@ -100,8 +102,10 @@ var minInjectableBowerComponents = [
   'angular-strap/dist/angular-strap.min.js',
   'angular-strap/dist/angular-strap.tpl.min.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
   'angular-touch/angular-touch.min.js'<% } %><% if (!ngRoute) { %>,
-  'angular-ui-router/release/angular-ui-router.min.js'<% } %><% if (polymer) { %>,
-  'platform/platform.js'<% } %>
+  'angular-ui-router/release/angular-ui-router.min.js'<% } %><% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>,
+  'lodash/dist/lodash.min.js'<% } %><% if (polymer) { %>,
+  'platform/platform.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
+  'restangular/dist/restangular.min.js'<% } %>
 ];
 
 <% if (polymer) { %>// bower polymer components that do not need to be injected into index.html
@@ -243,7 +247,8 @@ gulp.task('jshint', function () {
 <% } %>gulp.task('fonts', ['clean'], function () {
   return gulp.src([
     appFontFiles<% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>,
-    bowerDir + 'bootstrap/dist/fonts/**'<% } %>
+    bowerDir + 'bootstrap/dist/fonts/**'<% } %><% if (bower.indexOf('fontawesome') > -1) { %>,
+    bowerDir + 'font-awesome/fonts/**'<% } %>
   ])
     .pipe(gulp.dest(buildFonts));
 });
@@ -301,6 +306,11 @@ gulp.task('style', ['clean'], function () {
   ])
     .pipe(sass()))
   ;
+
+  <% } %><% if (bower.indexOf('fontawesome') > -1) { %>
+  stream.queue(gulp.src([
+    bowerDir + 'font-awesome/css/font-awesome.css'
+  ]));
 
   <% } %>// css
   stream.queue(gulp.src([
@@ -435,7 +445,8 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
 <% } %>gulp.task('karmaInject', function () {
   var stream = streamqueue({ objectMode: true});
   stream.queue(gulp.src([
-    bowerDir + 'angular/angular.js',
+    <% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>bowerDir + 'lodash/dist/lodash.js',
+    <% } %>bowerDir + 'angular/angular.js',
     bowerDir + 'angular-mocks/angular-mocks.js',
     appBase + '**/*-directive.tpl.{haml,html,jade}'
   ]));
@@ -454,7 +465,8 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
     bowerDir + 'angular-strap/dist/angular-strap.js',
     bowerDir + 'angular-strap/dist/angular-strap.tpl.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
     bowerDir + 'angular-touch/angular-touch.js'<% } %><% if (!ngRoute) { %>,
-    bowerDir + 'angular-ui-router/release/angular-ui-router.js'<% } %>
+    bowerDir + 'angular-ui-router/release/angular-ui-router.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
+    bowerDir + 'restangular/dist/restangular.js'<% } %>
   ]).pipe(angularSort()));
 
   stream.queue(gulp.src([

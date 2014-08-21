@@ -72,6 +72,9 @@ Languages and Features supported:
     - Angular Resource
     - Angular Sanitize
     - Angular Touch
+    - Font Awesome
+    - Lo-Dash
+    - Restangular
 
 [Configurations](#configurations):
   * Syntax
