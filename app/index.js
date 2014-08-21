@@ -266,6 +266,7 @@ Generator.prototype.writing = function writing() {
   this.template('_index.' + markup,
     path.join('app', 'index.' + markup), this.context);
 
+  this.mkdir(path.join('app', 'fonts'));
   this.mkdir(path.join('app', 'images'));
 };
 

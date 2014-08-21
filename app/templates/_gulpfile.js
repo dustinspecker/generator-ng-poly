@@ -36,6 +36,7 @@ var _ = require('lodash')
 
 // app src locations
 var appBase = 'app/'
+  , appFontFiles = appBase + 'fonts/**/*'
   , appImageFiles = appBase + 'images/**/*'
   , appMarkupFiles = appBase + '**/*.{haml,html,jade}'
   , appScriptFiles = appBase + '**/*.js'
@@ -59,8 +60,8 @@ var unitTestsFiles = '{app,test}/**/*_test.{coffee,js}'
 // build locations
 var build = 'build/'
 <% if (polymer) { %>  , buildComponents = build + 'components/'
-<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>  , buildFonts = build + 'fonts/'
-<% } %>  , buildCss = build + 'css/'
+<% } %>  , buildFonts = build + 'fonts/'
+  , buildCss = build + 'css/'
   , buildImages = build + 'images/'
   , buildJs = build + 'js/';
 
@@ -118,7 +119,7 @@ function prependBowerDir(file) {
 gulp.task('watch', function () {
   browserSync.reload();
   gulp.watch([unitTestsFiles], ['unitTest']);
-  gulp.watch([appMarkupFiles, appScriptFiles, appStyleFiles<% if (polymer) { %>, componentsBase + '**/*'<% } %>], ['build', browserSync.reload]);
+  gulp.watch([appFontFiles, appImageFiles, appMarkupFiles, appScriptFiles, appStyleFiles<% if (polymer) { %>, componentsBase + '**/*'<% } %>], ['build', browserSync.reload]);
 });
 
 gulp.task('browser-sync', function () {
@@ -239,14 +240,15 @@ gulp.task('jshint', function () {
     .pipe(gulp.dest(buildComponents));
 });
 
-<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>gulp.task('fonts', ['clean'], function () {
+<% } %>gulp.task('fonts', ['clean'], function () {
   return gulp.src([
-    bowerDir + 'bootstrap/dist/fonts/**'
+    appFontFiles<% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>,
+    bowerDir + 'bootstrap/dist/fonts/**'<% } %>
   ])
     .pipe(gulp.dest(buildFonts));
 });
 
-<% } %>gulp.task('images', ['clean'], function () {
+gulp.task('images', ['clean'], function () {
   return gulp.src([
     appImageFiles
   ])
@@ -492,7 +494,7 @@ gulp.task('dev', ['build', 'browser-sync'], function () {
   gulp.start('watch');
 });
 
-gulp.task('build', ['angularInject'<% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>, 'fonts'<% } %>, 'images'<% if (polymer) { %>, 'polymer'<% } %>], function () {
+gulp.task('build', ['angularInject', 'fonts', 'images'<% if (polymer) { %>, 'polymer'<% } %>], function () {
 });
 
 gulp.task('default', ['dev']);

@@ -125,7 +125,8 @@ root/
 │   │   ├── home.tpl.{haml,html,jade}
 │   │   ├── home-controller.js
 │   │   └── home-controller_test.{coffee,js}
-│   ├── images/
+│   ├── fonts/ (empty)
+│   ├── images/ (empty)
 │   ├── app.js
 │   └── index.{haml,html,jade}
 ├── bower_components/
