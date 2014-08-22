@@ -931,7 +931,8 @@ This will generate controllers like:
 angular
   .module('home')
   .controller('HomeCtrl', function () {
-    this.ctrlName = 'HomeCtrl';
+    var vm = this;
+    vm.ctrlName = 'HomeCtrl';
   });
 ```
 
@@ -1018,7 +1019,8 @@ If enabled, the app source code will pass functions, such as:
  *
  */
 function HomeCtrl() {
-  this.ctrlName = 'HomeCtrl';
+  var vm = this;
+  vm.ctrlName = 'HomeCtrl';
 }
 
 angular
