@@ -71,13 +71,17 @@ Generator.prototype.getConfig = function getConfig() {
   var config = {
     markup: this.options.markup || this.config.get('markup'),
     appScript: this.options['app-script'] || this.config.get('appScript'),
-    controllerAs: this.options['controller-as'] || this.config.get('controllerAs'),
-    passFunc: this.options['pass-func'] || this.config.get('passFunc'),
-    namedFunc: this.options['named-func'] || this.config.get('namedFunc'),
+    controllerAs: (this.options['controller-as'] !== undefined && this.options['controller-as'] !== null) ?
+      this.options['controller-as'] : this.config.get('controllerAs'),
+    passFunc: (this.options['pass-func'] !== undefined && this.options['pass-func'] !== null) ?
+      this.options['pass-func'] : this.config.get('passFunc'),
+    namedFunc: (this.options['named-func'] !== undefined && this.options['named-func'] !== null) ?
+      this.options['named-func'] : this.config.get('namedFunc'),
     testScript: this.options['test-script'] || this.config.get('testScript'),
     testDir: this.options['test-dir'] || this.config.get('testDir'),
     style: this.options.style || this.config.get('style'),
-    ngRoute: this.options['ng-route'] || this.config.get('ngRoute'),
+    ngRoute: (this.options['ng-route'] !== undefined && this.options['ng-route'] !== null) ?
+      this.options['ng-route'] : this.config.get('ngRoute'),
 
     appName: utils.getAppName(this.config.path),
     ctrlName: utils.ctrlName(this.name),
