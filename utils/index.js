@@ -122,7 +122,7 @@ function addRoute(fileContents, state, config) {
     fileContents = addDependency(fileContents, dependency);
   }
 
-  // check if $stateProvider is passed to config
+  // check if provider is passed to config
   var regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)');
   var addParam = !regex.test(fileContents);
 
@@ -172,92 +172,60 @@ function addRoute(fileContents, state, config) {
     // loop through everything to append new route at the end
   });
 
-  // has existing state
   var newState;
-  if (routeStartIndex > -1) {
-    // create new state
-    if (config.ngRoute) {
-      newState = [
-        '    })',
-        '    .when(\'' + state.url + '\', {',
-        '      templateUrl: \'' + state.templateUrl + '\','
-      ];
-    } else {
-      newState = [
-        '    })',
-        '    .state(\'' + state.lowerCamel + '\', {',
-        '      url: \'' + state.url + '\',',
-        '      templateUrl: \'' + state.templateUrl + '\','
-      ];
-    }
 
-    if (config.controllerAs) {
-      if (config.ngRoute) {
-        newState.push('      controller: \'' + state.ctrlName + '\',');
-        newState.push('      controllerAs: \'' + state.lowerCamel + '\'');
-      } else {
-        newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
-      }
-    } else {
-      newState.push('      controller: \'' + state.ctrlName + '\'');
-    }
-
-    // prepend another two spaces to each line if not passing functions
-    if (!config.passFunc) {
-      newState = newState.map(function (newStateLine) {
-        return '  ' + newStateLine;
-      });
-    }
-
-    // join the state
-    // insert state above }); of the original last state
-    lines.splice(routeEndIndex, 0, newState.map(function (newStateLine) {
-      return newStateLine;
-    }).join(endOfLine));
+  // base route logic
+  if (config.ngRoute) {
+    newState = [
+      '    .when(\'' + state.url + '\', {',
+      '      templateUrl: \'' + state.templateUrl + '\','
+    ];
   } else {
-    // no existing state
-    if (config.ngRoute) {
-      newState = [
-        '  $routeProvider',
-        '    .when(\'' + state.url + '\', {',
-        '      templateUrl: \'' + state.templateUrl + '\','
-      ];
-    } else {
-      newState = [
-        '  $stateProvider',
-        '    .state(\'' + state.lowerCamel + '\', {',
-        '      url: \'' + state.url + '\',',
-        '      templateUrl: \'' + state.templateUrl + '\','
-      ];
-    }
-
-    // add controller
-    if (config.controllerAs) {
-      if (config.ngRoute) {
-        newState.push('      controller: \'' + state.ctrlName + '\',');
-        newState.push('      controllerAs: \'' + state.lowerCamel + '\'');
-      } else {
-        newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
-      }
-    } else {
-      newState.push('      controller: \'' + state.ctrlName + '\'');
-    }
-
-    // close state
-    newState.push('    });');
-
-    // prepend another two spaces to each line if not passing functions
-    if (!config.passFunc) {
-      newState = newState.map(function (newStateLine) {
-        return '  ' + newStateLine;
-      });
-    }
-
-    // insert the first state at top of config function
-    lines.splice(configFunctionIndex+1, 0, newState.map(function (newStateLine) {
-      return newStateLine;
-    }).join(endOfLine));
+    newState = [
+      '    .state(\'' + state.lowerCamel + '\', {',
+      '      url: \'' + state.url + '\',',
+      '      templateUrl: \'' + state.templateUrl + '\','
+    ];
   }
+
+  // controller as logic
+  if (config.controllerAs && config.ngRoute) {
+    newState.push('      controller: \'' + state.ctrlName + '\',');
+    newState.push('      controllerAs: \'' + state.lowerCamel + '\'');
+  } else if (config.controllerAs && !config.ngRoute) {
+    newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+  } else {
+    newState.push('      controller: \'' + state.ctrlName + '\'');
+  }
+
+  if (routeStartIndex > -1) {
+    // add cloasing to squeeze new state between existing route and the final });
+    newState.unshift('    })');
+  } else {
+    // add provider
+    if (config.ngRoute) {
+      newState.unshift('  $routeProvider'); 
+    } else {
+      newState.unshift('  $stateProvider');
+    }
+
+    // close up this new state, which is the first state
+    newState.push('    });');
+  }
+
+  // prepend spaces if not passsing the function
+  if (!config.passFunc) {
+    newState = newState.map(function (newStateLine) {
+      return '  ' + newStateLine;
+    });
+  }
+
+  // insert the ilne after last existing state or at the start of the config function
+  var insertLine = (routeStartIndex > -1) ? routeEndIndex : configFunctionIndex + 1;
+
+  lines.splice(insertLine, 0, newState.map(function (newStateLine) {
+    return newStateLine;
+  }).join(endOfLine));
 
   return lines.join(endOfLine);
 }
