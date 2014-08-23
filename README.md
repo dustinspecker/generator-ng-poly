@@ -92,7 +92,7 @@ Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
 
 `gulp dev` will call the build task and setup the development environment
 
-`gulp unitTest` will run Jasmine tests via Karma
+`gulp unitTest` will run Jasmine tests via Karma and create code coverage reports
 
 `gulp webdriverUpdate` will download the Selenium server standalone and Chrome driver for e2e testing
 
@@ -116,6 +116,19 @@ Asks for application name and language preferences to scaffold out an applicatio
 Example:
 ```
 yo ng-poly
+[?] What is the app's name?
+[?] What is the preferred markup language?
+[?] What is the preferred application scripting language?
+[?] Want to use Controller As syntax?
+[?] Should functions be defined and passed instead of defined inline (in callbacks)?
+[?] Want to use named functions instead of anonymous?
+[?] What is the preferred test scripting language?
+[?] Where should tests be saved?
+[?] What is the preferred style language?
+[?] Should Polymer support be enabled?
+[?] Should a framework be setup?
+[?] Should ngRoute be used instead of UI Router?
+[?] Which additional Bower components should be installed?
 ```
 
 Produces:
@@ -156,6 +169,7 @@ Generates a constant and its test.
 Example:
 ```
 yo ng-poly:constant theHero
+[?] Which module is this for?
 ```
 
 Produces `app/module/the-hero-constant.js`:
@@ -202,6 +216,7 @@ Genrates a controller and its test.
 Example:
 ```
 yo ng-poly:controller micro
+[?] Which module is this for?
 ```
 
 Produces `app/module/micro-controller.js`:
@@ -252,6 +267,7 @@ Generates a directive, its template, and its test.
 Example:
 ```
 yo ng-poly:directive fancy-button
+[?] Which module is this for?
 ```
 
 Produces `app/module/fancy-button-directive.js`:
@@ -327,6 +343,7 @@ Generates a factory and its test.
 Example:
 ```
 yo ng-poly:factory cake
+[?] Which module is this for?
 ```
 
 Produces `app/module/cake-factory.js`:
@@ -384,6 +401,7 @@ Generates a filter and its test.
 Example:
 ```
 yo ng-poly:filter coffee
+[?] Which module is this for?
 ```
 
 Produces `app/module/coffee-filter.js`:
@@ -584,6 +602,7 @@ Generates a provider and its test.
 Example:
 ```
 yo ng-poly:provider bacon
+[?] Which module is this for?
 ```
 
 Produces `app/module/bacon-provider.js`:
@@ -632,11 +651,14 @@ describe('Bacon', function () {
 ```
 
 ### Route
-Adds a new route and generates a controller and view. The name provided is used as state name. Yeoman will then ask for the module to add the route to, the URL for the route, and the templateUrl. It will also generate an e2e test and a Page Object model for the new route.
+Adds a new route and generates a controller and view. The name provided is used as state name for UI Router and as the route URL for ngRoute. Yeoman will then ask for the module to add the route to, the URL for the route (UI Router only), and the templateUrl. It will also generate an e2e test and a Page Object model for the new route.
 
 Example:
 ```
 yo ng-poly:route your-place
+[?] Which module is this for?
+[?] What's the URL for this route? (UI Router only)
+[?] What's the templateURL for this route?
 ```
 
 Updates `app/module/module.js`:
@@ -725,6 +747,7 @@ Generates a service and its test.
 Example:
 ```
 yo ng-poly:service cheap-or-good
+[?] Which module is this for?
 ```
 
 Produces `app/module/cheap-or-good-service.js`:
@@ -779,6 +802,7 @@ Generates a value and its test.
 Example:
 ```
 yo ng-poly:value morals
+[?] Which module is this for?
 ```
 
 Produces `app/module/morals-value.js`:
@@ -825,6 +849,7 @@ Generates a view and its style.
 Example:
 ```
 yo ng-poly:view nice
+[?] Which module is this for?
 ```
 
 Produces `app/module/nice-view.tpl.html`:
