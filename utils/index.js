@@ -4,7 +4,6 @@ var _ = require('underscore.string')
   , fs = require('fs')
   , path = require('path');
 
-
 // name generators
 function lowerCamel(name) {
   return _.camelize(_.slugify(_.humanize(name)));
@@ -32,14 +31,15 @@ function getAppName(yoRcAbsolutePath) {
 }
 
 function extractBasedOnChar(string, symbol) {
-  var modules = [];
+  var modules = []
+    // string after last symbol is module name
+    , moduleName = string.slice(string.lastIndexOf(symbol)).replace(symbol, '')
+    , parentModuleName;
 
-  // string after last symbol is module name
-  var moduleName = string.slice(string.lastIndexOf(symbol)).replace(symbol, '');
   modules.push(moduleName);
 
   // determine if user provided more than 1 symbol
-  var parentModuleName = string.slice(0, string.lastIndexOf(symbol));
+  parentModuleName = string.slice(0, string.lastIndexOf(symbol));
   if (parentModuleName.indexOf(symbol) > -1) {
     parentModuleName = string.slice(parentModuleName.lastIndexOf(symbol), string.lastIndexOf(symbol));
     parentModuleName = parentModuleName.replace(symbol, '');
@@ -102,8 +102,9 @@ function addDependency(fileContents, dependency) {
   // remove new line and add a comma to the previous depdendency
   // slice at the last quote to remove the varying line endings
   if (angularDefinitionCloseLine > angularDefinitionOpenLine + 1) {
-    lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1].slice(0, lines[angularDefinitionCloseLine-1].lastIndexOf('\''));
-    lines[angularDefinitionCloseLine-1] = lines[angularDefinitionCloseLine-1] + '\',';
+    lines[angularDefinitionCloseLine - 1] =
+      lines[angularDefinitionCloseLine - 1].slice(0, lines[angularDefinitionCloseLine - 1].lastIndexOf('\''));
+    lines[angularDefinitionCloseLine - 1] = lines[angularDefinitionCloseLine - 1] + '\',';
   }
 
   // insert new line and dependency
@@ -113,35 +114,48 @@ function addDependency(fileContents, dependency) {
 }
 
 function addRoute(fileContents, state, config) {
-  var dependency = config.ngRoute ? 'ngRoute' : 'ui.router';
-  var param = config.ngRoute ? 'routeProvider' : 'stateProvider';
-  var newRoute = config.ngRoute ? 'when' : 'state';
+  var dependency = config.ngRoute ? 'ngRoute' : 'ui.router'
+    , param = config.ngRoute ? 'routeProvider' : 'stateProvider'
+    , newRoute = config.ngRoute ? 'when' : 'state'
+
+    // checking if provider is used
+    , regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)')
+    , addParam = !regex.test(fileContents)
+
+    // for determining where to place new state
+    , routeStartIndex = -1
+    , routeEndIndex = -1
+    , braceCount = 0 // {}
+    , configFunctionIndex = -1
+
+    // for prepending spaces to new route
+    , numOfSpaces = 0
+    , lineToCheck = null
+
+    , lines // split fileContents
+
+    // new state insertion
+    , insertLine
+    , newState;
 
   // if file doesn't have the dependency, add it
   if (!dependencyExists(fileContents, dependency)) {
     fileContents = addDependency(fileContents, dependency);
   }
 
-  // check if provider is passed to config
-  var regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)');
-  var addParam = !regex.test(fileContents);
+  lines = fileContents.split(endOfLine);
 
   // find line to add new state
-  var lines = fileContents.split(endOfLine)
-    , routeStartIndex = -1
-    , routeEndIndex = -1
-    , braceCount = 0 // {}
-    , configFunctionIndex = -1;
   lines.forEach(function (line, i) {
     // add $stateProvider if needed
-    if ( (addParam && config.passFunc && line.indexOf('function config(') > -1) ||
-      (addParam && !config.passFunc && line.indexOf('.config(function') > -1) ) {
-        // check if function has a parameter already
-        if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') {';
-        } else {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') {';
-        }
+    if ((addParam && config.passFunc && line.indexOf('function config(') > -1) ||
+      (addParam && !config.passFunc && line.indexOf('.config(function') > -1)) {
+      // check if function has a parameter already
+      if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
+        lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') {';
+      } else {
+        lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') {';
+      }
     }
 
     if (line.indexOf('function config(') > -1 || line.indexOf('.config(function') > -1) {
@@ -171,8 +185,6 @@ function addRoute(fileContents, state, config) {
 
     // loop through everything to append new route at the end
   });
-
-  var newState;
 
   // base route logic
   if (config.ngRoute) {
@@ -204,7 +216,7 @@ function addRoute(fileContents, state, config) {
   } else {
     // add provider
     if (config.ngRoute) {
-      newState.unshift('$routeProvider'); 
+      newState.unshift('$routeProvider');
     } else {
       newState.unshift('$stateProvider');
     }
@@ -214,8 +226,6 @@ function addRoute(fileContents, state, config) {
   }
 
   // count spaces to prepend to state
-  var numOfSpaces = 0;
-  var lineToCheck = null;
   if (routeStartIndex > -1) {
     lineToCheck = lines[routeStartIndex];
   } else {
@@ -242,7 +252,7 @@ function addRoute(fileContents, state, config) {
   });
 
   // insert the ilne after last existing state or at the start of the config function
-  var insertLine = (routeStartIndex > -1) ? routeEndIndex : configFunctionIndex + 1;
+  insertLine = (routeStartIndex > -1) ? routeEndIndex : configFunctionIndex + 1;
 
   lines.splice(insertLine, 0, newState.map(function (newStateLine) {
     return newStateLine;
@@ -252,7 +262,7 @@ function addRoute(fileContents, state, config) {
 }
 
 function checkElementName(name) {
-  if (name.indexOf('-') < 1 || name.indexOf('-') === name.length-1) {
+  if (name.indexOf('-') < 1 || name.indexOf('-') === name.length - 1) {
     throw 'Element name must have a hyphen (-) in it.';
   }
 }

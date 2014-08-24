@@ -2,37 +2,38 @@
 var fs = require('fs')
   , path = require('path')
   , genBase = require('../genBase')
-  , utils = require('../utils');
+  , utils = require('../utils')
+  , Generator;
 
-
-var Generator = module.exports = genBase.extend();
+Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
-  this.askForModuleName({ url: true, templateUrl: true });
+  this.askForModuleName({url: true, templateUrl: true});
 };
 
 Generator.prototype.writing = function writing() {
-  var config = this.getConfig();
+  var config = this.getConfig()
 
-  // load app.js to prepare adding new state
-  var filePath = path.join(this.config.path, '../app/', config.modulePath, utils.hyphenName(config.moduleName) + '.js')
-    , file = fs.readFileSync(filePath, 'utf8');
+    // load app.js to prepare adding new state
+    , filePath = path.join(this.config.path, '../app/', config.modulePath, utils.hyphenName(config.moduleName) + '.js')
+    , file = fs.readFileSync(filePath, 'utf8')
 
-  var newState = {
-    module: this.module,
-    url: this.url,
-    lowerCamel: config.lowerCamel,
-    hyphenName: config.hyphenName,
-    ctrlName: config.ctrlName,
-    templateUrl: this.templateUrl
-  };
+    ,  newState = {
+      module: this.module,
+      url: this.url,
+      lowerCamel: config.lowerCamel,
+      hyphenName: config.hyphenName,
+      ctrlName: config.ctrlName,
+      templateUrl: this.templateUrl
+    }
 
-  // save modifications
-  var newRouteConfig = {
-    controllerAs: config.controllerAs,
-    passFunc: config.passFunc,
-    ngRoute: config.ngRoute
-  };
+    // save modifications
+    , newRouteConfig = {
+      controllerAs: config.controllerAs,
+      passFunc: config.passFunc,
+      ngRoute: config.ngRoute
+    };
+
   fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
 
   // e2e testing

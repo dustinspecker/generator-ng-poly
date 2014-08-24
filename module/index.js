@@ -2,21 +2,23 @@
 var fs = require('fs')
   , genBase = require('../genBase')
   , path = require('path')
-  , utils = require('../utils');
+  , utils = require('../utils')
+  , Generator;
 
-
-var Generator = module.exports = genBase.extend();
+Generator = module.exports = genBase.extend();
 
 Generator.prototype.initialize = function initialize() {
   this.module = this.name;
 
   // if moduleName ends with a slash remove it
-  if (this.module.charAt(this.module.length-1) === '/' || this.module.charAt(this.module.length-1) === '\\') {
-    this.module = this.module.slice(0, this.module.length-1);
+  if (this.module.charAt(this.module.length - 1) === '/' || this.module.charAt(this.module.length - 1) === '\\') {
+    this.module = this.module.slice(0, this.module.length - 1);
   }
 };
 
 Generator.prototype.writing = function writing() {
+  var filePath, file, parentDir, depName;
+
   this.context = this.getConfig();
 
   this.context.moduleName = path.basename(this.module);
@@ -31,15 +33,13 @@ Generator.prototype.writing = function writing() {
   // create new module directory
   this.mkdir(path.join('app', this.context.modulePath));
 
-  var filePath, file;
-
   // check if path and moduleName are the same
   // if yes - get root app.js to prepare adding dep
   // else - get parent app.js to prepare adding dep
   if (this.context.moduleName === this.module) {
     filePath = path.join(this.config.path, '../app/app.js');
   } else {
-    var parentDir = path.resolve(path.join('app', this.context.modulePath), '..');
+    parentDir = path.resolve(path.join('app', this.context.modulePath), '..');
 
     // for templating to create a parent.child module name
     this.context.parentModuleName = path.basename(parentDir);
@@ -50,7 +50,7 @@ Generator.prototype.writing = function writing() {
   file = fs.readFileSync(filePath, 'utf8');
 
   // save modifications
-  var depName = (this.context.parentModuleName) ? this.context.parentModuleName + '.' : '';
+  depName = (this.context.parentModuleName) ? this.context.parentModuleName + '.' : '';
   depName += this.context.lowerCamel;
   fs.writeFileSync(filePath, utils.addDependency(file, depName));
 

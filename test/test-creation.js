@@ -46,16 +46,16 @@ describe('ng-poly generator', function () {
         ]);
 
         helpers.mockPrompt(this.app, {
-          'appName': 'testName',
-          'markup': 'html',
-          'appScript': 'js',
-          'controllerAs': false,
-          'passFunc': true,
-          'namedFunc': true,
-          'testScript': 'js',
-          'testDir': 'app',
-          'style': 'less',
-          'bower': []
+          appName: 'testName',
+          markup: 'html',
+          appScript: 'js',
+          controllerAs: false,
+          passFunc: true,
+          namedFunc: true,
+          testScript: 'js',
+          testDir: 'app',
+          style: 'less',
+          bower: []
         });
 
         this.app.options['skip-install'] = false; // done to cover installDependencies() branch
@@ -78,54 +78,55 @@ describe('ng-poly generator', function () {
 
   // prompts to provide to ng-poly:app
   var prompts = [
-  {
-    'appName': 'temp1',
-    'markup': 'html',
-    'appScript': 'js',
-    'controllerAs': false,
-    'passFunc': true,
-    'namedFunc': true,
-    'testScript': 'js',
-    'testDir': 'app',
-    'style': 'less',
-    'bower': []
-  },
-  {
-    'appName': 'temp2',
-    'markup': 'jade',
-    'appScript': 'js',
-    'controllerAs': true,
-    'passFunc': true,
-    'namedFunc': true,
-    'testScript': 'coffee',
-    'testDir': 'test',
-    'style': 'styl',
-    'bower': []
-  },
-  {
-    'appName': 'temp3',
-    'markup': 'haml',
-    'appScript': 'js',
-    'controllerAs': true,
-    'passFunc': true,
-    'namedFunc': true,
-    'testScript': 'coffee',
-    'testDir': 'test',
-    'style': 'scss',
-    'bower': []
-  },
-  {
-    'appName': 'temp4',
-    'markup': 'haml',
-    'appScript': 'js',
-    'controllerAs': true,
-    'passFunc': true,
-    'namedFunc': true,
-    'testScript': 'coffee',
-    'testDir': 'test',
-    'style': 'css',
-    'bower': []
-  }];
+    {
+      appName: 'temp1',
+      markup: 'html',
+      appScript: 'js',
+      controllerAs: false,
+      passFunc: true,
+      namedFunc: true,
+      testScript: 'js',
+      testDir: 'app',
+      style: 'less',
+      bower: []
+    },
+    {
+      appName: 'temp2',
+      markup: 'jade',
+      appScript: 'js',
+      controllerAs: true,
+      passFunc: true,
+      namedFunc: true,
+      testScript: 'coffee',
+      testDir: 'test',
+      style: 'styl',
+      bower: []
+    },
+    {
+      appName: 'temp3',
+      markup: 'haml',
+      appScript: 'js',
+      controllerAs: true,
+      passFunc: true,
+      namedFunc: true,
+      testScript: 'coffee',
+      testDir: 'test',
+      style: 'scss',
+      bower: []
+    },
+    {
+      appName: 'temp4',
+      markup: 'haml',
+      appScript: 'js',
+      controllerAs: true,
+      passFunc: true,
+      namedFunc: true,
+      testScript: 'coffee',
+      testDir: 'test',
+      style: 'css',
+      bower: []
+    }
+  ];
 
   function testGenerator(genName, deps, expectedFiles, mockPrompts) {
     describe(genName + ' generator with args and prompts', function () {
@@ -276,9 +277,9 @@ describe('ng-poly generator', function () {
         'app/home/route-test-controller.' + config.appScript,
         config.testDir + '/home/route-test-controller_test.' + config.testScript
       ), {
-        'module': 'home',
+        module: 'home',
         'template-url': 'value',
-        'url': 'value'
+        url: 'value'
       });
 
       testGenerator('service', ['../../service'], expected.concat(

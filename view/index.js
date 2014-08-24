@@ -1,18 +1,18 @@
 'use strict';
 var genBase = require('../genBase')
-  , path = require('path');
+  , path = require('path')
+  , Generator;
 
-
-var Generator = module.exports = genBase.extend();
+Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
   this.askForModuleName();
 };
 
 Generator.prototype.writing = function writing() {
-  var config = this.getConfig();
-
-  var markupFile = this.name;
+  var config = this.getConfig()
+  , markupFile = this.name
+  , styleFile;
 
   // if last character is a slash, remove it
   if (markupFile.charAt(markupFile.length - 1) === '/') {
@@ -31,7 +31,7 @@ Generator.prototype.writing = function writing() {
   config.ctrlName = config.ctrlName.replace(/tplhtml$/, '');
 
   // create the style file
-  var styleFile = markupFile.replace(/tpl[.]html$/, config.style);
+  styleFile = markupFile.replace(/tpl[.]html$/, config.style);
 
   // replace file extension with markup type being used
   markupFile = markupFile.replace(/html$/, config.markup);

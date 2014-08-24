@@ -1,10 +1,10 @@
 'use strict';
 var path = require('path')
   , yeoman = require('yeoman-generator')
-  , yosay = require('yosay');
+  , yosay = require('yosay')
+  , Generator;
 
-
-var Generator = module.exports = yeoman.generators.Base.extend();
+Generator = module.exports = yeoman.generators.Base.extend();
 
 /*Generator.prototype.intitialize = function intitialize() {
   // this overwrites the default the .yo-rc.json file

@@ -22,16 +22,16 @@ describe('module generator', function () {
       ]);
 
       helpers.mockPrompt(this.app, {
-        'appName': 'module-temp',
-        'markup': 'html',
-        'appScript': 'js',
-        'controllerAs': false,
-        'passFunc': true,
-        'namedFunc': true,
-        'testScript': 'js',
-        'testDir': 'app',
-        'style': 'less',
-        'bower': []
+        appName: 'module-temp',
+        markup: 'html',
+        appScript: 'js',
+        controllerAs: false,
+        passFunc: true,
+        namedFunc: true,
+        testScript: 'js',
+        testDir: 'app',
+        style: 'less',
+        bower: []
       });
 
       this.app.options['skip-install'] = true;

@@ -1,9 +1,9 @@
 'use strict';
 var genBase = require('../genBase')
-  , path = require('path');
+  , path = require('path')
+  , Generator,
 
-
-var Generator = module.exports = genBase.extend();
+Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
   this.askForModuleName();

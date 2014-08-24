@@ -99,7 +99,7 @@ describe('Utils', function () {
 
   describe('extractModuleNames', function () {
     it('should extract modules with slashes in path', function () {
-      assert(JSON.stringify(utils.extractModuleNames('test/parent/child')) === JSON.stringify(['child','parent']));
+      assert(JSON.stringify(utils.extractModuleNames('test/parent/child')) === JSON.stringify(['child', 'parent']));
     });
 
     it('should return module without slashes in path', function () {
@@ -128,7 +128,7 @@ describe('Utils', function () {
     });
 
     it('should throw error on name ending with a hyphen', function () {
-      assert.throws(utils.checkElementName.bind(this,'elementname-'));
+      assert.throws(utils.checkElementName.bind(this, 'elementname-'));
     });
 
     it('should not throw an error on name with hyphen in middle', function () {

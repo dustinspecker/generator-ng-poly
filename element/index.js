@@ -1,13 +1,13 @@
 'use strict';
-var genBase = require('../genBase');
+var genBase = require('../genBase')
+  , Generator;
 
-
-var Generator = module.exports = genBase.extend();
+Generator = module.exports = genBase.extend();
 
 Generator.prototype.writing = function writing() {
-  var config = this.getConfig();
+  var config = this.getConfig()
+    , elementDir = 'app/components/' + config.hyphenName + '/';
 
-  var elementDir = 'app/components/' + config.hyphenName + '/';
   this.mkdir(elementDir);
   this.copy('element.' + config.style, elementDir + config.hyphenName + '.' + config.style);
   this.template('_element.' + config.markup, elementDir + config.hyphenName + '.' + config.markup, config);

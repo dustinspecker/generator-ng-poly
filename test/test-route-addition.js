@@ -3,21 +3,21 @@
 var assert = require('assert')
   , fs = require('fs')
   , path = require('path')
-  , utils = require('../utils');
+  , utils = require('../utils')
 
-var newState = {
-  module:'home',
-  url: '/test',
-  lowerCamel: 'test',
-  hyphenName: 'test',
-  ctrlName: 'TestCtrl',
-  templateUrl: 'home/test.tpl.html'
-};
+  , newState = {
+    module:'home',
+    url: '/test',
+    lowerCamel: 'test',
+    hyphenName: 'test',
+    ctrlName: 'TestCtrl',
+    templateUrl: 'home/test.tpl.html'
+  };
 
 describe('addRoute using UI Router', function () {
   describe('controllerAs', function () {
-    var config;
-    var fileContents;
+    var config
+      , fileContents;
 
     beforeEach(function () {
       config = {
@@ -46,8 +46,8 @@ describe('addRoute using UI Router', function () {
 
   describe('no state defined', function () {
     describe('passed config function', function () {
-      var config;
-      var fileContents;
+      var config
+        , fileContents;
 
       beforeEach(function () {
         config = {
@@ -75,8 +75,8 @@ describe('addRoute using UI Router', function () {
     });
 
     describe('defined inline config function', function () {
-      var config;
-      var fileContents;
+      var config
+        , fileContents;
 
       beforeEach(function () {
         config = {
@@ -109,8 +109,8 @@ describe('addRoute using UI Router', function () {
 
 describe('addRoute using ngRoute', function () {
   describe('controller As', function () {
-    var config;
-    var fileContents;
+    var config
+      , fileContents;
 
     beforeEach(function () {
       config = {
@@ -139,8 +139,8 @@ describe('addRoute using ngRoute', function () {
 
   describe('no state defined', function () {
     describe('passed config function', function () {
-      var config;
-      var fileContents;
+      var config
+        , fileContents;
 
       beforeEach(function () {
         config = {
@@ -162,14 +162,14 @@ describe('addRoute using ngRoute', function () {
       });
 
       it('should add when', function () {
-         assert(/\$routeProvider[\n\r]*    .when\(\'\/test\', {[\n\r]*      templateUrl: \'home\/test.tpl.html\',[\n\r]*      controller: \'TestCtrl\'[^$]*}\)/
-            .test(utils.addRoute(fileContents, newState, config)));
+        assert(/\$routeProvider[\n\r]*    .when\(\'\/test\', {[\n\r]*      templateUrl: \'home\/test.tpl.html\',[\n\r]*      controller: \'TestCtrl\'[^$]*}\)/
+          .test(utils.addRoute(fileContents, newState, config)));
       });
     });
 
     describe('defined inline config function', function () {
-      var config;
-      var fileContents;
+      var config
+        , fileContents;
 
       beforeEach(function () {
         config = {

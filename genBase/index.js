@@ -1,9 +1,9 @@
 'use strict';
 var utils = require('../utils')
-  , yeoman = require('yeoman-generator');
+  , yeoman = require('yeoman-generator')
+  , Generator;
 
-
-var Generator = module.exports = yeoman.generators.NamedBase.extend();
+Generator = module.exports = yeoman.generators.NamedBase.extend();
 
 Generator.prototype.askForModuleName = function askForModuleName(params) {
   var done = this.async();
@@ -26,8 +26,8 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     default: function () {
       return '/' + utils.lowerCamel(this.name);
     }.bind(this),
-    when: function() {
-      return ( (params && params.url) && !this.config.get('ngRoute') && !(this.options && this.options.url) );
+    when: function () {
+      return ((params && params.url) && !this.config.get('ngRoute') && !(this.options && this.options.url));
     }.bind(this)
   }, {
     name: 'templateUrl',
@@ -37,7 +37,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
       return utils.normalizeModulePath(module) + '/' + this.name + '.tpl.html';
     }.bind(this),
     when: function () {
-      return ( (params && params.templateUrl) && !(this.options && this.options['template-url']) );
+      return ((params && params.templateUrl) && !(this.options && this.options['template-url']));
     }.bind(this)
   }], function (props) {
     this.module = props.module || this.options.module;
@@ -45,8 +45,8 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     this.templateUrl = props.templateUrl || this.options['template-url'];
 
     // if moduleName ends with a slash remove it
-    if (this.module.charAt(this.module.length-1) === '/' || this.module.charAt(this.module.length-1) === '\\') {
-      this.module = this.module.slice(0, this.module.length-1);
+    if (this.module.charAt(this.module.length - 1) === '/' || this.module.charAt(this.module.length - 1) === '\\') {
+      this.module = this.module.slice(0, this.module.length - 1);
     }
 
     // save this module to suggest later
@@ -89,11 +89,12 @@ Generator.prototype.getConfig = function getConfig() {
     hyphenName: utils.hyphenName(this.name),
     lowerCamel: utils.lowerCamel(this.name),
     upperCamel: utils.upperCamel(this.name)
-  };
+  }
+  , modules;
 
   if (this.module) {
     utils.moduleExists(this.config.path, this.module);
-    var modules = utils.extractModuleNames(this.module);
+    modules = utils.extractModuleNames(this.module);
     config.modulePath = utils.normalizeModulePath(this.module.replace('.', '/'));
     config.moduleName = modules[0];
     config.parentModuleName = modules[1];
