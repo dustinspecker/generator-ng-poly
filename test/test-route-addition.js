@@ -122,13 +122,13 @@ describe('addRoute using ngRoute', function () {
     });
 
     it('should add new when without controllerAS', function () {
-      assert(/.when\(\'\/test\', {[\n\r]*        templateUrl: \'home\/test.tpl.html\',[\n\r]*        controller: \'TestCtrl\'[^$]*}\)/
+      assert(/.when\(\'\/test\', {[\n\r]*      templateUrl: \'home\/test.tpl.html\',[\n\r]*      controller: \'TestCtrl\'[^$]*}\)/
         .test(utils.addRoute(fileContents, newState, config)));
     });
 
     it('should add new when with controllerAs', function () {
       config.controllerAs = true;
-      assert(/.when\(\'\/test\', {[\n\r]*        templateUrl: \'home\/test.tpl.html\',[\n\r]*        controller: \'TestCtrl\',[\n\r]*        controllerAs: \'test\'[^$]*}\)/
+      assert(/.when\(\'\/test\', {[\n\r]*      templateUrl: \'home\/test.tpl.html\',[\n\r]*      controller: \'TestCtrl\',[\n\r]*      controllerAs: \'test\'[^$]*}\)/
         .test(utils.addRoute(fileContents, newState, config)));
     });
 

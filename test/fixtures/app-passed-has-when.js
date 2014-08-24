@@ -12,7 +12,7 @@
  *
  */
 function config($routeProvider) {
-  $stateProvider
+  $routeProvider
     .when('/home', {
       templateUrl: 'home/home.tpl.html',
       controller: 'HomeCtrl'

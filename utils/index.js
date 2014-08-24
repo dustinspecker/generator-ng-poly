@@ -177,48 +177,69 @@ function addRoute(fileContents, state, config) {
   // base route logic
   if (config.ngRoute) {
     newState = [
-      '    .when(\'' + state.url + '\', {',
-      '      templateUrl: \'' + state.templateUrl + '\','
+      '  .when(\'' + state.url + '\', {',
+      '    templateUrl: \'' + state.templateUrl + '\','
     ];
   } else {
     newState = [
-      '    .state(\'' + state.lowerCamel + '\', {',
-      '      url: \'' + state.url + '\',',
-      '      templateUrl: \'' + state.templateUrl + '\','
+      '  .state(\'' + state.lowerCamel + '\', {',
+      '    url: \'' + state.url + '\',',
+      '    templateUrl: \'' + state.templateUrl + '\','
     ];
   }
 
   // controller as logic
   if (config.controllerAs && config.ngRoute) {
-    newState.push('      controller: \'' + state.ctrlName + '\',');
-    newState.push('      controllerAs: \'' + state.lowerCamel + '\'');
+    newState.push('    controller: \'' + state.ctrlName + '\',');
+    newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
   } else if (config.controllerAs && !config.ngRoute) {
-    newState.push('      controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+    newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
   } else {
-    newState.push('      controller: \'' + state.ctrlName + '\'');
+    newState.push('    controller: \'' + state.ctrlName + '\'');
   }
 
   if (routeStartIndex > -1) {
     // add cloasing to squeeze new state between existing route and the final });
-    newState.unshift('    })');
+    newState.unshift('  })');
   } else {
     // add provider
     if (config.ngRoute) {
-      newState.unshift('  $routeProvider'); 
+      newState.unshift('$routeProvider'); 
     } else {
-      newState.unshift('  $stateProvider');
+      newState.unshift('$stateProvider');
     }
 
     // close up this new state, which is the first state
-    newState.push('    });');
+    newState.push('  });');
   }
 
-  // prepend spaces if not passsing the function
-  if (!config.passFunc) {
-    newState = newState.map(function (newStateLine) {
-      return '  ' + newStateLine;
-    });
+  // count spaces to prepend to state
+  var numOfSpaces = 0;
+  var lineToCheck = null;
+  if (routeStartIndex > -1) {
+    lineToCheck = lines[routeStartIndex];
+  } else {
+    lineToCheck = lines[configFunctionIndex];
   }
+
+  // strip away line after first non space character and count number of spaces left
+  numOfSpaces = lineToCheck.substring(0, lineToCheck.search(/[^ ]/)).length;
+
+  // if this is the first state, add 2 more spaces to indent inside config function
+  // else remove 2 spaces to line up with existing states
+  if (routeStartIndex === -1) {
+    numOfSpaces += 2;
+  } else {
+    numOfSpaces -= 2;
+  }
+
+  // prepend spaces
+  newState = newState.map(function (newStateLine) {
+    for (var i = 0; i < numOfSpaces; i++) {
+      newStateLine = ' ' + newStateLine;
+    }
+    return newStateLine;
+  });
 
   // insert the ilne after last existing state or at the start of the config function
   var insertLine = (routeStartIndex > -1) ? routeEndIndex : configFunctionIndex + 1;
