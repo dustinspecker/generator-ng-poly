@@ -1031,27 +1031,27 @@ If enabled, the app source code will pass functions, such as:
 
 ```javascript
 (function () {
-'use strict';
+  'use strict';
 
-/**
- * @ngdoc object
- * @name home.controller:HomeCtrl
- * @function
- * 
- * @description
- * 
- *
- * @ngInject
- *
- */
-function HomeCtrl() {
-  var vm = this;
-  vm.ctrlName = 'HomeCtrl';
-}
+  /**
+   * @ngdoc object
+   * @name home.controller:HomeCtrl
+   * @function
+   * 
+   * @description
+   * 
+   *
+   * @ngInject
+   *
+   */
+  function HomeCtrl() {
+    var vm = this;
+    vm.ctrlName = 'HomeCtrl';
+  }
 
-angular
-  .module('home')
-  .controller('HomeCtrl', HomeCtrl);
+  angular
+    .module('home')
+    .controller('HomeCtrl', HomeCtrl);
 
 })();
 ```
@@ -1064,31 +1064,31 @@ If enabled, the app source code will have named functions, such as:
 
 ```javascript
 (function () {
-'use strict';
+  'use strict';
 
-/**
- * @ngdoc service
- * @name module.factory:Cake
- * @function
- * 
- * @description
- * 
- *
- * @ngInject
- *
- */
-function Cake() {
-  var CakeBase = {};
-  CakeBase.someValue = 'Cake';
-  CakeBase.someMethod = function someMethod() {
-    return 'Cake';
-  };
-  return CakeBase;
-}
+  /**
+   * @ngdoc service
+   * @name module.factory:Cake
+   * @function
+   * 
+   * @description
+   * 
+   *
+   * @ngInject
+   *
+   */
+  function Cake() {
+    var CakeBase = {};
+    CakeBase.someValue = 'Cake';
+    CakeBase.someMethod = function someMethod() {
+      return 'Cake';
+    };
+    return CakeBase;
+  }
 
-angular
-  .module('module')
-  .factory('Cake', Cake);
+  angular
+    .module('module')
+    .factory('Cake', Cake);
 
 })();
 ```
