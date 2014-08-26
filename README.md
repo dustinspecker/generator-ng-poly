@@ -106,6 +106,7 @@ Generators requiring a module can take a module option to bypass the prompt:
 ```
 yo ng-poly:view newView --module=home/kitchen
 ```
+**A module value of `app.js` will add the new components to the module defined in app.js.**
 * * *
 
 **Examples are shown with HTML, LESS, JavaScript, and UI Router as the app configuration.**

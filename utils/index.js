@@ -1,6 +1,7 @@
 'use strict';
 var _ = require('underscore.string')
   , endOfLine = require('os').EOL
+  , findup = require('findup-sync')
   , fs = require('fs')
   , path = require('path');
 
@@ -51,16 +52,26 @@ function extractBasedOnChar(string, symbol) {
 }
 
 function extractModuleNames(string) {
+  // return appName for app.js
+  if (string === 'app.js') {
+    var appName = require(path.join(path.dirname(findup('.yo-rc.json')), 'package.json')).name;
+    return [appName, null];
+  }
+
   string = string.replace(/\\/g, '/');
   // uses module syntax
   if (string.indexOf('/') > -1) {
     return extractBasedOnChar(string, '/');
-  } else {
-    return [string, null];
   }
+
+  return [string, null];
 }
 
 function normalizeModulePath(modulePath) {
+  if (modulePath === 'app.js') {
+    return '';
+  }
+
   modulePath = modulePath.replace(/[\\\/]/g, path.sep);
   modulePath = modulePath.split(path.sep).map(hyphenName).join(path.sep);
 
@@ -70,7 +81,13 @@ function normalizeModulePath(modulePath) {
 function moduleExists(yoRcAbsolutePath, modulePath) {
   // check if file exists
   var yoPath = path.dirname(yoRcAbsolutePath)
-    , fullPath = path.join(yoPath, 'app', normalizeModulePath(modulePath));
+    , fullPath;
+
+  if (modulePath === 'app.js') {
+    return true;
+  }
+
+  fullPath = path.join(yoPath, 'app', normalizeModulePath(modulePath));
 
   return fs.existsSync(fullPath);
 }

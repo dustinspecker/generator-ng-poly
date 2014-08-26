@@ -230,11 +230,12 @@ describe('ng-poly generator', function () {
         module: 'home/'
       });
 
+      // module is root module
       testGenerator('controller', ['../../controller'], expected.concat(
-        'app/home/controller-test-controller.' + config.appScript,
-        config.testDir + '/home/controller-test-controller_test.' + config.testScript
+        'app/controller-test-controller.' + config.appScript,
+        config.testDir + '/controller-test-controller_test.' + config.testScript
       ), {
-        module: 'home'
+        module: 'app.js'
       });
 
       testGenerator('directive', ['../../directive'], expected.concat(

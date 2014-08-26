@@ -1,8 +1,10 @@
 /*global describe, beforeEach, it */
 'use strict';
-var assert = require('assert')
+var a = require('a')
+  , assert = require('assert')
   , fs = require('fs')
   , path = require('path')
+  , proxyquire = require('proxyquire')
   , utils = require('../utils');
 
 describe('Utils', function () {
@@ -98,6 +100,24 @@ describe('Utils', function () {
   });
 
   describe('extractModuleNames', function () {
+    it('should return app name when using app.js', function () {
+      // mock out path to avoid needing to use file system to find package.json
+      var pathStub = {
+          join: function () {
+            return 'package.json';
+          }
+        }
+        // proxy utils
+        , utilsProxy = proxyquire('../utils', {path: pathStub})
+
+        // mock response
+        , expectRequire = a.expectRequire;
+
+      expectRequire('package.json').return({name: 'test'});
+
+      assert(JSON.stringify(utilsProxy.extractModuleNames('app.js')) === JSON.stringify(['test', null]));
+    });
+
     it('should extract modules with slashes in path', function () {
       assert(JSON.stringify(utils.extractModuleNames('test/parent/child')) === JSON.stringify(['child', 'parent']));
     });
