@@ -101,7 +101,8 @@ function addDependency(fileContents, dependency) {
   // find line to add new dependency
   var lines = fileContents.split(endOfLine)
     , angularDefinitionOpenLine = -1
-    , angularDefinitionCloseLine = -1;
+    , angularDefinitionCloseLine = -1
+    , i, numOfSpaces;
 
   lines.forEach(function (line, i) {
     // find line with angular.module('*', [
@@ -124,8 +125,16 @@ function addDependency(fileContents, dependency) {
     lines[angularDefinitionCloseLine - 1] = lines[angularDefinitionCloseLine - 1] + '\',';
   }
 
+  numOfSpaces = lines[angularDefinitionCloseLine].substring(0, lines[angularDefinitionCloseLine].search(/[^ ]/)).length;
+
+  dependency = '\'' + dependency + '\'';
+
+  for (i = 0; i < numOfSpaces + 2; i++) {
+    dependency = ' ' + dependency;
+  }
+
   // insert new line and dependency
-  lines.splice(angularDefinitionCloseLine, 0, '    \'' + dependency + '\'');
+  lines.splice(angularDefinitionCloseLine, 0, dependency);
 
   return lines.join(endOfLine);
 }

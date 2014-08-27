@@ -904,14 +904,16 @@ Produces `app/components/gold-silver/gold-silver.html`:
 Produces `app/components/gold-silver/gold-silver.js`:
 ```javascript
 /*global Polymer*/
-'use strict';
 (function () {
+  'use strict';
+
   var element = new Polymer('gold-silver', {
     name: 'gold-silver',
     domReady: function () {
       console.log('gold-silver');
     }
   });
+
   return element;
 }());
 ```
