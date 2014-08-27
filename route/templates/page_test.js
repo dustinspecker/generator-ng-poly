@@ -8,7 +8,7 @@ describe('<%= humanName %> page', function () {
     browser.get('http://localhost:3000/#/<%= lowerCamel %>');
   });
 
-  it('should say <%= ctrlName %>', function() {
+  it('should say <%= ctrlName %>', function () {
     expect(<%= lowerCamel %>Page.heading.getText()).toEqual('<%= lowerCamel %>');
     expect(<%= lowerCamel %>Page.text.getText()).toEqual('<%= ctrlName %>');
   });

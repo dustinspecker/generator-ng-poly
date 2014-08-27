@@ -11,14 +11,14 @@
    * @param {Array} input The array of numbers to filter
    * @returns {Array} The filtered array
    *
-   * @ngInject 
+   * @ngInject
    *
    */
   function <%= lowerCamel %>() {
     return function (input) {
       var temp = [];
       angular.forEach(input, function (item) {
-        if(item > 3) {
+        if (item > 3) {
           temp.push(item);
         }
       });
@@ -44,7 +44,7 @@
 <% if (passFunc) { %>  <% } %>    return function (input) {
 <% if (passFunc) { %>  <% } %>      var temp = [];
 <% if (passFunc) { %>  <% } %>      angular.forEach(input, function (item) {
-<% if (passFunc) { %>  <% } %>        if(item > 3) {
+<% if (passFunc) { %>  <% } %>        if (item > 3) {
 <% if (passFunc) { %>  <% } %>          temp.push(item);
 <% if (passFunc) { %>  <% } %>        }
 <% if (passFunc) { %>  <% } %>      });

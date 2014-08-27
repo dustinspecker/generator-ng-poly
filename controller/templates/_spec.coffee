@@ -12,3 +12,4 @@ describe '<%= ctrlName %>', ->
 
   it 'should have ctrlName as <%= ctrlName %>', ->
     <% if (controllerAs) { %>expect(ctrl.ctrlName).toEqual '<%= ctrlName %>'<% } else { %>expect(scope.ctrlName).toEqual '<%= ctrlName %>'<% } %>
+    

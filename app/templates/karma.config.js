@@ -12,13 +12,13 @@ module.exports = {
     '**/*_test.coffee': ['coffee']
   },
   ngHaml2JsPreprocessor: {
-    'stripPrefix': 'app/'
+    stripPrefix: 'app/'
   },
   ngHtml2JsPreprocessor: {
-    'stripPrefix': 'app/'
+    stripPrefix: 'app/'
   },
   ngJade2JsPreprocessor: {
-    'stripPrefix': 'app/'
+    stripPrefix: 'app/'
   },
   singleRun: true
 };

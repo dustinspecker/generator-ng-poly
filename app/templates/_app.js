@@ -34,7 +34,7 @@
 <% if (passFunc) { %>  <% } %>    'ui.bootstrap'<% } %><% if (framework === 'foundation') { %>,
 <% if (passFunc) { %>  <% } %>    'mm.foundation'<% } %>
 <% if (passFunc) { %>  <% } %>  ]);
-<% if (passFunc) { %>  <% } %>
+
 <% if (passFunc) { %>  <% } %>angular
 <% if (passFunc) { %>  <% } %>  .module('<%= moduleName %>')<% if (passFunc) { %>
 <% if (passFunc) { %>  <% } %>  .config(config);<% } else { %>

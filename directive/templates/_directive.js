@@ -4,10 +4,10 @@
   /**
    * @ngdoc directive
    * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.directive:<%= lowerCamel %>
-   * @restrict EA 
+   * @restrict EA
    * @element
    * @function
-   * 
+   *
    * @description
    * Change the element's text to <%= lowerCamel %>\nscope\nattrs
    *
@@ -17,7 +17,7 @@
         <<%= hyphenName %>></<%= hyphenName %>>
        </file>
      </example>
-   * 
+   *
    * @ngInject
    *
    */
@@ -25,7 +25,7 @@
     return {
       restrict: 'EA',
       scope: {},
-      templateUrl: '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html', 
+      templateUrl: '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html',
       replace: false,
       link: function (scope, element, attrs) {
         element.text('<%= lowerCamel %>\n' + scope + '\n' + attrs);
@@ -36,7 +36,7 @@
 <% if (!passFunc) { %>/**
  * @ngdoc directive
  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.directive:<%= lowerCamel %>
- * @restrict EA 
+ * @restrict EA
  * @element
  * 
  * @description
@@ -48,7 +48,7 @@
       <<%= hyphenName %>></<%= hyphenName %>>
      </file>
    </example>
- * 
+ *
  */
 <% } %><% if (passFunc) { %>  <% } %>angular
 <% if (passFunc) { %>  <% } %>  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
@@ -57,7 +57,7 @@
 <% if (passFunc) { %>  <% } %>    return {
 <% if (passFunc) { %>  <% } %>      restrict: 'AE',
 <% if (passFunc) { %>  <% } %>      scope: {},
-<% if (passFunc) { %>  <% } %>      templateUrl: '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html', 
+<% if (passFunc) { %>  <% } %>      templateUrl: '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html',
 <% if (passFunc) { %>  <% } %>      replace: false,
 <% if (passFunc) { %>  <% } %>      link: function (scope, element, attrs) {
 <% if (passFunc) { %>  <% } %>        element.text('<%= lowerCamel %>\n' + scope + '\n' + attrs);

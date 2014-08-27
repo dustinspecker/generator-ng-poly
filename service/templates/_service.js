@@ -8,7 +8,7 @@
    *
    * @description
    *
-   * @ngInject 
+   * @ngInject
    *
    */
   function <%= upperCamel %>() {

@@ -5,9 +5,9 @@
    * @ngdoc service
    * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.factory:<%= upperCamel %>
    * @function
-   * 
+   *
    * @description
-   * 
+   *
    *
    * @ngInject
    *
@@ -26,7 +26,7 @@
  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.factory:<%= upperCamel %>
  * 
  * @description
- * 
+ *
  *
  */
 <% } %><% if (passFunc) { %>  <% } %>angular

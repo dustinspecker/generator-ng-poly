@@ -25,7 +25,7 @@
 <% } %><% if (passFunc) { %>  <% } %>angular
 <% if (passFunc) { %>  <% } %>  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', [
 <% if (passFunc) { %>  <% } %>  ]);
-<% if (passFunc) { %>  <% } %>
+
 <% if (passFunc) { %>  <% } %>angular
 <% if (passFunc) { %>  <% } %>  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
 <% if (passFunc) { %>  <% } %>  .config(config);<% } else { %>

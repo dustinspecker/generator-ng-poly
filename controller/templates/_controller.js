@@ -6,9 +6,9 @@
    * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.controller:<%= ctrlName %><% if(!controllerAs) { %>
    * @requires $scope <% } %>
    * @function
-   * 
+   *
    * @description
-   * 
+   *
    *
    * @ngInject
    *

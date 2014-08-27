@@ -2,8 +2,8 @@
 'use strict';
 
 describe('<%= lowerCamel %>', function () {
-  var scope;
-  var element;
+  var scope
+    , element;
 
   beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html'));
 
