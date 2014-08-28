@@ -2,32 +2,7 @@
 
 // gulp plugins
 var gulp = require('gulp')
-  , addSrc = require('gulp-add-src')
-  , angularSort = require('gulp-angular-filesort')
-  , coffeelint = require('gulp-coffeelint')
-  , concat = require('gulp-concat')
-  , cssmin = require('gulp-cssmin')
-  , gulpIf = require('gulp-if')
-  , haml = require('gulp-haml')
-  , htmlmin = require('gulp-htmlmin')
-  , imagemin = require('gulp-imagemin')
-  , inject = require('gulp-inject')
-  , jade = require('gulp-jade')
-  , jscs = require('gulp-jscs')
-  , jshint = require('gulp-jshint')
-  , less = require('gulp-less')
-  , ngAnnotate = require('gulp-ng-annotate')
-  , plato = require('gulp-plato')
-  , prefix = require('gulp-autoprefixer')
-  , protractor = require('gulp-protractor').protractor
-  , sass = require('gulp-sass')
-  , stylus = require('gulp-stylus')
-  , uglify = require('gulp-uglify')
-  // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
-  /* jshint -W106 */
-  , webdriverUpdate = require('gulp-protractor').webdriver_update
-  /* jshint +W106 */
-  // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+  , plugins = require('gulp-load-plugins')()
 
   // other node modules
   , _ = require('lodash')
@@ -149,7 +124,7 @@ gulp.task('coffeelint', function () {
     e2ePoFiles,
     '!**/*.js'
   ])
-    .pipe(coffeelint({
+    .pipe(plugins.coffeelint({
       opt: {
         // jscs: disable disallowQuotedKeysInObjects
         'no_backticks': {
@@ -158,8 +133,8 @@ gulp.task('coffeelint', function () {
         }
       }
     }))
-    .pipe(coffeelint.reporter())
-    .pipe(coffeelint.reporter('fail'))
+    .pipe(plugins.coffeelint.reporter())
+    .pipe(plugins.coffeelint.reporter('fail'))
   ;
 });
 
@@ -174,12 +149,12 @@ gulp.task('jshint', function () {
     unitTestsFiles,
     '!**/*.coffee'
   ])
-    .pipe(jscs())
-    .pipe(addSrc('Gulpfile.js'))
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(jshint.reporter('fail'))
-    .pipe(plato('report'))
+    .pipe(plugins.jscs())
+    .pipe(plugins.addSrc('Gulpfile.js'))
+    .pipe(plugins.jshint())
+    .pipe(plugins.jshint.reporter('jshint-stylish'))
+    .pipe(plugins.jshint.reporter('fail'))
+    .pipe(plugins.plato('report'))
   ;
 });
 
@@ -191,7 +166,7 @@ gulp.task('jshint', function () {
     componentsMarkupFiles,
     '!**/*.{html,jade}'
   ], {base: componentsBase})
-    .pipe(haml()))
+    .pipe(plugins.haml()))
   ;
 
   // html
@@ -205,7 +180,7 @@ gulp.task('jshint', function () {
     componentsMarkupFiles,
     '!**/*.{haml,html}'
   ], {base: componentsBase})
-    .pipe(jade()))
+    .pipe(plugins.jade()))
   ;
 
   // js
@@ -225,8 +200,7 @@ gulp.task('jshint', function () {
     componentsStyleFiles,
     '!**/*.{css,scss,styl}'
   ], {base: componentsBase})
-    .pipe(less())
-    .pipe(prefix()))
+    .pipe(plugins.less()))
   ;
 
   // sass
@@ -234,8 +208,7 @@ gulp.task('jshint', function () {
     componentsStyleFiles,
     '!**/*.{css,less,styl}'
   ], {base: componentsBase})
-    .pipe(sass())
-    .pipe(prefix()))
+    .pipe(plugins.sass()))
   ;
 
   // stylus
@@ -243,11 +216,11 @@ gulp.task('jshint', function () {
     componentsStyleFiles,
     '!**/*.{css,less,scss}'
   ], {base: componentsBase})
-    .pipe(stylus())
-    .pipe(prefix()))
+    .pipe(plugins.stylus()))
   ;
 
   return stream.done()
+    .pipe(plugins.autoprefixer())
     .pipe(gulp.dest(buildComponents));
 });
 
@@ -264,7 +237,7 @@ gulp.task('images', ['clean'], function () {
   return gulp.src([
     appImageFiles
   ])
-    .pipe(imagemin())
+    .pipe(plugins.imagemin())
     .pipe(gulp.dest(buildImages));
 });
 
@@ -275,11 +248,11 @@ gulp.task('scripts', ['clean', 'jshint'], function () {
       '!' + componentsBase + '**/*'<% } %>,
       '!' + unitTestsFiles
     ])
-      .pipe(angularSort())
-      .pipe(ngAnnotate())
-      .pipe(concat('app.js'))
-      .pipe(uglify())
-      .pipe(addSrc([].concat(minInjectableBowerComponents.map(prependBowerDir))))
+      .pipe(plugins.angularFilesort())
+      .pipe(plugins.ngAnnotate())
+      .pipe(plugins.concat('app.js'))
+      .pipe(plugins.uglify())
+      .pipe(plugins.addSrc([].concat(minInjectableBowerComponents.map(prependBowerDir))))
       .pipe(gulp.dest(buildJs));
   } else {
     return gulp.src([
@@ -287,7 +260,7 @@ gulp.task('scripts', ['clean', 'jshint'], function () {
       '!' + componentsBase + '**/*'<% } %>,
       '!' + unitTestsFiles
     ])
-      .pipe(addSrc([].concat(injectableBowerComponents.map(prependBowerDir))))
+      .pipe(plugins.addSrc([].concat(injectableBowerComponents.map(prependBowerDir))))
       .pipe(gulp.dest(buildJs))
     ;
   }
@@ -300,7 +273,7 @@ gulp.task('style', ['clean'], function () {
   stream.queue(gulp.src([
     bowerDir + 'bootstrap/less/bootstrap.less'
   ])
-    .pipe(less({
+    .pipe(plugins.less({
       paths: [
         bowerDir + 'bootstrap/less/**/*.less'
       ]
@@ -311,7 +284,7 @@ gulp.task('style', ['clean'], function () {
   stream.queue(gulp.src([
     bowerDir + 'foundation/scss/**/*.scss'
   ])
-    .pipe(sass()))
+    .pipe(plugins.sass()))
   ;
 
   <% } %><% if (bower.indexOf('fontawesome') > -1) { %>
@@ -332,7 +305,7 @@ gulp.task('style', ['clean'], function () {
     '!**/*.{css,scss,styl}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
-    .pipe(less()))
+    .pipe(plugins.less()))
   ;
 
   // sass
@@ -341,7 +314,7 @@ gulp.task('style', ['clean'], function () {
     '!**/*.{css,less,styl}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
-    .pipe(sass()))
+    .pipe(plugins.sass()))
   ;
 
   // stylus
@@ -350,13 +323,13 @@ gulp.task('style', ['clean'], function () {
     '!**/*.{css,less,scss}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
-    .pipe(stylus()))
+    .pipe(plugins.stylus()))
   ;
 
   return stream.done()
-    .pipe(prefix())
-    .pipe(gulpIf(isProd, concat('style.css')))
-    .pipe(gulpIf(isProd, cssmin()))
+    .pipe(plugins.autoprefixer())
+    .pipe(plugins.if(isProd, plugins.concat('style.css')))
+    .pipe(plugins.if(isProd, plugins.cssmin()))
     .pipe(gulp.dest(buildCss))
   ;
 });
@@ -370,7 +343,7 @@ gulp.task('markup', ['clean'], function () {
     '!' + componentsBase + '**/*'<% } %>,
     '!**/*.{html,jade}'
   ])
-    .pipe(haml()))
+    .pipe(plugins.haml()))
   ;
 
   // html
@@ -386,7 +359,7 @@ gulp.task('markup', ['clean'], function () {
     '!' + componentsBase + '**/*'<% } %>,
     '!**/*.{haml,html}'
   ])
-    .pipe(jade()))
+    .pipe(plugins.jade()))
   ;
 
   return stream.done()
@@ -396,7 +369,7 @@ gulp.task('markup', ['clean'], function () {
 
 gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts', 'style'], function () {
   return gulp.src(build + 'index.html')
-    .pipe(inject(gulp.src([
+    .pipe(plugins.inject(gulp.src([
       <% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>buildCss + 'bootstrap.css',
       <% } %><% if (framework === 'foundation') { %>buildCss + 'normalize.css',
       buildCss + 'foundation.css',
@@ -414,7 +387,7 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
 
 <% if (polymer) { %>gulp.task('headInject', ['inject'], function () {
   return gulp.src(build + 'index.html')
-    .pipe(inject(gulp.src(buildJs + 'platform.js'), {
+    .pipe(plugins.inject(gulp.src(buildJs + 'platform.js'), {
       starttag: '<!-- inject:head:{{ext}} -->',
       addRootSlash: false,
       ignorePath: build
@@ -425,15 +398,15 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
 
 <% } %>gulp.task('angularInject', [<% if (polymer) { %>'headInject'<% } else { %>'inject'<% } %>], function () {
   return gulp.src(build + 'index.html')
-    .pipe(inject(gulp.src([
+    .pipe(plugins.inject(gulp.src([
       buildJs + '**/*.js'<% if (polymer) { %>,
       '!' + buildComponents + '**/*'<% } %>,
       '!' + buildJs + 'angular.js',
       '!' + buildJs + 'angular.min.js'<% if (polymer) { %>,
       '!' + buildJs + 'platform.js'<% } %>,
       '!**/*_test.*'
-    ]).pipe(angularSort()), {starttag: '<!-- inject:angular:{{ext}} -->', addRootSlash: false, ignorePath: build}))
-    .pipe(gulpIf(isProd, htmlmin({
+    ]).pipe(plugins.angularFilesort()), {starttag: '<!-- inject:angular:{{ext}} -->', addRootSlash: false, ignorePath: build}))
+    .pipe(plugins.if(isProd, plugins.htmlmin({
       collapseWhitespace: true,
       removeComments: true
     })))
@@ -474,14 +447,14 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
     bowerDir + 'angular-touch/angular-touch.js'<% } %><% if (!ngRoute) { %>,
     bowerDir + 'angular-ui-router/release/angular-ui-router.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
     bowerDir + 'restangular/dist/restangular.js'<% } %>
-  ]).pipe(angularSort()));
+  ]).pipe(plugins.angularFilesort()));
 
   stream.queue(gulp.src([
     unitTestsFiles
   ]));
 
   return gulp.src(karmaConfig)
-    .pipe(inject(stream.done(), {
+    .pipe(plugins.inject(stream.done(), {
       starttag: 'files: [',
       endtag: ']',
       addRootSlash: false,
@@ -500,7 +473,7 @@ gulp.task('unitTest', ['jshint', 'coffeelint', 'karmaInject'], function (done) {
 
 gulp.task('e2eTest', ['jshint', 'coffeelint'], function () {
   return gulp.src(e2eTestsFiles)
-    .pipe(protractor({
+    .pipe(plugins.protractor.protractor({
       configFile: protractorConfig
     }))
     .on('error', function (e) {
@@ -508,7 +481,11 @@ gulp.task('e2eTest', ['jshint', 'coffeelint'], function () {
     });
 });
 
-gulp.task('webdriverUpdate', webdriverUpdate);
+// jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+/* jshint -W106 */
+gulp.task('webdriverUpdate', plugins.protractor.webdriver_update);
+/* jshint +W106 */
+// jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
 gulp.task('dev', ['build', 'browser-sync'], function () {
   gulp.start('watch');
