@@ -13,6 +13,7 @@ var gulp = require('gulp')
   , imagemin = require('gulp-imagemin')
   , inject = require('gulp-inject')
   , jade = require('gulp-jade')
+  , jscs = require('gulp-jscs')
   , jshint = require('gulp-jshint')
   , less = require('gulp-less')
   , ngAnnotate = require('gulp-ng-annotate')
@@ -22,100 +23,102 @@ var gulp = require('gulp')
   , sass = require('gulp-sass')
   , stylus = require('gulp-stylus')
   , uglify = require('gulp-uglify')
+  // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
   /* jshint -W106 */
-  , webdriverUpdate = require('gulp-protractor').webdriver_update;
+  , webdriverUpdate = require('gulp-protractor').webdriver_update
   /* jshint +W106 */
+  // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
-// other node modules
-var _ = require('lodash')
+  // other node modules
+  , _ = require('lodash')
   , args = require('yargs').argv
   , browserSync = require('browser-sync')
   , karma = require('karma').server
   , rimraf = require('rimraf')
-  , streamqueue = require('streamqueue');
+  , streamqueue = require('streamqueue')
 
-// app src locations
-var appBase = 'app/'
+  // app src locations
+  , appBase = 'app/'
   , appFontFiles = appBase + 'fonts/**/*'
   , appImageFiles = appBase + 'images/**/*'
   , appMarkupFiles = appBase + '**/*.{haml,html,jade}'
   , appScriptFiles = appBase + '**/*.js'
-  , appStyleFiles = appBase + '**/*.{css,less,scss,styl}';
+  , appStyleFiles = appBase + '**/*.{css,less,scss,styl}'
 
-<% if (polymer) { %>// custom component locations
-var componentsBase = appBase + 'components/'
+<% if (polymer) { %>  // custom component locations
+  , componentsBase = appBase + 'components/'
   , componentsMarkupFiles = componentsBase + '**/*.{haml,html,jade}'
   , componentsScriptFiles = componentsBase + '**/*.js'
-  , componentsStyleFiles = componentsBase + '**/*.{css,less,scss,styl}';
+  , componentsStyleFiles = componentsBase + '**/*.{css,less,scss,styl}'
 
-<% } %>// e2e test locations
-var e2ePoFiles = 'e2e/**/*.po.{coffee,js}'
+<% } %>  // e2e test locations
+  , e2ePoFiles = 'e2e/**/*.po.{coffee,js}'
   , e2eTestsFiles = 'e2e/**/*_test.{coffee,js}'
-  , protractorConfig = 'protractor.config.js';
+  , protractorConfig = 'protractor.config.js'
 
-// unit test locations
-var unitTestsFiles = '{app,test}/**/*_test.{coffee,js}'
-  , karmaConfig = 'karma.config.js';
+  // unit test locations
+  , unitTestsFiles = '{app,test}/**/*_test.{coffee,js}'
+  , karmaConfig = 'karma.config.js'
 
-// build locations
-var build = 'build/'
+  // build locations
+  , build = 'build/'
 <% if (polymer) { %>  , buildComponents = build + 'components/'
 <% } %>  , buildFonts = build + 'fonts/'
   , buildCss = build + 'css/'
   , buildImages = build + 'images/'
-  , buildJs = build + 'js/';
+  , buildJs = build + 'js/'
 
-// passed arguments
-var isProd = args.stage === 'prod';
+  // passed arguments
+  , isProd = args.stage === 'prod'
 
-// bower assets to be injected into index.html
-// 'bower_components' is automatically prepended
-var injectableBowerComponents = [
-  'angular/angular.js'<% if (bower.indexOf('animate') > -1) { %>,
-  'angular-animate/angular-animate.js'<% } %><% if (framework === 'uibootstrap') { %>,
-  'angular-bootstrap/ui-bootstrap-tpls.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
-  'angular-cookies/angular-cookies.js'<% } %><% if (framework === 'foundation') { %>,
-  'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
-  'angular-resource/angular-resource.js'<% } %><% if (ngRoute) { %>,
-  'angular-route/angular-route.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
-  'angular-sanitize/angular-sanitize.js'<% } %><% if (framework === 'angularstrap') { %>,
-  'angular-strap/dist/angular-strap.js',
-  'angular-strap/dist/angular-strap.tpl.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
-  'angular-touch/angular-touch.js'<% } %><% if (!ngRoute) { %>,
-  'angular-ui-router/release/angular-ui-router.js'<% } %><% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>,
-  'lodash/dist/lodash.js'<% } %><% if (polymer) { %>,
-  'platform/platform.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
-  'restangular/dist/restangular.js'<% } %>
-];
+  // bower assets to be injected into index.html
+  // 'bower_components' is automatically prepended
+  , injectableBowerComponents = [
+    'angular/angular.js'<% if (bower.indexOf('animate') > -1) { %>,
+    'angular-animate/angular-animate.js'<% } %><% if (framework === 'uibootstrap') { %>,
+    'angular-bootstrap/ui-bootstrap-tpls.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
+    'angular-cookies/angular-cookies.js'<% } %><% if (framework === 'foundation') { %>,
+    'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
+    'angular-resource/angular-resource.js'<% } %><% if (ngRoute) { %>,
+    'angular-route/angular-route.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
+    'angular-sanitize/angular-sanitize.js'<% } %><% if (framework === 'angularstrap') { %>,
+    'angular-strap/dist/angular-strap.js',
+    'angular-strap/dist/angular-strap.tpl.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
+    'angular-touch/angular-touch.js'<% } %><% if (!ngRoute) { %>,
+    'angular-ui-router/release/angular-ui-router.js'<% } %><% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>,
+    'lodash/dist/lodash.js'<% } %><% if (polymer) { %>,
+    'platform/platform.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
+    'restangular/dist/restangular.js'<% } %>
+  ]
 
-// minified bower assets to be injected into index.html
-// 'bower_components' is automatically prepended
-var minInjectableBowerComponents = [
-  'angular/angular.min.js'<% if (bower.indexOf('animate') > -1) { %>,
-  'angular-animate/angular-animate.min.js'<% } %><% if (framework === 'uibootstrap') { %>,
-  'angular-bootstrap/ui-bootstrap-tpls.min.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
-  'angular-cookies/angular-cookies.min.js'<% } %><% if (framework === 'foundation') { %>,
-  'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
-  'angular-resource/angular-resource.min.js'<% } %><% if (ngRoute) { %>,
-  'angular-route/angular-route.min.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
-  'angular-sanitize/angular-sanitize.min.js'<% } %><% if (framework === 'angularstrap') { %>,
-  'angular-strap/dist/angular-strap.min.js',
-  'angular-strap/dist/angular-strap.tpl.min.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
-  'angular-touch/angular-touch.min.js'<% } %><% if (!ngRoute) { %>,
-  'angular-ui-router/release/angular-ui-router.min.js'<% } %><% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>,
-  'lodash/dist/lodash.min.js'<% } %><% if (polymer) { %>,
-  'platform/platform.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
-  'restangular/dist/restangular.min.js'<% } %>
-];
+  // minified bower assets to be injected into index.html
+  // 'bower_components' is automatically prepended
+  , minInjectableBowerComponents = [
+    'angular/angular.min.js'<% if (bower.indexOf('animate') > -1) { %>,
+    'angular-animate/angular-animate.min.js'<% } %><% if (framework === 'uibootstrap') { %>,
+    'angular-bootstrap/ui-bootstrap-tpls.min.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
+    'angular-cookies/angular-cookies.min.js'<% } %><% if (framework === 'foundation') { %>,
+    'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
+    'angular-resource/angular-resource.min.js'<% } %><% if (ngRoute) { %>,
+    'angular-route/angular-route.min.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
+    'angular-sanitize/angular-sanitize.min.js'<% } %><% if (framework === 'angularstrap') { %>,
+    'angular-strap/dist/angular-strap.min.js',
+    'angular-strap/dist/angular-strap.tpl.min.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
+    'angular-touch/angular-touch.min.js'<% } %><% if (!ngRoute) { %>,
+    'angular-ui-router/release/angular-ui-router.min.js'<% } %><% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>,
+    'lodash/dist/lodash.min.js'<% } %><% if (polymer) { %>,
+    'platform/platform.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
+    'restangular/dist/restangular.min.js'<% } %>
+  ]
 
-<% if (polymer) { %>// bower polymer components that do not need to be injected into index.html
-// 'bower_components' is automatically prepended
-var bowerPolymerComponents = [
-  'polymer/polymer.{js,html}',
-  'polymer/layout.html'
-];
+<% if (polymer) { %>  // bower polymer components that do not need to be injected into index.html
+  // 'bower_components' is automatically prepended
+  , bowerPolymerComponents = [
+    'polymer/polymer.{js,html}',
+    'polymer/layout.html'
+  ]
 
-<% } %>var bowerDir = 'bower_components/';
+<% } %>  , bowerDir = 'bower_components/';
 function prependBowerDir(file) {
   return bowerDir + file;
 }
@@ -123,7 +126,8 @@ function prependBowerDir(file) {
 gulp.task('watch', function () {
   browserSync.reload();
   gulp.watch([unitTestsFiles], ['unitTest']);
-  gulp.watch([appFontFiles, appImageFiles, appMarkupFiles, appScriptFiles, appStyleFiles<% if (polymer) { %>, componentsBase + '**/*'<% } %>], ['build', browserSync.reload]);
+  gulp.watch([appFontFiles, appImageFiles, appMarkupFiles, appScriptFiles, appStyleFiles<% if (polymer) { %>, componentsBase + '**/*'<% } %>],
+    ['build', browserSync.reload]);
 });
 
 gulp.task('browser-sync', function () {
@@ -144,10 +148,12 @@ gulp.task('coffeelint', function () {
     e2eTestsFiles,
     e2ePoFiles,
     '!**/*.js'
-    ])
+  ])
     .pipe(coffeelint({
       opt: {
+        // jscs: disable disallowQuotedKeysInObjects
         'no_backticks': {
+        // jscs: enable disallowQuotedKeysInObjects
           level: 'ignore'
         }
       }
@@ -166,9 +172,10 @@ gulp.task('jshint', function () {
     karmaConfig,
     protractorConfig,
     unitTestsFiles,
-    'Gulpfile.js',
     '!**/*.coffee'
   ])
+    .pipe(jscs())
+    .pipe(addSrc('Gulpfile.js'))
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'))
@@ -177,13 +184,13 @@ gulp.task('jshint', function () {
 });
 
 <% if (polymer) { %>gulp.task('components', ['clean', 'jshint'], function () {
-  var stream = streamqueue({ objectMode: true });
+  var stream = streamqueue({objectMode: true});
 
   // haml
   stream.queue(gulp.src([
     componentsMarkupFiles,
     '!**/*.{html,jade}'
-  ], { base: componentsBase })
+  ], {base: componentsBase})
     .pipe(haml()))
   ;
 
@@ -191,33 +198,33 @@ gulp.task('jshint', function () {
   stream.queue(gulp.src([
     componentsMarkupFiles,
     '!**/*.{haml,jade}'
-  ], { base: componentsBase }));
+  ], {base: componentsBase}));
 
   // jade
   stream.queue(gulp.src([
     componentsMarkupFiles,
     '!**/*.{haml,html}'
-  ], { base: componentsBase })
+  ], {base: componentsBase})
     .pipe(jade()))
   ;
 
   // js
   stream.queue(gulp.src(
     componentsScriptFiles
-  , { base: componentsBase }))
+  , {base: componentsBase}))
   ;
 
   // css
   stream.queue(gulp.src([
     componentsStyleFiles,
     '!**/*.{less,scss,styl}'
-  ], { base: componentsBase }));
+  ], {base: componentsBase}));
 
   // less
   stream.queue(gulp.src([
     componentsStyleFiles,
     '!**/*.{css,scss,styl}'
-  ], { base: componentsBase })
+  ], {base: componentsBase})
     .pipe(less())
     .pipe(prefix()))
   ;
@@ -225,8 +232,8 @@ gulp.task('jshint', function () {
   // sass
   stream.queue(gulp.src([
     componentsStyleFiles,
-    '!**/*.{css,less,styl}',
-  ], { base: componentsBase })
+    '!**/*.{css,less,styl}'
+  ], {base: componentsBase})
     .pipe(sass())
     .pipe(prefix()))
   ;
@@ -235,7 +242,7 @@ gulp.task('jshint', function () {
   stream.queue(gulp.src([
     componentsStyleFiles,
     '!**/*.{css,less,scss}'
-  ], { base: componentsBase })
+  ], {base: componentsBase})
     .pipe(stylus())
     .pipe(prefix()))
   ;
@@ -287,7 +294,7 @@ gulp.task('scripts', ['clean', 'jshint'], function () {
 });
 
 gulp.task('style', ['clean'], function () {
-  var stream = streamqueue({ objectMode: true });
+  var stream = streamqueue({objectMode: true});
 
   <% if (framework !== 'none') { %>// load frameworks first, so that when concating custom CSS overrides frameworks<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>
   stream.queue(gulp.src([
@@ -355,11 +362,11 @@ gulp.task('style', ['clean'], function () {
 });
 
 gulp.task('markup', ['clean'], function () {
-  var stream = streamqueue({ objectMode: true });
+  var stream = streamqueue({objectMode: true});
 
   // haml
   stream.queue(gulp.src([
-    appMarkupFiles,<% if (polymer) { %>,
+    appMarkupFiles<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>,
     '!**/*.{html,jade}'
   ])
@@ -397,9 +404,9 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
       <% } %>buildCss + '**/*.css',
       buildJs + 'angular.js',
       buildJs + 'angular.min.js'
-    ], { read: false }), {
-        addRootSlash: false,
-        ignorePath: build
+    ], {read: false}), {
+      addRootSlash: false,
+      ignorePath: build
     }))
     .pipe(gulp.dest(build))
   ;
@@ -425,7 +432,7 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
       '!' + buildJs + 'angular.min.js'<% if (polymer) { %>,
       '!' + buildJs + 'platform.js'<% } %>,
       '!**/*_test.*'
-    ]).pipe(angularSort()), { starttag: '<!-- inject:angular:{{ext}} -->', addRootSlash: false, ignorePath: build }))
+    ]).pipe(angularSort()), {starttag: '<!-- inject:angular:{{ext}} -->', addRootSlash: false, ignorePath: build}))
     .pipe(gulpIf(isProd, htmlmin({
       collapseWhitespace: true,
       removeComments: true
@@ -436,14 +443,14 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
 
 <% if (polymer) { %>gulp.task('polymer', ['inject'], function () {
   return gulp.src(bowerPolymerComponents.map(prependBowerDir), {
-      base: bowerDir
-    })
+    base: bowerDir
+  })
     .pipe(gulp.dest(buildComponents))
   ;
 });
 
 <% } %>gulp.task('karmaInject', function () {
-  var stream = streamqueue({ objectMode: true});
+  var stream = streamqueue({objectMode: true});
   stream.queue(gulp.src([
     <% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>bowerDir + 'lodash/dist/lodash.js',
     <% } %>bowerDir + 'angular/angular.js',
@@ -480,7 +487,8 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
       addRootSlash: false,
       transform: function (filepath, file, i, length) {
         return '  \'' + filepath + '\'' + (i + 1 < length ? ',' : '');
-    }}))
+      }
+    }))
     .pipe(gulp.dest('./'))
   ;
 });

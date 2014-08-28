@@ -153,6 +153,7 @@ root/
 │       └── home_test.{coffee,js}
 ├── node_modules/
 ├── .editorconfig
+├── .jscsrc
 ├── .jshintrc
 ├── .yo-rc.json
 ├── bower.json

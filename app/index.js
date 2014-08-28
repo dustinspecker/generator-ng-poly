@@ -258,6 +258,7 @@ Generator.prototype.configuring = function configuring() {
 
   // copy over common files
   this.copy('.editorconfig', '.editorconfig');
+  this.copy('.jscsrc', '.jscsrc');
   this.copy('.jshintrc', '.jshintrc');
   this.template('_bower.json', 'bower.json', this.context);
   this.template('_gulpfile.js', 'Gulpfile.js', this.context);
