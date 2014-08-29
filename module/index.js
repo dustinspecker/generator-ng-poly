@@ -2,12 +2,23 @@
 var fs = require('fs')
   , genBase = require('../genBase')
   , path = require('path')
+  , pkg = require(path.join(__dirname, '../package.json'))
+  , updateNotifier = require('update-notifier')
   , utils = require('../utils')
   , Generator;
 
 Generator = module.exports = genBase.extend();
 
 Generator.prototype.initialize = function initialize() {
+  // check for updates async
+  var notifier = updateNotifier({
+    packageName: pkg.name,
+    packageVersion: pkg.version
+  });
+
+  // notifiy user about update, if there is an update
+  notifier.notify();
+
   this.module = this.name;
 
   // if moduleName ends with a slash remove it
