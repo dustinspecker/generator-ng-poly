@@ -170,8 +170,7 @@ gulp.task('jshint', function () {
     componentsMarkupFiles,
     '!**/*.{html,jade}'
   ], {base: componentsBase})
-    .pipe(plugins.haml()))
-  ;
+    .pipe(plugins.haml()));
 
   // html
   stream.queue(gulp.src([
@@ -184,14 +183,20 @@ gulp.task('jshint', function () {
     componentsMarkupFiles,
     '!**/*.{haml,html}'
   ], {base: componentsBase})
-    .pipe(plugins.jade()))
-  ;
+    .pipe(plugins.jade()));
+
+  // coffee
+  stream.queue(gulp.src([
+    componentsScriptFiles,
+    '!**/*.js'
+  ], {base: componentsBase})
+    .pipe(plugins.coffee()));
 
   // js
-  stream.queue(gulp.src(
-    componentsScriptFiles
-  , {base: componentsBase}))
-  ;
+  stream.queue(gulp.src([
+    componentsScriptFiles,
+    '!**/*.coffee'
+  ], {base: componentsBase}));
 
   // css
   stream.queue(gulp.src([
@@ -204,27 +209,26 @@ gulp.task('jshint', function () {
     componentsStyleFiles,
     '!**/*.{css,scss,styl}'
   ], {base: componentsBase})
-    .pipe(plugins.less()))
-  ;
+    .pipe(plugins.less())
+    .pipe(plugins.autoprefixer()));
 
   // sass
   stream.queue(gulp.src([
     componentsStyleFiles,
     '!**/*.{css,less,styl}'
   ], {base: componentsBase})
-    .pipe(plugins.sass()))
-  ;
+    .pipe(plugins.sass())
+    .pipe(plugins.autoprefixer()));
 
   // stylus
   stream.queue(gulp.src([
     componentsStyleFiles,
     '!**/*.{css,less,scss}'
   ], {base: componentsBase})
-    .pipe(plugins.stylus()))
-  ;
+    .pipe(plugins.stylus())
+    .pipe(plugins.autoprefixer()));
 
   return stream.done()
-    .pipe(plugins.autoprefixer())
     .pipe(gulp.dest(buildComponents));
 });
 
