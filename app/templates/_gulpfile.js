@@ -17,13 +17,13 @@ var gulp = require('gulp')
   , appFontFiles = appBase + 'fonts/**/*'
   , appImageFiles = appBase + 'images/**/*'
   , appMarkupFiles = appBase + '**/*.{haml,html,jade}'
-  , appScriptFiles = appBase + '**/*.js'
+  , appScriptFiles = appBase + '**/*.{coffee,js}'
   , appStyleFiles = appBase + '**/*.{css,less,scss,styl}'
 
 <% if (polymer) { %>  // custom component locations
   , componentsBase = appBase + 'components/'
   , componentsMarkupFiles = componentsBase + '**/*.{haml,html,jade}'
-  , componentsScriptFiles = componentsBase + '**/*.js'
+  , componentsScriptFiles = componentsBase + '**/*.{coffee,js}'
   , componentsStyleFiles = componentsBase + '**/*.{css,less,scss,styl}'
 
 <% } %>  // e2e test locations
@@ -119,6 +119,8 @@ gulp.task('clean', function (cb) {
 
 gulp.task('coffeelint', function () {
   return gulp.src([
+    appScriptFiles<% if (polymer) { %>,
+    componentsScriptFiles<% } %>,
     unitTestsFiles,
     e2eTestsFiles,
     e2ePoFiles,
@@ -144,13 +146,15 @@ gulp.task('jshint', function () {
     componentsScriptFiles<% } %>,
     e2ePoFiles,
     e2eTestsFiles,
-    karmaConfig,
     protractorConfig,
     unitTestsFiles,
     '!**/*.coffee'
   ])
     .pipe(plugins.jscs())
-    .pipe(plugins.addSrc('Gulpfile.js'))
+    .pipe(plugins.addSrc([
+      karmaConfig,
+      'Gulpfile.js'
+    ]))
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
     .pipe(plugins.jshint.reporter('fail'))
@@ -241,29 +245,35 @@ gulp.task('images', ['clean'], function () {
     .pipe(gulp.dest(buildImages));
 });
 
-gulp.task('scripts', ['clean', 'jshint'], function () {
-  if (isProd) {
-    return gulp.src([
-      appScriptFiles<% if (polymer) { %>,
-      '!' + componentsBase + '**/*'<% } %>,
-      '!' + unitTestsFiles
-    ])
-      .pipe(plugins.angularFilesort())
-      .pipe(plugins.ngAnnotate())
-      .pipe(plugins.concat('app.js'))
-      .pipe(plugins.uglify())
-      .pipe(plugins.addSrc([].concat(minInjectableBowerComponents.map(prependBowerDir))))
-      .pipe(gulp.dest(buildJs));
-  } else {
-    return gulp.src([
-      appScriptFiles<% if (polymer) { %>,
-      '!' + componentsBase + '**/*'<% } %>,
-      '!' + unitTestsFiles
-    ])
-      .pipe(plugins.addSrc([].concat(injectableBowerComponents.map(prependBowerDir))))
-      .pipe(gulp.dest(buildJs))
-    ;
-  }
+gulp.task('scripts', ['clean', 'jshint', 'coffeelint'], function () {
+  var stream = streamqueue({objectMode: true});
+
+  // coffeescript
+  stream.queue(gulp.src([
+    appScriptFiles,
+    '!' + componentsScriptFiles,
+    '!' + unitTestsFiles,
+    '!**/*.js'
+  ])
+    .pipe(plugins.coffee()));
+
+  // javascript
+  stream.queue(gulp.src([
+    appScriptFiles,
+    '!' + componentsScriptFiles,
+    '!' + unitTestsFiles,
+    '!**/*.coffee'
+  ]));
+
+  return stream.done()
+    .pipe(plugins.angularFilesort())
+    .pipe(plugins.if(isProd, plugins.angularFilesort()))
+    .pipe(plugins.if(isProd, plugins.ngAnnotate()))
+    .pipe(plugins.if(isProd, plugins.concat('app.js')))
+    .pipe(plugins.if(isProd, plugins.uglify()))
+    .pipe(plugins.if(isProd, plugins.addSrc([].concat(minInjectableBowerComponents.map(prependBowerDir)))))
+    .pipe(plugins.if(!isProd, plugins.addSrc([].concat(injectableBowerComponents.map(prependBowerDir)))))
+    .pipe(gulp.dest(buildJs));
 });
 
 gulp.task('style', ['clean'], function () {
@@ -432,7 +442,7 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
   ]));
 
   stream.queue(gulp.src([
-    appBase + '**/*.js'<% if (polymer) { %>,
+    appScriptFiles<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>,
     '!**/*_test.*'<% if (bower.indexOf('animate') > -1) { %>,
     bowerDir + 'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
@@ -459,7 +469,7 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
       endtag: ']',
       addRootSlash: false,
       transform: function (filepath, file, i, length) {
-        return '  \'' + filepath + '\'' + (i + 1 < length ? ',' : '');
+        return '\'' + filepath + '\'' + (i + 1 < length ? ',' : '');
       }
     }))
     .pipe(gulp.dest('./'))

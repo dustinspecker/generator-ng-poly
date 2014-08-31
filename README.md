@@ -47,7 +47,7 @@ Languages and Features supported:
   * Markup
     - HAML, HTML, Jade
   * Application scripting languages
-    - JavaScript
+    - CoffeeScript †, JavaScript
   * Testing scripting languages
     - CoffeeScript, JavaScript
   * Style languages
@@ -82,6 +82,7 @@ Languages and Features supported:
     - [Pass Function](#pass-function)
     - [Named Functions](#named-functions)
 
+† Code coverage isn't currently performed on CoffeeScript application source code
 
 ### Gulp Tasks
 `gulp` will start a localhost and open in the default browser 
@@ -137,14 +138,14 @@ Produces:
 root/
 ├── app/
 │   ├── home/
-│   │   ├── home.js
+│   │   ├── home.{coffee,js}
 │   │   ├── home.{css,less,scss,styl}
 │   │   ├── home.tpl.{haml,html,jade}
-│   │   ├── home-controller.js
+│   │   ├── home-controller.{coffee,js}
 │   │   └── home-controller_test.{coffee,js}
 │   ├── fonts/ (empty)
 │   ├── images/ (empty)
-│   ├── app.js
+│   ├── app.{coffee,js}
 │   └── index.{haml,html,jade}
 ├── bower_components/
 ├── e2e/
@@ -929,6 +930,7 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 
 | Option | Possible Values|
 | ------ | -------------- |
+| app-script | coffee, js |
 | markup | haml, html, jade|
 | style | css, less, scss, styl|
 | test-dir | src, test|
@@ -1030,6 +1032,8 @@ Lastly, views will be generated like:
 
 The generator will ask when `ng-poly:app` is ran if it should pass defined functions instead of defining inline.
 
+**This is currently only supported in JavaScript files.**
+
 If enabled, the app source code will pass functions, such as:
 
 ```javascript
@@ -1062,6 +1066,8 @@ If enabled, the app source code will pass functions, such as:
 ### Named Functions
 
 The generator will ask when `ng-poly:app` is ran if it should use named functions or anonymous functions. Named functions create a stack trace that is easier to understand.
+
+**This is only supported in JavaScript files.**
 
 If enabled, the app source code will have named functions, such as:
 

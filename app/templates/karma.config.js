@@ -9,7 +9,7 @@ module.exports = {
     'app/**/*-directive.tpl.haml': ['ng-haml2js'],
     'app/**/*-directive.tpl.html': ['ng-html2js'],
     'app/**/*-directive.tpl.jade': ['ng-jade2js'],
-    '**/*_test.coffee': ['coffee']
+    '**/*.coffee': ['coffee']
   },
   ngHaml2JsPreprocessor: {
     stripPrefix: 'app/'

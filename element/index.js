@@ -11,5 +11,6 @@ Generator.prototype.writing = function writing() {
   this.mkdir(elementDir);
   this.copy('element.' + config.style, elementDir + config.hyphenName + '.' + config.style);
   this.template('_element.' + config.markup, elementDir + config.hyphenName + '.' + config.markup, config);
-  this.template('_element.js', elementDir + config.hyphenName + '.js', config);
+  this.template('_element.' + config.appScript,
+    elementDir + config.hyphenName + '.' + config.appScript, config);
 };

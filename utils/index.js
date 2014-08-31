@@ -93,7 +93,7 @@ function moduleExists(yoRcAbsolutePath, modulePath) {
 }
 
 function dependencyExists(fileContents, dependency) {
-  var regex = new RegExp('[.]module\\(\'[^$]*\', \\[[^$]*\'' + dependency + '\'[^$]*\\]\\);');
+  var regex = new RegExp('[.]module[^$]*\'[^$]*\', \\[[^$]*\'' + dependency + '\'[^$]*\\]');
   return regex.test(fileContents);
 }
 
@@ -111,7 +111,7 @@ function addDependency(fileContents, dependency) {
     }
 
     // find line with closing ]);
-    if (angularDefinitionOpenLine > -1 && angularDefinitionCloseLine < 0 && line.indexOf(']);') > -1) {
+    if (angularDefinitionOpenLine > -1 && angularDefinitionCloseLine < 0 && line.indexOf(']') > -1) {
       angularDefinitionCloseLine = i;
     }
   });
@@ -137,6 +137,10 @@ function addDependency(fileContents, dependency) {
   lines.splice(angularDefinitionCloseLine, 0, dependency);
 
   return lines.join(endOfLine);
+}
+
+function numOfSpacesAtStart(line) {
+  return line.substring(0, line.search(/[^ ]/)).length;
 }
 
 function addRoute(fileContents, state, config) {
@@ -259,7 +263,7 @@ function addRoute(fileContents, state, config) {
   }
 
   // strip away line after first non space character and count number of spaces left
-  numOfSpaces = lineToCheck.substring(0, lineToCheck.search(/[^ ]/)).length;
+  numOfSpaces = numOfSpacesAtStart(lineToCheck);
 
   // if this is the first state, add 2 more spaces to indent inside config function
   // else remove 2 spaces to line up with existing states
@@ -287,6 +291,143 @@ function addRoute(fileContents, state, config) {
   return lines.join(endOfLine);
 }
 
+function addRouteCoffee(fileContents, state, config) {
+  var dependency = config.ngRoute ? 'ngRoute' : 'ui.router'
+    , param = config.ngRoute ? 'routeProvider' : 'stateProvider'
+    , newRoute = config.ngRoute ? 'when' : 'state'
+
+    // checking if provider is used
+    , regex = new RegExp('\\(.*\\$' + param + '.*\\) ->')
+    , addParam = !regex.test(fileContents)
+
+    // for determining where to place new state
+    , routeStartIndex = -1
+    , configFunctionIndex = -1
+
+    // for prepending spaces to new route
+    , numOfSpaces
+    , numOfSpacesCounter
+    , lineToCheck = null
+
+    , lines // split fileContents
+
+    // new state insertion
+    , insertLine
+    , newState;
+
+  // if file doesn't have the dependency, add it
+  if (!dependencyExists(fileContents, dependency)) {
+    fileContents = addDependency(fileContents, dependency);
+  }
+
+  lines = fileContents.split(endOfLine);
+
+  // find line to add new state
+  lines.forEach(function (line, i) {
+    // add $stateProvider if needed
+    if (addParam && line.indexOf('.config') > -1 && line.indexOf('->') > -1) {
+      // check if function has a parameter already
+      if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
+        lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') ->';
+      } else if (line.lastIndexOf('(') === -1 && line.lastIndexOf(')') === -1) {
+        lines[i] = lines[i].slice(0, line.lastIndexOf('g')) + 'g ($' + param + ') ->';
+      } else {
+        lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') ->';
+      }
+    }
+
+    if (line.indexOf('.config') > -1 && line.indexOf('->') > -1) {
+      configFunctionIndex = i;
+    }
+
+    // look for .state and set routeStartIndex
+    if (line.indexOf('.' + newRoute) > -1) {
+      routeStartIndex = i;
+    }
+
+    // loop through everything to append new route at the end
+  });
+
+  // base route logic
+  if (config.ngRoute) {
+    newState = [
+      '  .when \'' + state.url + '\',',
+      '    templateUrl: \'' + state.templateUrl + '\''
+    ];
+  } else {
+    newState = [
+      '  .state \'' + state.lowerCamel + '\',',
+      '    url: \'' + state.url + '\'',
+      '    templateUrl: \'' + state.templateUrl + '\''
+    ];
+  }
+
+  // controller as logic
+  if (config.controllerAs && config.ngRoute) {
+    newState.push('    controller: \'' + state.ctrlName + '\'');
+    newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
+  } else if (config.controllerAs && !config.ngRoute) {
+    newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+  } else {
+    newState.push('    controller: \'' + state.ctrlName + '\'');
+  }
+
+  if (routeStartIndex === -1) {
+    // add provider
+    if (config.ngRoute) {
+      newState.unshift('$routeProvider');
+    } else {
+      newState.unshift('$stateProvider');
+    }
+  }
+
+  // count spaces to prepend to state
+  if (routeStartIndex > -1) {
+    lineToCheck = lines[routeStartIndex];
+  } else {
+    lineToCheck = lines[configFunctionIndex];
+  }
+
+  // strip away line after first non space character and count number of spaces left
+  numOfSpaces = lineToCheck.substring(0, lineToCheck.search(/[^ ]/)).length;
+
+  // if this is the first state, add 2 more spaces to indent inside config function
+  // else remove 2 spaces to line up with existing states
+  if (routeStartIndex === -1) {
+    numOfSpaces += 2;
+  } else {
+    numOfSpaces -= 2;
+  }
+
+  // prepend spaces
+  newState = newState.map(function (newStateLine) {
+    for (var i = 0; i < numOfSpaces; i++) {
+      newStateLine = ' ' + newStateLine;
+    }
+    return newStateLine;
+  });
+
+  if (routeStartIndex > -1) {
+    // determine where last state ends by examining spaces
+    // insert new route on first line to have less spaces at the start
+    numOfSpaces = numOfSpacesAtStart(lines[routeStartIndex]);
+    numOfSpacesCounter = numOfSpaces;
+    insertLine = routeStartIndex;
+    while (numOfSpacesCounter >= numOfSpaces) {
+      insertLine++;
+      numOfSpacesCounter = numOfSpacesAtStart(lines[insertLine]);
+    }
+  } else {
+    insertLine = configFunctionIndex + 1;
+  }
+
+  lines.splice(insertLine, 0, newState.map(function (newStateLine) {
+    return newStateLine;
+  }).join(endOfLine));
+
+  return lines.join(endOfLine);
+}
+
 function checkElementName(name) {
   if (name.indexOf('-') < 1 || name.indexOf('-') === name.length - 1) {
     throw 'Element name must have a hyphen (-) in it.';
@@ -304,6 +445,7 @@ module.exports = {
   moduleExists: moduleExists,
   extractModuleNames: extractModuleNames,
   addRoute: addRoute,
+  addRouteCoffee: addRouteCoffee,
   dependencyExists: dependencyExists,
   addDependency: addDependency,
   checkElementName: checkElementName

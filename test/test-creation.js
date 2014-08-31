@@ -14,6 +14,7 @@ describe('ng-poly generator', function () {
     var expected = [
       'e2e/home/home.po.js',
       'e2e/home/home_test.js',
+      'app/home/home.js',
       'app/home/home.tpl.html',
       'app/home/home.less',
       'app/home/home-controller.js',
@@ -94,7 +95,7 @@ describe('ng-poly generator', function () {
     {
       appName: 'temp2',
       markup: 'jade',
-      appScript: 'js',
+      appScript: 'coffee',
       controllerAs: true,
       passFunc: true,
       namedFunc: true,
@@ -150,9 +151,9 @@ describe('ng-poly generator', function () {
     describe(genName + ' generator with args and options', function () {
       beforeEach(function (done) {
 
-        // cover module scenario with / at end of name
+        // cover module and view scenario with / at end of name
         // on the second prompt (uses Jade)
-        if (expectedFiles[2].indexOf('.jade') > -1) {
+        if (expectedFiles[3].indexOf('.jade') > -1) {
           this.app = helpers.createGenerator('ng-poly:' + genName, deps, genName + '-test/', mockPrompts);
         } else {
           this.app = helpers.createGenerator('ng-poly:' + genName, deps, genName + '-test', mockPrompts);
@@ -177,6 +178,7 @@ describe('ng-poly generator', function () {
       var expected = [
         'e2e/home/home.po.' + config.testScript,
         'e2e/home/home_test.' + config.testScript,
+        'app/home/home.' + config.appScript,
         'app/home/home.tpl.' + config.markup,
         'app/home/home.' + config.style,
         'app/home/home-controller.' + config.appScript,

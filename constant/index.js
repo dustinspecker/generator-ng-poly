@@ -12,7 +12,8 @@ Generator.prototype.prompting = function prompting() {
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
-  this.template('_constant.js', path.join('app', config.modulePath, config.hyphenName + '-constant.js'), config);
+  this.template('_constant.' + config.appScript,
+    path.join('app', config.modulePath, config.hyphenName + '-constant.' + config.appScript), config);
   this.template('_spec.' + config.testScript,
     path.join(config.testDir, config.modulePath, config.hyphenName + '-constant_test.' + config.testScript), config);
 };

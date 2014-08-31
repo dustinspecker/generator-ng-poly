@@ -38,7 +38,6 @@ Generator.prototype.writing = function writing() {
   this.context.upperModule = utils.upperCamel(this.context.moduleName);
   this.context.parentModuleName = null;
   this.context.templateUrl = path.join(this.module).replace(/\\/g, '/');
-  console.log('module:' + this.module);
   this.context.modulePath = utils.normalizeModulePath(this.module);
 
   // create new module directory
@@ -48,14 +47,24 @@ Generator.prototype.writing = function writing() {
   // if yes - get root app.js to prepare adding dep
   // else - get parent app.js to prepare adding dep
   if (this.context.moduleName === this.module) {
-    filePath = path.join(this.config.path, '../app/app.js');
+    filePath = path.join(this.config.path, '../app/app.coffee');
+
+    // if CoffeeScript app doesn't exist, use JavaScript app
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(this.config.path, '../app/app.js');
+    }
   } else {
     parentDir = path.resolve(path.join('app', this.context.modulePath), '..');
 
     // for templating to create a parent.child module name
     this.context.parentModuleName = path.basename(parentDir);
 
-    filePath = path.join(parentDir, this.context.parentModuleName + '.js');
+    filePath = path.join(parentDir, this.context.parentModuleName + '.coffee');
+
+    // if CoffeeScript parent module doesn't exist, use JavaScript parent module
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(parentDir, this.context.parentModuleName + '.js');
+    }
   }
 
   file = fs.readFileSync(filePath, 'utf8');
@@ -66,7 +75,8 @@ Generator.prototype.writing = function writing() {
   fs.writeFileSync(filePath, utils.addDependency(file, depName));
 
   // create app.js
-  this.template('_app.js', path.join('app', this.context.modulePath, this.context.hyphenModule + '.js'), this.context);
+  this.template('_app.' + this.context.appScript,
+    path.join('app', this.context.modulePath, this.context.hyphenModule + '.' + this.context.appScript), this.context);
 };
 
 Generator.prototype.end = function end() {

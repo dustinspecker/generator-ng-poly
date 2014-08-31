@@ -103,8 +103,28 @@ describe('module generator', function () {
         '../../view'
       ], 'home/door');
 
+      this.app.options['app-script'] = 'coffee';
       this.app.run([], function () {
         done();
+      });
+    });
+
+    describe('adding a deeper level module', function () {
+      before(function (done) {
+        this.app = helpers.createGenerator('ng-poly:module', [
+          '../../module',
+          '../../route',
+          '../../controller',
+          '../../view'
+        ], 'home/door/handle');
+
+        this.app.run([], function () {
+          done();
+        });
+      });
+
+      it('should add door.handle to app/home/door.coffee', function () {
+        assert.fileContent('app/home/door/door.coffee', /    \'door.handle\'/);
       });
     });
 
@@ -116,8 +136,8 @@ describe('module generator', function () {
       assert.fileContent('app/home/home.js', /    \'home.door\'/);
     });
 
-    it('should name module in app/home/door/door.js home.door', function () {
-      assert.fileContent('app/home/door/door.js', /angular[^$]*.module\(.[^$]*\'home.door\'/);
+    it('should name module in app/home/door/door.coffee home.door', function () {
+      assert.fileContent('app/home/door/door.coffee', /angular[^$]*.module[^$]*\'home.door\'/);
     });
   });
 

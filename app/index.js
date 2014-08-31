@@ -50,6 +50,10 @@ Generator.prototype.prompting = function prompting() {
     message: 'What is the preferred application scripting language?',
     choices: [
       {
+        name: 'CoffeeScript',
+        value: 'coffee'
+      },
+      {
         name: 'JavaScript',
         value: 'js',
         checked: true
@@ -269,15 +273,13 @@ Generator.prototype.configuring = function configuring() {
 };
 
 Generator.prototype.writing = function writing() {
-  var markup = this.markup;
-
   this.mkdir('app');
 
   // create main module and index.html
-  this.template('_app.js',
-    path.join('app', 'app.js'), this.context);
-  this.template('_index.' + markup,
-    path.join('app', 'index.' + markup), this.context);
+  this.template('_app.' + this.appScript,
+    path.join('app', 'app.' + this.appScript), this.context);
+  this.template('_index.' + this.markup,
+    path.join('app', 'index.' + this.markup), this.context);
 
   this.mkdir(path.join('app', 'fonts'));
   this.mkdir(path.join('app', 'images'));
