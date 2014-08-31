@@ -107,7 +107,7 @@ Generators requiring a module can take a module option to bypass the prompt:
 ```
 yo ng-poly:view newView --module=home/kitchen
 ```
-**A module value of `app.js` will add the new components to the module defined in app.js.**
+**A module value of `app` will add the new components to the module defined in app.js or app.coffee.**
 * * *
 
 **Examples are shown with HTML, LESS, JavaScript, and UI Router as the app configuration.**
@@ -137,13 +137,13 @@ Produces:
 ```
 root/
 ├── app/
+│   ├── fonts/ (empty)
 │   ├── home/
 │   │   ├── home.{coffee,js}
 │   │   ├── home.{css,less,scss,styl}
 │   │   ├── home.tpl.{haml,html,jade}
 │   │   ├── home-controller.{coffee,js}
 │   │   └── home-controller_test.{coffee,js}
-│   ├── fonts/ (empty)
 │   ├── images/ (empty)
 │   ├── app.{coffee,js}
 │   └── index.{haml,html,jade}

@@ -100,7 +100,7 @@ describe('Utils', function () {
   });
 
   describe('extractModuleNames', function () {
-    it('should return app name when using app.js', function () {
+    it('should return app name when using app', function () {
       // mock out path to avoid needing to use file system to find package.json
       var pathStub = {
           join: function () {
@@ -115,7 +115,7 @@ describe('Utils', function () {
 
       expectRequire('package.json').return({name: 'test'});
 
-      assert(JSON.stringify(utilsProxy.extractModuleNames('app.js')) === JSON.stringify(['test', null]));
+      assert(JSON.stringify(utilsProxy.extractModuleNames('app')) === JSON.stringify(['test', null]));
     });
 
     it('should extract modules with slashes in path', function () {

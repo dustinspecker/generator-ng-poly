@@ -239,7 +239,7 @@ describe('ng-poly generator', function () {
         'app/controller-test-controller.' + config.appScript,
         config.testDir + '/controller-test-controller_test.' + config.testScript
       ), {
-        module: 'app.js'
+        module: 'app'
       });
 
       testGenerator('directive', ['../../directive'], expected.concat(

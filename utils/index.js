@@ -53,7 +53,7 @@ function extractBasedOnChar(string, symbol) {
 
 function extractModuleNames(string) {
   // return appName for app.js
-  if (string === 'app.js') {
+  if (string === 'app') {
     var appName = require(path.join(path.dirname(findup('.yo-rc.json')), 'package.json')).name;
     return [appName, null];
   }
@@ -68,7 +68,7 @@ function extractModuleNames(string) {
 }
 
 function normalizeModulePath(modulePath) {
-  if (modulePath === 'app.js') {
+  if (modulePath === 'app') {
     return '';
   }
 
@@ -83,7 +83,7 @@ function moduleExists(yoRcAbsolutePath, modulePath) {
   var yoPath = path.dirname(yoRcAbsolutePath)
     , fullPath;
 
-  if (modulePath === 'app.js') {
+  if (modulePath === 'app') {
     return true;
   }
 
