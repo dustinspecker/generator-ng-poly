@@ -323,12 +323,14 @@ gulp.task('scripts', ['clean', 'jshint', 'coffeelint'], function () {
       .pipe(plugins.angularFilesort())
       .pipe(plugins.ngAnnotate())
       .pipe(plugins.concat('app.js'))
+      .pipe(plugins.streamify(plugins.rev()))
       .pipe(plugins.uglify())
       .pipe(appFilter.restore())
       .pipe(bowerFilter)
       .pipe(plugins.angularFilesort())
       .pipe(plugins.order(['**/angular.min.js']))
       .pipe(plugins.concat('vendor.js'))
+      .pipe(plugins.streamify(plugins.rev()))
       .pipe(bowerFilter.restore())
       .pipe(gulp.dest(buildJs));
   } else {
@@ -408,10 +410,12 @@ gulp.task('style', ['clean'], function () {
       .pipe(plugins.autoprefixer())
       .pipe(appFilter)
       .pipe(plugins.concat('style.css'))
+      .pipe(plugins.streamify(plugins.rev()))
       .pipe(plugins.cssmin())
       .pipe(appFilter.restore())
       .pipe(bowerFilter)
       .pipe(plugins.concat('vendor.css'))
+      .pipe(plugins.streamify(plugins.rev()))
       .pipe(plugins.cssmin())
       .pipe(bowerFilter.restore())
       .pipe(gulp.dest(buildCss));
@@ -458,7 +462,7 @@ gulp.task('markup', ['clean'], function () {
 gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts', 'style'], function () {
   return gulp.src(build + 'index.html')
     .pipe(plugins.inject(gulp.src([
-      buildCss + 'vendor.css',
+      buildCss + 'vendor*.css',
       <% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>buildCss + 'bootstrap.css',
       <% } %><% if (framework === 'foundation') { %>buildCss + 'normalize.css',
       buildCss + 'foundation.css',
