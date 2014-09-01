@@ -250,7 +250,8 @@ gulp.task('images', ['clean'], function () {
 });
 
 gulp.task('scripts', ['clean', 'jshint', 'coffeelint'], function () {
-  var stream = streamqueue({objectMode: true});
+  var stream = streamqueue({objectMode: true})
+    , appFilter, bowerFilter, templateFilter;
 
   // coffeescript
   stream.queue(gulp.src([
@@ -270,34 +271,58 @@ gulp.task('scripts', ['clean', 'jshint', 'coffeelint'], function () {
   ]));
 
   if (isProd) {
-    var appFilter = plugins.filter(function (file) {
-      var <% if (polymer) { %>platformFilter = new RegExp('platform.js').test(file.path)
+    appFilter = plugins.filter(function (file) {
+      var <% if (polymer) { %>platformRegex = new RegExp('platform.js').test(file.path)
         , <% } %>filter;
 
-      <% if (polymer) { %>if (platformFilter) {
+      if (/[.]tpl[.]html$/.test(file.path)) {
+        return false;
+      }
+
+      <% if (polymer) { %>if (platformRegex) {
         return false;
       }
 
       <% } %>filter = new RegExp('bower_components').test(file.path);
       return !filter;
-    })
+    });
 
-      , bowerFilter = plugins.filter(function (file) {
-        var <% if (polymer) { %>platformFilter = new RegExp('platform.js').test(file.path)
-          , <% } %>filter;
+    bowerFilter = plugins.filter(function (file) {
+      var <% if (polymer) { %>platformRegex = new RegExp('platform.js').test(file.path)
+        , <% } %>filter;
 
-        <% if (polymer) { %>if (platformFilter) {
-          return false;
-        }
+      if (/[.]tpl[.]html$/.test(file.path)) {
+        return false;
+      }
 
-        <% } %>filter = new RegExp('bower_components').test(file.path);
-        return filter;
-      });
+      <% if (polymer) { %>if (platformRegex) {
+        return false;
+      }
+
+      <% } %>filter = new RegExp('bower_components').test(file.path);
+      return filter;
+    });
+
+    templateFilter = plugins.filter(function (file) {
+      return /[.]tpl[.]html$/.test(file.path);
+    });
+
     stream.queue(gulp.src(
       [].concat(minInjectableBowerComponents.map(prependBowerDir))
     ));
 
+    stream.queue(gulp.src([
+      build + '**/*.html',
+      '!**/index.html'
+    ]));
+
     return stream.done()
+      .pipe(templateFilter)
+      .pipe(plugins.ngHtml2js({
+        moduleName: require('./package.json').name,
+        declareModule: false
+      }))
+      .pipe(templateFilter.restore())
       .pipe(appFilter)
       .pipe(plugins.angularFilesort())
       .pipe(plugins.ngAnnotate())
@@ -459,7 +484,11 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
       '!' + buildJs + 'angular.min.js'<% if (polymer) { %>,
       '!' + buildJs + 'platform.js'<% } %>,
       '!**/*_test.*'
-    ]).pipe(plugins.angularFilesort()), {starttag: '<!-- inject:angular:{{ext}} -->', addRootSlash: false, ignorePath: build}))
+    ]).pipe(plugins.angularFilesort()), {
+      starttag: '<!-- inject:angular:{{ext}} -->',
+      addRootSlash: false,
+      ignorePath: build
+    }))
     .pipe(plugins.if(isProd, plugins.htmlmin({
       collapseWhitespace: true,
       removeComments: true
