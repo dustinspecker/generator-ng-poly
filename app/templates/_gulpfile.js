@@ -409,7 +409,7 @@ gulp.task('style', ['clean'], function () {
     return stream.done()
       .pipe(plugins.autoprefixer())
       .pipe(appFilter)
-      .pipe(plugins.concat('style.css'))
+      .pipe(plugins.concat('app.css'))
       .pipe(plugins.streamify(plugins.rev()))
       .pipe(plugins.cssmin())
       .pipe(appFilter.restore())
