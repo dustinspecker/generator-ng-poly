@@ -93,9 +93,9 @@ var gulp = require('gulp')
     'polymer/layout.html'
   ]
 
-<% } %>  , bowerDir = 'bower_components/';
+<% } %>  , bowerDir = 'bower_components';
 function prependBowerDir(file) {
-  return bowerDir + file;
+  return bowerDir + '/' + file;
 }
 
 gulp.task('watch', function () {
@@ -235,8 +235,8 @@ gulp.task('jshint', function () {
 <% } %>gulp.task('fonts', ['clean'], function () {
   return gulp.src([
     appFontFiles<% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>,
-    bowerDir + 'bootstrap/dist/fonts/**'<% } %><% if (bower.indexOf('fontawesome') > -1) { %>,
-    bowerDir + 'font-awesome/fonts/**'<% } %>
+    bowerDir + '/bootstrap/dist/fonts/**'<% } %><% if (bower.indexOf('fontawesome') > -1) { %>,
+    bowerDir + '/font-awesome/fonts/**'<% } %>
   ])
     .pipe(gulp.dest(buildFonts));
 });
@@ -272,35 +272,31 @@ gulp.task('scripts', ['clean', 'jshint', 'coffeelint'], function () {
 
   if (isProd) {
     appFilter = plugins.filter(function (file) {
-      var <% if (polymer) { %>platformRegex = new RegExp('platform.js').test(file.path)
-        , <% } %>filter;
+      <% if (polymer) { %>var platformRegex = new RegExp('platform.js').test(file.path);
 
-      if (/[.]tpl[.]html$/.test(file.path)) {
+      if (platformRegex) {
         return false;
       }
 
-      <% if (polymer) { %>if (platformRegex) {
+      <% } %>if (/[.]tpl[.]html$/.test(file.path)) {
         return false;
       }
 
-      <% } %>filter = new RegExp('bower_components').test(file.path);
-      return !filter;
+      return !file.path.match(bowerDir);
     });
 
     bowerFilter = plugins.filter(function (file) {
-      var <% if (polymer) { %>platformRegex = new RegExp('platform.js').test(file.path)
-        , <% } %>filter;
+      <% if (polymer) { %>var  platformRegex = new RegExp('platform.js').test(file.path);
 
-      if (/[.]tpl[.]html$/.test(file.path)) {
+      if (platformRegex) {
         return false;
       }
 
-      <% if (polymer) { %>if (platformRegex) {
+      <% } %>if (/[.]tpl[.]html$/.test(file.path)) {
         return false;
       }
 
-      <% } %>filter = new RegExp('bower_components').test(file.path);
-      return filter;
+      return file.path.match(bowerDir);
     });
 
     templateFilter = plugins.filter(function (file) {
@@ -346,32 +342,29 @@ gulp.task('scripts', ['clean', 'jshint', 'coffeelint'], function () {
 });
 
 gulp.task('style', ['clean'], function () {
-  var stream = streamqueue({objectMode: true});
+  var stream = streamqueue({objectMode: true})
+    , appFilter, bowerFilter;
 
-  <% if (framework !== 'none') { %>// load frameworks first, so that when concating custom CSS overrides frameworks<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>
+<% if (framework !== 'none') { %>  // load frameworks first, so that when concating custom CSS overrides frameworks<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>
   stream.queue(gulp.src([
-    bowerDir + 'bootstrap/less/bootstrap.less'
+    bowerDir + '/bootstrap/less/bootstrap.less'
   ])
     .pipe(plugins.less({
       paths: [
-        bowerDir + 'bootstrap/less/**/*.less'
+        bowerDir + '/bootstrap/less/**/*.less'
       ]
-    })))
-  ;
+    })));
 
-  <% } %><% if (framework === 'foundation') { %>
-  stream.queue(gulp.src([
-    bowerDir + 'foundation/scss/**/*.scss'
+<% } %><% if (framework === 'foundation') { %>  stream.queue(gulp.src([
+    bowerDir + '/foundation/scss/**/*.scss'
   ])
-    .pipe(plugins.sass()))
-  ;
+    .pipe(plugins.sass()));
 
-  <% } %><% if (bower.indexOf('fontawesome') > -1) { %>
-  stream.queue(gulp.src([
-    bowerDir + 'font-awesome/css/font-awesome.css'
+<% } %><% if (bower.indexOf('fontawesome') > -1) { %>  stream.queue(gulp.src([
+    bowerDir + '/font-awesome/css/font-awesome.css'
   ]));
 
-  <% } %>// css
+<% } %>  // css
   stream.queue(gulp.src([
     appStyleFiles,
     '!**/*.{less,scss,styl}'<% if (polymer) { %>,
@@ -384,8 +377,7 @@ gulp.task('style', ['clean'], function () {
     '!**/*.{css,scss,styl}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
-    .pipe(plugins.less()))
-  ;
+    .pipe(plugins.less()));
 
   // sass
   stream.queue(gulp.src([
@@ -393,8 +385,7 @@ gulp.task('style', ['clean'], function () {
     '!**/*.{css,less,styl}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
-    .pipe(plugins.sass()))
-  ;
+    .pipe(plugins.sass()));
 
   // stylus
   stream.queue(gulp.src([
@@ -402,15 +393,33 @@ gulp.task('style', ['clean'], function () {
     '!**/*.{css,less,scss}'<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>
   ])
-    .pipe(plugins.stylus()))
-  ;
+    .pipe(plugins.stylus()));
 
-  return stream.done()
-    .pipe(plugins.autoprefixer())
-    .pipe(plugins.if(isProd, plugins.concat('style.css')))
-    .pipe(plugins.if(isProd, plugins.cssmin()))
-    .pipe(gulp.dest(buildCss))
-  ;
+  if (isProd) {
+    appFilter = plugins.filter(function (file) {
+      return !file.path.match(bowerDir);
+    });
+
+    bowerFilter = plugins.filter(function (file) {
+      return file.path.match(bowerDir);
+    });
+
+    return stream.done()
+      .pipe(plugins.autoprefixer())
+      .pipe(appFilter)
+      .pipe(plugins.concat('style.css'))
+      .pipe(plugins.cssmin())
+      .pipe(appFilter.restore())
+      .pipe(bowerFilter)
+      .pipe(plugins.concat('vendor.css'))
+      .pipe(plugins.cssmin())
+      .pipe(bowerFilter.restore())
+      .pipe(gulp.dest(buildCss));
+  } else {
+    return stream.done()
+      .pipe(plugins.autoprefixer())
+      .pipe(gulp.dest(buildCss));
+  }
 });
 
 gulp.task('markup', ['clean'], function () {
@@ -449,6 +458,7 @@ gulp.task('markup', ['clean'], function () {
 gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts', 'style'], function () {
   return gulp.src(build + 'index.html')
     .pipe(plugins.inject(gulp.src([
+      buildCss + 'vendor.css',
       <% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>buildCss + 'bootstrap.css',
       <% } %><% if (framework === 'foundation') { %>buildCss + 'normalize.css',
       buildCss + 'foundation.css',
@@ -508,9 +518,9 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
 <% } %>gulp.task('karmaInject', function () {
   var stream = streamqueue({objectMode: true});
   stream.queue(gulp.src([
-    <% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>bowerDir + 'lodash/dist/lodash.js',
-    <% } %>bowerDir + 'angular/angular.js',
-    bowerDir + 'angular-mocks/angular-mocks.js',
+    <% if (bower.indexOf('restangular') > -1 || bower.indexOf('lodash') > -1) { %>bowerDir + '/lodash/dist/lodash.js',
+    <% } %>bowerDir + '/angular/angular.js',
+    bowerDir + '/angular-mocks/angular-mocks.js',
     appBase + '**/*-directive.tpl.{haml,html,jade}'
   ]));
 
@@ -518,18 +528,18 @@ gulp.task('inject', [<% if (polymer) { %>'components', <% } %>'markup', 'scripts
     appScriptFiles<% if (polymer) { %>,
     '!' + componentsBase + '**/*'<% } %>,
     '!**/*_test.*'<% if (bower.indexOf('animate') > -1) { %>,
-    bowerDir + 'angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
-    bowerDir + 'angular-cookies/angular-cookies.js'<% } %><% if (framework === 'uibootstrap') { %>,
-    bowerDir + 'angular-bootstrap/ui-bootstrap.tpls.js'<% } %><% if (framework === 'foundation') { %>,
-    bowerDir + 'angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
-    bowerDir + 'angular-resource/angular-resource.js'<% } %><% if (ngRoute) { %>,
-    bowerDir + 'angular-route/angular-route.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
-    bowerDir + 'angular-sanitize/angular-sanitize.js'<% } %><% if (framework === 'angularstrap') { %>,
-    bowerDir + 'angular-strap/dist/angular-strap.js',
-    bowerDir + 'angular-strap/dist/angular-strap.tpl.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
-    bowerDir + 'angular-touch/angular-touch.js'<% } %><% if (!ngRoute) { %>,
-    bowerDir + 'angular-ui-router/release/angular-ui-router.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
-    bowerDir + 'restangular/dist/restangular.js'<% } %>
+    bowerDir + '/angular-animate/angular-animate.js'<% } %><% if (bower.indexOf('cookies') > -1) { %>,
+    bowerDir + '/angular-cookies/angular-cookies.js'<% } %><% if (framework === 'uibootstrap') { %>,
+    bowerDir + '/angular-bootstrap/ui-bootstrap.tpls.js'<% } %><% if (framework === 'foundation') { %>,
+    bowerDir + '/angular-foundation/mm-foundation-tpls.js'<% } %><% if (bower.indexOf('resource') > -1) { %>,
+    bowerDir + '/angular-resource/angular-resource.js'<% } %><% if (ngRoute) { %>,
+    bowerDir + '/angular-route/angular-route.js'<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
+    bowerDir + '/angular-sanitize/angular-sanitize.js'<% } %><% if (framework === 'angularstrap') { %>,
+    bowerDir + '/angular-strap/dist/angular-strap.js',
+    bowerDir + '/angular-strap/dist/angular-strap.tpl.js'<% } %><% if (bower.indexOf('touch') > -1) { %>,
+    bowerDir + '/angular-touch/angular-touch.js'<% } %><% if (!ngRoute) { %>,
+    bowerDir + '/angular-ui-router/release/angular-ui-router.js'<% } %><% if (bower.indexOf('restangular') > -1) { %>,
+    bowerDir + '/restangular/dist/restangular.js'<% } %>
   ]).pipe(plugins.angularFilesort()));
 
   stream.queue(gulp.src([
