@@ -11,9 +11,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
   this.prompt([{
     name: 'module',
     message: 'Which module is this for?',
-    default: function () {
-      return this.config.get('lastUsedModule');
-    }.bind(this),
+    default: this.config.get('lastUsedModule'),
     when: function () {
       return !(this.options && this.options.module);
     }.bind(this),
@@ -33,7 +31,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     name: 'templateUrl',
     message: 'What\'s the templateURL for this route?',
     default: function (answers) {
-      var module = answers.module || this.options.module;
+      var module = answers.module;
       return utils.normalizeModulePath(module) + '/' + this.name + '.tpl.html';
     }.bind(this),
     when: function () {
