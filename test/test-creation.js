@@ -14,6 +14,10 @@ describe('ng-poly generator', function () {
     var expected = [
       'e2e/home/home.po.js',
       'e2e/home/home_test.js',
+      'gulp/analyze.js',
+      'gulp/build.js',
+      'gulp/test.js',
+      'gulp/watch.js',
       'app/home/home.js',
       'app/home/home.tpl.html',
       'app/home/home.less',

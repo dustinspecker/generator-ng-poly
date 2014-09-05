@@ -270,6 +270,12 @@ Generator.prototype.configuring = function configuring() {
   this.template('_package.json', 'package.json', this.context);
   this.copy('protractor.config.js', 'protractor.config.js');
   this.template('_readme.md', 'README.md');
+
+  this.mkdir('gulp');
+  this.copy('analyze.js', path.join('gulp', 'analyze.js'));
+  this.template('_build.js', path.join('gulp', 'build.js'), this.context);
+  this.copy('test.js', path.join('gulp', 'test.js'));
+  this.copy('watch.js', path.join('gulp', 'watch.js'));
 };
 
 Generator.prototype.writing = function writing() {

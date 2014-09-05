@@ -152,6 +152,11 @@ root/
 │   └── home/
 │       ├── home.po.{coffee,js}
 │       └── home_test.{coffee,js}
+├── gulp/
+│   ├── analyze.js
+│   ├── build.js
+│   ├── test.js
+│   └── watch.js
 ├── node_modules/
 ├── .editorconfig
 ├── .jscsrc

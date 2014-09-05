@@ -31,7 +31,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     name: 'templateUrl',
     message: 'What\'s the templateURL for this route?',
     default: function (answers) {
-      var module = answers.module;
+      var module = answers.module || this.options.module;
       return utils.normalizeModulePath(module) + '/' + this.name + '.tpl.html';
     }.bind(this),
     when: function () {
