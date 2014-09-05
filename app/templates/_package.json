@@ -1,5 +1,5 @@
 {
-  "name": "track",
+  "name": "<%= appName %>",
   "version": "0.0.0",
   "scripts": {
     "test": "gulp test"
