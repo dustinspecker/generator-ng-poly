@@ -6,6 +6,7 @@ var gulp = require('gulp')
       'gulp-*',
       'main-bower-files',
       'rimraf',
+      'streamqueue',
       'uglify-save-license',
       'wiredep',
       'yargs'
@@ -140,9 +141,20 @@ gulp.task('inject', ['markup', 'styles', 'scripts'], function () {
 // copy bower components into build directory
 gulp.task('bowerCopy', ['inject'], function () {
   var cssFilter = $.filter('**/*.css')
-    , jsFilter = $.filter('**/*.js');
+    , jsFilter = $.filter('**/*.js')
 
-  return gulp.src($.wiredep({exclude: [/polymer/, /platform/]}).css.concat($.wiredep({exclude: [/polymer/, /platform/]}).js))
+    , stream = $.streamqueue({objectMode: true})
+    , wiredep = $.wiredep(<% if (polymer) { %>{exclude: [/polymer/, /platform/]}<% } %>);
+
+  if (wiredep.js) {
+    stream.queue(gulp.src(wiredep.js));
+  }
+
+  if (wiredep.css) {
+    stream.queue(gulp.src(wiredep.css));
+  }
+
+  return stream.done()
     .pipe(cssFilter)
     .pipe($.if(isProd, $.concat('vendor.css')))
     .pipe($.if(isProd, $.cssmin()))
