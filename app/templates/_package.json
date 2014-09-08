@@ -21,7 +21,7 @@
     "gulp-htmlmin": "~0.2.0",
     "gulp-if": "^1.2.4",
     "gulp-imagemin": "^1.0.0",
-    "gulp-inject": "0.4.1",
+    "gulp-inject": "^1.0.2",
     "gulp-jade": "~0.7.0",
     "gulp-jscs": "^1.1.0",
     "gulp-jshint": "^1.8.4",
