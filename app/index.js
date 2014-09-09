@@ -261,6 +261,7 @@ Generator.prototype.configuring = function configuring() {
   };
 
   // copy over common files
+  this.copy('.bowerrc', '.bowerrc');
   this.copy('.editorconfig', '.editorconfig');
   this.copy('.jscsrc', '.jscsrc');
   this.copy('.jshintrc', '.jshintrc');

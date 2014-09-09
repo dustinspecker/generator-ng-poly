@@ -158,6 +158,7 @@ root/
 │   ├── test.js
 │   └── watch.js
 ├── node_modules/
+├── .bowerrc
 ├── .editorconfig
 ├── .jscsrc
 ├── .jshintrc
