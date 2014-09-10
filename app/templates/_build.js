@@ -28,7 +28,11 @@ var gulp = require('gulp')
   , buildImages = build + 'images/'
   , buildJs = build + 'js/'
 
-  , isProd = $.yargs.argv.stage === 'prod';
+  <% if (polymer) { %>, fs = require('fs')
+  , path = require('path')
+  , bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep
+
+<% } %>  , isProd = $.yargs.argv.stage === 'prod';
 
 // delete build directory
 gulp.task('clean', function (cb) {
@@ -144,7 +148,7 @@ gulp.task('bowerCopy', ['inject'], function () {
     , jsFilter = $.filter('**/*.js')
 
     , stream = $.streamqueue({objectMode: true})
-    , wiredep = $.wiredep(<% if (polymer) { %>{exclude: [/polymer/, /platform/]}<% } %>);
+    , wiredep = $.wiredep(<% if (polymer || framework === 'uibootstrap') { %>{exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /platform/<% } %><% if (polymer || framework === 'uibootstrap') { %>]}<% } %>);
 
   if (wiredep.js) {
     stream.queue(gulp.src(wiredep.js));
@@ -193,8 +197,8 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
       .pipe(gulp.dest(build));
   } else {
     return gulp.src(build + 'index.html')
-      .pipe($.wiredep.stream({<% if (polymer) { %>
-        exclude: [/polymer/, /platform/],<% } %>
+      .pipe($.wiredep.stream({<% if (polymer || framework === 'uibootstrap') { %>
+        exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /platform/<% } %><% if (polymer || framework === 'uibootstrap') { %>],<% } %>
         fileTypes: {
           html: {
             replace: {
@@ -222,7 +226,7 @@ gulp.task('components', ['bowerInject'], function () {
     , stylFilter = $.filter('**/*.styl');
 
   return gulp.src(appComponents)<% if (polymer) { %>
-    .pipe($.addSrc('bower_components/polymer/{layout,polymer}.{html,js}', {base: 'bower_components/'}))<% } %>
+    .pipe($.addSrc(bowerDir + 'polymer/{layout,polymer}.{html,js}', {base: bowerDir}))<% } %>
     .pipe(coffeeFilter)
     .pipe($.coffee())
     .pipe(coffeeFilter.restore())
