@@ -23,7 +23,8 @@ gulp.task('karmaInject', function () {
 
   // add bower javascript
   stream.queue(gulp.src($.wiredep({
-    devDependencies: true
+    devDependencies: true<% if (polymer) { %>,
+    exclude: [/polymer/, /platform/]<% } %>
   }).js));
 
   // add application javascript

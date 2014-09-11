@@ -11,12 +11,12 @@ var gulp = require('gulp')
   , appBase = 'app/'
   , unitTestFiles = '{app,test}/**/*_test.*'
 
-  , build = 'build/';
+  , buildConfig = require('../build.config.js');
 
 gulp.task('browserSync', function () {
   $.browserSync({
     server: {
-      baseDir: build
+      baseDir: buildConfig.buildDir
     }
   });
 });

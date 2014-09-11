@@ -266,6 +266,7 @@ Generator.prototype.configuring = function configuring() {
   this.copy('.jscsrc', '.jscsrc');
   this.copy('.jshintrc', '.jshintrc');
   this.template('_bower.json', 'bower.json', this.context);
+  this.template('_build.config.js', 'build.config.js', this.context);
   this.template('_gulpfile.js', 'Gulpfile.js', this.context);
   this.copy('karma.config.js', 'karma.config.js');
   this.template('_package.json', 'package.json', this.context);
@@ -275,7 +276,7 @@ Generator.prototype.configuring = function configuring() {
   this.mkdir('gulp');
   this.copy('analyze.js', path.join('gulp', 'analyze.js'));
   this.template('_build.js', path.join('gulp', 'build.js'), this.context);
-  this.copy('test.js', path.join('gulp', 'test.js'));
+  this.template('_test.js', path.join('gulp', 'test.js'), this.context);
   this.copy('watch.js', path.join('gulp', 'watch.js'));
 };
 

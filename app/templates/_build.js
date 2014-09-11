@@ -21,12 +21,7 @@ var gulp = require('gulp')
   , appScriptFiles = appBase + '**/*.{coffee,js}'
   , appStyleFiles = appBase + '**/*.{css,less,scss,styl}'
 
-  , build = 'build/'<% if (polymer) { %>
-  , buildComponents = build + 'components/'<% } %>
-  , buildCss = build + 'css/'
-  , buildFonts = build + 'fonts/'
-  , buildImages = build + 'images/'
-  , buildJs = build + 'js/'
+  , buildConfig = require('../build.config.js')
 
   <% if (polymer) { %>, fs = require('fs')
   , path = require('path')
@@ -36,7 +31,7 @@ var gulp = require('gulp')
 
 // delete build directory
 gulp.task('clean', function (cb) {
-  return $.rimraf(build, cb);
+  return $.rimraf(buildConfig.buildDir, cb);
 });
 
 // compile markup files and copy into build directory
@@ -54,7 +49,7 @@ gulp.task('markup', ['clean'], function () {
     .pipe(jadeFilter)
     .pipe($.jade())
     .pipe(jadeFilter.restore())
-    .pipe(gulp.dest(build));
+    .pipe(gulp.dest(buildConfig.buildDir));
 });
 
 // compile styles and copy into build directory
@@ -80,7 +75,7 @@ gulp.task('styles', ['clean'], function () {
     .pipe($.if(isProd, $.concat('app.css')))
     .pipe($.if(isProd, $.cssmin()))
     .pipe($.if(isProd, $.rev()))
-    .pipe(gulp.dest(buildCss));
+    .pipe(gulp.dest(buildConfig.buildCss));
 });
 
 // compile scripts and copy into build directory
@@ -91,7 +86,7 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
 
   return gulp.src([
     appScriptFiles,
-    build + '**/*.html'<% if (polymer) { %>,
+    buildConfig.buildDir + '**/*.html'<% if (polymer) { %>,
     '!' + appComponents<% } %>,
     '!**/*_test.*'
   ])
@@ -112,34 +107,34 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     .pipe($.if(isProd, $.rev()))
     .pipe(jsFilter.restore())<% if (polymer) { %>
     .pipe($.addSrc($.mainBowerFiles({filter: /platform/})))<% } %>
-    .pipe(gulp.dest(buildJs));
+    .pipe(gulp.dest(buildConfig.buildJs));
 });
 
 // inject custom CSS and JavaScript into index.html
 gulp.task('inject', ['markup', 'styles', 'scripts'], function () {
   var jsFilter = $.filter('**/*.js');
 
-  return gulp.src(build + 'index.html')
+  return gulp.src(buildConfig.buildDir + 'index.html')
     .pipe($.inject(gulp.src([
-      buildCss + '**/*',
-      buildJs + '**/*'<% if (polymer) { %>,
+      buildConfig.buildCss + '**/*',
+      buildConfig.buildJs + '**/*'<% if (polymer) { %>,
       '!**/platform.js'<% } %>
     ])
     .pipe(jsFilter)
     .pipe($.angularFilesort())
     .pipe(jsFilter.restore()), {
       addRootSlash: false,
-      ignorePath: build
+      ignorePath: buildConfig.buildDir
     }))<% if (polymer) { %>
     .pipe($.inject(gulp.src([
-      buildJs + 'platform.js'
+      buildConfig.buildJs + 'platform.js'
     ]), {
       starttag: '<!-- inject:head:{{ext}} -->',
       endtag: '<!-- endinject -->',
       addRootSlash: false,
-      ignorePath: build
+      ignorePath: buildConfig.buildDir
     }))<% } %>
-    .pipe(gulp.dest(build));
+    .pipe(gulp.dest(buildConfig.buildDir));
 });
 
 // copy bower components into build directory
@@ -163,7 +158,7 @@ gulp.task('bowerCopy', ['inject'], function () {
     .pipe($.if(isProd, $.concat('vendor.css')))
     .pipe($.if(isProd, $.cssmin()))
     .pipe($.if(isProd, $.rev()))
-    .pipe(gulp.dest(buildCss))
+    .pipe(gulp.dest(buildConfig.buildCss))
     .pipe(cssFilter.restore())
     .pipe(jsFilter)
     .pipe($.if(isProd, $.concat('vendor.js')))
@@ -171,32 +166,32 @@ gulp.task('bowerCopy', ['inject'], function () {
       preserveComments: $.uglifySaveLicense
     })))
     .pipe($.if(isProd, $.rev()))
-    .pipe(gulp.dest(buildJs))
+    .pipe(gulp.dest(buildConfig.buildJs))
     .pipe(jsFilter.restore());
 });
 
 // inject bower components into index.html
 gulp.task('bowerInject', ['bowerCopy'], function () {
   if (isProd) {
-    return gulp.src(build + 'index.html')
+    return gulp.src(buildConfig.buildDir + 'index.html')
       .pipe($.inject(gulp.src([
-        buildCss + 'vendor*.css',
-        buildJs + 'vendor*.js'
+        buildConfig.buildCss + 'vendor*.css',
+        buildConfig.buildJs + 'vendor*.js'
       ], {
         read: false
       }), {
         starttag: '<!-- bower:{{ext}} -->',
         endtag: '<!-- endbower -->',
         addRootSlash: false,
-        ignorePath: build
+        ignorePath: buildConfig.buildDir
       }))
       .pipe($.htmlmin({
         collapseWhitespace: true,
         removeComments: true
       }))
-      .pipe(gulp.dest(build));
+      .pipe(gulp.dest(buildConfig.buildDir));
   } else {
-    return gulp.src(build + 'index.html')
+    return gulp.src(buildConfig.buildDir + 'index.html')
       .pipe($.wiredep.stream({<% if (polymer || framework === 'uibootstrap') { %>
         exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /platform/<% } %><% if (polymer || framework === 'uibootstrap') { %>],<% } %>
         fileTypes: {
@@ -212,7 +207,7 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
           }
         }
       }))
-      .pipe(gulp.dest('build/'));
+      .pipe(gulp.dest(buildConfig.buildDir));
   }
 });
 
@@ -245,7 +240,7 @@ gulp.task('components', ['bowerInject'], function () {
     .pipe(stylFilter)
     .pipe($.stylus())
     .pipe(stylFilter.restore())
-    .pipe(gulp.dest(buildComponents));
+    .pipe(gulp.dest(buildConfig.buildComponents));
 });
 
 <% } %>// copy fonts from Bower and custom fonts into build directory
@@ -254,7 +249,7 @@ gulp.task('fonts', ['clean'], function () {
   return gulp.src(
       $.mainBowerFiles().concat([appFontFiles]))
     .pipe(fontFilter)
-    .pipe(gulp.dest(buildFonts))
+    .pipe(gulp.dest(buildConfig.buildFonts))
     .pipe(fontFilter.restore());
 });
 
@@ -262,7 +257,7 @@ gulp.task('fonts', ['clean'], function () {
 gulp.task('images', ['clean'], function () {
   return gulp.src(appImages)
     .pipe($.imagemin())
-    .pipe(gulp.dest(buildImages));
+    .pipe(gulp.dest(buildConfig.buildImages));
 });
 
 gulp.task('build', [<% if (polymer) { %>'components'<% } else { %>'bowerInject'<% } %>, 'images', 'fonts']);

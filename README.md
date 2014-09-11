@@ -164,12 +164,12 @@ root/
 ├── .jshintrc
 ├── .yo-rc.json
 ├── bower.json
+├── build.config.js
 ├── Gulpfile.js
 ├── karma.config.js
 ├── package.json
 ├── protractor.config.js
 └── README.md
-
 ```
 
 ### Constant
