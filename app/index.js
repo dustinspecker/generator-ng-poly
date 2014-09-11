@@ -28,6 +28,7 @@ Generator.prototype.prompting = function prompting() {
     type: 'list',
     name: 'markup',
     message: 'What is the preferred markup language?',
+    default: 'jade',
     choices: [
       {
         name: 'HAML',
@@ -39,8 +40,7 @@ Generator.prototype.prompting = function prompting() {
       },
       {
         name: 'Jade',
-        value: 'jade',
-        checked: true
+        value: 'jade'
       }
     ]
   },
@@ -48,6 +48,7 @@ Generator.prototype.prompting = function prompting() {
     type: 'list',
     name: 'appScript',
     message: 'What is the preferred application scripting language?',
+    default: 'js',
     choices: [
       {
         name: 'CoffeeScript',
@@ -55,8 +56,7 @@ Generator.prototype.prompting = function prompting() {
       },
       {
         name: 'JavaScript',
-        value: 'js',
-        checked: true
+        value: 'js'
       }
     ]
   },
@@ -82,6 +82,7 @@ Generator.prototype.prompting = function prompting() {
     type: 'list',
     name: 'testScript',
     message: 'What is the preferred test scripting language?',
+    default: 'js',
     choices: [
       {
         name: 'CoffeeScript',
@@ -89,8 +90,7 @@ Generator.prototype.prompting = function prompting() {
       },
       {
         name: 'JavaScript',
-        value: 'js',
-        checked: true
+        value: 'js'
       }
     ]
   },
@@ -98,11 +98,11 @@ Generator.prototype.prompting = function prompting() {
     type: 'list',
     name: 'testDir',
     message: 'Where should tests be saved?',
+    default: 'app',
     choices: [
       {
         name: 'app/',
-        value: 'app',
-        checked: true
+        value: 'app'
       },
       {
         name: 'test/',
@@ -114,6 +114,7 @@ Generator.prototype.prompting = function prompting() {
     type: 'list',
     name: 'style',
     message: 'What is the preferred style language?',
+    default: 'less',
     choices: [
       {
         name: 'CSS',
@@ -121,8 +122,7 @@ Generator.prototype.prompting = function prompting() {
       },
       {
         name: 'LESS',
-        value: 'less',
-        checked: true
+        value: 'less'
       },
       {
         name: 'SCSS',
