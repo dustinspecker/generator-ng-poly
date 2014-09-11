@@ -24,6 +24,10 @@ Yeoman will then ask for an app name and language preferences.
 
 Run `gulp` to build and start the development environment.
 
+## User Groups
+
+Please feel free to ask any questions on our [GitHub Issues](https://github.com/dustinspecker/generator-ng-poly/issues) or [Google Group](https://groups.google.com/forum/#!forum/generator-ng-poly)
+
 ## Generators
 
 Available generators:
