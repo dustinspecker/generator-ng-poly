@@ -88,7 +88,8 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     appScriptFiles,
     buildConfig.buildDir + '**/*.html'<% if (polymer) { %>,
     '!' + appComponents<% } %>,
-    '!**/*_test.*'
+    '!**/*_test.*',
+    '!**/index.html'
   ])
     .pipe(coffeeFilter)
     .pipe($.coffee())
@@ -106,7 +107,8 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     .pipe($.if(isProd, $.uglify()))
     .pipe($.if(isProd, $.rev()))<% if (polymer) { %>
     .pipe($.addSrc($.mainBowerFiles({filter: /platform/})))<% } %>
-    .pipe(gulp.dest(buildConfig.buildJs));
+    .pipe(gulp.dest(buildConfig.buildJs))
+    .pipe(jsFilter.restore());
 });
 
 // inject custom CSS and JavaScript into index.html
