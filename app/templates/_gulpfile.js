@@ -4,7 +4,8 @@ var gulp = require('gulp');
 
 require('require-dir')('./gulp');
 
-gulp.task('dev', ['build', 'browserSync'], function () {
+gulp.task('dev', ['build'], function () {
+  gulp.start('browserSync');
   gulp.start('watch');
 });
 

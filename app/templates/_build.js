@@ -104,8 +104,7 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     .pipe($.if(isProd, $.concat('app.js')))
     .pipe($.if(isProd, $.ngAnnotate()))
     .pipe($.if(isProd, $.uglify()))
-    .pipe($.if(isProd, $.rev()))
-    .pipe(jsFilter.restore())<% if (polymer) { %>
+    .pipe($.if(isProd, $.rev()))<% if (polymer) { %>
     .pipe($.addSrc($.mainBowerFiles({filter: /platform/})))<% } %>
     .pipe(gulp.dest(buildConfig.buildJs));
 });
