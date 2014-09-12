@@ -1,27 +1,19 @@
 /*global describe, before, it */
 'use strict';
-var join = require('path').join
-  , assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test;
+var assert = require('yeoman-generator').assert
+  , helpers = require('yeoman-generator').test
+  , path = require('path');
 
 describe('module generator', function () {
 
   // generate default app
   before(function (done) {
-    helpers.testDirectory(join(__dirname, 'module-temp'), function (err) {
-      if (err) {
-        done(err);
-      }
-
-      this.app = helpers.createGenerator('ng-poly:app', [
-        '../../app',
-        '../../module',
-        '../../route',
-        '../../controller',
-        '../../view'
-      ]);
-
-      helpers.mockPrompt(this.app, {
+    helpers.run(path.join(__dirname, '../app'))
+      .inDir(path.join(__dirname, 'module-temp'))
+      .withOptions({
+        'skip-install': true
+      })
+      .withPrompt({
         appName: 'module-temp',
         markup: 'html',
         appScript: 'js',
@@ -32,57 +24,53 @@ describe('module generator', function () {
         testDir: 'app',
         style: 'less',
         bower: []
-      });
-
-      this.app.options['skip-install'] = true;
-      this.app.run([], function () {
-        done();
-      });
-
-    }.bind(this));
+      })
+      .withGenerators([
+        path.join(__dirname, '../module'),
+        path.join(__dirname, '../route'),
+        path.join(__dirname, '../controller'),
+        path.join(__dirname, '../view')
+      ])
+      .on('end', done);
   });
 
   describe('adding a new empty module', function () {
     before(function (done) {
-      this.app = helpers.createGenerator('ng-poly:module', [
-        '../../module',
-        '../../route',
-        '../../controller',
-        '../../view'
-      ], 'testGroup');
-      this.app.options.empty = true;
-      this.app.run([], function () {
-        done();
-      });
+      helpers.run(path.join(__dirname, '../module'))
+        .withArguments(['testGroup'])
+        .withOptions({
+          empty: true
+        })
+        .withGenerators([
+          path.join(__dirname, '../route'),
+          path.join(__dirname, '../controller'),
+          path.join(__dirname, '../view')
+        ])
+        .on('end', done);
     });
 
-    it('should not create a controller and view', function (done) {
-      this.app.run([], function () {
-        assert.noFile([
-          'app/test-group/test-group-controller.js',
-          'app/test-group/test-group-controller_test.js',
-          'app/test-group/test-group.tpl.html',
-          'e2e/test-group/test-group.po.js',
-          'e2e/test-group/test-group_test.js'
-        ]);
-        done();
-      });
+    it('should not create a controller and view', function () {
+      assert.noFile([
+        'app/test-group/test-group-controller.js',
+        'app/test-group/test-group-controller_test.js',
+        'app/test-group/test-group.tpl.html',
+        'e2e/test-group/test-group.po.js',
+        'e2e/test-group/test-group_test.js'
+      ]);
     });
   });
 
   // trailing slash to test trailing slash removal
   describe('adding a new module', function () {
     before(function (done) {
-      this.app = helpers.createGenerator('ng-poly:module', [
-        '../../module',
-        '../../route',
-        '../../controller',
-        '../../view'
-      ], 'test/');
-
-      this.app.run([], function () {
-        done();
-      });
+      helpers.run(path.join(__dirname, '../module'))
+        .withArguments(['test/'])
+        .withGenerators([
+          path.join(__dirname, '../route'),
+          path.join(__dirname, '../controller'),
+          path.join(__dirname, '../view')
+        ])
+        .on('end', done);
     });
 
     it('should add comma to ui.router in app/app.js', function () {
@@ -96,31 +84,29 @@ describe('module generator', function () {
 
   describe('adding a deep level module', function () {
     before(function (done) {
-      this.app = helpers.createGenerator('ng-poly:module', [
-        '../../module',
-        '../../route',
-        '../../controller',
-        '../../view'
-      ], 'home/door');
-
-      this.app.options['app-script'] = 'coffee';
-      this.app.run([], function () {
-        done();
-      });
+      helpers.run(path.join(__dirname, '../module'))
+        .withArguments(['home/door'])
+        .withOptions({
+          'app-script': 'coffee'
+        })
+        .withGenerators([
+          path.join(__dirname, '../route'),
+          path.join(__dirname, '../controller'),
+          path.join(__dirname, '../view')
+        ])
+        .on('end', done);
     });
 
     describe('adding a deeper level module', function () {
       before(function (done) {
-        this.app = helpers.createGenerator('ng-poly:module', [
-          '../../module',
-          '../../route',
-          '../../controller',
-          '../../view'
-        ], 'home/door/handle');
-
-        this.app.run([], function () {
-          done();
-        });
+        helpers.run(path.join(__dirname, '../module'))
+          .withArguments(['home/door/handle'])
+          .withGenerators([
+            path.join(__dirname, '../route'),
+            path.join(__dirname, '../controller'),
+            path.join(__dirname, '../view')
+          ])
+          .on('end', done);
       });
 
       it('should add door.handle to app/home/door.coffee', function () {
