@@ -11,6 +11,7 @@ var gulp = require('gulp')
     ]
   })
 
+  , appDirectiveTemplateFiles = 'app/**/*directive.tpl.{haml,html,jade}'
   , appScriptFiles = 'app/**/*.{coffee,js}'
 
   , unitTests = '{app,test}/**/*_test.*'
@@ -26,6 +27,9 @@ gulp.task('karmaInject', function () {
     devDependencies: true<% if (polymer) { %>,
     exclude: [/polymer/, /platform/]<% } %>
   }).js));
+
+  // add application templates
+  stream.queue(gulp.src([appDirectiveTemplateFiles]));
 
   // add application javascript
   stream.queue(gulp.src([
