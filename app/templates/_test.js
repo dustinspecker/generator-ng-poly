@@ -15,7 +15,7 @@ var gulp = require('gulp')
 
   , unitTests = '{app,test}/**/*_test.*'
 
-  , e2eTestFiles = 'e2e/**/*';
+  , e2eTestFiles = 'e2e/**/*_test.*';
 
 // inject scripts in karma.config.js
 gulp.task('karmaInject', function () {
