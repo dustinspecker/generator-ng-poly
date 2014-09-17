@@ -199,10 +199,12 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
           html: {
             replace: {
               css: function (filePath) {
-                return '<link rel="stylesheet" href="' + 'css/' + filePath.split('/').pop() + '">';
+                return '<link rel="stylesheet" href="' + buildConfig.buildCss.replace(buildConfig.buildDir, '') +
+                  filePath.split('/').pop() + '">';
               },
               js: function (filePath) {
-                return '<script src="' + 'js/' + filePath.split('/').pop() + '"></script>';
+                return '<script src="' + buildConfig.buildJs.replace(buildConfig.buildDir, '') +
+                  filePath.split('/').pop() + '"></script>';
               }
             }
           }
