@@ -257,7 +257,7 @@ gulp.task('fonts', ['clean'], function () {
 // copy and optimize images into build directory
 gulp.task('images', ['clean'], function () {
   return gulp.src(appImages)
-    .pipe($.imagemin())
+    .pipe($.if(isProd, $.imagemin()))
     .pipe(gulp.dest(buildConfig.buildImages));
 });
 
