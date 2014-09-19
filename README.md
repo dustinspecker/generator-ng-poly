@@ -728,11 +728,14 @@ Produces `e2e/your-place/your-place_test.js`:
 /*global describe, beforeEach, it, browser, expect */
 'use strict';
 
+var buildConfigFile = require('findup-sync')('build.config.js')
+  , buildConfig = require(buildConfigFile);
+
 describe('Your place page', function () {
   var yourPlacePage = require('./your-place.po');
 
   beforeEach(function () {
-    browser.get('http://localhost:8080/#/yourPlace');
+        browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#/yourPlace');
   });
 
   it('should say YourPlaceCtrl', function() {

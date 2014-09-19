@@ -23,7 +23,7 @@ var gulp = require('gulp')
 
   , buildConfig = require('../build.config.js')
 
-  <% if (polymer) { %>, fs = require('fs')
+<% if (polymer) { %>  , fs = require('fs')
   , path = require('path')
   , bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep
 

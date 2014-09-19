@@ -8,6 +8,7 @@
   "devDependencies": {
     "browser-sync": "^1.3.3",
     "coffee-script": "^1.7.1",
+    "findup-sync": "^0.1.3",
     "gulp": "^3.8.7"<% if (polymer) { %>,
     "gulp-add-src": "^0.1.1"<% } %>,
     "gulp-angular-filesort": "git://github.com/dustinspecker/gulp-angular-filesort.git#coffee-script",

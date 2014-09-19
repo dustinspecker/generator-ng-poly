@@ -15,6 +15,9 @@ var gulp = require('gulp')
 
 gulp.task('browserSync', function () {
   $.browserSync({
+    host: buildConfig.host,
+    open: 'external',
+    port: buildConfig.port,
     server: {
       baseDir: buildConfig.buildDir
     }

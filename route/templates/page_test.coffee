@@ -1,11 +1,14 @@
 ###global describe, beforeEach, it, browser, expect ###
 'use strict'
 
+buildConfigFile = require('findup-sync') 'build.config.js'
+buildConfig = require buildConfigFile
+
 describe '<%= humanName %> page', ->
   <%= lowerCamel %>Page = require './<%= hyphenName %>.po'
 
   beforeEach ->
-    browser.get 'http://localhost:3000/#/<%= lowerCamel %>'
+    browser.driver.get buildConfig.host + ':' + buildConfig.port + '/#/<% lowerCamel %>'
 
   it 'should say <%= ctrlName %>', ->
     expect(<%= lowerCamel %>Page.heading.getText()).toEqual '<%= lowerCamel %>'

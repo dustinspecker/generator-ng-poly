@@ -1,11 +1,14 @@
 /*global describe, beforeEach, it, browser, expect */
 'use strict';
 
+var buildConfigFile = require('findup-sync')('build.config.js')
+  , buildConfig = require(buildConfigFile);
+
 describe('<%= humanName %> page', function () {
   var <%= lowerCamel %>Page = require('./<%= hyphenName %>.po');
 
   beforeEach(function () {
-    browser.get('http://localhost:3000/#/<%= lowerCamel %>');
+    browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#/<% lowerCamel %>');
   });
 
   it('should say <%= ctrlName %>', function () {
