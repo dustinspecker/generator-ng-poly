@@ -735,7 +735,7 @@ describe('Your place page', function () {
   var yourPlacePage = require('./your-place.po');
 
   beforeEach(function () {
-        browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#/yourPlace');
+    browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#/yourPlace');
   });
 
   it('should say YourPlaceCtrl', function() {
