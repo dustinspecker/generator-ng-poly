@@ -2,87 +2,9 @@
 'use strict';
 var join = require('path').join
   , assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test
-  , sinon = require('sinon');
+  , helpers = require('yeoman-generator').test;
 
 describe('ng-poly generator', function () {
-
-  // separate from other tests because it creates a child directory
-  // which messes up generator dependencies
-  describe('appName different than current directory', function () {
-    // expected files from ng-poly:app
-    var expected = [
-      'e2e/home/home.po.js',
-      'e2e/home/home_test.js',
-      'gulp/analyze.js',
-      'gulp/build.js',
-      'gulp/test.js',
-      'gulp/watch.js',
-      'app/home/home.js',
-      'app/home/home.tpl.html',
-      'app/home/home.less',
-      'app/home/home-controller.js',
-      'app/home/home-controller_test.js',
-      'app/app.js',
-      'app/index.html',
-      '.bowerrc',
-      '.editorconfig',
-      '.jscsrc',
-      '.jshintrc',
-      '.yo-rc.json',
-      'bower.json',
-      'Gulpfile.js',
-      'karma.config.js',
-      'package.json',
-      'protractor.config.js',
-      'README.md'
-    ];
-
-    before(function (done) {
-      helpers.testDirectory(join(__dirname, 'temp'), function (err) {
-        if (err) {
-          done(err);
-        }
-
-        this.app = helpers.createGenerator('ng-poly:app', [
-          '../../app',
-          '../../module',
-          '../../route',
-          '../../controller',
-          '../../view'
-        ]);
-
-        helpers.mockPrompt(this.app, {
-          appName: 'testName',
-          markup: 'html',
-          appScript: 'js',
-          controllerAs: false,
-          passFunc: true,
-          namedFunc: true,
-          testScript: 'js',
-          testDir: 'app',
-          style: 'less',
-          bower: []
-        });
-
-        this.app.options['skip-install'] = false; // done to cover installDependencies() branch
-        this.app.installDependencies = sinon.spy(); // enables counting the number of function calls
-        this.app.run([], function () {
-          done();
-        });
-
-      }.bind(this));
-    });
-
-    it('should create expected files', function () {
-      assert.file(expected);
-    });
-
-    it('should call installDependencies once', function () {
-      assert(this.app.installDependencies.calledOnce);
-    });
-  });
-
   // prompts to provide to ng-poly:app
   var prompts = [
     {

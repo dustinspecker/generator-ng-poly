@@ -2,19 +2,23 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
-  , path = require('path');
+  , path = require('path')
+  , sinon = require('sinon');
 
 describe('module generator', function () {
+  var gen; // used to test if methods have been called
 
   // generate default app
+  // appName different than directory for code coverage
+  // stub installDependencies for code coverage
   before(function (done) {
     helpers.run(path.join(__dirname, '../app'))
       .inDir(path.join(__dirname, 'module-temp'))
       .withOptions({
-        'skip-install': true
+        'skip-install': false
       })
       .withPrompt({
-        appName: 'module-temp',
+        appName: 'module-temp-test',
         markup: 'html',
         appScript: 'js',
         controllerAs: false,
@@ -31,7 +35,15 @@ describe('module generator', function () {
         path.join(__dirname, '../controller'),
         path.join(__dirname, '../view')
       ])
+      .on('ready', function (generator) {
+        gen = generator;
+        generator.installDependencies = sinon.spy();
+      })
       .on('end', done);
+  });
+
+  it('should call installDependencies once', function () {
+    assert(gen.installDependencies.calledOnce);
   });
 
   describe('adding a new empty module', function () {
