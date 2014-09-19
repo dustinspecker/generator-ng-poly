@@ -108,7 +108,7 @@ describe('Utils', function () {
           }
         }
         // proxy utils
-        , utilsProxy = proxyquire('../utils', {path: pathStub})
+        , utilsProxy = proxyquire('../utils/module', {path: pathStub})
 
         // mock response
         , expectRequire = a.expectRequire;
