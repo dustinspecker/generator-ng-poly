@@ -25,6 +25,7 @@ Generator.prototype.writing = function writing() {
 
     // save modifications
     , newRouteConfig = {
+      appScript: config.appScript,
       controllerAs: config.controllerAs,
       passFunc: config.passFunc,
       ngRoute: config.ngRoute
@@ -38,15 +39,12 @@ Generator.prototype.writing = function writing() {
   // load JavaScript app if CoffeeScript app doesn't exist
   if (fs.existsSync(filePath)) {
     file = fs.readFileSync(filePath, 'utf8');
-
-    fs.writeFileSync(filePath, utils.addRouteCoffee(file, newState, newRouteConfig));
   } else {
     filePath = path.join(this.config.path, '../app/', config.modulePath, utils.hyphenName(config.moduleName) + '.js');
-
     file = fs.readFileSync(filePath, 'utf8');
-
-    fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
   }
+
+  fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
 
   // e2e testing
   // create page object model

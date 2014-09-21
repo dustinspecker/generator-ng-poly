@@ -22,6 +22,7 @@ describe('Route Utils', function () {
 
       beforeEach(function () {
         config = {
+          appScript: 'coffee',
           controllerAs: false,
           passFunc: false,
           ngRoute: false
@@ -31,17 +32,17 @@ describe('Route Utils', function () {
 
       it('should add new state without controllerAs', function () {
         assert(/.state \'test\',[\n\r]*        url: \'\/test\'[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r]*        controller: \'TestCtrl\'[\n\r]/
-          .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+          .test(routeUtils.addRoute(fileContents, newState, config)));
       });
 
       it('should add new state with controllerAs', function () {
         config.controllerAs = true;
         assert(/.state \'test\',[\n\r]*        url: \'\/test\'[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r]*        controller: \'TestCtrl as test\'[\n\r]/
-          .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+          .test(routeUtils.addRoute(fileContents, newState, config)));
       });
 
       it('should only have 1 $stateProvider param', function () {
-        assert(routeUtils.addRouteCoffee(fileContents, newState, config).match(/\(.*\$stateProvider.*\)/).length === 1);
+        assert(routeUtils.addRoute(fileContents, newState, config).match(/\(.*\$stateProvider.*\)/).length === 1);
       });
     });
 
@@ -52,6 +53,7 @@ describe('Route Utils', function () {
 
         beforeEach(function () {
           config = {
+            appScript: 'coffee',
             controllerAs: false,
             passFunc: true,
             ngRoute: false
@@ -61,17 +63,17 @@ describe('Route Utils', function () {
 
         it('should add ui.router as dependency', function () {
           assert(/.module \'[^$]*\', \[[^$]*\'ui.router\'[^$]*\]/
-            .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 
         it('should add $stateProvider as param', function () {
           assert(/config \(\$stateProvider\) ->/
-            .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 
         it('should add state', function () {
           assert(/\$stateProvider[\n\r]*      .state \'test\',[\n\r]*        url: \'\/test\'[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r]*        controller: \'TestCtrl\'[\n\r]/
-            .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
       });
     });
@@ -81,6 +83,7 @@ describe('Route Utils', function () {
 
       beforeEach(function () {
         config = {
+          appScript: 'coffee',
           controllerAs: false,
           passFunc: true,
           ngRoute: false
@@ -91,14 +94,14 @@ describe('Route Utils', function () {
         var filePath = path.join(__dirname, 'fixtures', 'app-no-state-empty-config.coffee')
           , fileContents = fs.readFileSync(filePath, 'utf8');
         assert(/config \(\$stateProvider\) ->/
-          .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+          .test(routeUtils.addRoute(fileContents, newState, config)));
       });
 
       it('should add param to existing config', function () {
         var filePath = path.join(__dirname, 'fixtures', 'app-no-state-existing-config.coffee')
           , fileContents = fs.readFileSync(filePath, 'utf8');
         assert(/config \([^$]*, \$stateProvider\) ->/
-          .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+          .test(routeUtils.addRoute(fileContents, newState, config)));
       });
     });
   });
@@ -110,6 +113,7 @@ describe('Route Utils', function () {
 
       beforeEach(function () {
         config = {
+          appScript: 'coffee',
           controllerAs: false,
           passFunc: true,
           ngRoute: true
@@ -119,17 +123,17 @@ describe('Route Utils', function () {
 
       it('should add new when without controllerAs', function () {
         assert(/.when \'\/test\',[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r]*        controller: \'TestCtrl\'[\n\r]/
-          .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+          .test(routeUtils.addRoute(fileContents, newState, config)));
       });
 
       it('should add new when with controllerAs', function () {
         config.controllerAs = true;
         assert(/.when \'\/test\',[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r]*        controller: \'TestCtrl\'[\n\r]*        controllerAs: \'test\'[\n\r]/
-          .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+          .test(routeUtils.addRoute(fileContents, newState, config)));
       });
 
       it('should only have 1 $routeProvider param', function () {
-        assert(routeUtils.addRouteCoffee(fileContents, newState, config).match(/\(.*\$routeProvider.*\)/).length === 1);
+        assert(routeUtils.addRoute(fileContents, newState, config).match(/\(.*\$routeProvider.*\)/).length === 1);
       });
     });
 
@@ -140,6 +144,7 @@ describe('Route Utils', function () {
 
         beforeEach(function () {
           config = {
+            appScript: 'coffee',
             controllerAs: false,
             passFunc: false,
             ngRoute: true
@@ -149,18 +154,18 @@ describe('Route Utils', function () {
 
         it('should add ngRoute as depdendency', function () {
           assert(/.module \'[^$]*\', \[[^$]*\'ngRoute\'[^$]*\]/
-            .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 
         it('should add $routeProvider as param', function () {
           assert(/.config \(\$routeProvider\) ->/
-            .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 
         it('should add when with controllerAs', function () {
           config.controllerAs = true;
           assert(/\$routeProvider[\n\r]*      .when \'\/test\',[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r]*        controller: \'TestCtrl\'[\n\r]*        controllerAs: \'test\'[\n\r]/
-            .test(routeUtils.addRouteCoffee(fileContents, newState, config)));
+            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
       });
     });
@@ -173,6 +178,7 @@ describe('Route Utils', function () {
 
       beforeEach(function () {
         config = {
+          appScript: 'js',
           controllerAs: false,
           passFunc: false,
           ngRoute: false
@@ -203,6 +209,7 @@ describe('Route Utils', function () {
 
         beforeEach(function () {
           config = {
+            appScript: 'js',
             controllerAs: false,
             passFunc: true,
             ngRoute: false
@@ -232,6 +239,7 @@ describe('Route Utils', function () {
 
         beforeEach(function () {
           config = {
+            appScript: 'js',
             controllerAs: false,
             passFunc: false,
             ngRoute: false
@@ -266,6 +274,7 @@ describe('Route Utils', function () {
 
       beforeEach(function () {
         config = {
+          appScript: 'js',
           controllerAs: false,
           passFunc: true,
           ngRoute: true
@@ -296,6 +305,7 @@ describe('Route Utils', function () {
 
         beforeEach(function () {
           config = {
+            appScript: 'js',
             controllerAs: false,
             passFunc: true,
             ngRoute: true
@@ -325,6 +335,7 @@ describe('Route Utils', function () {
 
         beforeEach(function () {
           config = {
+            appScript: 'js',
             controllerAs: false,
             passFunc: false,
             ngRoute: true
