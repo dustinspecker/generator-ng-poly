@@ -6,13 +6,6 @@ var path = require('path')
 
 Generator = module.exports = yeoman.generators.Base.extend();
 
-/*Generator.prototype.intitialize = function intitialize() {
-  // this overwrites the default the .yo-rc.json file
-  // a default is provided so that the module subgen will run
-  // by being able to find the .yo-rc file
-  this.options.force = true;
-};*/
-
 Generator.prototype.prompting = function prompting() {
   var done = this.async();
 
