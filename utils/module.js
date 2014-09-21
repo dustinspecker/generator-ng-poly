@@ -6,18 +6,24 @@ var endOfLine = require('os').EOL
   , nameUtils = require('./name')
   , path = require('path');
 
-function extractBasedOnChar(string, symbol) {
+/**
+ * Returns modules' names in path
+ * @param {String} name
+ * @param {String} symbol
+ * @return {Array}
+ */
+function extractBasedOnChar(path, symbol) {
   var modules = []
-    // string after last symbol is module name
-    , moduleName = string.slice(string.lastIndexOf(symbol)).replace(symbol, '')
+    // path after last symbol is module name
+    , moduleName = path.slice(path.lastIndexOf(symbol)).replace(symbol, '')
     , parentModuleName;
 
   modules.push(moduleName);
 
   // determine if user provided more than 1 symbol
-  parentModuleName = string.slice(0, string.lastIndexOf(symbol));
+  parentModuleName = path.slice(0, path.lastIndexOf(symbol));
   if (parentModuleName.indexOf(symbol) > -1) {
-    parentModuleName = string.slice(parentModuleName.lastIndexOf(symbol), string.lastIndexOf(symbol));
+    parentModuleName = path.slice(parentModuleName.lastIndexOf(symbol), path.lastIndexOf(symbol));
     parentModuleName = parentModuleName.replace(symbol, '');
   }
 
@@ -26,22 +32,32 @@ function extractBasedOnChar(string, symbol) {
   return modules;
 }
 
-exports.extractModuleNames = function extractModuleNames(string) {
+/**
+ * Returns child and parent module names
+ * @param {String} name
+ * @return {Array}
+ */
+exports.extractModuleNames = function extractModuleNames(name) {
   // return appName for app.js
-  if (string === 'app') {
+  if (name === 'app') {
     var appName = require(path.join(path.dirname(findup('.yo-rc.json')), 'package.json')).name;
     return [appName, null];
   }
 
-  string = string.replace(/\\/g, '/');
+  name = name.replace(/\\/g, '/');
   // uses module syntax
-  if (string.indexOf('/') > -1) {
-    return extractBasedOnChar(string, '/');
+  if (name.indexOf('/') > -1) {
+    return extractBasedOnChar(name, '/');
   }
 
-  return [string, null];
+  return [name, null];
 };
 
+/**
+ * Converts backslashes and forwardslashes to path separator
+ * @param {String} modulePath
+ * @return {String}
+ */
 exports.normalizeModulePath = function normalizeModulePath(modulePath) {
   if (modulePath === 'app') {
     return '';
@@ -53,6 +69,12 @@ exports.normalizeModulePath = function normalizeModulePath(modulePath) {
   return modulePath;
 };
 
+/**
+ * Returns if module exists in app
+ * @param {String} yoRcAbsolutePath
+ * @param {String} modulePath
+ * @return {Boolean}
+ */
 exports.moduleExists = function moduleExists(yoRcAbsolutePath, modulePath) {
   // check if file exists
   var yoPath = path.dirname(yoRcAbsolutePath)
@@ -67,11 +89,23 @@ exports.moduleExists = function moduleExists(yoRcAbsolutePath, modulePath) {
   return fs.existsSync(fullPath);
 };
 
+/**
+ * Returns if dependency is listed in app's dependencies
+ * @param {String} fileContents
+ * @param {String} dependency
+ * @return {Boolean}
+ */
 exports.dependencyExists = function dependencyExists(fileContents, dependency) {
   var regex = new RegExp('[.]module[^$]*\'[^$]*\', \\[[^$]*\'' + dependency + '\'[^$]*\\]');
   return regex.test(fileContents);
 };
 
+/**
+ * Adds dependency to fileContents
+ * @param {String} fileContents
+ * @param {String} dependency
+ * @return {String}
+ */
 exports.addDependency = function addDependency(fileContents, dependency) {
   // find line to add new dependency
   var lines = fileContents.split(endOfLine)
