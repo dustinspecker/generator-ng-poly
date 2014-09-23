@@ -54,7 +54,7 @@ gulp.task('karmaInject', function () {
 });
 
 // run unit tests
-gulp.task('unitTest', ['karmaInject'], function (done) {
+gulp.task('unitTest', ['lint', 'karmaInject'], function (done) {
   var karmaConf = require('../karma.config.js');
   $.karma.server.start($.lodash.assign({}, karmaConf), done);
 });
