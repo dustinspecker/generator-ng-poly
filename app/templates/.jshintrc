@@ -7,7 +7,7 @@
   "eqeqeq": true,
   "immed": true,
   "indent": 2,
-  "latedef": true,
+  "latedef": "nofunc",
   "laxcomma": true,
   "newcap": true,
   "noarg": true,
