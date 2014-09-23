@@ -18,6 +18,16 @@ Generator.prototype.prompting = function prompting() {
     message: 'What is the app\'s name?'
   },
   {
+    name: 'host',
+    message: 'What host should the app run on?',
+    default: 'localhost'
+  },
+  {
+    name: 'port',
+    message: 'Which port should the app run on?',
+    default: 3000
+  },
+  {
     type: 'list',
     name: 'markup',
     message: 'What is the preferred markup language?',
@@ -202,6 +212,8 @@ Generator.prototype.prompting = function prompting() {
     ]
   }], function (props) {
     this.appName = props.appName;
+    this.host = props.host;
+    this.port = props.port;
     this.markup = props.markup;
     this.appScript = props.appScript;
     this.controllerAs = props.controllerAs;
@@ -244,6 +256,8 @@ Generator.prototype.configuring = function configuring() {
 
   this.context = {
     appName: this.appName,
+    host: this.host,
+    port: this.port,
     moduleName: this.appName,
     passFunc: this.passFunc,
     namedFunc: this.namedFunc,

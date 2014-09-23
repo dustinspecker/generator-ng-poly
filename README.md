@@ -123,6 +123,8 @@ Example:
 ```
 yo ng-poly
 [?] What is the app's name?
+[?] What host should the app run on?
+[?] Which port should the app run on?
 [?] What is the preferred markup language?
 [?] What is the preferred application scripting language?
 [?] Want to use Controller As syntax?
