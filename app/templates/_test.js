@@ -70,6 +70,11 @@ gulp.task('e2eTest', ['lint'], function () {
     });
 });
 
+// run unit and e2e tests
+gulp.task('test', ['build', 'unitTest'], function () {
+  gulp.start('e2eTest');
+});
+
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 /* jshint -W106 */
 gulp.task('webdriverUpdate', $.protractor.webdriver_update);
