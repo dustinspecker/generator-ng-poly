@@ -949,7 +949,6 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 | app-script | coffee, js |
 | markup | haml, html, jade|
 | style | css, less, scss, styl|
-| test-dir | src, test|
 | test-script | coffee, js|
 | controller-as | true, false |
 | pass-func | true, false |
