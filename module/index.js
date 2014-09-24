@@ -41,20 +41,20 @@ Generator.prototype.writing = function writing() {
   this.context.modulePath = utils.normalizeModulePath(this.module);
 
   // create new module directory
-  this.mkdir(path.join('app', this.context.modulePath));
+  this.mkdir(path.join(this.context.appDir, this.context.modulePath));
 
   // check if path and moduleName are the same
   // if yes - get root app.js to prepare adding dep
   // else - get parent app.js to prepare adding dep
   if (this.context.moduleName === this.module) {
-    filePath = path.join(this.config.path, '../app/app.coffee');
+    filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.coffee');
 
     // if CoffeeScript app doesn't exist, use JavaScript app
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(this.config.path, '../app/app.js');
+      filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.js');
     }
   } else {
-    parentDir = path.resolve(path.join('app', this.context.modulePath), '..');
+    parentDir = path.resolve(path.join(this.context.appDir, this.context.modulePath), '..');
 
     // for templating to create a parent.child module name
     this.context.parentModuleName = path.basename(parentDir);
@@ -76,7 +76,8 @@ Generator.prototype.writing = function writing() {
 
   // create app.js
   this.template('_app.' + this.context.appScript,
-    path.join('app', this.context.modulePath, this.context.hyphenModule + '.' + this.context.appScript), this.context);
+    path.join(this.context.appDir, this.context.modulePath,
+      this.context.hyphenModule + '.' + this.context.appScript), this.context);
 };
 
 Generator.prototype.end = function end() {

@@ -125,13 +125,14 @@ yo ng-poly
 [?] What is the app's name?
 [?] What host should the app run on?
 [?] Which port should the app run on?
+[?] Which folder should the app be developed in?
 [?] What is the preferred markup language?
 [?] What is the preferred application scripting language?
 [?] Want to use Controller As syntax?
 [?] Should functions be defined and passed instead of defined inline (in callbacks)?
 [?] Want to use named functions instead of anonymous?
+[?] Where should unit tests be saved?
 [?] What is the preferred test scripting language?
-[?] Where should tests be saved?
 [?] What is the preferred style language?
 [?] Should Polymer support be enabled?
 [?] Should a framework be setup?

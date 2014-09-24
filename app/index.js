@@ -28,6 +28,11 @@ Generator.prototype.prompting = function prompting() {
     default: 3000
   },
   {
+    name: 'appDir',
+    message: 'Which folder should the app be developed in?',
+    default: 'app'
+  },
+  {
     type: 'list',
     name: 'markup',
     message: 'What is the preferred markup language?',
@@ -82,6 +87,11 @@ Generator.prototype.prompting = function prompting() {
     default: true
   },
   {
+    name: 'unitTestDir',
+    message: 'Where should unit tests be saved?',
+    default: 'app'
+  },
+  {
     type: 'list',
     name: 'testScript',
     message: 'What is the preferred test scripting language?',
@@ -94,22 +104,6 @@ Generator.prototype.prompting = function prompting() {
       {
         name: 'JavaScript',
         value: 'js'
-      }
-    ]
-  },
-  {
-    type: 'list',
-    name: 'testDir',
-    message: 'Where should tests be saved?',
-    default: 'app',
-    choices: [
-      {
-        name: 'app/',
-        value: 'app'
-      },
-      {
-        name: 'test/',
-        value: 'test'
       }
     ]
   },
@@ -212,6 +206,7 @@ Generator.prototype.prompting = function prompting() {
     ]
   }], function (props) {
     this.appName = props.appName;
+    this.appDir = props.appDir;
     this.host = props.host;
     this.port = props.port;
     this.markup = props.markup;
@@ -220,7 +215,7 @@ Generator.prototype.prompting = function prompting() {
     this.passFunc = props.passFunc;
     this.namedFunc = props.namedFunc;
     this.testScript = props.testScript;
-    this.testDir = props.testDir;
+    this.unitTestDir = props.unitTestDir;
     this.style = props.style;
     this.polymer = props.polymer;
     this.ngRoute = props.ngRoute;
@@ -245,7 +240,6 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('passFunc', this.passFunc);
   this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
-  this.config.set('testDir', this.testDir);
   this.config.set('style', this.style);
   this.config.set('ngRoute', this.ngRoute);
   this.config.set('lastUsedModule', 'home');
@@ -256,6 +250,8 @@ Generator.prototype.configuring = function configuring() {
 
   this.context = {
     appName: this.appName,
+    appDir: this.appDir,
+    unitTestDir: this.unitTestDir,
     host: this.host,
     port: this.port,
     moduleName: this.appName,
@@ -288,16 +284,16 @@ Generator.prototype.configuring = function configuring() {
 };
 
 Generator.prototype.writing = function writing() {
-  this.mkdir('app');
+  this.mkdir(this.appDir);
 
   // create main module and index.html
   this.template('_app.' + this.appScript,
-    path.join('app', 'app.' + this.appScript), this.context);
+    path.join(this.appDir, 'app.' + this.appScript), this.context);
   this.template('_index.' + this.markup,
-    path.join('app', 'index.' + this.markup), this.context);
+    path.join(this.appDir, 'index.' + this.markup), this.context);
 
-  this.mkdir(path.join('app', 'fonts'));
-  this.mkdir(path.join('app', 'images'));
+  this.mkdir(path.join(this.appDir, 'fonts'));
+  this.mkdir(path.join(this.appDir, 'images'));
 };
 
 Generator.prototype.install = function install() {

@@ -34,13 +34,15 @@ Generator.prototype.writing = function writing() {
     // module file to add route to
     , filePath, file;
 
-  filePath = path.join(this.config.path, '../app/', config.modulePath, utils.hyphenName(config.moduleName) + '.coffee');
+  filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
+    utils.hyphenName(config.moduleName) + '.coffee');
 
   // load JavaScript app if CoffeeScript app doesn't exist
   if (fs.existsSync(filePath)) {
     file = fs.readFileSync(filePath, 'utf8');
   } else {
-    filePath = path.join(this.config.path, '../app/', config.modulePath, utils.hyphenName(config.moduleName) + '.js');
+    filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
+      utils.hyphenName(config.moduleName) + '.js');
     file = fs.readFileSync(filePath, 'utf8');
   }
 

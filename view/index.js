@@ -37,6 +37,6 @@ Generator.prototype.writing = function writing() {
   markupFile = markupFile.replace(/html$/, config.markup);
 
   this.template('_view.' + config.markup,
-    path.join('app', config.modulePath, markupFile), config);
-  this.copy('style.' + config.style, path.join('app', config.modulePath, styleFile));
+    path.join(config.appDir, config.modulePath, markupFile), config);
+  this.copy('style.' + config.style, path.join(config.appDir, config.modulePath, styleFile));
 };

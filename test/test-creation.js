@@ -9,49 +9,53 @@ describe('ng-poly generator', function () {
   var prompts = [
     {
       appName: 'temp1',
+      appDir: 'app',
       markup: 'html',
       appScript: 'js',
       controllerAs: false,
       passFunc: true,
       namedFunc: true,
       testScript: 'js',
-      testDir: 'app',
+      unitTestDir: 'test',
       style: 'less',
       bower: []
     },
     {
       appName: 'temp2',
+      appDir: 'app',
       markup: 'jade',
       appScript: 'coffee',
       controllerAs: true,
       passFunc: true,
       namedFunc: true,
       testScript: 'coffee',
-      testDir: 'test',
+      unitTestDir: 'app',
       style: 'styl',
       bower: []
     },
     {
       appName: 'temp3',
+      appDir: 'front/',
       markup: 'haml',
       appScript: 'js',
       controllerAs: true,
       passFunc: true,
       namedFunc: true,
       testScript: 'coffee',
-      testDir: 'test',
+      unitTestDir: 'front/',
       style: 'scss',
       bower: []
     },
     {
       appName: 'temp4',
+      appDir: 'app',
       markup: 'haml',
       appScript: 'js',
       controllerAs: true,
       passFunc: true,
       namedFunc: true,
       testScript: 'coffee',
-      testDir: 'test',
+      unitTestDir: 'test',
       style: 'css',
       bower: []
     }
@@ -105,13 +109,13 @@ describe('ng-poly generator', function () {
       var expected = [
         'e2e/home/home.po.' + config.testScript,
         'e2e/home/home_test.' + config.testScript,
-        'app/home/home.' + config.appScript,
-        'app/home/home.tpl.' + config.markup,
-        'app/home/home.' + config.style,
-        'app/home/home-controller.' + config.appScript,
-        config.testDir + '/home/home-controller_test.' + config.testScript,
-        'app/app.' + config.appScript,
-        'app/index.' + config.markup,
+        join(config.appDir, '/home/home.' + config.appScript),
+        join(config.appDir, '/home/home.tpl.' + config.markup),
+        join(config.appDir, '/home/home.' + config.style),
+        join(config.appDir, '/home/home-controller.' + config.appScript),
+        join(config.unitTestDir, '/home/home-controller_test.' + config.testScript),
+        join(config.appDir, '/app.' + config.appScript),
+        join(config.appDir, '/index.' + config.markup),
         '.bowerrc',
         '.editorconfig',
         '.jscsrc',
@@ -156,59 +160,59 @@ describe('ng-poly generator', function () {
 
       // module name has trailing slash to test trailing slash in genBase
       testGenerator('constant', ['../../constant'], expected.concat(
-        'app/home/constant-test-constant.' + config.appScript,
-        config.testDir + '/home/constant-test-constant_test.' + config.testScript
+        join(config.appDir, '/home/constant-test-constant.' + config.appScript),
+        join(config.unitTestDir, '/home/constant-test-constant_test.' + config.testScript)
       ), {
         module: 'home/'
       });
 
       // module is root module
       testGenerator('controller', ['../../controller'], expected.concat(
-        'app/controller-test-controller.' + config.appScript,
-        config.testDir + '/controller-test-controller_test.' + config.testScript
+        join(config.appDir, '/controller-test-controller.' + config.appScript),
+        join(config.unitTestDir, '/controller-test-controller_test.' + config.testScript)
       ), {
-        module: 'app'
+        module: config.appDir + ''
       });
 
       testGenerator('directive', ['../../directive'], expected.concat(
-        'app/home/directive-test-directive.tpl.' + config.markup,
-        'app/home/directive-test-directive.' + config.appScript,
-        config.testDir + '/home/directive-test-directive_test.' + config.testScript
+        join(config.appDir, '/home/directive-test-directive.tpl.' + config.markup),
+        join(config.appDir, '/home/directive-test-directive.' + config.appScript),
+        join(config.unitTestDir, '/home/directive-test-directive_test.' + config.testScript)
       ), {
         module: 'home'
       });
 
       testGenerator('element', ['../../element'], expected.concat(
-        'app/components/element-test/element-test.' + config.style,
-        'app/components/element-test/element-test.' + config.markup,
-        'app/components/element-test/element-test.' + config.appScript
+        join(config.appDir, '/components/element-test/element-test.' + config.style),
+        join(config.appDir, '/components/element-test/element-test.' + config.markup),
+        join(config.appDir, '/components/element-test/element-test.' + config.appScript)
       ));
 
       testGenerator('factory', ['../../factory'], expected.concat(
-        'app/home/factory-test-factory.' + config.appScript,
-        config.testDir + '/home/factory-test-factory_test.' + config.testScript
+        join(config.appDir, '/home/factory-test-factory.' + config.appScript),
+        join(config.unitTestDir, '/home/factory-test-factory_test.' + config.testScript)
       ), {
         module: 'home'
       });
 
       testGenerator('filter', ['../../filter'], expected.concat(
-        'app/home/filter-test-filter.' + config.appScript,
-        config.testDir + '/home/filter-test-filter_test.' + config.testScript
+        join(config.appDir, '/home/filter-test-filter.' + config.appScript),
+        join(config.unitTestDir, '/home/filter-test-filter_test.' + config.testScript)
       ), {
         module: 'home'
       });
 
       testGenerator('provider', ['../../provider'], expected.concat(
-        'app/home/provider-test-provider.' + config.appScript,
-        config.testDir + '/home/provider-test-provider_test.' + config.testScript
+        join(config.appDir, '/home/provider-test-provider.' + config.appScript),
+        join(config.unitTestDir, '/home/provider-test-provider_test.' + config.testScript)
       ), {
         module: 'home'
       });
 
       testGenerator('route', ['../../route', '../../controller', '../../view'], (
-        'app/home/route-test.tpl.' + config.markup,
-        'app/home/route-test-controller.' + config.appScript,
-        config.testDir + '/home/route-test-controller_test.' + config.testScript
+        join(config.appDir, '/home/route-test.tpl.' + config.markup),
+        join(config.appDir, '/home/route-test-controller.' + config.appScript),
+        join(config.unitTestDir, '/home/route-test-controller_test.' + config.testScript)
       ), {
         module: 'home',
         'template-url': 'value',
@@ -216,22 +220,22 @@ describe('ng-poly generator', function () {
       });
 
       testGenerator('service', ['../../service'], expected.concat(
-        'app/home/service-test-service.' + config.appScript,
-        config.testDir + '/home/service-test-service_test.' + config.testScript
+        join(config.appDir, '/home/service-test-service.' + config.appScript),
+        join(config.unitTestDir, '/home/service-test-service_test.' + config.testScript)
       ), {
         module: 'home'
       });
 
       testGenerator('value', ['../../value'], expected.concat(
-        'app/home/value-test-value.' + config.appScript,
-        config.testDir + '/home/value-test-value_test.' + config.testScript
+        join(config.appDir, '/home/value-test-value.' + config.appScript),
+        join(config.unitTestDir, '/home/value-test-value_test.' + config.testScript)
       ), {
         module: 'home'
       });
 
       testGenerator('view', ['../../view'], expected.concat(
-        'app/home/view-test.tpl.' + config.markup,
-        'app/home/view-test.' + config.style
+        join(config.appDir, '/home/view-test.tpl.' + config.markup),
+        join(config.appDir, '/home/view-test.' + config.style)
       ), {
         module: 'home'
       });

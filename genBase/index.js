@@ -76,12 +76,13 @@ Generator.prototype.getConfig = function getConfig() {
     namedFunc: (this.options['named-func'] !== undefined && this.options['named-func'] !== null) ?
       this.options['named-func'] : this.config.get('namedFunc'),
     testScript: this.options['test-script'] || this.config.get('testScript'),
-    testDir: this.options['test-dir'] || this.config.get('testDir'),
     style: this.options.style || this.config.get('style'),
     ngRoute: (this.options['ng-route'] !== undefined && this.options['ng-route'] !== null) ?
       this.options['ng-route'] : this.config.get('ngRoute'),
 
     appName: utils.getAppName(this.config.path),
+    appDir: utils.getAppDir(this.config.path),
+    testDir: utils.getUnitTestDir(this.config.path),
     ctrlName: utils.ctrlName(this.name),
     humanName: utils.humanName(this.name),
     hyphenName: utils.hyphenName(this.name),
@@ -91,7 +92,6 @@ Generator.prototype.getConfig = function getConfig() {
   , modules;
 
   if (this.module) {
-    utils.moduleExists(this.config.path, this.module);
     modules = utils.extractModuleNames(this.module);
     config.modulePath = utils.normalizeModulePath(this.module);
     config.moduleName = modules[0];

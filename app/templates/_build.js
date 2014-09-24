@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp')
+  , path = require('path')
   , $ = require('gulp-load-plugins')({
     pattern: [
       'gulp-*',
@@ -13,15 +14,15 @@ var gulp = require('gulp')
     ]
   })
 
-  , appBase = 'app/'<% if (polymer) { %>
-  , appComponents = appBase + 'components/**/*'<% } %>
-  , appFontFiles = appBase + 'fonts/**/*'
-  , appImages = appBase + 'images/**/*'
-  , appMarkupFiles = appBase + '**/*.{haml,html,jade}'
-  , appScriptFiles = appBase + '**/*.{coffee,js}'
-  , appStyleFiles = appBase + '**/*.{css,less,scss,styl}'
-
   , buildConfig = require('../build.config.js')
+
+  , appBase = buildConfig.appDir<% if (polymer) { %>
+  , appComponents = path.join(appBase, 'components/**/*')<% } %>
+  , appFontFiles = path.join(appBase, 'fonts/**/*')
+  , appImages = path.join(appBase, 'images/**/*')
+  , appMarkupFiles = path.join(appBase, '**/*.{haml,html,jade}')
+  , appScriptFiles = path.join(appBase, '**/*.{coffee,js}')
+  , appStyleFiles = path.join(appBase, '**/*.{css,less,scss,styl}')
 
 <% if (polymer) { %>  , fs = require('fs')
   , path = require('path')

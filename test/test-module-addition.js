@@ -17,7 +17,7 @@ describe('module generator', function () {
       .withOptions({
         'skip-install': false
       })
-      .withPrompt({
+      .withPrompts({
         appName: 'module-temp-test',
         markup: 'html',
         appScript: 'js',

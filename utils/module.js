@@ -32,6 +32,14 @@ function extractBasedOnChar(path, symbol) {
   return modules;
 }
 
+exports.getAppDir = function getAppDir() {
+  var appDir = require(path.join(path.dirname(findup('.yo-rc.json')), 'build.config.js')).appDir;
+  if (appDir[appDir.length - 1] === '/' || appDir[appDir.length - 1] === '\\') {
+    appDir = appDir.slice(0, appDir.length - 1);
+  }
+  return appDir;
+};
+
 /**
  * Returns child and parent module names
  * @param {String} name
@@ -39,7 +47,7 @@ function extractBasedOnChar(path, symbol) {
  */
 exports.extractModuleNames = function extractModuleNames(name) {
   // return appName for app.js
-  if (name === 'app') {
+  if (name === exports.getAppDir()) {
     var appName = require(path.join(path.dirname(findup('.yo-rc.json')), 'package.json')).name;
     return [appName, null];
   }
@@ -59,7 +67,7 @@ exports.extractModuleNames = function extractModuleNames(name) {
  * @return {String}
  */
 exports.normalizeModulePath = function normalizeModulePath(modulePath) {
-  if (modulePath === 'app') {
+  if (modulePath === exports.getAppDir()) {
     return '';
   }
 
@@ -80,11 +88,11 @@ exports.moduleExists = function moduleExists(yoRcAbsolutePath, modulePath) {
   var yoPath = path.dirname(yoRcAbsolutePath)
     , fullPath;
 
-  if (modulePath === 'app') {
+  if (modulePath === exports.getAppDir()) {
     return true;
   }
 
-  fullPath = path.join(yoPath, 'app', exports.normalizeModulePath(modulePath));
+  fullPath = path.join(yoPath, exports.getAppDir(), exports.normalizeModulePath(modulePath));
 
   return fs.existsSync(fullPath);
 };

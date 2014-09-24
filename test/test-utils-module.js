@@ -24,6 +24,11 @@ describe('Module Utils', function () {
 
       expectRequire('package.json').return({name: 'test'});
 
+      // mock function to prevent looking for build.config.js
+      utilsProxy.getAppDir = function getAppDir() {
+        return 'app';
+      };
+
       assert(JSON.stringify(utilsProxy.extractModuleNames('app')) === JSON.stringify(['test', null]));
     });
 

@@ -4,6 +4,12 @@ module.exports = {
   host: '<%= host %>',
   port: <%= port %>,
 
+  // app directories
+  appDir: '<%= appDir %>',
+
+  // unit test directories
+  unitTestDir: '<%= unitTestDir %>',
+
   // build directories
   buildDir: 'build/',<% if (polymer) { %>
   buildComponents: 'build/components/',<% } %>

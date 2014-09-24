@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp')
+  , path = require('path')
   , $ = require('gulp-load-plugins')({
     pattern: [
       'gulp-*',
@@ -11,10 +12,11 @@ var gulp = require('gulp')
     ]
   })
 
-  , appDirectiveTemplateFiles = 'app/**/*directive.tpl.{haml,html,jade}'
-  , appScriptFiles = 'app/**/*.{coffee,js}'
+  , appBase = require('../build.config.js').appDir
+  , appDirectiveTemplateFiles = path.join(appBase, '**/*directive.tpl.{haml,html,jade}')
+  , appScriptFiles = path.join(appBase, '**/*.{coffee,js}')
 
-  , unitTests = '{app,test}/**/*_test.*'
+  , unitTests = path.join(require('../build.config.js').unitTestDir, '**/*_test.*')
 
   , e2eTestFiles = 'e2e/**/*_test.*';
 

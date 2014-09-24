@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp')
+  , path = require('path')
   , $ = require('gulp-load-plugins')({
     pattern: [
       'gulp-*',
@@ -8,10 +9,10 @@ var gulp = require('gulp')
     ]
   })
 
-  , appBase = 'app/'
-  , unitTestFiles = '{app,test}/**/*_test.*'
+  , buildConfig = require('../build.config.js')
 
-  , buildConfig = require('../build.config.js');
+  , appBase = buildConfig.appDir
+  , unitTestFiles = path.join(buildConfig.unitTestDir, '**/*_test.*');
 
 gulp.task('browserSync', function () {
   $.browserSync({

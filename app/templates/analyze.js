@@ -1,13 +1,14 @@
 'use strict';
 
 var gulp = require('gulp')
+  , path = require('path')
   , $ = require('gulp-load-plugins')()
 
-  , appBase = 'app/'
-  , appScriptFiles = appBase + '**/*.{coffee,js}'
+  , appBase = require('../build.config.js').appDir
+  , appScriptFiles = path.join(appBase, '**/*.{coffee,js}')
 
   , e2eFiles = 'e2e/**/*.{coffee,js}'
-  , unitTests = '{app,test}/**/*.{coffee,js}';
+  , unitTests = path.join(require('../build.config.js').unitTestDir, '**/*_test.{coffee,js}');
 
 // lint CoffeeScript and jshint and jscs JavaScript
 gulp.task('lint', function () {

@@ -1,7 +1,6 @@
 'use strict';
 var _ = require('underscore.string')
-  , exports = module.exports
-  , path = require('path');
+  , exports = module.exports;
 
 /**
  * Returns lower camel case
@@ -46,13 +45,4 @@ exports.hyphenName = function hyphenName(name) {
  */
 exports.ctrlName = function ctrlName(name) {
   return exports.upperCamel(name) + 'Ctrl';
-};
-
-/**
- * Gets the app's name from the root package.json
- * @param {String} yoRcAbsolutePath
- * @return {String}
- */
-exports.getAppName = function getAppName(yoRcAbsolutePath) {
-  return require(path.join(path.dirname(yoRcAbsolutePath), 'package.json')).name;
 };
