@@ -1058,22 +1058,18 @@ If enabled, the app source code will pass functions, such as:
   /**
    * @ngdoc object
    * @name home.controller:HomeCtrl
-   * @function
-   * 
-   * @description
-   * 
    *
-   * @ngInject
+   * @description
    *
    */
+  angular
+    .module('home')
+    .controller('HomeCtrl', HomeCtrl);
+
   function HomeCtrl() {
     var vm = this;
     vm.ctrlName = 'HomeCtrl';
   }
-
-  angular
-    .module('home')
-    .controller('HomeCtrl', HomeCtrl);
 
 })();
 ```
@@ -1093,14 +1089,14 @@ If enabled, the app source code will have named functions, such as:
   /**
    * @ngdoc service
    * @name module.factory:Cake
-   * @function
-   * 
-   * @description
-   * 
    *
-   * @ngInject
+   * @description
    *
    */
+  angular
+    .module('module')
+    .factory('Cake', Cake);
+
   function Cake() {
     var CakeBase = {};
     CakeBase.someValue = 'Cake';
@@ -1109,10 +1105,6 @@ If enabled, the app source code will have named functions, such as:
     };
     return CakeBase;
   }
-
-  angular
-    .module('module')
-    .factory('Cake', Cake);
 
 })();
 ```
