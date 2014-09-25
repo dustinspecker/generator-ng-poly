@@ -11,7 +11,7 @@ var gulp = require('gulp')
 
   , buildConfig = require('../build.config.js')
 
-  , appBase = buildConfig.appDir
+  , appFiles = path.join(buildConfig.appDir, '**/*')
   , unitTestFiles = path.join(buildConfig.unitTestDir, '**/*_test.*');
 
 gulp.task('browserSync', function () {
@@ -28,5 +28,5 @@ gulp.task('browserSync', function () {
 gulp.task('watch', function () {
   $.browserSync.reload();
   gulp.watch([unitTestFiles], ['unitTest']);
-  gulp.watch([appBase + '**/*'], ['build', $.browserSync.reload]);
+  gulp.watch([appFiles, '!' + unitTestFiles], ['build', $.browserSync.reload]);
 });
