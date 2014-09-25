@@ -23,7 +23,7 @@ angular
   .directive '<%= lowerCamel %>', ->
     restrict: 'AE'
     scope: {}
-    templateUrl: '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html'
+    templateUrl: '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html'
     replace: false
     link: (scope, element, attrs) ->
       element.text '<%= lowerCamel %>\n' + scope + '\n' + attrs

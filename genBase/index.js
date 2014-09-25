@@ -56,6 +56,11 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
       this.url = '/' + this.url;
     }
 
+    // convert backslashes to forwardslashes for Windows
+    if (this.templateUrl) {
+      this.templateUrl = this.templateUrl.replace('\\', '/');
+    }
+
     // append .tpl.html if not existing
     if (!/[.]tpl[.]html$/.test(this.templateUrl)) {
       this.templateUrl = this.templateUrl + '.tpl.html';

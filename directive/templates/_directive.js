@@ -25,7 +25,7 @@
     return {
       restrict: 'EA',
       scope: {},
-      templateUrl: '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html',
+      templateUrl: '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html',
       replace: false,
       link: function (scope, element, attrs) {
         element.text('<%= lowerCamel %>\n' + scope + '\n' + attrs);
@@ -57,7 +57,7 @@
 <% if (passFunc) { %>  <% } %>    return {
 <% if (passFunc) { %>  <% } %>      restrict: 'AE',
 <% if (passFunc) { %>  <% } %>      scope: {},
-<% if (passFunc) { %>  <% } %>      templateUrl: '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html',
+<% if (passFunc) { %>  <% } %>      templateUrl: '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html',
 <% if (passFunc) { %>  <% } %>      replace: false,
 <% if (passFunc) { %>  <% } %>      link: function (scope, element, attrs) {
 <% if (passFunc) { %>  <% } %>        element.text('<%= lowerCamel %>\n' + scope + '\n' + attrs);

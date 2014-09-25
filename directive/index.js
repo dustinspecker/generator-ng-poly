@@ -11,6 +11,7 @@ Generator.prototype.prompting = function prompting() {
 
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
+  config.templateUrl = config.modulePath.replace('\\', '/');
 
   this.template('_directive.' + config.appScript,
     path.join(config.appDir, config.modulePath, config.hyphenName + '-directive.' + config.appScript), config);

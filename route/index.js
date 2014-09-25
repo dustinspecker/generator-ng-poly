@@ -9,6 +9,12 @@ Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
   this.askForModuleName({url: true, templateUrl: true});
+
+  // convert backslashes to forwardslashes for Windows
+  if (this.templateUrl) {
+    this.templateUrl = this.templateUrl.replace('\\', '/');
+  }
+
 };
 
 Generator.prototype.writing = function writing() {
