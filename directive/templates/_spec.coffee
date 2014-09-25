@@ -5,7 +5,7 @@ describe '<%= lowerCamel %>', ->
   scope = undefined
   element = undefined
 
-  beforeEach module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', '<%= modulePath %>/<%= hyphenName %>-directive.tpl.html')
+  beforeEach module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html')
 
   beforeEach inject ($compile, $rootScope) ->
     scope = $rootScope.$new()
