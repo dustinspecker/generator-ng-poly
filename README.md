@@ -60,6 +60,7 @@ Languages and Features supported:
     - Angular Route, UI Router
   * Unit testing
     - Jasmine (Karma as the test runner) for AngularJS
+    - Mocha with Chai (Karma as the test runner) for AngularJS
   * e2e testing
     - Protractor for AngularJS
   * Frameworks
@@ -126,14 +127,15 @@ yo ng-poly
 [?] What host should the app run on?
 [?] Which port should the app run on?
 [?] Which folder should the app be developed in?
-[?] What is the preferred markup language?
-[?] What is the preferred application scripting language?
+[?] Which is the preferred markup language?
+[?] Which is the preferred application scripting language?
 [?] Want to use Controller As syntax?
 [?] Should functions be defined and passed instead of defined inline (in callbacks)?
 [?] Want to use named functions instead of anonymous?
 [?] Where should unit tests be saved?
-[?] What is the preferred test scripting language?
-[?] What is the preferred style language?
+[?] Which is the preferred test scripting language?
+[?] Which is the preferred unit testing framework?
+[?] Which is the preferred style language?
 [?] Should Polymer support be enabled?
 [?] Should a framework be setup?
 [?] Should ngRoute be used instead of UI Router?

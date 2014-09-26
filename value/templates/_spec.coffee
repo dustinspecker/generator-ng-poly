@@ -10,4 +10,4 @@ describe '<%= upperCamel %>', ->
     value = <%= upperCamel %>
 
   it 'should equal 0', ->
-    expect(value).toBe 0
+    expect(value).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toBe<% } %> 0

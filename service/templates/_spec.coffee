@@ -10,4 +10,4 @@ describe '<%= upperCamel %>', ->
     service = <%= upperCamel %>
 
   it 'should equal <%= upperCamel %>', ->
-    expect(service.get()).toEqual '<%= upperCamel %>'
+    expect(service.get()).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %> '<%= upperCamel %>'

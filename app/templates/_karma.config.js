@@ -17,7 +17,7 @@ var buildConfig = require('./build.config.js')
 
 module.exports = {
   browsers: ['PhantomJS'],
-  frameworks: ['jasmine'],
+  frameworks: [<% if (testFramework === 'mocha') { %>'mocha', 'chai'<% } else { %>'jasmine'<% } %>],
   files: [
   ],
   reporters: ['failed', 'coverage'],

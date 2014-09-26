@@ -10,4 +10,4 @@ describe '<%= upperCamel %>', ->
     provider = <%= upperCamel %>
 
   it 'should equal <%= upperCamel %>', ->
-    expect(provider).toEqual '<%= upperCamel %>'
+    expect(provider).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %> '<%= upperCamel %>'

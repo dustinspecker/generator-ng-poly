@@ -11,7 +11,7 @@ describe('<%= upperCamel %>', function () {
   }));
 
   it('should equal 0', function () {
-    expect(constant).toBe(0);
+    expect(constant).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toBe<% } %>(0);
   });
 
 });

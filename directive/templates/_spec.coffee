@@ -14,4 +14,4 @@ describe '<%= lowerCamel %>', ->
 
   it 'should have correct text', ->
     scope.$digest()
-    expect(element.html()).toEqual '<%= lowerCamel %>\n[object Object]\n[object Object]'
+    expect(element.html()).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %> '<%= lowerCamel %>\n[object Object]\n[object Object]'

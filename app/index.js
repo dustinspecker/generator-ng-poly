@@ -35,7 +35,7 @@ Generator.prototype.prompting = function prompting() {
   {
     type: 'list',
     name: 'markup',
-    message: 'What is the preferred markup language?',
+    message: 'Which is the preferred markup language?',
     default: 'jade',
     choices: [
       {
@@ -55,7 +55,7 @@ Generator.prototype.prompting = function prompting() {
   {
     type: 'list',
     name: 'appScript',
-    message: 'What is the preferred application scripting language?',
+    message: 'Which is the preferred application scripting language?',
     default: 'js',
     choices: [
       {
@@ -94,7 +94,7 @@ Generator.prototype.prompting = function prompting() {
   {
     type: 'list',
     name: 'testScript',
-    message: 'What is the preferred test scripting language?',
+    message: 'Which is the preferred test scripting language?',
     default: 'js',
     choices: [
       {
@@ -109,8 +109,24 @@ Generator.prototype.prompting = function prompting() {
   },
   {
     type: 'list',
+    name: 'testFramework',
+    message: 'Which is the preferred unit testing framework?',
+    default: 'jasmine',
+    choices: [
+      {
+        name: 'Jasmine',
+        value: 'jasmine'
+      },
+      {
+        name: 'Mocha with Chai',
+        value: 'mocha'
+      }
+    ]
+  },
+  {
+    type: 'list',
     name: 'style',
-    message: 'What is the preferred style language?',
+    message: 'Which is the preferred style language?',
     default: 'less',
     choices: [
       {
@@ -215,6 +231,7 @@ Generator.prototype.prompting = function prompting() {
     this.passFunc = props.passFunc;
     this.namedFunc = props.namedFunc;
     this.testScript = props.testScript;
+    this.testFramework = props.testFramework;
     this.unitTestDir = props.unitTestDir;
     this.style = props.style;
     this.polymer = props.polymer;
@@ -240,6 +257,7 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('passFunc', this.passFunc);
   this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
+  this.config.set('testFramework', this.testFramework);
   this.config.set('style', this.style);
   this.config.set('ngRoute', this.ngRoute);
   this.config.set('lastUsedModule', 'home');
@@ -259,6 +277,7 @@ Generator.prototype.configuring = function configuring() {
     namedFunc: this.namedFunc,
     polymer: this.polymer,
     framework: this.framework,
+    testFramework: this.testFramework,
     ngRoute: this.ngRoute,
     bower: this.bower
   };
@@ -271,7 +290,7 @@ Generator.prototype.configuring = function configuring() {
   this.template('_bower.json', 'bower.json', this.context);
   this.template('_build.config.js', 'build.config.js', this.context);
   this.template('_gulpfile.js', 'Gulpfile.js', this.context);
-  this.copy('karma.config.js', 'karma.config.js');
+  this.template('_karma.config.js', 'karma.config.js');
   this.template('_package.json', 'package.json', this.context);
   this.copy('protractor.config.js', 'protractor.config.js');
   this.template('_readme.md', 'README.md');

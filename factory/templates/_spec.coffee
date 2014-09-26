@@ -10,7 +10,7 @@ describe '<%= upperCamel %>', ->
     factory = <%= upperCamel %>
 
   it 'should have someValue be <%= upperCamel %>', ->
-    expect(factory.someValue).toEqual '<%= upperCamel %>'
+    expect(factory.someValue).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %> '<%= upperCamel %>'
 
   it 'should have someMethod return <%= upperCamel %>', ->
-    expect(factory.someMethod()).toEqual '<%= upperCamel %>'
+    expect(factory.someMethod()).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %> '<%= upperCamel %>'
