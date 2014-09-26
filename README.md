@@ -115,7 +115,7 @@ yo ng-poly:view newView --module=home/kitchen
 **A module value of `app` will add the new components to the module defined in app.js or app.coffee.**
 * * *
 
-**Examples are shown with HTML, LESS, JavaScript, and UI Router as the app configuration.**
+**Examples are shown with HTML, LESS, JavaScript, Jasmine, and UI Router as the app configuration.**
 
 ### App
 Asks for application name and language preferences to scaffold out an application with a home module. It will also ask if tests should be placed in the `app/` or `tests/` directory. It'll ask for some additional Bower dependencies and then install npm and Bower dependencies.
