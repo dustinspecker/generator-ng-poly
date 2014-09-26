@@ -777,22 +777,19 @@ Produces `app/module/cheap-or-good-service.js`:
 
 /**
  * @ngdoc service
- * @name module.service:CheapOrGood
- * @function
+ * @name home.service:CheapOrGood
  *
  * @description
- *
  *
  */
 angular
   .module('module')
-  .service('CheapOrGood', function () {
-    function CheapOrGoodBase() {}
-    CheapOrGoodBase.prototype.get = function () {
+  .service('CheapOrGood', function CheapOrGood() {
+    var self = this;
+
+    self.get = function get() {
       return 'CheapOrGood';
     };
-
-    return new CheapOrGoodBase();
   });
 ```
 

@@ -6,14 +6,14 @@
  #
  # @description
  #
- #
 ###
 
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
   .service '<%= upperCamel %>', ->
-    class <%= upperCamel %>Base
-      get: ->
-        '<%= upperCamel %>'
+    self = @
 
-    new <%= upperCamel %>Base()
+    self.get = ->
+      '<%= upperCamel %>'
+
+    return
