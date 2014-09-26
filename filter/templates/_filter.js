@@ -7,8 +7,7 @@
 <% if (passFunc) { %>  <% } %> *
 <% if (passFunc) { %>  <% } %> * @description
 <% if (passFunc) { %>  <% } %> *
-<% if (passFunc) { %>  <% } %> *
-<% if (passFunc) { %>  <% } %> * @param {Array} input The array of numbers to filter
+<% if (passFunc) { %>  <% } %> * @param {Array} input The array to filter
 <% if (passFunc) { %>  <% } %> * @returns {Array} The filtered array
 <% if (passFunc) { %>  <% } %> *
 <% if (passFunc) { %>  <% } %> */

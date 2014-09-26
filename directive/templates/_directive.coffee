@@ -7,7 +7,6 @@
  # @element
  #
  # @description
- # Change the element's text to <%= lowerCamel %>\nscope\nattrs
  #
  # @example
    <example module="<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>">
@@ -17,7 +16,6 @@
    </example>
  #
 ###
-
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
   .directive '<%= lowerCamel %>', ->

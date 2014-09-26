@@ -7,7 +7,6 @@
 <% if (passFunc) { %>  <% } %> *
 <% if (passFunc) { %>  <% } %> * @description
 <% if (passFunc) { %>  <% } %> *
-<% if (passFunc) { %>  <% } %> *
 <% if (passFunc) { %>  <% } %> */
 <% if (passFunc) { %>  <% } %>angular
 <% if (passFunc) { %>  <% } %>  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', [

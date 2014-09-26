@@ -4,7 +4,6 @@
 <% if (passFunc) { %>  <% } %>/**
 <% if (passFunc) { %>  <% } %> * @ngdoc service
 <% if (passFunc) { %>  <% } %> * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.provider:<%= upperCamel %>
-<% if (passFunc) { %>  <% } %> * @function
 <% if (passFunc) { %>  <% } %> *
 <% if (passFunc) { %>  <% } %> * @description
 <% if (passFunc) { %>  <% } %> *

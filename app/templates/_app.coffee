@@ -6,9 +6,7 @@
  #
  # @description
  #
- #
 ###
-
 angular
   .module '<%= moduleName %>', [
     <% if (ngRoute) { %>'ngRoute'<% } else { %>'ui.router'<% } %><% if (framework === 'angularstrap') { %>,

@@ -200,7 +200,6 @@ Produces `app/module/the-hero-constant.js`:
  *
  * @description
  *
- *
  */
 angular
   .module('module')
@@ -248,7 +247,6 @@ Produces `app/module/micro-controller.js`:
  * 
  * @description
  * 
- *
  */
 angular
   .module('module')
@@ -295,11 +293,10 @@ Produces `app/module/fancy-button-directive.js`:
 /**
  * @ngdoc directive
  * @name module.directive:fancyButton
- * @restrict EA 
+ * @restrict EA
  * @element
- * 
+ *
  * @description
- * Change the element's text to fancyButton\nscope\nattrs
  *
  * @example
    <example module="module">
@@ -307,7 +304,7 @@ Produces `app/module/fancy-button-directive.js`:
       <fancy-button></fancy-button>
      </file>
    </example>
- * 
+ *
  */
 angular
   .module('module')
@@ -371,9 +368,8 @@ Produces `app/module/cake-factory.js`:
 /**
  * @ngdoc service
  * @name module.factory:Cake
- * 
+ *
  * @description
- * 
  *
  */
 angular
@@ -432,8 +428,7 @@ Produces `app/module/coffee-filter.js`:
  *
  * @description
  *
- *
- * @param {Array} input The array of numbers to filter
+ * @param {Array} input The array to filter
  * @returns {Array} The filtered array
  *
  */
@@ -483,7 +478,6 @@ Produces `app/top/top.js`:
  * @name top
  *
  * @description
- *
  *
  */
 angular
@@ -550,7 +544,6 @@ Updates `app/top/top.js`:
  *
  * @description
  *
- *
  */
 angular
   .module('top', [
@@ -599,9 +592,6 @@ By running `ng-poly:module newHome --empty` a module without a route will be cre
  *
  * @description
  *
- *
- * @ngInject
- *
  */
 angular
   .module('newHome', [
@@ -630,10 +620,8 @@ Produces `app/module/bacon-provider.js`:
 /**
  * @ngdoc service
  * @name module.provider:Bacon
- * @function
  *
  * @description
- *
  *
  */
 angular
@@ -688,9 +676,6 @@ Updates `app/module/module.js`:
  * @requires $stateProvider
  *
  * @description
- *
- *
- * @ngInject
  *
  */
 angular
@@ -832,7 +817,6 @@ Produces `app/module/morals-value.js`:
  * @name module.constant:Morals
  *
  * @description
- *
  *
  */
 angular

@@ -6,12 +6,10 @@
  #
  # @description
  #
- #
- # @param {Array} input The array of numbers to filter
+ # @param {Array} input The array to filter
  # @returns {Array} The filtered array
  #
 ###
-
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
   .filter '<%= lowerCamel %>', ->

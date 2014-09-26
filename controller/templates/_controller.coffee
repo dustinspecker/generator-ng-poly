@@ -7,9 +7,7 @@
  #
  # @description
  #
- #
 ###
-
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
   .controller '<%= ctrlName %>', <% if (!controllerAs) { %>($scope) <% } %>->

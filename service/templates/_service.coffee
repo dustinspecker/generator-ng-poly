@@ -7,7 +7,6 @@
  # @description
  #
 ###
-
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
   .service '<%= upperCamel %>', ->
