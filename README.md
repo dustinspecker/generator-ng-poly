@@ -509,7 +509,6 @@ Updates `app/app.js`:
  *
  * @description
  *
- *
  */
 angular
   .module('module', [
@@ -955,7 +954,6 @@ This will generate controllers like:
  * 
  * @description
  * 
- *
  */
 angular
   .module('home')
@@ -997,9 +995,6 @@ It'll also modify the state's controller like:
  * @requires $stateProvider
  *
  * @description
- *
- *
- * @ngInject
  *
  */
 angular
