@@ -62,7 +62,7 @@ Languages and Features supported:
     - Jasmine (Karma as the test runner) for AngularJS
     - Mocha with Chai (Karma as the test runner) for AngularJS
   * e2e testing
-    - Protractor for AngularJS
+    - Protractor (Jasmine) for AngularJS
   * Frameworks
     - Bootstrap with AngularStrap
     - Bootstrap with UI Bootstrap
