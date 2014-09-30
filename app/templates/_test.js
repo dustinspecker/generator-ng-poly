@@ -17,11 +17,15 @@ var gulp = require('gulp')
   , appScriptFiles = path.join(appBase, '**/*.{coffee,js}')
 
   , unitTests = path.join(require('../build.config.js').unitTestDir, '**/*_test.*')
+  , e2eTestFiles = 'e2e/**/*_test.*'
 
-  , e2eTestFiles = 'e2e/**/*_test.*';
+  , karmaConf = $.lodash.assign({}, require('../karma.config.js'));
+
+// karmaConf.files get populated in karmaFiles
+karmaConf.files = [];
 
 // inject scripts in karma.config.js
-gulp.task('karmaInject', function () {
+gulp.task('karmaFiles', function () {
   var stream = $.streamqueue({objectMode: true});
 
   // add bower javascript
@@ -43,21 +47,14 @@ gulp.task('karmaInject', function () {
   // add unit tests
   stream.queue(gulp.src(unitTests));
 
-  return gulp.src('karma.config.js')
-    .pipe($.inject(stream.done(), {
-      starttag: 'files: [',
-      endtag: ']',
-      addRootSlash: false,
-      transform: function (filepath, file, i, length) {
-        return '\'' + filepath + '\'' + (i + 1 < length ? ',' : '');
-      }
-    }))
-    .pipe(gulp.dest('./'));
+  return stream.done()
+    .on('data', function (file) {
+      karmaConf.files.push(file.path);
+    });
 });
 
 // run unit tests
-gulp.task('unitTest', ['lint', 'karmaInject'], function (done) {
-  var karmaConf = require('../karma.config.js');
+gulp.task('unitTest', ['lint', 'karmaFiles'], function (done) {
   $.karma.server.start($.lodash.assign({}, karmaConf), done);
 });
 

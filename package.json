@@ -39,6 +39,7 @@
     "angular",
     "gulp",
     "jasmine",
+    "mocha",
     "protractor",
     "polymer"
   ],
