@@ -98,7 +98,7 @@ Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
 
 `gulp dev` will call the build task and setup the development environment
 
-`gulp unitTest` will run Jasmine tests via Karma and create code coverage reports
+`gulp unitTest` will run unit tests via Karma and create code coverage reports
 
 `gulp webdriverUpdate` will download the Selenium server standalone and Chrome driver for e2e testing
 
