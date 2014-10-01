@@ -6,7 +6,6 @@ var gulp = require('gulp')
     pattern: [
       'gulp-*',
       'karma',
-      'lodash',
       'streamqueue',
       'wiredep'
     ]
@@ -19,7 +18,7 @@ var gulp = require('gulp')
   , unitTests = path.join(require('../build.config.js').unitTestDir, '**/*_test.*')
   , e2eTestFiles = 'e2e/**/*_test.*'
 
-  , karmaConf = $.lodash.assign({}, require('../karma.config.js'));
+  , karmaConf = require('../karma.config.js');
 
 // karmaConf.files get populated in karmaFiles
 karmaConf.files = [];
@@ -55,7 +54,7 @@ gulp.task('karmaFiles', function () {
 
 // run unit tests
 gulp.task('unitTest', ['lint', 'karmaFiles'], function (done) {
-  $.karma.server.start($.lodash.assign({}, karmaConf), done);
+  $.karma.server.start(karmaConf, done);
 });
 
 // run e2e tests - SERVER MUST BE RUNNING FIRST
