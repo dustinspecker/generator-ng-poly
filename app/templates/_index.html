@@ -1,25 +1,72 @@
 <!DOCTYPE html>
 <html lang='en' data-ng-app='<%= appName %>'>
-<head>
-  <title><%= appName %></title>
-  <meta name='viewport' content='width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes'>
-  <!-- inject:head:js -->
-  <!-- endinject -->
-  <!-- inject:html -->
-  <!-- endinject -->
-  <!-- bower:css -->
-  <!-- endbower -->
-  <!-- inject:css -->
-  <!-- endinject -->
-</head>
-<body>
-  <div data-<% if (ngRoute) { %>ng<% } else { %>ui<% } %>-view>
+  <head>
+    <title><%= appName %></title>
+    <meta name='viewport' content='width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes'>
+    <!-- inject:head:js -->
+    <!-- endinject -->
+    <!-- inject:html -->
+    <!-- endinject -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- inject:css -->
+    <!-- endinject -->
+  </head>
+  <body>
 
-  </div>
+<% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>    <div class='navbar navbar-inverse' role='navigation'<% if (framework === 'angularstrap') { %> data-bs-navbar data-bs-collapse data-start-collapsed='true'<% } %>>
+      <div class='container'>
+        <div class='navbar-header'>
+          <button class='navbar-toggle collapsed' type='button' <% if (framework === 'uibootstrap') { %>data-ng-init='navCollapsed = true' data-ng-click='navCollapsed = !navCollapsed'<% } else { %>data-bs-collapse-toggle<% } %>>
+            <span class='sr-only'>Toggle Navigation</span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+          </button>
+          <a class='navbar-brand' href='#/'><%= appName %></a>
+        </div>
+        <div class='navbar-collapse collapse' <% if (framework === 'uibootstrap') { %>collapse='navCollapsed'<% } else { %>data-bs-collapse-target<% } %>>
+          <ul class='nav navbar-nav'>
+            <li<% if (!ngRoute) { %> data-ui-sref-active='active'<% } else if (framework === 'angularstrap') { %> data-match-route='/home'<% } %>>
+              <a <% if (ngRoute) { %>href='#/home'<% } else { %>data-ui-sref='home'<% } %>>Home</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-  <!-- bower:js -->
-  <!-- endbower -->
-  <!-- inject:js -->
-  <!-- endinject -->
-</body>
+<% } else if (framework === 'foundation') { %>    <div data-top-bar>
+      <ul class='title-area'>
+        <li class='name'>
+          <h1>
+            <a href='#/'><%= appName %></a>
+          </h1>
+        </li>
+        <li class='menu-icon' data-toggle-top-bar>
+          <a href='#/'>
+            <span></span>
+          </a>
+        </li>
+      </ul>
+
+      <div data-top-bar-section>
+        <ul class='left'>
+          <li<% if (!ngRoute) { %> data-ui-sref-active='active'<% } %>>
+            <a <% if (ngRoute) { %>href='#/home'<% } else { %>data-ui-sref='home'<% } %>>Home</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+<% } %><% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>    <div class='container'>
+  <% } %>    <div data-<% if (ngRoute) { %>ng<% } else { %>ui<% } %>-view>
+
+<% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>  <% } %>    </div><% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>
+    </div><% } %>
+
+    <!-- bower:js -->
+    <!-- endbower -->
+    <!-- inject:js -->
+    <!-- endinject -->
+  </body>
 </html>

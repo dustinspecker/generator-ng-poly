@@ -13,7 +13,39 @@
     <!-- endinject -->
   %body
 
-    <div data-<% if (ngRoute) { %>ng<% } else { %>ui<% } %>-view></div>
+<% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>    <div class="navbar navbar-inverse" role="navigation"<% if (framework === 'angularstrap') { %> data-bs-navbar data-bs-collapse data-start-collapsed="true"<% } %>>
+        .container
+          .navbar-header
+            <button class="navbar-toggle collapsed" type="button" <% if (framework === 'uibootstrap') { %>data-ng-init="navCollapsed = true" data-ng-click="navCollapsed = !navCollapsed"<% } else { %>data-bs-collapse-toggle<% } %>>
+              %span.sr-only Toggle Navigation
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            </button>
+            %a.navbar-brand{href: "#/"} <%= appName %>
+          <div class="navbar-collapse collapse" <% if (framework === 'uibootstrap') { %>collapse="navCollapsed"<% } else { %>data-bs-collapse-target<% } %>>
+            %ul.nav.navbar-nav
+              %li<% if (!ngRoute) { %>{data-ui-sref-active: "active"}<% } else if (framework === 'angularstrap') { %>{data-match-route: "/home"}<% } %>
+                %a{<% if (ngRoute) { %>href: "#/home"<% } else { %>data-ui-sref: "home"<% } %>} Home
+          </div>
+      </div>
+
+<% } else if (framework === 'foundation') { %>    %div{data-top-bar: true}
+        %ul.title-area
+          %li.name
+            %h1
+              %a{href: "#/"} <%= appName %>
+          %li.menu-icon{data-toggle-top-bar: true}
+            %a{href: "#/"}
+              %span
+
+        %div{data-top-bar-section: true}
+          %ul.left
+            %li<% if (!ngRoute) { %>{data-ui-sref-active: "active"}<% } %>
+              %a{<% if (ngRoute) { %>href: "#/home"<% } else { %>data-ui-sref: "home"<% } %>} Home
+
+<% } %><% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>    .container
+  <% } %>    <div data-<% if (ngRoute) { %>ng<% } else { %>ui<% } %>-view></div>
 
     <!-- bower:js -->
     <!-- endbower -->
