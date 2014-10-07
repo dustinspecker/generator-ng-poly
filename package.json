@@ -1,6 +1,6 @@
 {
   "name": "generator-ng-poly",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "Yeoman generator for AngularJS apps with optional Polymer support",
   "license": "MIT",
   "main": "app/index.js",
