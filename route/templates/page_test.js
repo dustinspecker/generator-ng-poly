@@ -2,13 +2,15 @@
 'use strict';
 
 var buildConfigFile = require('findup-sync')('build.config.js')
-  , buildConfig = require(buildConfigFile);
+  , buildConfig = require(buildConfigFile)
+  , <%= upperCamel %>PagePo = require('./<%= hyphenName %>.po');
 
 describe('<%= humanName %> page', function () {
-  var <%= lowerCamel %>Page = require('./<%= hyphenName %>.po');
+  var <%= lowerCamel %>Page;
 
   beforeEach(function () {
-    browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#/<% lowerCamel %>');
+    <%= lowerCamel %>Page = new <%= upperCamel %>PagePo();
+    browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#/<%= lowerCamel %>');
   });
 
   it('should say <%= ctrlName %>', function () {

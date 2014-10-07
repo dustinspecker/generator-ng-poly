@@ -6,4 +6,4 @@ class <%= upperCamel %>Page
     @text = element By.tagName('p')
     @heading = element By.tagName('h2')
 
-module.exports = new <%= upperCamel %>Page()
+module.exports = <%= upperCamel %>Page

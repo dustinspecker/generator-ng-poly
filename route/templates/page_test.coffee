@@ -3,12 +3,14 @@
 
 buildConfigFile = require('findup-sync') 'build.config.js'
 buildConfig = require buildConfigFile
+<%= upperCamel %>PagePo = require './<%= hyphenName %>.po'
 
 describe '<%= humanName %> page', ->
-  <%= lowerCamel %>Page = require './<%= hyphenName %>.po'
+  <%= lowerCamel %>Page = undefined
 
   beforeEach ->
-    browser.driver.get buildConfig.host + ':' + buildConfig.port + '/#/<% lowerCamel %>'
+    <%= lowerCamel %>Page = new <%= upperCamel %>PagePo
+    browser.driver.get buildConfig.host + ':' + buildConfig.port + '/#/<%= lowerCamel %>'
 
   it 'should say <%= ctrlName %>', ->
     expect(<%= lowerCamel %>Page.heading.getText()).toEqual '<%= lowerCamel %>'

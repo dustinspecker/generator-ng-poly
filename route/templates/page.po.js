@@ -6,4 +6,4 @@ var <%= upperCamel %>Page = function () {
   this.heading = element(by.tagName('h2'));
 };
 
-module.exports = new <%= upperCamel %>Page();
+module.exports = <%= upperCamel %>Page;

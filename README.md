@@ -709,7 +709,7 @@ var YourPlacePage = function () {
   this.heading = element(by.tagName('h2'));
 };
 
-module.exports = new YourPlacePage();
+module.exports = YourPlacePage;
 ```
 
 Produces `e2e/your-place/your-place_test.js`:
@@ -718,16 +718,18 @@ Produces `e2e/your-place/your-place_test.js`:
 'use strict';
 
 var buildConfigFile = require('findup-sync')('build.config.js')
-  , buildConfig = require(buildConfigFile);
+  , buildConfig = require(buildConfigFile)
+  , YourPlacePagePo = require('./your-place.po');
 
 describe('Your place page', function () {
-  var yourPlacePage = require('./your-place.po');
+  var yourPlacePage;
 
   beforeEach(function () {
+    yourPlacePage = new YourPlacePagePo();
     browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#/yourPlace');
   });
 
-  it('should say YourPlaceCtrl', function() {
+  it('should say YourPlaceCtrl', function () {
     expect(yourPlacePage.heading.getText()).toEqual('yourPlace');
     expect(yourPlacePage.text.getText()).toEqual('YourPlaceCtrl');
   });
