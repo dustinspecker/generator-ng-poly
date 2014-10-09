@@ -15,7 +15,11 @@ Generator.prototype.prompting = function prompting() {
   // get preferred langugaes
   this.prompt([{
     name: 'appName',
-    message: 'What is the app\'s name?'
+    message: 'What is the app\'s name?',
+    validate: function (input) {
+      // require an app name
+      return !!input;
+    }
   },
   {
     name: 'host',
