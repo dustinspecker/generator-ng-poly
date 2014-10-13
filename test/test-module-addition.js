@@ -97,7 +97,7 @@ describe('module generator', function () {
   describe('adding a deep level module', function () {
     before(function (done) {
       helpers.run(path.join(__dirname, '../module'))
-        .withArguments(['home/door'])
+        .withArguments(['home/myDoor'])
         .withOptions({
           'app-script': 'coffee'
         })
@@ -112,7 +112,7 @@ describe('module generator', function () {
     describe('adding a deeper level module', function () {
       before(function (done) {
         helpers.run(path.join(__dirname, '../module'))
-          .withArguments(['home/door/handle'])
+          .withArguments(['home/myDoor/handle'])
           .withGenerators([
             path.join(__dirname, '../route'),
             path.join(__dirname, '../controller'),
@@ -121,8 +121,8 @@ describe('module generator', function () {
           .on('end', done);
       });
 
-      it('should add door.handle to app/home/door.coffee', function () {
-        assert.fileContent('app/home/door/door.coffee', /    \'door.handle\'/);
+      it('should add door.handle to app/home/my-door.coffee', function () {
+        assert.fileContent('app/home/my-door/my-door.coffee', /    \'myDoor.handle\'/);
       });
     });
 
@@ -131,11 +131,11 @@ describe('module generator', function () {
     });
 
     it('should add home.door to app/home/home.js deps', function () {
-      assert.fileContent('app/home/home.js', /    \'home.door\'/);
+      assert.fileContent('app/home/home.js', /    \'home.myDoor\'/);
     });
 
-    it('should name module in app/home/door/door.coffee home.door', function () {
-      assert.fileContent('app/home/door/door.coffee', /angular[^$]*.module[^$]*\'home.door\'/);
+    it('should name module in app/home/my-door/my-door.coffee home.myDoor', function () {
+      assert.fileContent('app/home/my-door/my-door.coffee', /angular[^$]*.module[^$]*\'home.myDoor\'/);
     });
   });
 

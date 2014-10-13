@@ -28,7 +28,7 @@ Generator.prototype.initialize = function initialize() {
 };
 
 Generator.prototype.writing = function writing() {
-  var filePath, file, parentDir, depName;
+  var filePath, file, parentDir, depName, parentModuleDir;
 
   this.context = this.getConfig();
 
@@ -36,7 +36,7 @@ Generator.prototype.writing = function writing() {
   this.context.lowerCamel = utils.lowerCamel(this.context.moduleName);
   this.context.hyphenModule = utils.hyphenName(this.context.moduleName);
   this.context.upperModule = utils.upperCamel(this.context.moduleName);
-  this.context.parentModuleName = null;
+  parentModuleDir = null;
   this.context.templateUrl = path.join(this.module).replace(/\\/g, '/');
   this.context.modulePath = utils.normalizeModulePath(this.module);
 
@@ -57,13 +57,13 @@ Generator.prototype.writing = function writing() {
     parentDir = path.resolve(path.join(this.context.appDir, this.context.modulePath), '..');
 
     // for templating to create a parent.child module name
-    this.context.parentModuleName = path.basename(parentDir);
+    parentModuleDir = path.basename(parentDir);
 
-    filePath = path.join(parentDir, this.context.parentModuleName + '.coffee');
+    filePath = path.join(parentDir, parentModuleDir + '.coffee');
 
     // if CoffeeScript parent module doesn't exist, use JavaScript parent module
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(parentDir, this.context.parentModuleName + '.js');
+      filePath = path.join(parentDir, parentModuleDir + '.js');
     }
   }
 
