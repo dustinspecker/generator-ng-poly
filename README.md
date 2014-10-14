@@ -48,6 +48,8 @@ Available generators:
   - [ng-poly:element](#element)
 
 Languages and Features supported:
+  * Angular Versions
+    - 1.2.\*, 1.3.\*
   * Markup
     - HAML, HTML, Jade
   * Application scripting languages
@@ -74,6 +76,7 @@ Languages and Features supported:
   * Other supported Bower packages:
     - Angular Animate
     - Angular Cookies
+    - Angular Messages
     - Angular Resource
     - Angular Sanitize
     - Angular Touch

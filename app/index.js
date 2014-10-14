@@ -206,40 +206,51 @@ Generator.prototype.prompting = function prompting() {
       type: 'checkbox',
       name: 'bower',
       message: 'Which additonal Bower components should be installed?',
-      choices: [
-        {
-          name: 'Angular Animate',
-          value: 'animate'
-        },
-        {
-          name: 'Angular Cookies',
-          value: 'cookies'
-        },
-        {
-          name: 'Angular Resource',
-          value: 'resource'
-        },
-        {
-          name: 'Angular Sanitize',
-          value: 'sanitize'
-        },
-        {
-          name: 'Angular Touch',
-          value: 'touch'
-        },
-        {
-          name: 'Font Awesome',
-          value: 'fontawesome'
-        },
-        {
-          name: 'Lo-Dash',
-          value: 'lodash'
-        },
-        {
-          name: 'Restangular (installs Lo-Dash)',
-          value: 'restangular'
+      choices: function (answers) {
+        var choices = [
+          {
+            name: 'Angular Animate',
+            value: 'animate'
+          },
+          {
+            name: 'Angular Cookies',
+            value: 'cookies'
+          },
+          {
+            name: 'Angular Resource',
+            value: 'resource'
+          },
+          {
+            name: 'Angular Sanitize',
+            value: 'sanitize'
+          },
+          {
+            name: 'Angular Touch',
+            value: 'touch'
+          },
+          {
+            name: 'Font Awesome',
+            value: 'fontawesome'
+          },
+          {
+            name: 'Lo-Dash',
+            value: 'lodash'
+          },
+          {
+            name: 'Restangular (installs Lo-Dash)',
+            value: 'restangular'
+          }
+        ];
+
+        if (answers.ngversion === '1.3.*') {
+          choices.splice(2, 0, {
+            name: 'Angular Messages',
+            value: 'messages'
+          });
         }
-      ]
+
+        return choices;
+      }
     }
   ], function (props) {
     this.appName = props.appName;
