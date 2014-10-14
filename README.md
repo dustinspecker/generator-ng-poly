@@ -124,6 +124,7 @@ Example:
 ```
 yo ng-poly
 [?] What is the app's name?
+[?] Which version of Angular should be used?
 [?] What host should the app run on?
 [?] Which port should the app run on?
 [?] Which folder should the app be developed in?
