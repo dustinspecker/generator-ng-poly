@@ -171,7 +171,7 @@ Generator.prototype.prompting = function prompting() {
       type: 'confirm',
       name: 'polymer',
       message: 'Should Polymer support be enabled?',
-      default: true
+      default: false
     },
     {
       type: 'list',
