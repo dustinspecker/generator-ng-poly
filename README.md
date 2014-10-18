@@ -255,7 +255,8 @@ Produces `app/module/micro-controller.js`:
 angular
   .module('module')
   .controller('MicroCtrl', function ($scope) {
-    $scope.ctrlName = 'MicroCtrl';
+    $scope.micro = {};
+    $scope.micro.ctrlName = 'MicroCtrl';
   });
 ```
 
@@ -275,7 +276,7 @@ describe('MicroCtrl', function () {
   }));
 
   it('should have ctrlName as MicroCtrl', function () {
-    expect(scope.ctrlName).toEqual('MicroCtrl');
+    expect(scope.micro.ctrlName).toEqual('MicroCtrl');
   });
 
 });
@@ -862,7 +863,7 @@ yo ng-poly:view nice
 Produces `app/module/nice-view.tpl.html`:
 ```html
 <h2>nice</h2>
-<p>{{ctrlName}}</p>
+<p>{{nice.ctrlName}}</p>
 ```
 
 Produces `app/module/nice-view.less`:
