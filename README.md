@@ -317,10 +317,14 @@ angular
     return {
       restrict: 'EA',
       scope: {},
-      templateUrl: 'module/fancy-button-directive.tpl.html', 
+      templateUrl: 'module/fancy-button-directive.tpl.html',
       replace: false,
+      controller: function (scope) {
+        scope.fancyButton = {};
+        scope.fancyButton.name = 'fancyButton';
+      },
       link: function (scope, element, attrs) {
-        element.text('fancyButton\n' + scope + '\n' + attrs);
+        /*jshint unused:false */
       }
     };
   });
@@ -328,7 +332,7 @@ angular
 
 Produces `app/module/fancy-button-directive.tpl.html`:
 ```html
-<div></div>
+<div>{{fancyButton.name}}</div>
 ```
 
 Produces `app/module/fancy-button-directive_test.js`:
@@ -344,13 +348,12 @@ describe('fancyButton', function () {
 
   beforeEach(inject(function ($compile, $rootScope) {
     scope = $rootScope.$new();
-    element = angular.element('<fancy-button></fancy-button>');
-    $compile(element)($rootScope);
+    element = $compile(angular.element('<fancy-button></fancy-button>'))(scope);
   }));
 
   it('should have correct text', function () {
     scope.$digest();
-    expect(element.html()).toEqual('fancyButton\n[object Object]\n[object Object]');
+    expect(element.isolateScope().fancyButton.name).toEqual('fancyButton');
   });
 
 });
@@ -1020,6 +1023,48 @@ angular
       });
   });
 ```
+
+Directives will be generated like:
+
+```javascript
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name home.directive:fancyButton
+ * @restrict EA
+ * @element
+ *
+ * @description
+ *
+ * @example
+   <example module="home">
+     <file name="index.html">
+      <fancy-button></fancy-button>
+     </file>
+   </example>
+ *
+ */
+angular
+  .module('home')
+  .directive('fancyButton', function fancyButton() {
+    return {
+      restrict: 'EA',
+      scope: {},
+      templateUrl: 'home/fancy-button-directive.tpl.html',
+      replace: false,
+      controllerAs: 'fancyButton',
+      controller: function () {
+        var vm = this;
+        vm.name = 'fancyButton';
+      },
+      link: function (scope, element, attrs) {
+        /*jshint unused:false */
+      }
+    };
+  });
+```
+
 
 Lastly, views will be generated like:
 

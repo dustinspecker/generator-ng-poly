@@ -9,13 +9,12 @@ describe('<%= lowerCamel %>', function () {
 
   beforeEach(inject(function ($compile, $rootScope) {
     scope = $rootScope.$new();
-    element = angular.element('<<%= hyphenName %>></<%= hyphenName %>>');
-    $compile(element)($rootScope);
+    element = $compile(angular.element('<<%= hyphenName %>></<%= hyphenName %>>'))(scope);
   }));
 
   it('should have correct text', function () {
     scope.$digest();
-    expect(element.html()).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %>('<%= lowerCamel %>\n[object Object]\n[object Object]');
+    expect(element.isolateScope().<%= lowerCamel %>.name).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %>('<%= lowerCamel %>');
   });
 
 });

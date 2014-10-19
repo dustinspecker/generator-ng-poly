@@ -25,9 +25,15 @@
 <% if (passFunc) { %>  <% } %>      restrict: 'AE',
 <% if (passFunc) { %>  <% } %>      scope: {},
 <% if (passFunc) { %>  <% } %>      templateUrl: '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html',
-<% if (passFunc) { %>  <% } %>      replace: false,
+<% if (passFunc) { %>  <% } %>      replace: false,<% if (controllerAs) { %>
+<% if (passFunc) { %>  <% } %>      controllerAs: '<%= lowerCamel %>',<% } %>
+<% if (passFunc) { %>  <% } %>      controller: function (<% if (!controllerAs) { %>$scope<% } %>) {
+<% if (passFunc) { %>  <% } %>        <% if (controllerAs) { %>var vm = this;
+<% if (passFunc) { %>  <% } %>        vm.name = '<%= lowerCamel %>';<% } else { %>$scope.<%= lowerCamel %> = {};
+<% if (passFunc) { %>  <% } %>        $scope.<%= lowerCamel %>.name = '<%= lowerCamel %>';<% } %>
+<% if (passFunc) { %>  <% } %>      },
 <% if (passFunc) { %>  <% } %>      link: function (scope, element, attrs) {
-<% if (passFunc) { %>  <% } %>        element.text('<%= lowerCamel %>\n' + scope + '\n' + attrs);
+<% if (passFunc) { %>  <% } %>        /*jshint unused:false */
 <% if (passFunc) { %>  <% } %>      }
 <% if (passFunc) { %>  <% } %>    };
 <% if (passFunc) { %>  <% } %>  });<% } %><% if (passFunc) { %>
@@ -37,9 +43,15 @@
       restrict: 'EA',
       scope: {},
       templateUrl: '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html',
-      replace: false,
+      replace: false,<% if (controllerAs) { %>
+      controllerAs: '<%= lowerCamel %>',<% } %>
+      controller: function (<% if (!controllerAs) { %>$scope<% } %>) {
+        <% if (controllerAs) { %>var vm = this;
+        vm.name = '<%= lowerCamel %>';<% } else { %>$scope.<%= lowerCamel %> = {};
+        $scope.<%= lowerCamel %>.name = '<%= lowerCamel %>';<% } %>
+      },
       link: function (scope, element, attrs) {
-        element.text('<%= lowerCamel %>\n' + scope + '\n' + attrs);
+        /*jshint unused:false */
       }
     };
   }

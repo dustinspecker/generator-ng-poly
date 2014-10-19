@@ -8,36 +8,40 @@ Generator = module.exports = yeoman.generators.NamedBase.extend();
 Generator.prototype.askForModuleName = function askForModuleName(params) {
   var done = this.async();
 
-  this.prompt([{
-    name: 'module',
-    message: 'Which module is this for?',
-    default: this.config.get('lastUsedModule'),
-    when: function () {
-      return !(this.options && this.options.module);
-    }.bind(this),
-    validate: function (input) {
-      return utils.moduleExists(this.config.path, input);
-    }.bind(this)
-  }, {
-    name: 'url',
-    message: 'What\'s the URL for this route?',
-    default: function () {
-      return '/' + utils.lowerCamel(this.name);
-    }.bind(this),
-    when: function () {
-      return ((params && params.url) && !this.config.get('ngRoute') && !(this.options && this.options.url));
-    }.bind(this)
-  }, {
-    name: 'templateUrl',
-    message: 'What\'s the templateURL for this route?',
-    default: function (answers) {
-      var module = answers.module || this.options.module;
-      return utils.normalizeModulePath(module) + '/' + utils.hyphenName(this.name) + '.tpl.html';
-    }.bind(this),
-    when: function () {
-      return ((params && params.templateUrl) && !(this.options && this.options['template-url']));
-    }.bind(this)
-  }], function (props) {
+  this.prompt([
+    {
+      name: 'module',
+      message: 'Which module is this for?',
+      default: this.config.get('lastUsedModule'),
+      when: function () {
+        return !(this.options && this.options.module);
+      }.bind(this),
+      validate: function (input) {
+        return utils.moduleExists(this.config.path, input);
+      }.bind(this)
+    },
+    {
+      name: 'url',
+      message: 'What\'s the URL for this route?',
+      default: function () {
+        return '/' + utils.lowerCamel(this.name);
+      }.bind(this),
+      when: function () {
+        return ((params && params.url) && !this.config.get('ngRoute') && !(this.options && this.options.url));
+      }.bind(this)
+    },
+    {
+      name: 'templateUrl',
+      message: 'What\'s the templateURL for this route?',
+      default: function (answers) {
+        var module = answers.module || this.options.module;
+        return utils.normalizeModulePath(module) + '/' + utils.hyphenName(this.name) + '.tpl.html';
+      }.bind(this),
+      when: function () {
+        return ((params && params.templateUrl) && !(this.options && this.options['template-url']));
+      }.bind(this)
+    }
+  ], function (props) {
     this.module = props.module || this.options.module;
     this.url = props.url || this.options.url || this.name;
     this.templateUrl = props.templateUrl || this.options['template-url'];

@@ -22,6 +22,11 @@ angular
     restrict: 'AE'
     scope: {}
     templateUrl: '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html'
-    replace: false
+    replace: false<% if (controllerAs) { %>
+    controllerAs: '<%= lowerCamel %>'<% } %>
+    controller:<% if (!controllerAs) { %> ($scope)<% } %> ->
+      <% if (controllerAs) { %>vm = this
+      vm.name = '<%= lowerCamel %>'<% } else { %>$scope.<%= lowerCamel %> = {}
+      $scope.<%= lowerCamel %>.name = '<%= lowerCamel %>'<% } %>
     link: (scope, element, attrs) ->
-      element.text '<%= lowerCamel %>\n' + scope + '\n' + attrs
+      ###jshint unused:false ###
