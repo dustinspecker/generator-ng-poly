@@ -25,7 +25,7 @@ angular
     replace: false<% if (controllerAs) { %>
     controllerAs: '<%= lowerCamel %>'<% } %>
     controller:<% if (!controllerAs) { %> ($scope)<% } %> ->
-      <% if (controllerAs) { %>vm = this
+      <% if (controllerAs) { %>vm = @
       vm.name = '<%= lowerCamel %>'<% } else { %>$scope.<%= lowerCamel %> = {}
       $scope.<%= lowerCamel %>.name = '<%= lowerCamel %>'<% } %>
     link: (scope, element, attrs) ->

@@ -11,6 +11,6 @@
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
   .controller '<%= ctrlName %>', <% if (!controllerAs) { %>($scope) <% } %>->
-    <% if (controllerAs) { %>vm = this
+    <% if (controllerAs) { %>vm = @
     vm.ctrlName = '<%= ctrlName %>'<% } else { %>$scope.<%= lowerCamel %> = {}
     $scope.<%= lowerCamel %>.ctrlName = '<%= ctrlName %>'<% } %>
