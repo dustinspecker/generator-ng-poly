@@ -1,12 +1,25 @@
 'use strict';
-var utils = require('../utils')
+var path = require('path')
+  , pkg = require(path.join(__dirname, '../package.json'))
+  , updateNotifier = require('update-notifier')
+  , utils = require('../utils')
   , yeoman = require('yeoman-generator')
   , Generator;
 
 Generator = module.exports = yeoman.generators.NamedBase.extend();
 
 Generator.prototype.askForModuleName = function askForModuleName(params) {
-  var done = this.async();
+  var done = this.async()
+    , notifier;
+
+  // check for updates async
+  notifier = updateNotifier({
+    packageName: pkg.name,
+    packageVersion: pkg.version
+  });
+
+  // notifiy user about update, if there is an update
+  notifier.notify();
 
   this.prompt([
     {
