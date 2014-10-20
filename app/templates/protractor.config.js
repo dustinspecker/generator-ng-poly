@@ -1,5 +1,7 @@
+var glob = require('glob');
+
 exports.config = {
-  seleniumServerJar: './node_modules/protractor/selenium/selenium-server-standalone-2.43.1.jar',
+  seleniumServerJar: glob.sync('./node_modules/protractor/selenium/selenium-server-standalone-*.jar').join(),
   capabilities: {
     browserName: 'chrome',
     chromeOptions: {
