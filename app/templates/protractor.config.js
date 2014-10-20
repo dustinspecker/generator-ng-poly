@@ -7,8 +7,8 @@ exports.config = {
     }
   },
 
-  jasmineNodeOpts: {
+  <% if (testFramework === 'mocha') { %>framework: 'mocha'<% } else { %>jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000
-  }
+  }<% } %>
 };

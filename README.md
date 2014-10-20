@@ -64,7 +64,8 @@ Languages and Features supported:
     - Jasmine (Karma as the test runner) for AngularJS
     - Mocha with Chai (Karma as the test runner) for AngularJS
   * e2e testing
-    - Protractor (Jasmine) for AngularJS
+    - Jasmine (ran with Protractor) for AngularJS
+    - Mocha, Chai, and Chai as Promised (ran with Protractor) for AngularJS
   * Frameworks
     - Bootstrap with AngularStrap
     - Bootstrap with UI Bootstrap
@@ -138,7 +139,7 @@ yo ng-poly
 [?] Want to use named functions instead of anonymous?
 [?] Where should unit tests be saved?
 [?] Which is the preferred test scripting language?
-[?] Which is the preferred unit testing framework?
+[?] Which is the preferred testing framework?
 [?] Which is the preferred style language?
 [?] Should Polymer support be enabled?
 [?] Should a framework be setup?

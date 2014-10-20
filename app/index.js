@@ -130,7 +130,7 @@ Generator.prototype.prompting = function prompting() {
     {
       type: 'list',
       name: 'testFramework',
-      message: 'Which is the preferred unit testing framework?',
+      message: 'Which is the preferred testing framework?',
       default: 'jasmine',
       choices: [
         {

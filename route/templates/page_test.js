@@ -1,8 +1,10 @@
-/*global describe, beforeEach, it, browser, expect */
+/*global describe, beforeEach, it, browser<% if (testFramework === 'jasmine') { %>, expect<% } %> */
 'use strict';
 
 var buildConfigFile = require('findup-sync')('build.config.js')
-  , buildConfig = require(buildConfigFile)
+  , buildConfig = require(buildConfigFile)<% if (testFramework === 'mocha') { %>
+  , chai = require('chai')
+  , expect = chai.expect<% } %>
   , <%= upperCamel %>PagePo = require('./<%= hyphenName %>.po');
 
 describe('<%= humanName %> page', function () {
@@ -14,7 +16,7 @@ describe('<%= humanName %> page', function () {
   });
 
   it('should say <%= ctrlName %>', function () {
-    expect(<%= lowerCamel %>Page.heading.getText()).toEqual('<%= lowerCamel %>');
-    expect(<%= lowerCamel %>Page.text.getText()).toEqual('<%= ctrlName %>');
+    expect(<%= lowerCamel %>Page.heading.getText()).<% if (testFramework === 'mocha') { %>to.eventually.equal<% } else { %>toEqual<% } %>('<%= lowerCamel %>');
+    expect(<%= lowerCamel %>Page.text.getText()).<% if (testFramework === 'mocha') { %>to.eventually.equal<% } else { %>toEqual<% } %>('<%= ctrlName %>');
   });
 });
