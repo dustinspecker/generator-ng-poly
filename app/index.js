@@ -130,7 +130,23 @@ Generator.prototype.prompting = function prompting() {
     {
       type: 'list',
       name: 'testFramework',
-      message: 'Which is the preferred testing framework?',
+      message: 'Which is the preferred unit testing framework?',
+      default: 'jasmine',
+      choices: [
+        {
+          name: 'Jasmine',
+          value: 'jasmine'
+        },
+        {
+          name: 'Mocha with Chai',
+          value: 'mocha'
+        }
+      ]
+    },
+    {
+      type: 'list',
+      name: 'e2eTestFramework',
+      message: 'Which is the preferred e2e testing framework?',
       default: 'jasmine',
       choices: [
         {
@@ -265,6 +281,7 @@ Generator.prototype.prompting = function prompting() {
     this.namedFunc = props.namedFunc;
     this.testScript = props.testScript;
     this.testFramework = props.testFramework;
+    this.e2eTestFramework = props.e2eTestFramework;
     this.unitTestDir = props.unitTestDir;
     this.style = props.style;
     this.polymer = props.polymer;
@@ -291,6 +308,7 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
   this.config.set('testFramework', this.testFramework);
+  this.config.set('e2eTestFramework', this.e2eTestFramework);
   this.config.set('style', this.style);
   this.config.set('ngRoute', this.ngRoute);
   this.config.set('lastUsedModule', 'home');
@@ -312,6 +330,7 @@ Generator.prototype.configuring = function configuring() {
     polymer: this.polymer,
     framework: this.framework,
     testFramework: this.testFramework,
+    e2eTestFramework: this.e2eTestFramework,
     ngRoute: this.ngRoute,
     bower: this.bower
   };

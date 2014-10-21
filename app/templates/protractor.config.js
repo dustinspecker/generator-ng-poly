@@ -9,7 +9,7 @@ exports.config = {
     }
   },
 
-  <% if (testFramework === 'mocha') { %>framework: 'mocha'<% } else { %>jasmineNodeOpts: {
+  <% if (e2eTestFramework === 'mocha') { %>framework: 'mocha'<% } else { %>jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000
   }<% } %>

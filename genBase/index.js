@@ -98,7 +98,8 @@ Generator.prototype.getConfig = function getConfig() {
     namedFunc: (this.options['named-func'] !== undefined && this.options['named-func'] !== null) ?
       this.options['named-func'] : this.config.get('namedFunc'),
     testScript: this.options['test-script'] || this.config.get('testScript'),
-    testFramework: this.config.get('testFramework') || 'jasmine',
+    testFramework: this.config.get('testFramework'),
+    e2eTestFramework: this.config.get('e2eTestFramework') || 'jasmine',
     style: this.options.style || this.config.get('style'),
     ngRoute: (this.options['ng-route'] !== undefined && this.options['ng-route'] !== null) ?
       this.options['ng-route'] : this.config.get('ngRoute'),

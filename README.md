@@ -139,7 +139,8 @@ yo ng-poly
 [?] Want to use named functions instead of anonymous?
 [?] Where should unit tests be saved?
 [?] Which is the preferred test scripting language?
-[?] Which is the preferred testing framework?
+[?] Which is the preferred unit testing framework?
+[?] Which is the preferred e2e testing framework?
 [?] Which is the preferred style language?
 [?] Should Polymer support be enabled?
 [?] Should a framework be setup?
