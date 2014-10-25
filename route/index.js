@@ -61,9 +61,8 @@ Generator.prototype.writing = function writing() {
   // create test
   this.template('page_test.' + config.testScript,
     path.join('e2e', config.hyphenName, config.hyphenName + '_test.' + config.testScript), config);
-};
 
-Generator.prototype.end = function end() {
+  // call controller subgenerator
   this.composeWith('ng-poly:controller', {
     args: [this.name],
     options: {
@@ -82,6 +81,8 @@ Generator.prototype.end = function end() {
     local: require.resolve('../controller'),
     link: 'strong'
   });
+
+  // call view subgenerator
   this.composeWith('ng-poly:view', {
     args: [path.basename(this.templateUrl)],
     options: {

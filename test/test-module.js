@@ -2,10 +2,11 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
+  , os = require('os')
   , path = require('path')
   , sinon = require('sinon');
 
-describe('module generator', function () {
+describe('Module generator', function () {
   var gen; // used to test if methods have been called
 
   // generate default app
@@ -13,12 +14,12 @@ describe('module generator', function () {
   // stub installDependencies for code coverage
   before(function (done) {
     helpers.run(path.join(__dirname, '../app'))
-      .inDir(path.join(__dirname, 'module-temp'))
+      .inDir(path.join(os.tmpDir(), 'temp-module'))
       .withOptions({
         'skip-install': false
       })
       .withPrompts({
-        appName: 'module-temp-test',
+        appName: 'temp-module',
         markup: 'html',
         appScript: 'js',
         controllerAs: false,

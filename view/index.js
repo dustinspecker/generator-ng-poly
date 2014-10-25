@@ -14,11 +14,6 @@ Generator.prototype.writing = function writing() {
   , markupFile = this.name
   , styleFile;
 
-  // if last character is a slash, remove it
-  if (markupFile.charAt(markupFile.length - 1) === '/') {
-    markupFile = markupFile.slice(0, markupFile.length - 1);
-  }
-
   // if markupFile doesn't end with .tpl.html, append it
   if (!/[.]tpl[.]html$/.test(this.name)) {
     markupFile = markupFile + '.tpl.html';

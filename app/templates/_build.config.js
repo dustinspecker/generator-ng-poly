@@ -18,4 +18,3 @@ module.exports = {
   buildImages: 'build/images/',
   buildJs: 'build/js/'
 };
-
