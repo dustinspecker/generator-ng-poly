@@ -36,7 +36,7 @@
     "gulp-order": "^1.1.1",
     "gulp-plato": "^1.0.0",
     "gulp-protractor": "^0.0.11",
-    "gulp-rev": "^1.1.0",
+    "gulp-rev": "^2.0.1",
     "gulp-sass": "^1.0.0",
     "gulp-stylus": "^1.0.0",
     "gulp-uglify": "^1.0.0",
