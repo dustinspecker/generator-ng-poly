@@ -33,12 +33,13 @@ describe('Route generator', function () {
       .on('end', done);
   });
 
-  describe('with HTML markup, Less style, JS app, and JS test', function () {
+  describe('with HTML markup, Less style, JS app, JS test, and skipController', function () {
     before(function (done) {
       helpers.run(join(__dirname, '../route'))
         .withArguments(['test'])
         .withOptions({
           module: 'home',
+          'skip-controller': true,
           'template-url': 'value',
           url: 'value'
         })
@@ -47,12 +48,17 @@ describe('Route generator', function () {
 
     it('should create route files', function () {
       assert.file([
-        'app/home/test-controller.js',
-        'app/home/test-controller_test.js',
         'app/home/test.tpl.html',
         'app/home/test.less',
         'e2e/test/test.po.js',
         'e2e/test/test_test.js'
+      ]);
+    });
+
+    it('should not create controller files', function () {
+      assert.noFile([
+        'app/home/test-controller.js',
+        'app/home/test-controller_test.js'
       ]);
     });
 

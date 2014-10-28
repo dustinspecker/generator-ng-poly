@@ -46,6 +46,26 @@ describe('Route Utils', function () {
       });
     });
 
+    describe('skipController', function () {
+      var config
+        , fileContents;
+
+      beforeEach(function () {
+        config = {
+          appScript: 'coffee',
+          skipController: true,
+          passFunc: false,
+          ngRoute: false
+        };
+        fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.coffee'), 'utf-8');
+      });
+
+      it('should add state without controller', function () {
+        assert(/.state \'test\',[\n\r]*        url: \'\/test\'[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r]/
+          .test(routeUtils.addRoute(fileContents, newState, config)));
+      });
+    });
+
     describe('no state defined', function () {
       describe('defined inline config function', function () {
         var config
@@ -202,6 +222,26 @@ describe('Route Utils', function () {
       });
     });
 
+    describe('skipController', function () {
+      var config
+        , fileContents;
+
+      beforeEach(function () {
+        config = {
+          appScript: 'js',
+          skipController: true,
+          passFunc: false,
+          ngRoute: false
+        };
+        fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.js'), 'utf8');
+      });
+
+      it('should add state without contorller', function () {
+        assert(/.state\(\'test\', {[\n\r]*        url: \'\/test\',[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r][^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config)));
+      });
+    });
+
     describe('no state defined', function () {
       describe('passed config function', function () {
         var config
@@ -295,6 +335,26 @@ describe('Route Utils', function () {
 
       it('should only have 1 $routeProvider param', function () {
         assert(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$routeProvider.*\)/).length === 1);
+      });
+    });
+
+    describe('skipController', function () {
+      var config
+        , fileContents;
+
+      beforeEach(function () {
+        config = {
+          appScript: 'js',
+          skipController: true,
+          passFunc: true,
+          ngRoute: true
+        };
+        fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-has-when.js'), 'utf8');
+      });
+
+      it('should add route without controller', function () {
+        assert(/.when\(\'\/test\', {[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r][^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config)));
       });
     });
 

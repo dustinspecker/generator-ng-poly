@@ -96,6 +96,12 @@ Generator.prototype.prompting = function prompting() {
     },
     {
       type: 'confirm',
+      name: 'skipController',
+      message: 'By default, should the route generator create controllers?',
+      default: true
+    },
+    {
+      type: 'confirm',
       name: 'passFunc',
       message: 'Should functions be defined and passed instead of defined inline (in callbacks)?',
       default: true
@@ -277,6 +283,7 @@ Generator.prototype.prompting = function prompting() {
     this.markup = props.markup;
     this.appScript = props.appScript;
     this.controllerAs = props.controllerAs;
+    this.skipController = !props.skipController;
     this.passFunc = props.passFunc;
     this.namedFunc = props.namedFunc;
     this.testScript = props.testScript;
@@ -304,6 +311,7 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('markup', this.markup);
   this.config.set('appScript', this.appScript);
   this.config.set('controllerAs', this.controllerAs);
+  this.config.set('skipController', this.skipController);
   this.config.set('passFunc', this.passFunc);
   this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
@@ -384,6 +392,7 @@ Generator.prototype.end = function end() {
       'test-dir': this.testDir,
       'test-script': this.testScript,
       'controller-as': this.controllerAs,
+      'skip-controller': this.skipController,
       'pass-func': this.passFunc,
       'named-func': this.namedFunc,
       'ng-route': this.ngRoute

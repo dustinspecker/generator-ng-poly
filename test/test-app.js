@@ -35,7 +35,7 @@ describe('App generator', function () {
         .on('end', function () {
           // TODO: determine why done is called before files are finished writing
           // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 300);
+          setTimeout(done, 400);
         });
     });
 
@@ -103,7 +103,7 @@ describe('App generator', function () {
         .on('end', function () {
           // TODO: determine why done is called before files are finished writing
           // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 300);
+          setTimeout(done, 400);
         });
     });
 
@@ -168,7 +168,7 @@ describe('App generator', function () {
         .on('end', function () {
           // TODO: determine why done is called before files are finished writing
           // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 300);
+          setTimeout(done, 400);
         });
     });
 
@@ -234,7 +234,7 @@ describe('App generator', function () {
         .on('end', function () {
           // TODO: determine why done is called before files are finished writing
           // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 300);
+          setTimeout(done, 400);
         });
     });
 

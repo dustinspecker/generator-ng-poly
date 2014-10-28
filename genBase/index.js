@@ -93,6 +93,10 @@ Generator.prototype.getConfig = function getConfig() {
     appScript: this.options['app-script'] || this.config.get('appScript'),
     controllerAs: (this.options['controller-as'] !== undefined && this.options['controller-as'] !== null) ?
       this.options['controller-as'] : this.config.get('controllerAs'),
+
+    skipController: (this.options['skip-controller'] !== undefined && this.options['skip-controller'] !== null) ?
+      this.options['skip-controller'] : this.config.get('skipController'),
+
     passFunc: (this.options['pass-func'] !== undefined && this.options['pass-func'] !== null) ?
       this.options['pass-func'] : this.config.get('passFunc'),
     namedFunc: (this.options['named-func'] !== undefined && this.options['named-func'] !== null) ?

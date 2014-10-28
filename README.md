@@ -135,6 +135,7 @@ yo ng-poly
 [?] Which is the preferred markup language?
 [?] Which is the preferred application scripting language?
 [?] Want to use Controller As syntax?
+[?] By default, should the route generator create controllers?
 [?] Should functions be defined and passed instead of defined inline (in callbacks)?
 [?] Want to use named functions instead of anonymous?
 [?] Where should unit tests be saved?
@@ -945,6 +946,7 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 | style | css, less, scss, styl|
 | test-script | coffee, js|
 | controller-as | true, false |
+| skip-controller | true, false |
 | pass-func | true, false |
 | named-func | true, false |
 | ng-route | true, false|

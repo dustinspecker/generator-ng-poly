@@ -33,6 +33,7 @@ Generator.prototype.writing = function writing() {
     , newRouteConfig = {
       appScript: config.appScript,
       controllerAs: config.controllerAs,
+      skipController: config.skipController,
       passFunc: config.passFunc,
       ngRoute: config.ngRoute
     }
@@ -62,25 +63,27 @@ Generator.prototype.writing = function writing() {
   this.template('page_test.' + config.testScript,
     path.join('e2e', config.hyphenName, config.hyphenName + '_test.' + config.testScript), config);
 
-  // call controller subgenerator
-  this.composeWith('ng-poly:controller', {
-    args: [this.name],
-    options: {
-      module: this.module,
+  if (!config.skipController) {
+    // call controller subgenerator
+    this.composeWith('ng-poly:controller', {
+      args: [this.name],
+      options: {
+        module: this.module,
 
-      markup: this.options.markup,
-      'app-script': this.options['app-script'],
-      'controller-as': this.options['controller-as'],
-      'pass-func': this.options['pass-func'],
-      'named-func': this.options['named-func'],
-      'test-script': this.options['test-script'],
-      'test-dir': this.options['test-dir'],
-      style: this.options.style
-    }
-  }, {
-    local: require.resolve('../controller'),
-    link: 'strong'
-  });
+        markup: this.options.markup,
+        'app-script': this.options['app-script'],
+        'controller-as': this.options['controller-as'],
+        'pass-func': this.options['pass-func'],
+        'named-func': this.options['named-func'],
+        'test-script': this.options['test-script'],
+        'test-dir': this.options['test-dir'],
+        style: this.options.style
+      }
+    }, {
+      local: require.resolve('../controller'),
+      link: 'strong'
+    });
+  }
 
   // call view subgenerator
   this.composeWith('ng-poly:view', {

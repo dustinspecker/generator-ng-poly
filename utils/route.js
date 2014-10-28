@@ -142,24 +142,26 @@ function prepareState(state, analysis, config) {
     if (config.ngRoute) {
       newState = [
         '  .when(\'' + state.url + '\', {',
-        '    templateUrl: \'' + state.templateUrl + '\','
+        '    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ',')
       ];
     } else {
       newState = [
         '  .state(\'' + state.lowerCamel + '\', {',
         '    url: \'' + state.url + '\',',
-        '    templateUrl: \'' + state.templateUrl + '\','
+        '    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ',')
       ];
     }
 
     // controller as logic
-    if (config.controllerAs && config.ngRoute) {
-      newState.push('    controller: \'' + state.ctrlName + '\',');
-      newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
-    } else if (config.controllerAs && !config.ngRoute) {
-      newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
-    } else {
-      newState.push('    controller: \'' + state.ctrlName + '\'');
+    if (!config.skipController) {
+      if (config.controllerAs && config.ngRoute) {
+        newState.push('    controller: \'' + state.ctrlName + '\',');
+        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
+      } else if (config.controllerAs && !config.ngRoute) {
+        newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+      } else {
+        newState.push('    controller: \'' + state.ctrlName + '\'');
+      }
     }
 
     if (analysis.routeStartIndex > -1) {
@@ -185,13 +187,15 @@ function prepareState(state, analysis, config) {
     }
 
     // controller as logic
-    if (config.controllerAs && config.ngRoute) {
-      newState.push('    controller: \'' + state.ctrlName + '\'');
-      newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
-    } else if (config.controllerAs && !config.ngRoute) {
-      newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
-    } else {
-      newState.push('    controller: \'' + state.ctrlName + '\'');
+    if (!config.skipController) {
+      if (config.controllerAs && config.ngRoute) {
+        newState.push('    controller: \'' + state.ctrlName + '\'');
+        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
+      } else if (config.controllerAs && !config.ngRoute) {
+        newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+      } else {
+        newState.push('    controller: \'' + state.ctrlName + '\'');
+      }
     }
   }
 
