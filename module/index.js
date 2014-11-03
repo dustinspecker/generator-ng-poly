@@ -36,11 +36,16 @@ Generator.prototype.writing = function writing() {
   // if yes - get root app.js to prepare adding dep
   // else - get parent app.js to prepare adding dep
   if (this.context.moduleName === this.module) {
-    filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.coffee');
+    filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.ts');
 
-    // if CoffeeScript app doesn't exist, use JavaScript app
+    // if TypeScript app doesn't exist, use CoffeeScript app
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.js');
+      filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.coffee');
+
+      // if CoffeeScript app doesn't exist, use JavaScript app
+      if (!fs.existsSync(filePath)) {
+        filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.js');
+      }
     }
   } else {
     parentDir = path.resolve(path.join(this.context.appDir, this.context.modulePath), '..');
@@ -48,11 +53,16 @@ Generator.prototype.writing = function writing() {
     // for templating to create a parent.child module name
     parentModuleDir = path.basename(parentDir);
 
-    filePath = path.join(parentDir, parentModuleDir + '.coffee');
+    filePath = path.join(parentDir, parentModuleDir + '.ts');
 
-    // if CoffeeScript parent module doesn't exist, use JavaScript parent module
+    // if TypeScript parent module doesn't exist, use JavaScript parent module
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(parentDir, parentModuleDir + '.js');
+      filePath = path.join(parentDir, parentModuleDir + '.coffee');
+
+      // if CoffeeScript parent module doesn't exist, use JavaScript parent module
+      if (!fs.existsSync(filePath)) {
+        filePath = path.join(parentDir, parentModuleDir + '.js');
+      }
     }
   }
 

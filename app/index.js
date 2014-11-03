@@ -79,6 +79,10 @@ Generator.prototype.prompting = function prompting() {
       default: 'js',
       choices: [
         {
+          name: 'TypeScript',
+          value: 'ts'
+        },
+        {
           name: 'CoffeeScript',
           value: 'coffee'
         },
@@ -123,6 +127,10 @@ Generator.prototype.prompting = function prompting() {
       message: 'Which is the preferred test scripting language?',
       default: 'js',
       choices: [
+        {
+          name: 'TypeScript',
+          value: 'ts'
+        },
         {
           name: 'CoffeeScript',
           value: 'coffee'
@@ -369,6 +377,7 @@ Generator.prototype.writing = function writing() {
   // create main module and index.html
   this.template('_app.' + this.appScript,
     path.join(this.appDir, 'app.' + this.appScript), this.context);
+
   this.template('_index.' + this.markup,
     path.join(this.appDir, 'index.' + this.markup), this.context);
 
