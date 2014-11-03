@@ -119,28 +119,24 @@ describe('Module generator', function () {
             path.join(__dirname, '../controller'),
             path.join(__dirname, '../view')
           ])
-          .on('end', function () {
-            // TODO: determine why done is called before files are finished writing
-            // setTimeout is used to allow files to be finished writing before running tests
-            setTimeout(done, 400);
-          });
+          .on('end', done);
       });
 
       it('should add door.handle to app/home/my-door.coffee', function () {
         assert.fileContent('app/home/my-door/my-door.coffee', /    \'myDoor.handle\'/);
       });
-    });
 
-    it('should add comma to ui.router in app/home/home.js deps', function () {
-      assert.fileContent('app/home/home.js', /    \'ui.router\',/);
-    });
+      it('should add comma to ui.router in app/home/home.js deps', function () {
+        assert.fileContent('app/home/home.js', /    \'ui.router\',/);
+      });
 
-    it('should add home.door to app/home/home.js deps', function () {
-      assert.fileContent('app/home/home.js', /    \'home.myDoor\'/);
-    });
+      it('should add home.door to app/home/home.js deps', function () {
+        assert.fileContent('app/home/home.js', /    \'home.myDoor\'/);
+      });
 
-    it('should name module in app/home/my-door/my-door.coffee home.myDoor', function () {
-      assert.fileContent('app/home/my-door/my-door.coffee', /angular[^$]*.module[^$]*\'home.myDoor\'/);
+      it('should name module in app/home/my-door/my-door.coffee home.myDoor', function () {
+        assert.fileContent('app/home/my-door/my-door.coffee', /angular[^$]*.module[^$]*\'home.myDoor\'/);
+      });
     });
   });
 
