@@ -119,7 +119,11 @@ describe('Module generator', function () {
             path.join(__dirname, '../controller'),
             path.join(__dirname, '../view')
           ])
-          .on('end', done);
+          .on('end', function () {
+            // TODO: determine why done is called before files are finished writing
+            // setTimeout is used to allow files to be finished writing before running tests
+            setTimeout(done, 400);
+          });
       });
 
       it('should add door.handle to app/home/my-door.coffee', function () {
