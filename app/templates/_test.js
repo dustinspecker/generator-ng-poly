@@ -13,7 +13,7 @@ var gulp = require('gulp')
 
   , appBase = require('../build.config.js').appDir
   , appDirectiveTemplateFiles = path.join(appBase, '**/*directive.tpl.{haml,html,jade}')
-  , appScriptFiles = path.join(appBase, '**/*.{coffee,js}')
+  , appScriptFiles = path.join(appBase, '**/*.{ts,coffee,js}')
 
   , unitTests = path.join(require('../build.config.js').unitTestDir, '**/*_test.*')
   , e2eTestFiles = 'e2e/**/*_test.*'

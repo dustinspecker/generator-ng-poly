@@ -21,7 +21,7 @@ var gulp = require('gulp')
   , appFontFiles = path.join(appBase, 'fonts/**/*')
   , appImages = path.join(appBase, 'images/**/*')
   , appMarkupFiles = path.join(appBase, '**/*.{haml,html,jade}')
-  , appScriptFiles = path.join(appBase, '**/*.{coffee,js}')
+  , appScriptFiles = path.join(appBase, '**/*.{ts,coffee,js}')
   , appStyleFiles = path.join(appBase, '**/*.{css,less,scss,styl}')
 
 <% if (polymer) { %>  , fs = require('fs')
@@ -79,9 +79,15 @@ gulp.task('styles', ['clean'], function () {
     .pipe(gulp.dest(buildConfig.buildCss));
 });
 
+var tsProject = $.typescript.createProject({
+  declarationFiles: true,
+  noExternalResolve: true
+});
+
 // compile scripts and copy into build directory
 gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
-  var coffeeFilter = $.filter('**/*.coffee')
+  var typescriptFilter = $.filter('**/*.ts')
+    , coffeeFilter = $.filter('**/*.coffee')
     , htmlFilter = $.filter('**/*.html')
     , jsFilter = $.filter('**/*.js');
 
@@ -92,6 +98,9 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     '!**/*_test.*',
     '!**/index.html'
   ])
+    .pipe(typescriptFilter)
+    .pipe($.typescript(tsProject))
+    .pipe(typescriptFilter.restore())
     .pipe(coffeeFilter)
     .pipe($.coffee())
     .pipe(coffeeFilter.restore())
@@ -217,7 +226,8 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
 
 <% if (polymer) { %>// compile components and copy into build directory
 gulp.task('components', ['bowerInject'], function () {
-  var coffeeFilter = $.filter('**/*.coffee')
+  var typeScriptFilter = $.filter('**/*.ts')
+    , coffeeFilter = $.filter('**/*.coffee')
     , hamlFilter = $.filter('**/*.haml')
     , jadeFilter = $.filter('**/*.jade')
     , lessFilter = $.filter('**/*.less')
@@ -226,6 +236,41 @@ gulp.task('components', ['bowerInject'], function () {
 
   return gulp.src(appComponents)<% if (polymer) { %>
     .pipe($.addSrc(bowerDir + 'polymer/{layout,polymer}.{html,js}', {base: bowerDir}))<% } %>
+    .pipe(typeScriptFilter)
+    .pipe($.typescript(<% if (passFunc) { %>(function () {
+      <% } %>'use strict';
+
+    <% if (passFunc) { %>  <% } %>/**
+    <% if (passFunc) { %>  <% } %> * @ngdoc service
+    <% if (passFunc) { %>  <% } %> * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.factory:<%= upperCamel %>
+    <% if (passFunc) { %>  <% } %> *
+    <% if (passFunc) { %>  <% } %> * @description
+    <% if (passFunc) { %>  <% } %> *
+    <% if (passFunc) { %>  <% } %> */
+    <% if (passFunc) { %>  <% } %>angular
+    <% if (passFunc) { %>  <% } %>  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
+    <% if (passFunc) { %>  <% } %>  .factory('<%= upperCamel %>', <%= upperCamel %>);<% } else { %>
+    <% if (passFunc) { %>  <% } %>  .factory('<%= upperCamel %>', function <% if (namedFunc) { %><%= upperCamel %><% } %>() {
+    <% if (passFunc) { %>  <% } %>    var <%= upperCamel %>Base = {};
+    <% if (passFunc) { %>  <% } %>    <%= upperCamel %>Base.someValue = '<%= upperCamel %>';
+    <% if (passFunc) { %>  <% } %>    <%= upperCamel %>Base.someMethod = function <% if (namedFunc) { %>someMethod<% } %>() {
+    <% if (passFunc) { %>  <% } %>      return '<%= upperCamel %>';
+    <% if (passFunc) { %>  <% } %>    };
+    <% if (passFunc) { %>  <% } %>    return <%= upperCamel %>Base;
+    <% if (passFunc) { %>  <% } %>  });<% } %><% if (passFunc) { %>
+
+      function <%= upperCamel %>() {
+        var <%= upperCamel %>Base = {};
+        <%= upperCamel %>Base.someValue = '<%= upperCamel %>';
+        <%= upperCamel %>Base.someMethod = function <% if (namedFunc) { %>someMethod<% } %>() {
+          return '<%= upperCamel %>';
+        };
+        return <%= upperCamel %>Base;
+      }
+
+    })();<% } %>
+))
+    .pipe(typeScriptFilter.restore())
     .pipe(coffeeFilter)
     .pipe($.coffee())
     .pipe(coffeeFilter.restore())
