@@ -1,27 +1,33 @@
-<% if (passFunc) { %>(function () {
-  <% } %>'use strict';
+///<reference path='<%= referencePath %>/references.d.ts' />
 
-<% if (passFunc) { %>  <% } %>/**
-<% if (passFunc) { %>  <% } %> * @ngdoc object
-<% if (passFunc) { %>  <% } %> * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.controller:<%= ctrlName %><% if(!controllerAs) { %>
-<% if (passFunc) { %>  <% } %> * @requires $scope<% } %>
-<% if (passFunc) { %>  <% } %> *
-<% if (passFunc) { %>  <% } %> * @description
-<% if (passFunc) { %>  <% } %> *
-<% if (passFunc) { %>  <% } %> */
-<% if (passFunc) { %>  <% } %>angular
-<% if (passFunc) { %>  <% } %>  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
-<% if (passFunc) { %>  <% } %>  .controller('<%= ctrlName %>', <%= ctrlName %>);<% } else { %>
-<% if (passFunc) { %>  <% } %>  .controller('<%= ctrlName %>', function <% if (namedFunc) { %><%= ctrlName %><% } %>(<% if (!controllerAs) { %>$scope<% } %>) {
-<% if (passFunc) { %>  <% } %>    <% if (controllerAs) { %>var vm = this;
-<% if (passFunc) { %>  <% } %>    vm.ctrlName = '<%= ctrlName %>';<% } else { %>$scope.<%= lowerCamel %> = {};
-<% if (passFunc) { %>  <% } %>    $scope.<%= lowerCamel %>.ctrlName = '<%= ctrlName %>';<% } %>
-<% if (passFunc) { %>  <% } %>  });<% } %><% if (passFunc) { %>
+'use strict';
 
-  function <%= ctrlName %>(<% if (!controllerAs) { %>$scope<% } %>) {
-    <% if (controllerAs) { %>var vm = this;
-    vm.ctrlName = '<%= ctrlName %>';<% } else { %>$scope.<%= lowerCamel %> = {};
-    $scope.<%= lowerCamel %>.ctrlName = '<%= ctrlName %>';<% } %>
+/**
+ * @ngdoc object
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.controller:<%= ctrlName %><% if(!controllerAs) { %>
+ * @requires $scope<% } %>
+ *
+ * @description
+ *
+ */
+angular
+  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
+  .controller('<%= ctrlName %>');
+
+  class <%= ctrlName %> {
+
+    // $inject annotation.
+    // It provides $injector with information about dependencies to be injected into constructor
+    // it is better to have it close to the constructor, because the parameters must match in count and type.
+    // See http://docs.angularjs.org/guide/di
+    public static $inject = [
+      <% if (!controllerAs) { %>'$scope' <% } %>
+    ];
+
+    // dependencies are injected via AngularJS $injector
+    constructor(<% if (!controllerAs) { %> $scope: ng.IScope <% } %>) {
+        <% if (controllerAs) { %>var vm = this;
+          vm.ctrlName = '<%= ctrlName %>';<% } else { %>$scope.<%= lowerCamel %> = {};
+        $scope.<%= lowerCamel %>.ctrlName = '<%= ctrlName %>';<% } %>
+    }
   }
-
-})();<% } %>

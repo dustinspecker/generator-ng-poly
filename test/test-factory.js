@@ -74,4 +74,26 @@ describe('Factory generator', function () {
 
   });
 
+  describe('with TypeScript app and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../factory'))
+        .withArguments(['test2'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'ts',
+          'test-script': 'ts'
+        })
+        .on('end', done);
+    });
+
+    it('should create factory files', function () {
+      assert.file([
+        'app/home/test2-factory.ts',
+        'app/home/test2-factory_test.ts'
+      ]);
+    });
+
+  });
+
 });

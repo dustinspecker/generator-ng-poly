@@ -74,4 +74,26 @@ describe('Service generator', function () {
 
   });
 
+  describe('with TypeScript app and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../service'))
+        .withArguments(['test2'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'ts',
+          'test-script': 'ts'
+        })
+        .on('end', done);
+    });
+
+    it('should create service files', function () {
+      assert.file([
+        'app/home/test2-service.ts',
+        'app/home/test2-service_test.ts'
+      ]);
+    });
+
+  });
+
 });

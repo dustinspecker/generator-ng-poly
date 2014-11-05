@@ -1,24 +1,21 @@
-<% if (passFunc) { %>(function () {
-  <% } %>'use strict';
+///<reference path='<%= referencePath %>/references.d.ts' />
 
-<% if (passFunc) { %>  <% } %>/* @ngdoc object
-<% if (passFunc) { %>  <% } %> * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>
-<% if (passFunc) { %>  <% } %> * @requires <% if (ngRoute) { %>$routeProvider<% } else { %>$stateProvider<% } %>
-<% if (passFunc) { %>  <% } %> *
-<% if (passFunc) { %>  <% } %> * @description
-<% if (passFunc) { %>  <% } %> *
-<% if (passFunc) { %>  <% } %> */
-<% if (passFunc) { %>  <% } %>angular
-<% if (passFunc) { %>  <% } %>  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', [
-<% if (passFunc) { %>  <% } %>  ]);
+'use strict';
 
-<% if (passFunc) { %>  <% } %>angular
-<% if (passFunc) { %>  <% } %>  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')<% if (passFunc) { %>
-<% if (passFunc) { %>  <% } %>  .config(config);<% } else { %>
-<% if (passFunc) { %>  <% } %>  .config(function <% if (namedFunc) { %>config<% } %>() {
-<% if (passFunc) { %>  <% } %>  });<% } %><% if (passFunc) { %>
+/* @ngdoc object
+ * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>
+ * @requires <% if (ngRoute) { %>$routeProvider<% } else { %>$stateProvider<% } %>
+ *
+ * @description
+ *
+ */
+angular
+  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', [
+  ]);
+
+angular
+  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
+  .config(config)
 
   function config() {
   }
-
-})();<% } %>

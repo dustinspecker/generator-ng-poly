@@ -71,6 +71,10 @@ describe('App generator', function () {
         'protractor.config.js',
         'README.md'
       ]);
+
+      assert.noFile([
+        'tsd.json'
+      ]);
     });
   });
 
@@ -92,6 +96,7 @@ describe('App generator', function () {
           testScript: 'ts',
           unitTestDir: 'app',
           style: 'less',
+          framework: 'uibootstrap',
           bower: []
         })
         .withGenerators([
@@ -130,6 +135,7 @@ describe('App generator', function () {
         '.jshintrc',
         '.yo-rc.json',
         'bower.json',
+        'tsd.json',
         'build.config.js',
         'Gulpfile.js',
         'karma.config.js',
@@ -202,6 +208,10 @@ describe('App generator', function () {
         'package.json',
         'protractor.config.js',
         'README.md'
+      ]);
+
+      assert.noFile([
+        'tsd.json'
       ]);
     });
   });

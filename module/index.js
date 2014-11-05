@@ -3,6 +3,7 @@ var fs = require('fs')
   , genBase = require('../genBase')
   , path = require('path')
   , utils = require('../utils')
+  , _ = require('lodash')
   , Generator;
 
 Generator = module.exports = genBase.extend();
@@ -28,6 +29,9 @@ Generator.prototype.writing = function writing() {
   parentModuleDir = null;
   this.context.templateUrl = path.join(this.module).replace(/\\/g, '/');
   this.context.modulePath = utils.normalizeModulePath(this.module);
+  if (this.context.appScript === 'ts') {
+    this.context.referencePath = path.relative(this.context.modulePath, this.context.appDir);
+  }
 
   // create new module directory
   this.mkdir(path.join(this.context.appDir, this.context.modulePath));
@@ -36,34 +40,28 @@ Generator.prototype.writing = function writing() {
   // if yes - get root app.js to prepare adding dep
   // else - get parent app.js to prepare adding dep
   if (this.context.moduleName === this.module) {
-    filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.ts');
 
-    // if TypeScript app doesn't exist, use CoffeeScript app
-    if (!fs.existsSync(filePath)) {
-      filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.coffee');
+    filePath = _.find([
+      path.join(this.context.appDir, 'app.ts'),
+      path.join(this.context.appDir, 'app.coffee'),
+      path.join(this.context.appDir, 'app.js')
+    ], function (appFile) {
+      return fs.existsSync(appFile);
+    });
 
-      // if CoffeeScript app doesn't exist, use JavaScript app
-      if (!fs.existsSync(filePath)) {
-        filePath = path.join(this.context.appDir, '..', this.context.appDir, 'app.js');
-      }
-    }
   } else {
     parentDir = path.resolve(path.join(this.context.appDir, this.context.modulePath), '..');
 
     // for templating to create a parent.child module name
     parentModuleDir = path.basename(parentDir);
 
-    filePath = path.join(parentDir, parentModuleDir + '.ts');
-
-    // if TypeScript parent module doesn't exist, use JavaScript parent module
-    if (!fs.existsSync(filePath)) {
-      filePath = path.join(parentDir, parentModuleDir + '.coffee');
-
-      // if CoffeeScript parent module doesn't exist, use JavaScript parent module
-      if (!fs.existsSync(filePath)) {
-        filePath = path.join(parentDir, parentModuleDir + '.js');
-      }
-    }
+    filePath = _.find([
+      path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.ts'),
+      path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.coffee'),
+      path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.js')
+    ], function (appFile) {
+      return fs.existsSync(appFile);
+    });
   }
 
   file = fs.readFileSync(filePath, 'utf8');

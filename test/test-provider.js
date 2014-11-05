@@ -74,4 +74,25 @@ describe('Provider generator', function () {
 
   });
 
+  describe('with TypeScript app and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../provider'))
+        .withArguments(['test2'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'ts',
+          'test-script': 'ts'
+        })
+        .on('end', done);
+    });
+
+    it('should create provider files', function () {
+      assert.file([
+        'app/home/test2-provider.ts',
+        'app/home/test2-provider_test.ts'
+      ]);
+    });
+
+  });
 });
