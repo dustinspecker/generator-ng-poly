@@ -361,6 +361,9 @@ Generator.prototype.configuring = function configuring() {
   this.template('_gulpfile.js', 'Gulpfile.js', this.context);
   this.template('_karma.config.js', 'karma.config.js');
   this.template('_package.json', 'package.json', this.context);
+  if (this.appScript === 'ts') {
+    this.template('_tsd.json', 'tsd.json', this.context);
+  }
   this.copy('protractor.config.js', 'protractor.config.js');
   this.template('_readme.md', 'README.md');
 

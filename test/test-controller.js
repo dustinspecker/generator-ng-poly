@@ -71,7 +71,27 @@ describe('Controller generator', function () {
         'app/home/test1-controller_test.coffee'
       ]);
     });
+  });
 
+  describe('with TypeScript app, and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../controller'))
+        .withArguments(['test1'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'ts',
+          'test-script': 'ts'
+        })
+        .on('end', done);
+    });
+
+    it('should create controller files', function () {
+      assert.file([
+        'app/home/test1-controller.ts',
+        'app/home/test1-controller_test.ts'
+      ]);
+    });
   });
 
 });

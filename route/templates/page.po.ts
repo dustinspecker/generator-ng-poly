@@ -1,3 +1,5 @@
+///<reference path='<%= referencePath %>/references.d.ts' />
+
 /*global element, by*/
 'use strict';
 

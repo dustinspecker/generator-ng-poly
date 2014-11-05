@@ -62,6 +62,10 @@ Generator.prototype.writing = function writing() {
 
   fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
 
+  if (config.appScript === 'ts') {
+    config.referencePath = path.relative(config.modulePath, config.appDir);
+  }
+
   // e2e testing
   // create page object model
   this.template('page.po.' + config.testScript,

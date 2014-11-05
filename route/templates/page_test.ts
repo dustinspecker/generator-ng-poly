@@ -1,3 +1,5 @@
+///<reference path='<%= referencePath %>/references.d.ts' />
+
 /*global describe, beforeEach, it, browser<% if (e2eTestFramework === 'jasmine') { %>, expect<% } %> */
 'use strict';
 

@@ -74,4 +74,26 @@ describe('Filter generator', function () {
 
   });
 
+  describe('with TypeScript app and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../filter'))
+        .withArguments(['test2'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'ts',
+          'test-script': 'ts'
+        })
+        .on('end', done);
+    });
+
+    it('should create filter files', function () {
+      assert.file([
+        'app/home/test2-filter.ts',
+        'app/home/test2-filter_test.ts'
+      ]);
+    });
+
+  });
+
 });

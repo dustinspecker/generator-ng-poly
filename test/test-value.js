@@ -74,4 +74,26 @@ describe('Value generator', function () {
 
   });
 
+  describe('with TypeScript app and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../value'))
+        .withArguments(['test2'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'ts',
+          'test-script': 'ts'
+        })
+        .on('end', done);
+    });
+
+    it('should create value files', function () {
+      assert.file([
+        'app/home/test2-value.ts',
+        'app/home/test2-value_test.ts'
+      ]);
+    });
+
+  });
+
 });
