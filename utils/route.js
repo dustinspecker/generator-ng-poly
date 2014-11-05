@@ -23,7 +23,9 @@ function hasParam(fileContents, config) {
   var param = config.ngRoute ? 'routeProvider' : 'stateProvider'
     , regex; // regex to test
 
-  if (config.appScript === 'js') {
+  if (config.appScript === 'ts') {
+    regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)');
+  } else if (config.appScript === 'js') {
     regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)');
   } else {
     regex = new RegExp('\\(.*\\$' + param + '.*\\) ->');
@@ -43,7 +45,7 @@ function addParam(lines, config) {
   var param = config.ngRoute ? 'routeProvider' : 'stateProvider';
 
   lines.forEach(function (line, i) {
-    if (config.appScript === 'js') {
+    if (config.appScript === 'ts') {
       if ((config.passFunc && line.indexOf('function config(') > -1) ||
         (!config.passFunc && line.indexOf('.config(function') > -1)) {
         // check if function has a parameter already
@@ -54,18 +56,29 @@ function addParam(lines, config) {
         }
       }
     } else {
-      if (line.indexOf('.config') > -1 && line.indexOf('->') > -1) {
-        // check if function has a parameter already
-        if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') ->';
-        } else if (line.lastIndexOf('(') === -1 && line.lastIndexOf(')') === -1) {
-          lines[i] = lines[i].slice(0, line.lastIndexOf('g')) + 'g ($' + param + ') ->';
-        } else {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') ->';
+      if (config.appScript === 'js') {
+        if ((config.passFunc && line.indexOf('function config(') > -1) ||
+          (!config.passFunc && line.indexOf('.config(function') > -1)) {
+          // check if function has a parameter already
+          if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
+            lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') {';
+          } else {
+            lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') {';
+          }
+        }
+      } else {
+        if (line.indexOf('.config') > -1 && line.indexOf('->') > -1) {
+          // check if function has a parameter already
+          if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
+            lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') ->';
+          } else if (line.lastIndexOf('(') === -1 && line.lastIndexOf(')') === -1) {
+            lines[i] = lines[i].slice(0, line.lastIndexOf('g')) + 'g ($' + param + ') ->';
+          } else {
+            lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') ->';
+          }
         }
       }
     }
-
   });
 
   return lines;
@@ -87,7 +100,32 @@ function analyzeLines(lines, config) {
     , newRoute = config.ngRoute ? 'when' : 'state';
 
   lines.forEach(function (line, i) {
-    if (config.appScript === 'js') {
+    if (config.appScript === 'ts') {
+      if (line.indexOf('function config(') > -1 || line.indexOf('.config(function') > -1) {
+        analysis.configFunctionIndex = i;
+      }
+
+      // look for .state and set routeStartIndex
+      if (line.indexOf('.' + newRoute + '(') > -1) {
+        analysis.routeStartIndex = i;
+      }
+
+      // open braces add to braceCount
+      if (analysis.routeStartIndex > -1 && line.indexOf('{') > -1) {
+        braceCount++;
+      }
+
+      // close braces subract from braceCount
+      if (analysis.routeStartIndex > -1 && line.indexOf('}') > -1) {
+        braceCount--;
+      }
+
+      // when braceCount = 0 the end of the state has been reached
+      // set routeEndIndex
+      if (analysis.routeStartIndex > -1 && braceCount === 0) {
+        analysis.routeEndIndex = i;
+      }
+    } else if (config.appScript === 'js') {
       if (line.indexOf('function config(') > -1 || line.indexOf('.config(function') > -1) {
         analysis.configFunctionIndex = i;
       }
@@ -137,7 +175,41 @@ function analyzeLines(lines, config) {
 function prepareState(state, analysis, config) {
   var newState;
 
-  if (config.appScript === 'js') {
+  if (config.appScript === 'ts') {
+    // base route logic
+    if (config.ngRoute) {
+      newState = [
+        '  .when(\'' + state.url + '\', {',
+        '    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ',')
+      ];
+    } else {
+      newState = [
+        '  .state(\'' + state.lowerCamel + '\', {',
+        '    url: \'' + state.url + '\',',
+        '    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ',')
+      ];
+    }
+
+    // controller as logic
+    if (!config.skipController) {
+      if (config.controllerAs && config.ngRoute) {
+        newState.push('    controller: \'' + state.ctrlName + '\',');
+        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
+      } else if (config.controllerAs && !config.ngRoute) {
+        newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
+      } else {
+        newState.push('    controller: \'' + state.ctrlName + '\'');
+      }
+    }
+
+    if (analysis.routeStartIndex > -1) {
+      // add cloasing to squeeze new state between existing route and the final });
+      newState.unshift('  })');
+    } else {
+      // close up this new state, which is the first state
+      newState.push('  });');
+    }
+  } else if (config.appScript === 'js') {
     // base route logic
     if (config.ngRoute) {
       newState = [
@@ -247,7 +319,9 @@ function addState(lines, state, analysis, config) {
     return stateLine;
   });
 
-  if (config.appScript === 'js') {
+  if (config.appScript === 'ts') {
+    insertLine = (analysis.routeStartIndex > -1) ? analysis.routeEndIndex : analysis.configFunctionIndex + 1;
+  } else if (config.appScript === 'js') {
     insertLine = (analysis.routeStartIndex > -1) ? analysis.routeEndIndex : analysis.configFunctionIndex + 1;
   } else {
     if (analysis.routeStartIndex > -1) {

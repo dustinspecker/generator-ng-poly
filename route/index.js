@@ -42,18 +42,29 @@ Generator.prototype.writing = function writing() {
     , filePath, file;
 
   filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
-    utils.hyphenName(config.moduleName) + '.coffee');
+    utils.hyphenName(config.moduleName) + '.ts');
 
-  // load JavaScript app if CoffeeScript app doesn't exist
   if (fs.existsSync(filePath)) {
     file = fs.readFileSync(filePath, 'utf8');
   } else {
     filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
-      utils.hyphenName(config.moduleName) + '.js');
-    file = fs.readFileSync(filePath, 'utf8');
+      utils.hyphenName(config.moduleName) + '.coffee');
+
+    // load JavaScript app if CoffeeScript app doesn't exist
+    if (fs.existsSync(filePath)) {
+      file = fs.readFileSync(filePath, 'utf8');
+    } else {
+      filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
+        utils.hyphenName(config.moduleName) + '.js');
+      file = fs.readFileSync(filePath, 'utf8');
+    }
   }
 
   fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
+
+  if (config.appScript === 'ts') {
+    config.referencePath = path.relative(config.modulePath, config.appDir);
+  }
 
   // e2e testing
   // create page object model

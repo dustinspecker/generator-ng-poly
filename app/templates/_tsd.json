@@ -1,0 +1,33 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "references.d.ts",
+  "installed": {
+    "jquery/jquery.d.ts": {
+      "commit": "f41b28ef4b632e37f6f32f86b8a5f8379de15a38"
+    },
+    "angularjs/angular.d.ts": {
+      "commit": "f41b28ef4b632e37f6f32f86b8a5f8379de15a38"
+    },
+    "angularjs/angular-route.d.ts": {
+      "commit": "f41b28ef4b632e37f6f32f86b8a5f8379de15a38"
+    }<% if (framework === 'uibootstrap') { %>,
+    "angular-ui-bootstrap/angular-ui-bootstrap.d.ts": {
+      "commit": "f41b28ef4b632e37f6f32f86b8a5f8379de15a38"
+    }<% } else if (framework === 'foundation') { %>,
+    "foundation/foundation.d.ts": {
+      "commit": "f41b28ef4b632e37f6f32f86b8a5f8379de15a38"
+    }<% } %>,
+    "mocha/mocha.d.ts": {
+      "commit": "f41b28ef4b632e37f6f32f86b8a5f8379de15a38"
+    },
+    "assert/assert.d.ts": {
+      "commit": "f41b28ef4b632e37f6f32f86b8a5f8379de15a38"
+    },
+    "angularjs/angular-mocks.d.ts": {
+      "commit": "f41b28ef4b632e37f6f32f86b8a5f8379de15a38"
+    }
+  }
+}

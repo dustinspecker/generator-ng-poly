@@ -140,4 +140,48 @@ describe('Module generator', function () {
     });
   });
 
+  describe('adding a deep level Typescript module', function () {
+    before(function (done) {
+      helpers.run(path.join(__dirname, '../module'))
+        .withArguments(['home/myHouse'])
+        .withOptions({
+          'app-script': 'ts'
+        })
+        .withGenerators([
+          path.join(__dirname, '../route'),
+          path.join(__dirname, '../controller'),
+          path.join(__dirname, '../view')
+        ])
+        .on('end', done);
+    });
+
+    describe('adding a deeper level module', function () {
+      before(function (done) {
+        helpers.run(path.join(__dirname, '../module'))
+          .withArguments(['home/myHouse/handle'])
+          .withGenerators([
+            path.join(__dirname, '../route'),
+            path.join(__dirname, '../controller'),
+            path.join(__dirname, '../view')
+          ])
+          .on('end', done);
+      });
+
+      it('should add door.handle to app/home/my-house.ts', function () {
+        assert.fileContent('app/home/my-house/my-house.ts', /    \'myHouse.handle\'/);
+      });
+
+      it('should name module in app/home/my-house/my-house.ts home.myHouse', function () {
+        assert.fileContent('app/home/my-house/my-house.ts', /angular[^$]*.module[^$]*\'home.myHouse\'/);
+      });
+    });
+
+    it('should add comma to ui.router in app/home/home.js deps', function () {
+      assert.fileContent('app/home/home.js', /    \'ui.router\',/);
+    });
+
+    it('should add home.door to app/home/home.js deps', function () {
+      assert.fileContent('app/home/home.js', /    \'home.myHouse\'/);
+    });
+  });
 });

@@ -79,6 +79,10 @@ Generator.prototype.prompting = function prompting() {
       default: 'js',
       choices: [
         {
+          name: 'TypeScript',
+          value: 'ts'
+        },
+        {
           name: 'CoffeeScript',
           value: 'coffee'
         },
@@ -123,6 +127,10 @@ Generator.prototype.prompting = function prompting() {
       message: 'Which is the preferred test scripting language?',
       default: 'js',
       choices: [
+        {
+          name: 'TypeScript',
+          value: 'ts'
+        },
         {
           name: 'CoffeeScript',
           value: 'coffee'
@@ -353,6 +361,9 @@ Generator.prototype.configuring = function configuring() {
   this.template('_gulpfile.js', 'Gulpfile.js', this.context);
   this.template('_karma.config.js', 'karma.config.js');
   this.template('_package.json', 'package.json', this.context);
+  if (this.appScript === 'ts') {
+    this.template('_tsd.json', 'tsd.json', this.context);
+  }
   this.copy('protractor.config.js', 'protractor.config.js');
   this.template('_readme.md', 'README.md');
 
@@ -369,6 +380,7 @@ Generator.prototype.writing = function writing() {
   // create main module and index.html
   this.template('_app.' + this.appScript,
     path.join(this.appDir, 'app.' + this.appScript), this.context);
+
   this.template('_index.' + this.markup,
     path.join(this.appDir, 'index.' + this.markup), this.context);
 
