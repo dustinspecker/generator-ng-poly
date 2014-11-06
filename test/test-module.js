@@ -125,6 +125,10 @@ describe('Module generator', function () {
       it('should add door.handle to app/home/my-door.coffee', function () {
         assert.fileContent('app/home/my-door/my-door.coffee', /    \'myDoor.handle\'/);
       });
+
+      it('should name module in app/home/my-door/my-door.coffee home.myDoor', function () {
+        assert.fileContent('app/home/my-door/my-door.coffee', /angular[^$]*.module[^$]*\'home.myDoor\'/);
+      });
     });
 
     it('should add comma to ui.router in app/home/home.js deps', function () {
@@ -134,10 +138,5 @@ describe('Module generator', function () {
     it('should add home.door to app/home/home.js deps', function () {
       assert.fileContent('app/home/home.js', /    \'home.myDoor\'/);
     });
-
-    it('should name module in app/home/my-door/my-door.coffee home.myDoor', function () {
-      assert.fileContent('app/home/my-door/my-door.coffee', /angular[^$]*.module[^$]*\'home.myDoor\'/);
-    });
   });
-
 });
