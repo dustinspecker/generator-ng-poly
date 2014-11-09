@@ -179,5 +179,4 @@ describe('Route generator', function () {
 
   });
 
-
 });

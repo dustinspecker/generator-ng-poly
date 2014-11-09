@@ -52,28 +52,28 @@ describe('Constant generator', function () {
 
   });
 
-describe('with TypeScript app, and TypeScript test', function () {
-  before(function (done) {
-    helpers.run(join(__dirname, '../constant'))
-      .withArguments(['test1'])
-      .withPrompt({
-        module: 'app'
-      })
-      .withOptions({
-        markup: 'jade',
-        'app-script': 'ts',
-        'test-script': 'ts'
-      })
-      .on('end', done);
-  });
+  describe('with TypeScript app, and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../constant'))
+        .withArguments(['test1'])
+        .withPrompt({
+          module: 'app'
+        })
+        .withOptions({
+          markup: 'jade',
+          'app-script': 'ts',
+          'test-script': 'ts'
+        })
+        .on('end', done);
+    });
 
-  it('should create constant files', function () {
-    assert.file([
-      'app/test1-constant.ts',
-      'app/test1-constant_test.ts'
-    ]);
+    it('should create constant files', function () {
+      assert.file([
+        'app/test1-constant.ts',
+        'app/test1-constant_test.ts'
+      ]);
+    });
   });
-});
 
   describe('with Coffee app, and Coffee test', function () {
     before(function (done) {
