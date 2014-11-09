@@ -13,11 +13,6 @@ Generator.prototype.writing = function writing() {
   var config = this.getConfig();
   config.templateUrl = config.modulePath.replace('\\', '/');
 
-  if (config.appScript === 'ts') {
-    config.referencePath = path.relative(config.modulePath, config.appDir);
-    console.log('reference path = ' + config.referencePath);
-  }
-
   this.template('_directive.' + config.appScript,
     path.join(config.appDir, config.modulePath, config.hyphenName + '-directive.' + config.appScript), config);
   this.template('_directive.' + config.markup,

@@ -12,10 +12,6 @@ Generator.prototype.prompting = function prompting() {
 Generator.prototype.writing = function writing() {
   var config = this.getConfig();
 
-  if (config.appScript === 'ts') {
-    config.referencePath = path.relative(config.modulePath, config.appDir);
-  }
-
   this.template('_value.' + config.appScript,
     path.join(config.appDir, config.modulePath, config.hyphenName + '-value.' + config.appScript), config);
   this.template('_spec.' + config.testScript,

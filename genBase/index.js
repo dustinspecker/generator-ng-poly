@@ -99,8 +99,10 @@ Generator.prototype.getConfig = function getConfig() {
 
     passFunc: (this.options['pass-func'] !== undefined && this.options['pass-func'] !== null) ?
       this.options['pass-func'] : this.config.get('passFunc'),
+
     namedFunc: (this.options['named-func'] !== undefined && this.options['named-func'] !== null) ?
       this.options['named-func'] : this.config.get('namedFunc'),
+
     testScript: this.options['test-script'] || this.config.get('testScript'),
     testFramework: this.config.get('testFramework'),
     e2eTestFramework: this.config.get('e2eTestFramework') || 'jasmine',
@@ -124,6 +126,10 @@ Generator.prototype.getConfig = function getConfig() {
     config.modulePath = utils.normalizeModulePath(this.module);
     config.moduleName = modules[0];
     config.parentModuleName = modules[1];
+
+    if (config.appScript === 'ts') {
+      config.referencePath = path.relative(config.modulePath, config.appDir);
+    }
   }
 
   return config;
