@@ -112,4 +112,26 @@ describe('Element generator', function () {
     });
   });
 
+  describe('with Jade markup, TypeScript app, and CSS style', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../element'))
+        .withArguments(['test4-element'])
+        .withOptions({
+          markup: 'jade',
+          'app-script': 'ts',
+          style: 'css'
+        })
+        .on('end', done);
+    });
+
+    it('should create element files', function () {
+      assert.file([
+        'app/components/test4-element/test4-element.ts',
+        'app/components/test4-element/test4-element.jade',
+        'app/components/test4-element/test4-element.css'
+      ]);
+    });
+
+  });
+
 });

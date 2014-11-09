@@ -76,6 +76,29 @@ describe('Directive generator', function () {
 
   });
 
+  describe('with Jade markup, TypeScript app, and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../directive'))
+        .withArguments(['test3'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'ts',
+          'test-script': 'ts'
+        })
+        .on('end', done);
+    });
+
+    it('should create directive files', function () {
+      assert.file([
+        'app/home/test3-directive.ts',
+        'app/home/test3-directive.tpl.jade',
+        'app/home/test3-directive_test.ts'
+      ]);
+    });
+
+  });
+
   describe('with HAML markup, JS app, and JS test', function () {
     before(function (done) {
       helpers.run(join(__dirname, '../directive'))

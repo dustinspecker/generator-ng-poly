@@ -149,4 +149,35 @@ describe('Route generator', function () {
 
   });
 
+  describe('with Jade markup, CSS style, TypeScript app, and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../route'))
+        .withArguments(['test2'])
+        .withOptions({
+          module: 'home',
+          'template-url': 'value',
+          url: 'value',
+
+          markup: 'jade',
+          style: 'css',
+          'app-script': 'ts',
+          'test-script': 'ts'
+        })
+        .on('end', done);
+    });
+
+    it('should create route files', function () {
+      assert.file([
+        'app/home/test2-controller.ts',
+        'app/home/test2-controller_test.ts',
+        'app/home/test2.tpl.jade',
+        'app/home/test2.css',
+        'e2e/test2/test2.po.ts',
+        'e2e/test2/test2_test.ts'
+      ]);
+    });
+
+  });
+
+
 });

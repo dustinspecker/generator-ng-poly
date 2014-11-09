@@ -71,6 +71,78 @@ describe('App generator', function () {
         'protractor.config.js',
         'README.md'
       ]);
+
+      assert.noFile([
+        'tsd.json'
+      ]);
+    });
+  });
+
+  describe('with HAML markup, LESS style, TypeScript app, and TypeScript test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../app'))
+        .inDir(join(os.tmpDir(), 'temp-app-5'))
+        .withOptions({
+          'skip-install': true
+        })
+        .withPrompts({
+          appName: 'temp-app',
+          appDir: 'app',
+          markup: 'haml',
+          appScript: 'ts',
+          controllerAs: false,
+          passFunc: true,
+          namedFunc: true,
+          testScript: 'ts',
+          unitTestDir: 'app',
+          style: 'less',
+          framework: 'uibootstrap',
+          bower: []
+        })
+        .withGenerators([
+          join(__dirname, '../module'),
+          join(__dirname, '../route'),
+          join(__dirname, '../controller'),
+          join(__dirname, '../view')
+        ])
+        .on('end', function () {
+          // TODO: determine why done is called before files are finished writing
+          // setTimeout is used to allow files to be finished writing before running tests
+          setTimeout(done, 400);
+        });
+    });
+
+    it('should create files', function () {
+      assert.file([
+        'app/fonts',
+        'app/home/home.ts',
+        'app/home/home.less',
+        'app/home/home.tpl.haml',
+        'app/home/home-controller.ts',
+        'app/home/home-controller_test.ts',
+        'app/images',
+        'app/app.ts',
+        'app/index.haml',
+        'e2e/home/home.po.ts',
+        'e2e/home/home_test.ts',
+        'gulp/analyze.js',
+        'gulp/build.js',
+        'gulp/test.js',
+        'gulp/watch.js',
+        '.bowerrc',
+        '.editorconfig',
+        '.jscsrc',
+        '.jshintrc',
+        '.yo-rc.json',
+        'bower.json',
+        'tsd.json',
+        'build.config.js',
+        'Gulpfile.js',
+        'karma.config.js',
+        'package.json',
+        'protractor.config.js',
+        'README.md'
+      ]);
     });
   });
 
@@ -136,6 +208,10 @@ describe('App generator', function () {
         'package.json',
         'protractor.config.js',
         'README.md'
+      ]);
+
+      assert.noFile([
+        'tsd.json'
       ]);
     });
   });
