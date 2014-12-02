@@ -107,7 +107,7 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     .pipe($.if(isProd, $.ngAnnotate()))
     .pipe($.if(isProd, $.uglify()))
     .pipe($.if(isProd, $.rev()))<% if (polymer) { %>
-    .pipe($.addSrc($.mainBowerFiles({filter: /platform/})))<% } %>
+    .pipe($.addSrc($.mainBowerFiles({filter: /webcomponents/})))<% } %>
     .pipe(gulp.dest(buildConfig.buildJs))
     .pipe(jsFilter.restore());
 });
@@ -120,7 +120,7 @@ gulp.task('inject', ['markup', 'styles', 'scripts'], function () {
     .pipe($.inject(gulp.src([
       buildConfig.buildCss + '**/*',
       buildConfig.buildJs + '**/*'<% if (polymer) { %>,
-      '!**/platform.js'<% } %>
+      '!**/webcomponents.js'<% } %>
     ])
     .pipe(jsFilter)
     .pipe($.angularFilesort())
@@ -129,7 +129,7 @@ gulp.task('inject', ['markup', 'styles', 'scripts'], function () {
       ignorePath: buildConfig.buildDir
     }))<% if (polymer) { %>
     .pipe($.inject(gulp.src([
-      buildConfig.buildJs + 'platform.js'
+      buildConfig.buildJs + 'webcomponents.js'
     ]), {
       starttag: '<!-- inject:head:{{ext}} -->',
       endtag: '<!-- endinject -->',
@@ -145,7 +145,7 @@ gulp.task('bowerCopy', ['inject'], function () {
     , jsFilter = $.filter('**/*.js')
 
     , stream = $.streamqueue({objectMode: true})
-    , wiredep = $.wiredep(<% if (polymer || framework === 'uibootstrap') { %>{exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /platform/<% } %><% if (polymer || framework === 'uibootstrap') { %>]}<% } %>);
+    , wiredep = $.wiredep(<% if (polymer || framework === 'uibootstrap') { %>{exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /webcomponents/<% } %><% if (polymer || framework === 'uibootstrap') { %>]}<% } %>);
 
   if (wiredep.js) {
     stream.queue(gulp.src(wiredep.js));
@@ -195,7 +195,7 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
   } else {
     return gulp.src(buildConfig.buildDir + 'index.html')
       .pipe($.wiredep.stream({<% if (polymer || framework === 'uibootstrap') { %>
-        exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /platform/<% } %><% if (polymer || framework === 'uibootstrap') { %>],<% } %>
+        exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /webcomponents/<% } %><% if (polymer || framework === 'uibootstrap') { %>],<% } %>
         fileTypes: {
           html: {
             replace: {
