@@ -265,7 +265,11 @@ Generator.prototype.prompting = function prompting() {
         ];
 
         if (answers.ngversion === '1.3.*') {
-          choices.splice(2, 0, {
+          choices.splice(1, 0, {
+            name: 'Angular Aria',
+            value: 'aria'
+          });
+          choices.splice(3, 0, {
             name: 'Angular Messages',
             value: 'messages'
           });
