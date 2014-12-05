@@ -30,7 +30,7 @@ gulp.task('karmaFiles', function () {
   // add bower javascript
   stream.queue(gulp.src($.wiredep({
     devDependencies: true<% if (polymer) { %>,
-    exclude: [/polymer/, /platform/]<% } %>
+    exclude: [/polymer/, /webcomponents/]<% } %>
   }).js));
 
   // add application templates
