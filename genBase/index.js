@@ -122,8 +122,8 @@ Generator.prototype.getConfig = function getConfig() {
   if (this.module) {
     modules = utils.extractModuleNames(this.module);
     config.modulePath = utils.normalizeModulePath(this.module);
-    config.moduleName = modules[0];
-    config.parentModuleName = modules[1];
+    config.moduleName = utils.lowerCamel(modules[0]);
+    config.parentModuleName = utils.lowerCamel(modules[1]);
   }
 
   return config;

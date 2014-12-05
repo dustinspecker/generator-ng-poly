@@ -95,7 +95,7 @@ describe('Module generator', function () {
     });
   });
 
-  describe('adding a deep level module', function () {
+  describe('adding a deep level camelCase module', function () {
     before(function (done) {
       helpers.run(path.join(__dirname, '../module'))
         .withArguments(['home/myDoor'])
@@ -139,4 +139,26 @@ describe('Module generator', function () {
       assert.fileContent('app/home/home.js', /    \'home.myDoor\'/);
     });
   });
+
+  describe('adding a deep level hyphenated module', function () {
+    before(function (done) {
+      helpers.run(path.join(__dirname, '../module'))
+        .withArguments(['home/my-module'])
+        .withGenerators([
+          path.join(__dirname, '../route'),
+          path.join(__dirname, '../controller'),
+          path.join(__dirname, '../view')
+        ])
+        .on('end', done);
+    });
+
+    it('should add home.myModule in app/home/home.js', function () {
+      assert.fileContent('app/home/home.js', /    \'home.myModule\'/);
+    });
+
+    it('should create home.myModule in app/home/my-module/my-module.js', function () {
+      assert.fileContent('app/home/my-module/my-module.js', /angular[^$]*.module[^$]*\'home.myModule\'/);
+    });
+  });
+
 });
