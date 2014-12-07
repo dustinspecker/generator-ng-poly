@@ -2,6 +2,8 @@
 
 var gulp = require('gulp')
   , path = require('path')
+  , notify = require('gulp-notify')
+  , plumber = require('gulp-plumber')
   , $ = require('gulp-load-plugins')()
 
   , appBase = require('../build.config.js').appDir
@@ -20,6 +22,7 @@ gulp.task('lint', function () {
     e2eFiles,
     unitTests
   ])
+    .pipe(plumber({errorHandler: notify.onError('JS Linting Failed')}))
     .pipe(coffeeFilter)
     .pipe($.coffeelint())
     .pipe($.coffeelint.reporter())

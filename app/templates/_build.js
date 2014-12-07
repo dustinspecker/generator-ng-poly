@@ -2,6 +2,8 @@
 
 var gulp = require('gulp')
   , path = require('path')
+  , notify = require('gulp-notify')
+  , plumber = require('gulp-plumber')
   , $ = require('gulp-load-plugins')({
     pattern: [
       'gulp-*',
@@ -63,6 +65,7 @@ gulp.task('styles', ['clean'], function () {
     appStyleFiles<% if (polymer) { %>,
     '!' + appComponents<% } %>
   ])
+    .pipe(plumber({errorHandler: notify.onError('CSS Syntax Error')}))
     .pipe(lessFilter)
     .pipe($.less())
     .pipe(lessFilter.restore())
