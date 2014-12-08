@@ -2,6 +2,8 @@
 
 var gulp = require('gulp')
   , path = require('path')
+  , notify = require('gulp-notify')
+  , plumber = require('gulp-plumber')
   , $ = require('gulp-load-plugins')({
     pattern: [
       'gulp-*',
@@ -57,12 +59,23 @@ gulp.task('markup', ['clean'], function () {
 gulp.task('styles', ['clean'], function () {
   var lessFilter = $.filter('**/*.less')
     , scssFilter = $.filter('**/*.scss')
-    , stylusFilter = $.filter('**/*.styl');
+    , stylusFilter = $.filter('**/*.styl')
+    , onError = function(err) {
+        notify.onError({
+            title:    'Syntax error in CSS',
+            subtitle: ' ', //overrides defaults
+            message:  ' ', //overrides defaults
+            sound:    ' ' //overrides defaults
+        })(err);
+
+        this.emit('end');
+    };
 
   return gulp.src([
     appStyleFiles<% if (polymer) { %>,
     '!' + appComponents<% } %>
   ])
+    .pipe(plumber({errorHandler: onError}))
     .pipe(lessFilter)
     .pipe($.less())
     .pipe(lessFilter.restore())
