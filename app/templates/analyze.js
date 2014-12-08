@@ -2,8 +2,6 @@
 
 var gulp = require('gulp')
   , path = require('path')
-  , notify = require('gulp-notify')
-  , plumber = require('gulp-plumber')
   , $ = require('gulp-load-plugins')()
 
   , appBase = require('../build.config.js').appDir
@@ -16,15 +14,15 @@ var gulp = require('gulp')
 gulp.task('lint', function () {
   var coffeeFilter = $.filter('**/*.coffee')
     , jsFilter = $.filter('**/*.js')
-    , onError = function(err) {
-        notify.onError({
-            title:    'Error linting the JS',
-            subtitle: ' ', //overrides defaults
-            message:  ' ', //overrides defaults
-            sound:    ' ' //overrides defaults
-        })(err);
+    , onError = function (err) {
+      $.notify.onError({
+        title: 'Error linting the JS',
+        subtitle: ' ', //overrides defaults
+        message: ' ', //overrides defaults
+        sound: ' ' //overrides defaults
+      })(err);
 
-        this.emit('end');
+      this.emit('end');
     };
 
   return gulp.src([
@@ -32,7 +30,7 @@ gulp.task('lint', function () {
     e2eFiles,
     unitTests
   ])
-    .pipe(plumber({errorHandler: onError}))
+    .pipe($.plumber({errorHandler: onError}))
     .pipe(coffeeFilter)
     .pipe($.coffeelint())
     .pipe($.coffeelint.reporter())
