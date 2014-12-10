@@ -1,5 +1,6 @@
 'use strict';
 var path = require('path')
+  , utils = require('../utils')
   , yeoman = require('yeoman-generator')
   , yosay = require('yosay')
   , Generator;
@@ -336,7 +337,7 @@ Generator.prototype.configuring = function configuring() {
     unitTestDir: this.unitTestDir,
     host: this.host,
     port: this.port,
-    moduleName: this.appName,
+    moduleName: utils.lowerCamel(this.appName),
     passFunc: this.passFunc,
     namedFunc: this.namedFunc,
     polymer: this.polymer,

@@ -72,6 +72,10 @@ describe('App generator', function () {
         'README.md'
       ]);
     });
+
+    it('should create tempAppDiff module in front/app.js', function () {
+      assert.fileContent('front/app.js', /angular[^$]*.module[^$]*\'tempAppDiff\'/);
+    });
   });
 
   describe('with HAML markup, LESS style, Coffee app, and Coffee test', function () {
