@@ -10,12 +10,13 @@ var gulp = require('gulp')
       'wiredep'
     ]
   })
-
-  , appBase = require('../build.config.js').appDir
+  , buildConfig = require('../build.config.js')
+  , appBase = buildConfig.appDir
+  , buildDir = buildConfig.buildDir
   , appDirectiveTemplateFiles = path.join(appBase, '**/*directive.tpl.{haml,html,jade}')
-  , appScriptFiles = path.join(appBase, '**/*.{coffee,js}')
+  , buildJsFiles = path.join(buildConfig.buildJs, '**/*.js')
 
-  , unitTests = path.join(require('../build.config.js').unitTestDir, '**/*_test.*')
+  , unitTests = path.join(buildConfig.unitTestDir, '**/*_test.*')
   , e2eTestFiles = 'e2e/**/*_test.*'
 
   , karmaConf = require('../karma.config.js');
@@ -38,7 +39,7 @@ gulp.task('karmaFiles', function () {
 
   // add application javascript
   stream.queue(gulp.src([
-    appScriptFiles,
+    buildJsFiles,
     '!**/*_test.*'
   ])
     .pipe($.angularFilesort()));

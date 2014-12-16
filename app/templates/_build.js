@@ -17,7 +17,6 @@ var gulp = require('gulp')
   })
 
   , buildConfig = require('../build.config.js')
-
   , appBase = buildConfig.appDir<% if (polymer) { %>
   , appComponents = path.join(appBase, 'components/**/*')<% } %>
   , appFontFiles = path.join(appBase, 'fonts/**/*')

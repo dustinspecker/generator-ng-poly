@@ -1,19 +1,16 @@
 'use strict';
 var buildConfig = require('./build.config.js')
   , preprocessors = {}
-  , appDir;
+  , buildDir;
 
-appDir = buildConfig.appDir;
+buildDir = buildConfig.buildDir;
 // add slash if missing to properly strip prefix from directive templates
-if (appDir[appDir.length - 1] !== '/') {
-  appDir = appDir + '/';
+if (buildDir[buildDir.length - 1] !== '/') {
+  buildDir = buildDir + '/';
 }
 
-preprocessors[appDir + '**/!(*_test)+(.js)'] = ['coverage'];
-preprocessors[appDir + '**/*-directive.tpl.haml'] =  ['ng-haml2js'];
-preprocessors[appDir + '**/*-directive.tpl.html'] = ['ng-html2js'];
-preprocessors[appDir + '**/*-directive.tpl.jade'] = ['ng-jade2js'];
-preprocessors['**/*.coffee'] = ['coffee'];
+preprocessors[buildDir + '**/!(*_test)+(.js)'] = ['coverage'];
+preprocessors[buildDir + '**/*-directive.tpl.html'] = ['ng-html2js'];
 
 module.exports = {
   browsers: ['PhantomJS'],
@@ -21,13 +18,13 @@ module.exports = {
   reporters: ['failed', 'coverage'],
   preprocessors: preprocessors,
   ngHaml2JsPreprocessor: {
-    stripPrefix: appDir
+    stripPrefix: buildDir
   },
   ngHtml2JsPreprocessor: {
-    stripPrefix: appDir
+    stripPrefix: buildDir
   },
   ngJade2JsPreprocessor: {
-    stripPrefix: appDir
+    stripPrefix: buildDir
   },
   singleRun: true
 };
