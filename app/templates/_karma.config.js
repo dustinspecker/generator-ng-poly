@@ -17,13 +17,7 @@ module.exports = {
   frameworks: [<% if (testFramework === 'mocha') { %>'mocha', 'chai'<% } else { %>'jasmine'<% } %>, 'sinon'],
   reporters: ['failed', 'coverage'],
   preprocessors: preprocessors,
-  ngHaml2JsPreprocessor: {
-    stripPrefix: buildDir
-  },
   ngHtml2JsPreprocessor: {
-    stripPrefix: buildDir
-  },
-  ngJade2JsPreprocessor: {
     stripPrefix: buildDir
   },
   singleRun: true
