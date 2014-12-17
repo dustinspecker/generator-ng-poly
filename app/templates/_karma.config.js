@@ -1,7 +1,8 @@
 'use strict';
 var buildConfig = require('./build.config.js')
   , preprocessors = {}
-  , buildDir;
+  , buildDir
+  , jsDir;
 
 buildDir = buildConfig.buildDir;
 // add slash if missing to properly strip prefix from directive templates
@@ -9,7 +10,13 @@ if (buildDir[buildDir.length - 1] !== '/') {
   buildDir = buildDir + '/';
 }
 
-preprocessors[buildDir + '**/!(*_test)+(.js)'] = ['coverage'];
+jsDir = buildConfig.buildJs;
+// add slash if missing to properly strip prefix from directive templates
+if (jsDir[jsDir.length - 1] !== '/') {
+  jsDir = jsDir + '/';
+}
+
+preprocessors[jsDir + '**/!(*_test)+(.js)'] = ['coverage'];
 preprocessors[buildDir + '**/*-directive.tpl.html'] = ['ng-html2js'];
 
 module.exports = {
