@@ -37,7 +37,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
       name: 'url',
       message: 'What\'s the URL for this route?',
       default: function () {
-        return '/' + utils.lowerCamel(this.name);
+        return '/' + utils.hyphenName(this.name);
       }.bind(this),
       when: function () {
         return ((params && params.url) && !this.config.get('ngRoute') && !(this.options && this.options.url));

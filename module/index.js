@@ -81,7 +81,7 @@ Generator.prototype.end = function end() {
       args: [this.context.moduleName],
       options: {
         module: this.module,
-        url: '/' + this.context.lowerCamel,
+        url: '/' + this.context.hyphenModule,
         'template-url': this.context.modulePath + '/' + this.context.hyphenModule + '.tpl.html',
 
         markup: this.options.markup,

@@ -41,6 +41,8 @@ Generator.prototype.writing = function writing() {
     // module file to add route to
     , filePath, file;
 
+  config.url = this.url;
+
   filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
     utils.hyphenName(config.moduleName) + '.coffee');
 
