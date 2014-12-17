@@ -172,7 +172,7 @@ gulp.task('bowerCopy', ['inject'], function () {
     .pipe($.if(isProd, $.concat('vendor.css')))
     .pipe($.if(isProd, $.cssmin()))
     .pipe($.if(isProd, $.rev()))
-    .pipe(gulp.dest(buildConfig.buildCss))
+    .pipe(gulp.dest(buildConfig.extCss))
     .pipe(cssFilter.restore())
     .pipe(jsFilter)
     .pipe($.if(isProd, $.concat('vendor.js')))
@@ -180,7 +180,7 @@ gulp.task('bowerCopy', ['inject'], function () {
       preserveComments: $.uglifySaveLicense
     })))
     .pipe($.if(isProd, $.rev()))
-    .pipe(gulp.dest(buildConfig.buildJs))
+    .pipe(gulp.dest(buildConfig.extJs))
     .pipe(jsFilter.restore());
 });
 
@@ -189,8 +189,8 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
   if (isProd) {
     return gulp.src(buildConfig.buildDir + 'index.html')
       .pipe($.inject(gulp.src([
-        buildConfig.buildCss + 'vendor*.css',
-        buildConfig.buildJs + 'vendor*.js'
+        buildConfig.extCss + 'vendor*.css',
+        buildConfig.extJs + 'vendor*.js'
       ], {
         read: false
       }), {
@@ -212,11 +212,11 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
           html: {
             replace: {
               css: function (filePath) {
-                return '<link rel="stylesheet" href="' + buildConfig.buildCss.replace(buildConfig.buildDir, '') +
+                return '<link rel="stylesheet" href="' + buildConfig.extCss.replace(buildConfig.buildDir, '') +
                   filePath.split('/').pop() + '">';
               },
               js: function (filePath) {
-                return '<script src="' + buildConfig.buildJs.replace(buildConfig.buildDir, '') +
+                return '<script src="' + buildConfig.extJs.replace(buildConfig.buildDir, '') +
                   filePath.split('/').pop() + '"></script>';
               }
             }
@@ -259,13 +259,21 @@ gulp.task('components', ['bowerInject'], function () {
     .pipe(gulp.dest(buildConfig.buildComponents));
 });
 
-<% } %>// copy fonts from Bower and custom fonts into build directory
-gulp.task('fonts', ['clean'], function () {
+<% } %>
+// copy custom fonts into build directory
+gulp.task('fonts', ['fontsBower'], function () {
   var fontFilter = $.filter('**/*.{eot,otf,svg,ttf,woff}');
-  return gulp.src(
-      $.mainBowerFiles().concat([appFontFiles]))
+  return gulp.src([appFontFiles])
     .pipe(fontFilter)
     .pipe(gulp.dest(buildConfig.buildFonts))
+    .pipe(fontFilter.restore());
+});
+// copy Bower fonts into build directory
+gulp.task('fontsBower', ['clean'], function () {
+  var fontFilter = $.filter('**/*.{eot,otf,svg,ttf,woff}');
+  return gulp.src($.mainBowerFiles())
+    .pipe(fontFilter)
+    .pipe(gulp.dest(buildConfig.extFonts))
     .pipe(fontFilter.restore());
 });
 
