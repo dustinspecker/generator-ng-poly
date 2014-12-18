@@ -16,6 +16,7 @@ if (jsDir[jsDir.length - 1] !== '/') {
   jsDir = jsDir + '/';
 }
 
+preprocessors['**/*.coffee'] = ['coffee'];
 preprocessors[jsDir + '**/!(*_test)+(.js)'] = ['coverage'];
 preprocessors[buildDir + '**/*-directive.tpl.html'] = ['ng-html2js'];
 
