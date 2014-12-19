@@ -17,7 +17,7 @@ module.exports = {
   buildFonts: 'build/fonts/',
   buildImages: 'build/images/',
   buildJs: 'build/js/',
-  extCss: 'external/css/',
-  extFonts: 'external/fonts/',
-  extJs: 'external/js/'
+  extCss: 'build/vendor/css/',
+  extFonts: 'build/vendor/fonts/',
+  extJs: 'build/vendor/js/'
 };

@@ -12,7 +12,6 @@ var gulp = require('gulp')
   })
   , buildConfig = require('../build.config.js')
   , appBase = buildConfig.appDir
-  , buildDir = buildConfig.buildDir
   , appDirectiveTemplateFiles = path.join(appBase, '**/*directive.tpl.html')
   , buildJsFiles = path.join(buildConfig.buildJs, '**/*.js')
 
@@ -54,7 +53,7 @@ gulp.task('karmaFiles', function () {
 });
 
 // run unit tests
-gulp.task('unitTest', ['lint', 'karmaFiles'], function (done) {
+gulp.task('unitTest', ['lint', 'karmaFiles', 'build'], function (done) {
   $.karma.server.start(karmaConf, done);
 });
 

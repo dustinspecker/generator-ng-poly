@@ -46,6 +46,7 @@
     "jshint-stylish": "^1.0.0",
     "karma": "^0.12.16"<% if (testFramework === 'mocha') { %>,
     "karma-chai": "^0.1.0"<% } %>,
+    "karma-coffee-preprocessor": "^0.2.1",
     "karma-coverage": "^0.2.5",
     "karma-failed-reporter": "^0.0.2"<% if (testFramework === 'jasmine') { %>,
     "karma-jasmine": "^0.3.0"<% } else if (testFramework === 'mocha') { %>,
