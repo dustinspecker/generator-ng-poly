@@ -9,7 +9,8 @@
 <% if (passFunc) { %>  <% } %> *
 <% if (passFunc) { %>  <% } %> */
 <% if (passFunc) { %>  <% } %>angular
-<% if (passFunc) { %>  <% } %>  .module('<%= moduleName %>', [
+<% if (passFunc) { %>  <% } %>  .module('<%= moduleName %>', [<% if (bower.indexOf('aria') > -1) { %>
+<% if (passFunc) { %>  <% } %>    'ngAria',<% } %>
 <% if (passFunc) { %>  <% } %>    <% if (ngRoute) { %>'ngRoute'<% } else { %>'ui.router'<% } %><% if (framework === 'angularstrap') { %>,
 <% if (passFunc) { %>  <% } %>    'mgcrea.ngStrap'<% } %><% if (framework === 'uibootstrap') { %>,
 <% if (passFunc) { %>  <% } %>    'ui.bootstrap'<% } %><% if (framework === 'foundation') { %>,

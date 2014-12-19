@@ -86,10 +86,10 @@ Generator.prototype.end = function end() {
 
   if (this.options && !this.options.empty) {
     this.composeWith('ng-poly:route', {
-      args: [this.context.moduleName],
+      args: [this.name],
       options: {
         module: this.module,
-        url: '/' + this.context.lowerCamel,
+        url: '/' + this.context.hyphenModule,
         'template-url': this.context.modulePath + '/' + this.context.hyphenModule + '.tpl.html',
 
         markup: this.options.markup,

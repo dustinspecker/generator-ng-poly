@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "angular": "~<%= ngversion %>"<% if (bower.indexOf('animate') > -1) { %>,
-    "angular-animate": "~<%= ngversion %>"<% } %><% if (framework === 'uibootstrap') { %>,
+    "angular-animate": "~<%= ngversion %>"<% } %><% if (bower.indexOf('aria') > -1) { %>,
+    "angular-aria": "~<%= ngversion %>"<% } %><% if (framework === 'uibootstrap') { %>,
     "angular-bootstrap": "~0.11.0"<% } %><% if (bower.indexOf('cookies') > -1) { %>,
     "angular-cookies": "~<%= ngversion %>"<% } %><% if (framework === 'foundation') { %>,
     "angular-foundation": "~0.3.0"<% } %><% if (bower.indexOf('messages') > -1) { %>,
@@ -18,9 +19,9 @@
     "font-awesome": "~4.2.0"<% } %><% if (framework === 'foundation') { %>,
     "foundation": "~5.4.0"<% } %><% if (bower.indexOf('lodash') > -1) { %>,
     "lodash": "~2.4.1"<% } %><% if (polymer) { %>,
-    "polymer": "Polymer/polymer#~0.4.0",
-    "core-elements": "Polymer/core-elements#~0.4.0",
-    "paper-elements": "Polymer/paper-elements#~0.4.0"<% } %><% if (bower.indexOf('restangular') > -1) { %>,
+    "polymer": "Polymer/polymer#~0.5.0",
+    "core-elements": "Polymer/core-elements#~0.5.0",
+    "paper-elements": "Polymer/paper-elements#~0.5.0"<% } %><% if (bower.indexOf('restangular') > -1) { %>,
     "restangular": "~1.4.0"<% } %>
   },
   "devDependencies": {

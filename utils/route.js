@@ -218,7 +218,7 @@ function prepareState(state, analysis, config) {
       ];
     } else {
       newState = [
-        '  .state(\'' + state.lowerCamel + '\', {',
+        '  .state(\'' + state.name + '\', {',
         '    url: \'' + state.url + '\',',
         '    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ',')
       ];
@@ -252,7 +252,7 @@ function prepareState(state, analysis, config) {
       ];
     } else {
       newState = [
-        '  .state \'' + state.lowerCamel + '\',',
+        '  .state \'' + state.name + '\',',
         '    url: \'' + state.url + '\'',
         '    templateUrl: \'' + state.templateUrl + '\''
       ];

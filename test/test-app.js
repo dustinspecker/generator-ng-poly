@@ -144,6 +144,10 @@ describe('App generator', function () {
         'README.md'
       ]);
     });
+
+    it('should create tempApp module in app/app.ts', function () {
+      assert.fileContent('app/app.ts', /angular[^$]*.module[^$]*\'tempApp\'/);
+    });
   });
 
   describe('with HAML markup, LESS style, Coffee app, and Coffee test', function () {

@@ -12,7 +12,7 @@ describe('<%= humanName %> page', function () {
 
   beforeEach(function () {
     <%= lowerCamel %>Page = new <%= upperCamel %>PagePo();
-    browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#/<%= lowerCamel %>');
+    browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#<%= url %>');
   });
 
   it('should say <%= ctrlName %>', function () {

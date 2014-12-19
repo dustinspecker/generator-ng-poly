@@ -15,7 +15,6 @@ var gulp = require('gulp')
   })
 
   , buildConfig = require('../build.config.js')
-
   , appBase = buildConfig.appDir<% if (polymer) { %>
   , appComponents = path.join(appBase, 'components/**/*')<% } %>
   , appFontFiles = path.join(appBase, 'fonts/**/*')
@@ -57,12 +56,23 @@ gulp.task('markup', ['clean'], function () {
 gulp.task('styles', ['clean'], function () {
   var lessFilter = $.filter('**/*.less')
     , scssFilter = $.filter('**/*.scss')
-    , stylusFilter = $.filter('**/*.styl');
+    , stylusFilter = $.filter('**/*.styl')
+    , onError = function (err) {
+      $.notify.onError({
+        title: 'Syntax error in CSS',
+        subtitle: ' ', //overrides defaults
+        message: ' ', //overrides defaults
+        sound: ' ' //overrides defaults
+      })(err);
+
+      this.emit('end');
+    };
 
   return gulp.src([
     appStyleFiles<% if (polymer) { %>,
     '!' + appComponents<% } %>
   ])
+    .pipe($.plumber({errorHandler: onError}))
     .pipe(lessFilter)
     .pipe($.less())
     .pipe(lessFilter.restore())
@@ -116,7 +126,7 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     .pipe($.if(isProd, $.ngAnnotate()))
     .pipe($.if(isProd, $.uglify()))
     .pipe($.if(isProd, $.rev()))<% if (polymer) { %>
-    .pipe($.addSrc($.mainBowerFiles({filter: /platform/})))<% } %>
+    .pipe($.addSrc($.mainBowerFiles({filter: /webcomponents/})))<% } %>
     .pipe(gulp.dest(buildConfig.buildJs))
     .pipe(jsFilter.restore());
 });
@@ -129,7 +139,7 @@ gulp.task('inject', ['markup', 'styles', 'scripts'], function () {
     .pipe($.inject(gulp.src([
       buildConfig.buildCss + '**/*',
       buildConfig.buildJs + '**/*'<% if (polymer) { %>,
-      '!**/platform.js'<% } %>
+      '!**/webcomponents.js'<% } %>
     ])
     .pipe(jsFilter)
     .pipe($.angularFilesort())
@@ -138,7 +148,7 @@ gulp.task('inject', ['markup', 'styles', 'scripts'], function () {
       ignorePath: buildConfig.buildDir
     }))<% if (polymer) { %>
     .pipe($.inject(gulp.src([
-      buildConfig.buildJs + 'platform.js'
+      buildConfig.buildJs + 'webcomponents.js'
     ]), {
       starttag: '<!-- inject:head:{{ext}} -->',
       endtag: '<!-- endinject -->',
@@ -154,7 +164,7 @@ gulp.task('bowerCopy', ['inject'], function () {
     , jsFilter = $.filter('**/*.js')
 
     , stream = $.streamqueue({objectMode: true})
-    , wiredep = $.wiredep(<% if (polymer || framework === 'uibootstrap') { %>{exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /platform/<% } %><% if (polymer || framework === 'uibootstrap') { %>]}<% } %>);
+    , wiredep = $.wiredep(<% if (polymer || framework === 'uibootstrap') { %>{exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /webcomponents/<% } %><% if (polymer || framework === 'uibootstrap') { %>]}<% } %>);
 
   if (wiredep.js) {
     stream.queue(gulp.src(wiredep.js));
@@ -169,7 +179,7 @@ gulp.task('bowerCopy', ['inject'], function () {
     .pipe($.if(isProd, $.concat('vendor.css')))
     .pipe($.if(isProd, $.cssmin()))
     .pipe($.if(isProd, $.rev()))
-    .pipe(gulp.dest(buildConfig.buildCss))
+    .pipe(gulp.dest(buildConfig.extCss))
     .pipe(cssFilter.restore())
     .pipe(jsFilter)
     .pipe($.if(isProd, $.concat('vendor.js')))
@@ -177,7 +187,7 @@ gulp.task('bowerCopy', ['inject'], function () {
       preserveComments: $.uglifySaveLicense
     })))
     .pipe($.if(isProd, $.rev()))
-    .pipe(gulp.dest(buildConfig.buildJs))
+    .pipe(gulp.dest(buildConfig.extJs))
     .pipe(jsFilter.restore());
 });
 
@@ -186,8 +196,8 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
   if (isProd) {
     return gulp.src(buildConfig.buildDir + 'index.html')
       .pipe($.inject(gulp.src([
-        buildConfig.buildCss + 'vendor*.css',
-        buildConfig.buildJs + 'vendor*.js'
+        buildConfig.extCss + 'vendor*.css',
+        buildConfig.extJs + 'vendor*.js'
       ], {
         read: false
       }), {
@@ -204,16 +214,16 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
   } else {
     return gulp.src(buildConfig.buildDir + 'index.html')
       .pipe($.wiredep.stream({<% if (polymer || framework === 'uibootstrap') { %>
-        exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /platform/<% } %><% if (polymer || framework === 'uibootstrap') { %>],<% } %>
+        exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /webcomponents/<% } %><% if (polymer || framework === 'uibootstrap') { %>],<% } %>
         fileTypes: {
           html: {
             replace: {
               css: function (filePath) {
-                return '<link rel="stylesheet" href="' + buildConfig.buildCss.replace(buildConfig.buildDir, '') +
+                return '<link rel="stylesheet" href="' + buildConfig.extCss.replace(buildConfig.buildDir, '') +
                   filePath.split('/').pop() + '">';
               },
               js: function (filePath) {
-                return '<script src="' + buildConfig.buildJs.replace(buildConfig.buildDir, '') +
+                return '<script src="' + buildConfig.extJs.replace(buildConfig.buildDir, '') +
                   filePath.split('/').pop() + '"></script>';
               }
             }
@@ -292,13 +302,21 @@ gulp.task('components', ['bowerInject'], function () {
     .pipe(gulp.dest(buildConfig.buildComponents));
 });
 
-<% } %>// copy fonts from Bower and custom fonts into build directory
-gulp.task('fonts', ['clean'], function () {
+<% } %>
+// copy custom fonts into build directory
+gulp.task('fonts', ['fontsBower'], function () {
   var fontFilter = $.filter('**/*.{eot,otf,svg,ttf,woff}');
-  return gulp.src(
-      $.mainBowerFiles().concat([appFontFiles]))
+  return gulp.src([appFontFiles])
     .pipe(fontFilter)
     .pipe(gulp.dest(buildConfig.buildFonts))
+    .pipe(fontFilter.restore());
+});
+// copy Bower fonts into build directory
+gulp.task('fontsBower', ['clean'], function () {
+  var fontFilter = $.filter('**/*.{eot,otf,svg,ttf,woff}');
+  return gulp.src($.mainBowerFiles())
+    .pipe(fontFilter)
+    .pipe(gulp.dest(buildConfig.extFonts))
     .pipe(fontFilter.restore());
 });
 

@@ -95,7 +95,7 @@ describe('Module generator', function () {
     });
   });
 
-  describe('adding a deep level module', function () {
+  describe('adding a deep level camelCase module', function () {
     before(function (done) {
       helpers.run(path.join(__dirname, '../module'))
         .withArguments(['home/myDoor'])
@@ -140,6 +140,28 @@ describe('Module generator', function () {
     });
   });
 
+  describe('adding a deep level hyphenated module', function () {
+    before(function (done) {
+      helpers.run(path.join(__dirname, '../module'))
+      .withArguments(['home/my-module'])
+      .withGenerators([
+        path.join(__dirname, '../route'),
+        path.join(__dirname, '../controller'),
+        path.join(__dirname, '../view')
+      ])
+      .on('end', done);
+    });
+
+    it('should create home.myModule in app/home/my-module/my-module.js', function () {
+      assert.fileContent('app/home/my-module/my-module.js', /angular[^$]*.module[^$]*\'home.myModule\'/);
+    });
+
+    it('should add home.myModule in app/home/home.js', function () {
+      assert.fileContent('app/home/home.js', /    \'home.myModule\'/);
+    });
+
+  });
+
   describe('adding a deep level Typescript module', function () {
     before(function (done) {
       helpers.run(path.join(__dirname, '../module'))
@@ -155,14 +177,22 @@ describe('Module generator', function () {
         .on('end', done);
     });
 
+    it('should add comma to ui.router in app/home/home.js deps', function () {
+      assert.fileContent('app/home/home.js', /    \'ui.router\',/);
+    });
+
+    it('should add home.myHouse to app/home/home.js deps', function () {
+      assert.fileContent('app/home/home.js', /    \'home.myHouse\'/);
+    });
+
     describe('adding a deeper level module', function () {
       before(function (done) {
         helpers.run(path.join(__dirname, '../module'))
-          .withArguments(['home/myHouse/handle'])
-          .withGenerators([
-            path.join(__dirname, '../route'),
-            path.join(__dirname, '../controller'),
-            path.join(__dirname, '../view')
+        .withArguments(['home/myHouse/handle'])
+        .withGenerators([
+          path.join(__dirname, '../route'),
+          path.join(__dirname, '../controller'),
+          path.join(__dirname, '../view')
           ])
           .on('end', done);
       });
@@ -174,14 +204,9 @@ describe('Module generator', function () {
       it('should name module in app/home/my-house/my-house.ts home.myHouse', function () {
         assert.fileContent('app/home/my-house/my-house.ts', /angular[^$]*.module[^$]*\'home.myHouse\'/);
       });
+
     });
 
-    it('should add comma to ui.router in app/home/home.js deps', function () {
-      assert.fileContent('app/home/home.js', /    \'ui.router\',/);
-    });
-
-    it('should add home.door to app/home/home.js deps', function () {
-      assert.fileContent('app/home/home.js', /    \'home.myHouse\'/);
-    });
   });
+
 });

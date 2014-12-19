@@ -12,7 +12,7 @@ describe '<%= humanName %> page', ->
 
   beforeEach ->
     <%= lowerCamel %>Page = new <%= upperCamel %>PagePo
-    browser.driver.get buildConfig.host + ':' + buildConfig.port + '/#/<%= lowerCamel %>'
+    browser.driver.get buildConfig.host + ':' + buildConfig.port + '/#<%= url %>'
 
   it 'should say <%= ctrlName %>', ->
     expect(<%= lowerCamel %>Page.heading.getText()).<% if (e2eTestFramework === 'mocha') { %>to.eventually.equal<% } else { %>toEqual<% } %> '<%= lowerCamel %>'

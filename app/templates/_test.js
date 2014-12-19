@@ -10,12 +10,12 @@ var gulp = require('gulp')
       'wiredep'
     ]
   })
+  , buildConfig = require('../build.config.js')
+  , appBase = buildConfig.appDir
+  , appDirectiveTemplateFiles = path.join(appBase, '**/*directive.tpl.html')
+  , buildJsFiles = path.join(buildConfig.buildJs, '**/*.js')
 
-  , appBase = require('../build.config.js').appDir
-  , appDirectiveTemplateFiles = path.join(appBase, '**/*directive.tpl.{haml,html,jade}')
-  , appScriptFiles = path.join(appBase, '**/*.{ts,coffee,js}')
-
-  , unitTests = path.join(require('../build.config.js').unitTestDir, '**/*_test.*')
+  , unitTests = path.join(buildConfig.unitTestDir, '**/*_test.*')
   , e2eTestFiles = 'e2e/**/*_test.*'
 
   , karmaConf = require('../karma.config.js');
@@ -30,7 +30,7 @@ gulp.task('karmaFiles', function () {
   // add bower javascript
   stream.queue(gulp.src($.wiredep({
     devDependencies: true<% if (polymer) { %>,
-    exclude: [/polymer/, /platform/]<% } %>
+    exclude: [/polymer/, /webcomponents/]<% } %>
   }).js));
 
   // add application templates
@@ -38,7 +38,7 @@ gulp.task('karmaFiles', function () {
 
   // add application javascript
   stream.queue(gulp.src([
-    appScriptFiles,
+    buildJsFiles,
     '!**/*_test.*'
   ])
     .pipe($.angularFilesort()));
@@ -53,7 +53,7 @@ gulp.task('karmaFiles', function () {
 });
 
 // run unit tests
-gulp.task('unitTest', ['lint', 'karmaFiles'], function (done) {
+gulp.task('unitTest', ['lint', 'karmaFiles', 'build'], function (done) {
   $.karma.server.start(karmaConf, done);
 });
 

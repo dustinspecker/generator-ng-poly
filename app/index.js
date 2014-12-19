@@ -1,5 +1,6 @@
 'use strict';
 var path = require('path')
+  , utils = require('../utils')
   , yeoman = require('yeoman-generator')
   , yosay = require('yosay')
   , Generator;
@@ -273,7 +274,11 @@ Generator.prototype.prompting = function prompting() {
         ];
 
         if (answers.ngversion === '1.3.*') {
-          choices.splice(2, 0, {
+          choices.splice(1, 0, {
+            name: 'Angular Aria',
+            value: 'aria'
+          });
+          choices.splice(3, 0, {
             name: 'Angular Messages',
             value: 'messages'
           });
@@ -340,7 +345,7 @@ Generator.prototype.configuring = function configuring() {
     unitTestDir: this.unitTestDir,
     host: this.host,
     port: this.port,
-    moduleName: this.appName,
+    moduleName: utils.lowerCamel(this.appName),
     passFunc: this.passFunc,
     namedFunc: this.namedFunc,
     polymer: this.polymer,

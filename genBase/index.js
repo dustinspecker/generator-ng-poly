@@ -37,7 +37,11 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
       name: 'url',
       message: 'What\'s the URL for this route?',
       default: function () {
-        return '/' + utils.lowerCamel(this.name);
+        // if child state return child portion as url
+        if (this.name.indexOf('.') > -1) {
+          return '/' + utils.hyphenName(this.name.split('.')[1]);
+        }
+        return '/' + utils.hyphenName(this.name);
       }.bind(this),
       when: function () {
         return ((params && params.url) && !this.config.get('ngRoute') && !(this.options && this.options.url));
@@ -48,7 +52,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
       message: 'What\'s the templateURL for this route?',
       default: function (answers) {
         var module = answers.module || this.options.module;
-        return utils.normalizeModulePath(module) + '/' + utils.hyphenName(this.name) + '.tpl.html';
+        return utils.normalizeModulePath(module) + '/' + utils.hyphenName(this.name.replace('.', '-')) + '.tpl.html';
       }.bind(this),
       when: function () {
         return ((params && params.templateUrl) && !(this.options && this.options['template-url']));
@@ -124,8 +128,8 @@ Generator.prototype.getConfig = function getConfig() {
   if (this.module) {
     modules = utils.extractModuleNames(this.module);
     config.modulePath = utils.normalizeModulePath(this.module);
-    config.moduleName = modules[0];
-    config.parentModuleName = modules[1];
+    config.moduleName = utils.lowerCamel(modules[0]);
+    config.parentModuleName = utils.lowerCamel(modules[1]);
 
     if (config.appScript === 'ts') {
       config.referencePath = path.relative(config.modulePath, config.appDir);
