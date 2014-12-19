@@ -19,16 +19,6 @@ Generator.prototype.prompting = function prompting() {
 
 Generator.prototype.writing = function writing() {
   var config = this.getConfig()
-
-    ,  newState = {
-      module: this.module,
-      url: this.url,
-      lowerCamel: config.lowerCamel,
-      hyphenName: config.hyphenName,
-      ctrlName: config.ctrlName,
-      templateUrl: this.templateUrl
-    }
-
     // save modifications
     , newRouteConfig = {
       appScript: config.appScript,
@@ -39,9 +29,24 @@ Generator.prototype.writing = function writing() {
     }
 
     // module file to add route to
-    , filePath, file;
+    , filePath, file, newState;
 
+  // move this logic to utils-route
   config.url = this.url;
+  config.lowerCamel = utils.lowerCamel(this.name.replace('.', '-'));
+  config.hyphenName = utils.hyphenName(this.name.replace('.', '-'));
+  config.ctrlName = utils.ctrlName(this.name.replace('.', '-'));
+  config.humanName = utils.humanName(this.name.replace('.', '-'));
+
+  newState = {
+    name: this.name,
+    module: this.module,
+    url: this.url,
+    lowerCamel: config.lowerCamel,
+    hyphenName: config.hyphenName,
+    ctrlName: config.ctrlName,
+    templateUrl: this.templateUrl
+  };
 
   filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
     utils.hyphenName(config.moduleName) + '.coffee');
@@ -68,7 +73,7 @@ Generator.prototype.writing = function writing() {
   if (!config.skipController) {
     // call controller subgenerator
     this.composeWith('ng-poly:controller', {
-      args: [this.name],
+      args: [this.name.replace('.', '-')],
       options: {
         module: this.module,
 

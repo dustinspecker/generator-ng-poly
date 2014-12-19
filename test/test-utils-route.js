@@ -6,6 +6,7 @@ var assert = require('assert')
   , routeUtils = require('../utils/route')
 
   , newState = {
+    name: 'test',
     module:'home',
     url: '/test',
     lowerCamel: 'test',
