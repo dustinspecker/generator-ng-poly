@@ -72,6 +72,7 @@ gulp.task('styles', ['clean'], function () {
     appStyleFiles<% if (polymer) { %>,
     '!' + appComponents<% } %>
   ])
+    .pipe($.cached('styles'))
     .pipe($.plumber({errorHandler: onError}))
     .pipe(lessFilter)
     .pipe($.less())
@@ -102,6 +103,7 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     '!**/*_test.*',
     '!**/index.html'
   ])
+    .pipe($.cached('scripts'))
     .pipe(coffeeFilter)
     .pipe($.coffee())
     .pipe(coffeeFilter.restore())
