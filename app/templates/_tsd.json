@@ -3,7 +3,7 @@
   "repo": "borisyankov/DefinitelyTyped",
   "ref": "master",
   "path": "typings",
-  "bundle": "references.d.ts",
+  "bundle": "typings/tsd.d.ts",
   "installed": {
     "jquery/jquery.d.ts": {
       "commit": "f41b28ef4b632e37f6f32f86b8a5f8379de15a38"

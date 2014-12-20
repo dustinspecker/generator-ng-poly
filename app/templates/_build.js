@@ -91,7 +91,7 @@ gulp.task('styles', ['clean'], function () {
 
 var tsProject = $.typescript.createProject({
   declarationFiles: true,
-  noExternalResolve: true
+  noExternalResolve: false
 });
 
 // compile scripts and copy into build directory
