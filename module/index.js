@@ -78,7 +78,7 @@ Generator.prototype.end = function end() {
 
   if (this.options && !this.options.empty) {
     this.composeWith('ng-poly:route', {
-      args: [this.name],
+      args: [utils.lowerCamel(this.module.split(/[\/\\]/).pop())],
       options: {
         module: this.module,
         url: '/' + this.context.hyphenModule,

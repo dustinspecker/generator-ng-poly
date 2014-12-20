@@ -83,7 +83,21 @@ describe('Module generator', function () {
           path.join(__dirname, '../controller'),
           path.join(__dirname, '../view')
         ])
-        .on('end', done);
+        .on('end', function () {
+          // TODO: determine why done is called before files are finished writing
+          // setTimeout is used to allow files to be finished writing before running tests
+          setTimeout(done, 400);
+        });
+    });
+
+    it('should add test files', function () {
+      assert.file([
+        'app/test/test.js',
+        'app/test/test.less',
+        'app/test/test.tpl.html',
+        'app/test/test-controller.js',
+        'app/test/test-controller_test.js'
+      ]);
     });
 
     it('should add comma to ui.router in app/app.js', function () {
@@ -158,6 +172,10 @@ describe('Module generator', function () {
 
     it('should create home.myModule in app/home/my-module/my-module.js', function () {
       assert.fileContent('app/home/my-module/my-module.js', /angular[^$]*.module[^$]*\'home.myModule\'/);
+    });
+
+    it('should add myModule state to app/home/my-module/my-modules.js', function () {
+      assert.fileContent('app/home/my-module/my-module.js', /[.]state\(\'myModule\', /);
     });
   });
 
