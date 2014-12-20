@@ -11,8 +11,7 @@ var gulp = require('gulp')
     ]
   })
   , buildConfig = require('../build.config.js')
-  , appBase = buildConfig.appDir
-  , appDirectiveTemplateFiles = path.join(buildConfig.buildDir, '**/*directive.tpl.html')
+  , buildDirectiveTemplateFiles = path.join(buildConfig.buildDir, '**/*directive.tpl.html')
   , buildJsFiles = path.join(buildConfig.buildJs, '**/*.js')
 
   , unitTests = path.join(buildConfig.unitTestDir, '**/*_test.*')
@@ -24,7 +23,7 @@ var gulp = require('gulp')
 karmaConf.files = [];
 
 // inject scripts in karma.config.js
-gulp.task('karmaFiles', function () {
+gulp.task('karmaFiles', ['build'], function () {
   var stream = $.streamqueue({objectMode: true});
 
   // add bower javascript
@@ -34,7 +33,7 @@ gulp.task('karmaFiles', function () {
   }).js));
 
   // add application templates
-  stream.queue(gulp.src([appDirectiveTemplateFiles]));
+  stream.queue(gulp.src([buildDirectiveTemplateFiles]));
 
   // add application javascript
   stream.queue(gulp.src([
@@ -53,7 +52,7 @@ gulp.task('karmaFiles', function () {
 });
 
 // run unit tests
-gulp.task('unitTest', ['lint', 'karmaFiles', 'build'], function (done) {
+gulp.task('unitTest', ['lint', 'karmaFiles'], function (done) {
   $.karma.server.start(karmaConf, done);
 });
 
