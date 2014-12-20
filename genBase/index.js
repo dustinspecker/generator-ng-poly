@@ -132,7 +132,9 @@ Generator.prototype.getConfig = function getConfig() {
     config.parentModuleName = utils.lowerCamel(modules[1]);
 
     if (config.appScript === 'ts') {
-      config.referencePath = path.relative(config.modulePath, config.appDir);
+      config.referencePath = path.relative(config.modulePath, path.dirname(this.config.path));
+      config.referencePath = config.referencePath.replace('\\', '/');
+      config.referencePath = '../' + config.referencePath + '/typings/tsd.d.ts';
     }
   }
 
