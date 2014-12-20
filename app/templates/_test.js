@@ -12,7 +12,7 @@ var gulp = require('gulp')
   })
   , buildConfig = require('../build.config.js')
   , appBase = buildConfig.appDir
-  , appDirectiveTemplateFiles = path.join(appBase, '**/*directive.tpl.html')
+  , appDirectiveTemplateFiles = path.join(buildConfig.buildDir, '**/*directive.tpl.html')
   , buildJsFiles = path.join(buildConfig.buildJs, '**/*.js')
 
   , unitTests = path.join(buildConfig.unitTestDir, '**/*_test.*')
