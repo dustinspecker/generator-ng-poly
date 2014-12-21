@@ -1,7 +1,6 @@
-///<reference path='<%= referencePath %>/references.d.ts' />
-
+///<reference path='<%= referencePath %>' />
 /*global Polymer*/
-(function () {
+module UpperCamel {
   'use strict';
 
   var element = new Polymer('<%= hyphenName %>', {
@@ -12,4 +11,4 @@
   });
 
   return element;
-}());
+}

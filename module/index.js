@@ -30,7 +30,9 @@ Generator.prototype.writing = function writing() {
   this.context.templateUrl = path.join(this.module).replace(/\\/g, '/');
   this.context.modulePath = utils.normalizeModulePath(this.module);
   if (this.context.appScript === 'ts') {
-    this.context.referencePath = path.relative(this.context.modulePath, this.context.appDir);
+    this.context.referncePath = path.relative(this.context.modulePath, path.dirname(this.config.path));
+    this.context.referncePath = this.context.referncePath.replace('\\', '/');
+    this.context.referncePath = '../' + this.context.referncePath + '/typings/tsd.d.ts';
   }
 
   // create new module directory

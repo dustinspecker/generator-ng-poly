@@ -1,4 +1,4 @@
-///<reference path='references.d.ts' />
+///<reference path='../typings/tsd.d.ts' />
 module <%= moduleName %> {
   'use strict';
 

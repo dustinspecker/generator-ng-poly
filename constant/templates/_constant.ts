@@ -1,14 +1,15 @@
-///<reference path='<%= referencePath %>/references.d.ts' />
+///<reference path='<%= referencePath %>' />
+module <%= upperCamel %> {
+  'use strict';
 
-'use strict';
-
-/**
- * @ngdoc service
- * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.constant:<%= upperCamel %>
- *
- * @description
- *
- */
-angular
-  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
-  .constant('<%= upperCamel %>', 0);
+  /**
+  * @ngdoc service
+  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.constant:<%= upperCamel %>
+  *
+  * @description
+  *
+  */
+  angular
+    .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
+    .constant('<%= upperCamel %>', 0);
+}

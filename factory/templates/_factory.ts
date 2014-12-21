@@ -1,28 +1,29 @@
-///<reference path='<%= referencePath %>/references.d.ts' />
+///<reference path='<%= referencePath %>' />
+module <%= upperCamel %> {
+  'use strict';
 
-'use strict';
+  /**
+  * @ngdoc service
+  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.factory:<%= upperCamel %>
+  *
+  * @description
+  *
+  */
+  angular
+    .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
+    .factory('<%= upperCamel %>', <%= upperCamel %>);
 
-/**
- * @ngdoc service
- * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.factory:<%= upperCamel %>
- *
- * @description
- *
- */
-angular
-  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
-  .factory('<%= upperCamel %>', <%= upperCamel %>);
-
-  class <%= upperCamel %> {
-    public static $inject = [
-    ];
-
-    private logGreeting(greeting: string) {
-      console.log("Received greeting: " + greeting);
-    }
-
-    getGreeting(greeting) {
-      this.logGreeting(greeting);
-      return "greeting " + greeting;
-    }
+  interface <%= upperCamel %>Interface {
+    someValue?: string
+    someMethod?: Function
   }
+
+  function <%= upperCamel %>() {
+    var <%= upperCamel %>Base:<%= upperCamel %>Interface = {};
+    <%= upperCamel %>Base.someValue = '<%= upperCamel %>';
+    <%= upperCamel %>Base.someMethod = function <% if (namedFunc) {%>someMethod<% } %>() {
+      return '<%= upperCamel %>';
+    };
+    return <%= upperCamel %>Base;
+  }
+}

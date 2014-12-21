@@ -1,26 +1,26 @@
-///<reference path='<%= referencePath %>/references.d.ts' />
+///<reference path='<%= referencePath %>' />
+module <%= upperCamel %> {
+  'use strict';
 
-'use strict';
-
-/**
- * @ngdoc directive
- * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.directive:<%= lowerCamel %>
- * @restrict EA
- * @element
- *
- * @description
- *
- * @example
-   <example module="<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>">
-     <file name="index.html">
-      <<%= hyphenName %>></<%= hyphenName %>>
-     </file>
-   </example>
- *
- */
-angular
-  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
-  .directive('<%= lowerCamel %>', <%= lowerCamel %>);
+  /**
+  * @ngdoc directive
+  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.directive:<%= lowerCamel %>
+  * @restrict EA
+  * @element
+  *
+  * @description
+  *
+  * @example
+    <example module="<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>">
+      <file name="index.html">
+        <<%= hyphenName %>></<%= hyphenName %>>
+      </file>
+    </example>
+  *
+  */
+  angular
+    .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
+    .directive('<%= lowerCamel %>', <%= lowerCamel %>);
 
   function <%= lowerCamel %>(): <% if (!ngRoute) { %>ng.IDirective<% } %> {
     return {
@@ -39,3 +39,4 @@ angular
       }
     };
   }
+}

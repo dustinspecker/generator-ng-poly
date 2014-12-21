@@ -1,4 +1,4 @@
-///<reference path='<%= referencePath %>/references.d.ts' />
+///<reference path='<%= referencePath %>' />
 module <%= moduleName %> {
   'use strict';
 
