@@ -2,15 +2,13 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
-  , join = require('path').join
-  , os = require('os');
+  , join = require('path').join;
 
 describe('App generator', function () {
   describe('with HTML markup, CSS style, JS app, and JS test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
-        .inDir(join(os.tmpDir(), 'temp-app-1'))
         .withOptions({
           'skip-install': true
         })
@@ -73,17 +71,12 @@ describe('App generator', function () {
         'README.md'
       ]);
     });
-
-    it('should create tempAppDiff module in front/app.js', function () {
-      assert.fileContent('front/app.js', /angular[^$]*.module[^$]*\'tempAppDiff\'/);
-    });
   });
 
   describe('with HAML markup, LESS style, Coffee app, and Coffee test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
-        .inDir(join(os.tmpDir(), 'temp-app-2'))
         .withOptions({
           'skip-install': true
         })
@@ -150,7 +143,6 @@ describe('App generator', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
-        .inDir(join(os.tmpDir(), 'temp-app-3'))
         .withOptions({
           'skip-install': true
         })
@@ -216,7 +208,6 @@ describe('App generator', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
-        .inDir(join(os.tmpDir(), 'temp-app-4'))
         .withOptions({
           'skip-install': true
         })

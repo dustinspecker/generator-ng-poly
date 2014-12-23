@@ -5,6 +5,7 @@ var a = require('a')
   , fs = require('fs')
   , path = require('path')
   , proxyquire = require('proxyquire')
+  , sinon = require('sinon')
   , utils = require('../utils/module');
 
 describe('Module Utils', function () {
@@ -39,6 +40,42 @@ describe('Module Utils', function () {
     it('should return module without slashes in path', function () {
       assert(JSON.stringify(utils.extractModuleNames('test')) === JSON.stringify(['test', null]));
     });
+  });
+
+  describe('moduleExists', function () {
+    var pathStub, utilsProxy;
+
+    beforeEach(function () {
+      pathStub = {
+        dirname: function () {
+          return '.yo-rc.json';
+        },
+        join: function () {
+          return 'app/home';
+        }
+      };
+      utilsProxy = proxyquire('../utils/module', {path: pathStub});
+
+      utilsProxy.getAppDir = function getAppDir() {
+        return 'app';
+      };
+    });
+
+    it('should return true when module is appDir', function () {
+      assert(utilsProxy.moduleExists('app') === true);
+    });
+
+    // it('should call fs.exstsSync', function () {
+    //   var fsStub = {
+    //     existsSync: sinon.stub().returns(true)
+    //   };
+    //   utilsProxy = proxyquire('../utils/module', {fs: fsStub, path: pathStub});
+    //   utilsProxy.normalizeModulePath = function normalizeModulePath() {
+    //     return 'app/home';
+    //   };
+    //   utilsProxy.moduleExists('app/home');
+    //   assert(fsStub.existsSync.callCount === 1);
+    // });
   });
 
   describe('dependencyExists', function () {

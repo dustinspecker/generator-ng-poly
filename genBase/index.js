@@ -30,7 +30,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
         return !(this.options && this.options.module);
       }.bind(this),
       validate: function (input) {
-        return utils.moduleExists(this.config.path, input);
+        return utils.moduleExists(input);
       }.bind(this)
     },
     {
