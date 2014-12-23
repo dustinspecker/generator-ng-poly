@@ -2,7 +2,6 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
-  , os = require('os')
   , path = require('path')
   , sinon = require('sinon');
 
@@ -13,8 +12,8 @@ describe('Module generator', function () {
   // appName different than directory for code coverage
   // stub installDependencies for code coverage
   before(function (done) {
-    helpers.run(path.join(__dirname, '../app'))
-      .inDir(path.join(os.tmpDir(), 'temp-module'))
+    helpers
+      .run(path.join(__dirname, '../app'))
       .withOptions({
         'skip-install': false
       })
@@ -49,7 +48,10 @@ describe('Module generator', function () {
 
   describe('adding a new empty module', function () {
     before(function (done) {
-      helpers.run(path.join(__dirname, '../module'))
+      helpers
+        .run(path.join(__dirname, '../module'), {
+          tmpdir: false
+        })
         .withArguments(['testGroup'])
         .withOptions({
           empty: true
@@ -76,7 +78,10 @@ describe('Module generator', function () {
   // trailing slash to test trailing slash removal
   describe('adding a new module', function () {
     before(function (done) {
-      helpers.run(path.join(__dirname, '../module'))
+      helpers
+        .run(path.join(__dirname, '../module'), {
+          tmpdir: false
+        })
         .withArguments(['test/'])
         .withGenerators([
           path.join(__dirname, '../route'),
@@ -111,7 +116,10 @@ describe('Module generator', function () {
 
   describe('adding a deep level camelCase module', function () {
     before(function (done) {
-      helpers.run(path.join(__dirname, '../module'))
+      helpers
+        .run(path.join(__dirname, '../module'), {
+          tmpdir: false
+        })
         .withArguments(['home/myDoor'])
         .withOptions({
           'app-script': 'coffee'
@@ -126,7 +134,10 @@ describe('Module generator', function () {
 
     describe('adding a deeper level module', function () {
       before(function (done) {
-        helpers.run(path.join(__dirname, '../module'))
+        helpers
+          .run(path.join(__dirname, '../module'), {
+            tmpdir: false
+          })
           .withArguments(['home/myDoor/handle'])
           .withGenerators([
             path.join(__dirname, '../route'),
@@ -156,7 +167,10 @@ describe('Module generator', function () {
 
   describe('adding a deep level hyphenated module', function () {
     before(function (done) {
-      helpers.run(path.join(__dirname, '../module'))
+      helpers
+        .run(path.join(__dirname, '../module'), {
+          tmpdir: false
+        })
         .withArguments(['home/my-module'])
         .withGenerators([
           path.join(__dirname, '../route'),

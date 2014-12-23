@@ -8,7 +8,8 @@ var assert = require('yeoman-generator').assert
 describe('App generator', function () {
   describe('with HTML markup, CSS style, JS app, and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../app'))
+      helpers
+        .run(join(__dirname, '../app'))
         .inDir(join(os.tmpDir(), 'temp-app-1'))
         .withOptions({
           'skip-install': true
@@ -81,7 +82,8 @@ describe('App generator', function () {
 
   describe('with HAML markup, LESS style, Coffee app, and Coffee test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../app'))
+      helpers
+        .run(join(__dirname, '../app'))
         .inDir(join(os.tmpDir(), 'temp-app-2'))
         .withOptions({
           'skip-install': true
@@ -148,7 +150,8 @@ describe('App generator', function () {
 
   describe('with Jade markup, Stylus style, JS app, and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../app'))
+      helpers
+        .run(join(__dirname, '../app'))
         .inDir(join(os.tmpDir(), 'temp-app-3'))
         .withOptions({
           'skip-install': true
@@ -214,7 +217,8 @@ describe('App generator', function () {
 
   describe('with HTML markup, SCSS style, JS app, and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../app'))
+      helpers
+        .run(join(__dirname, '../app'))
         .inDir(join(os.tmpDir(), 'temp-app-4'))
         .withOptions({
           'skip-install': true
