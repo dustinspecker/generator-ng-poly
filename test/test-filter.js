@@ -2,13 +2,12 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
-  , join = require('path').join
-  , os = require('os');
+  , join = require('path').join;
 
 describe('Filter generator', function () {
   before(function (done) {
-    helpers.run(join(__dirname, '../app'))
-      .inDir(join(os.tmpDir(), 'temp-filter'))
+    helpers
+      .run(join(__dirname, '../app'))
       .withOptions({
         'skip-install': true
       })
@@ -35,7 +34,10 @@ describe('Filter generator', function () {
 
   describe('with JS app and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../filter'))
+      helpers
+        .run(join(__dirname, '../filter'), {
+          tmpdir: false
+        })
         .withArguments(['test'])
         .withOptions({
           module: 'home'
@@ -54,7 +56,10 @@ describe('Filter generator', function () {
 
   describe('with Coffee app and Coffee test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../filter'))
+      helpers
+        .run(join(__dirname, '../filter'), {
+          tmpdir: false
+        })
         .withArguments(['test1'])
         .withOptions({
           module: 'home',

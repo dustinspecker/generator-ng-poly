@@ -2,13 +2,14 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
-  , join = require('path').join
-  , os = require('os');
+  , join = require('path').join;
 
 describe('Provider generator', function () {
   before(function (done) {
-    helpers.run(join(__dirname, '../app'))
-      .inDir(join(os.tmpDir(), 'temp-provider'))
+    helpers
+      .run(join(__dirname, '../app'), {
+        tmpdir: false
+      })
       .withOptions({
         'skip-install': true
       })
@@ -35,7 +36,10 @@ describe('Provider generator', function () {
 
   describe('with JS app and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../provider'))
+      helpers
+        .run(join(__dirname, '../provider'), {
+          tmpdir: false
+        })
         .withArguments(['test'])
         .withOptions({
           module: 'home'
@@ -54,7 +58,10 @@ describe('Provider generator', function () {
 
   describe('with Coffee app and Coffee test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../provider'))
+      helpers
+        .run(join(__dirname, '../provider'), {
+          tmpdir: false
+        })
         .withArguments(['test1'])
         .withOptions({
           module: 'home',

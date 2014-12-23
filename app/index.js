@@ -326,10 +326,6 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('ngRoute', this.ngRoute);
   this.config.set('lastUsedModule', 'home');
 
-  // force save to guarantee config exists for controller
-  // tests randomly fail without this
-  this.config.forceSave();
-
   this.context = {
     appName: this.appName,
     ngversion: this.ngversion,

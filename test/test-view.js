@@ -2,13 +2,12 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
-  , join = require('path').join
-  , os = require('os');
+  , join = require('path').join;
 
 describe('View generator', function () {
   before(function (done) {
-    helpers.run(join(__dirname, '../app'))
-      .inDir(join(os.tmpDir(), 'temp-view'))
+    helpers
+      .run(join(__dirname, '../app'))
       .withOptions({
         'skip-install': true
       })
@@ -35,7 +34,10 @@ describe('View generator', function () {
 
   describe('with HTML markup and LESS style', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../view'))
+      helpers
+        .run(join(__dirname, '../view'), {
+          tmpdir: false
+        })
         .withArguments(['test'])
         .withOptions({
           module: 'home'
@@ -54,7 +56,10 @@ describe('View generator', function () {
 
   describe('with HAML markup and CSS style', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../view'))
+      helpers
+        .run(join(__dirname, '../view'), {
+          tmpdir: false
+        })
         .withArguments(['test1'])
         .withOptions({
           module: 'home',
@@ -75,7 +80,10 @@ describe('View generator', function () {
 
   describe('with Jade markup and SCSS style', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../view'))
+      helpers
+        .run(join(__dirname, '../view'), {
+          tmpdir: false
+        })
         .withArguments(['test2'])
         .withOptions({
           module: 'home',
@@ -96,7 +104,10 @@ describe('View generator', function () {
 
   describe('with Jade markup and Stylus style', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../view'))
+      helpers
+        .run(join(__dirname, '../view'), {
+          tmpdir: false
+        })
         .withArguments(['test3'])
         .withOptions({
           module: 'home',
