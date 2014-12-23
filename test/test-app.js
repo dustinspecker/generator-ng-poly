@@ -31,11 +31,7 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('end', done);
     });
 
     it('should create files in temp-app-diff directory', function () {
@@ -99,11 +95,7 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('end', done);
     });
 
     it('should create files', function () {
@@ -164,11 +156,7 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('end', done);
     });
 
     it('should create files', function () {
@@ -230,11 +218,7 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('end', done);
     });
 
     it('should create files', function () {

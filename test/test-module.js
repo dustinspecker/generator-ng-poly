@@ -88,11 +88,7 @@ describe('Module generator', function () {
           path.join(__dirname, '../controller'),
           path.join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('end', done);
     });
 
     it('should add test files', function () {
