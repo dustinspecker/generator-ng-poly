@@ -83,9 +83,6 @@ Generator.prototype.end = function end() {
   // save this module to suggest later
   this.config.set('lastUsedModule', this.module);
 
-  // prevents done() from being called out of sync
-  this.config.forceSave();
-
   if (this.options && !this.options.empty) {
     this.composeWith('ng-poly:route', {
       args: [utils.lowerCamel(this.module.split(/[\/\\]/).pop())],

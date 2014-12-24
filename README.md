@@ -94,7 +94,7 @@ Languages and Features supported:
 † Code coverage isn't currently performed on CoffeeScript application source code
 
 ### Gulp Tasks
-`gulp` will start a localhost and open in the default browser 
+`gulp` will start a localhost and open in the default browser
 
 Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
 
@@ -176,6 +176,7 @@ root/
 ├── node_modules/
 ├── .bowerrc
 ├── .editorconfig
+├── .gitignore
 ├── .jscsrc
 ├── .jshintrc
 ├── .yo-rc.json
@@ -250,10 +251,10 @@ Produces `app/module/micro-controller.js`:
 /**
  * @ngdoc object
  * @name module.controller:MicroCtrl
- * @requires $scope 
- * 
+ * @requires $scope
+ *
  * @description
- * 
+ *
  */
 angular
   .module('module')
@@ -965,9 +966,9 @@ This will generate controllers like:
 /**
  * @ngdoc object
  * @name home.controller:HomeCtrl
- * 
+ *
  * @description
- * 
+ *
  */
 angular
   .module('home')

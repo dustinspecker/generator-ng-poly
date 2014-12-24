@@ -2,13 +2,12 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
-  , join = require('path').join
-  , os = require('os');
+  , join = require('path').join;
 
 describe('Directive generator', function () {
   before(function (done) {
-    helpers.run(join(__dirname, '../app'))
-      .inDir(join(os.tmpDir(), 'temp-directive'))
+    helpers
+      .run(join(__dirname, '../app'))
       .withOptions({
         'skip-install': true
       })
@@ -35,7 +34,10 @@ describe('Directive generator', function () {
 
   describe('with HTML markup, JS app, and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../directive'))
+      helpers
+        .run(join(__dirname, '../directive'), {
+          tmpdir: false
+        })
         .withArguments(['test'])
         .withOptions({
           module: 'home'
@@ -55,7 +57,10 @@ describe('Directive generator', function () {
 
   describe('with Jade markup, Coffee app, and Coffee test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../directive'))
+      helpers
+        .run(join(__dirname, '../directive'), {
+          tmpdir: false
+        })
         .withArguments(['test1'])
         .withOptions({
           module: 'home',
@@ -78,7 +83,10 @@ describe('Directive generator', function () {
 
   describe('with Jade markup, TypeScript app, and TypeScript test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../directive'))
+      helpers
+        .run(join(__dirname, '../directive'), {
+          tmpdir: false
+        })
         .withArguments(['test3'])
         .withOptions({
           module: 'home',
@@ -101,7 +109,10 @@ describe('Directive generator', function () {
 
   describe('with HAML markup, JS app, and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../directive'))
+      helpers
+        .run(join(__dirname, '../directive'), {
+          tmpdir: false
+        })
         .withArguments(['test2'])
         .withOptions({
           module: 'home',

@@ -79,13 +79,12 @@ exports.normalizeModulePath = function normalizeModulePath(modulePath) {
 
 /**
  * Returns if module exists in app
- * @param {String} yoRcAbsolutePath
  * @param {String} modulePath
  * @return {Boolean}
  */
-exports.moduleExists = function moduleExists(yoRcAbsolutePath, modulePath) {
+exports.moduleExists = function moduleExists(modulePath) {
   // check if file exists
-  var yoPath = path.dirname(yoRcAbsolutePath)
+  var yoPath = path.dirname(findup('yo-rc.json'))
     , fullPath;
 
   if (modulePath === exports.getAppDir()) {

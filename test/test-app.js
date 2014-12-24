@@ -2,14 +2,13 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
-  , join = require('path').join
-  , os = require('os');
+  , join = require('path').join;
 
 describe('App generator', function () {
   describe('with HTML markup, CSS style, JS app, and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../app'))
-        .inDir(join(os.tmpDir(), 'temp-app-1'))
+      helpers
+        .run(join(__dirname, '../app'))
         .withOptions({
           'skip-install': true
         })
@@ -32,11 +31,7 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('end', done);
     });
 
     it('should create files in temp-app-diff directory', function () {
@@ -60,6 +55,7 @@ describe('App generator', function () {
         'gulp/watch.js',
         '.bowerrc',
         '.editorconfig',
+        '.gitignore',
         '.jscsrc',
         '.jshintrc',
         '.yo-rc.json',
@@ -80,8 +76,8 @@ describe('App generator', function () {
 
   describe('with HAML markup, LESS style, TypeScript app, and TypeScript test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../app'))
-        .inDir(join(os.tmpDir(), 'temp-app-5'))
+      helpers
+        .run(join(__dirname, '../app'))
         .withOptions({
           'skip-install': true
         })
@@ -144,16 +140,12 @@ describe('App generator', function () {
         'README.md'
       ]);
     });
-
-    it('should create tempApp module in app/app.ts', function () {
-      assert.fileContent('app/app.ts', /angular[^$]*.module[^$]*\'tempApp\'/);
-    });
   });
 
   describe('with HAML markup, LESS style, Coffee app, and Coffee test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../app'))
-        .inDir(join(os.tmpDir(), 'temp-app-2'))
+      helpers
+        .run(join(__dirname, '../app'))
         .withOptions({
           'skip-install': true
         })
@@ -176,11 +168,7 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('end', done);
     });
 
     it('should create files', function () {
@@ -202,6 +190,7 @@ describe('App generator', function () {
         'gulp/watch.js',
         '.bowerrc',
         '.editorconfig',
+        '.gitignore',
         '.jscsrc',
         '.jshintrc',
         '.yo-rc.json',
@@ -222,8 +211,8 @@ describe('App generator', function () {
 
   describe('with Jade markup, Stylus style, JS app, and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../app'))
-        .inDir(join(os.tmpDir(), 'temp-app-3'))
+      helpers
+        .run(join(__dirname, '../app'))
         .withOptions({
           'skip-install': true
         })
@@ -245,11 +234,7 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('end', done);
     });
 
     it('should create files', function () {
@@ -271,6 +256,7 @@ describe('App generator', function () {
         'gulp/watch.js',
         '.bowerrc',
         '.editorconfig',
+        '.gitignore',
         '.jscsrc',
         '.jshintrc',
         '.yo-rc.json',
@@ -287,8 +273,8 @@ describe('App generator', function () {
 
   describe('with HTML markup, SCSS style, JS app, and JS test', function () {
     before(function (done) {
-      helpers.run(join(__dirname, '../app'))
-        .inDir(join(os.tmpDir(), 'temp-app-4'))
+      helpers
+        .run(join(__dirname, '../app'))
         .withOptions({
           'skip-install': true
         })
@@ -311,11 +297,7 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('end', done);
     });
 
     it('should create files', function () {
@@ -337,6 +319,7 @@ describe('App generator', function () {
         'gulp/watch.js',
         '.bowerrc',
         '.editorconfig',
+        '.gitignore',
         '.jscsrc',
         '.jshintrc',
         '.yo-rc.json',

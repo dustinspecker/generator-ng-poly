@@ -30,7 +30,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
         return !(this.options && this.options.module);
       }.bind(this),
       validate: function (input) {
-        return utils.moduleExists(this.config.path, input);
+        return utils.moduleExists(input);
       }.bind(this)
     },
     {
@@ -70,7 +70,6 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
 
     // save this module to suggest later
     this.config.set('lastUsedModule', this.module);
-    this.config.forceSave();
 
     // prepend slash if missing
     if (this.url && (this.url.charAt(0) !== '/' && this.url.charAt(0) !== '\\')) {
