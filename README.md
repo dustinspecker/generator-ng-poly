@@ -176,9 +176,9 @@ root/
 ├── node_modules/
 ├── .bowerrc
 ├── .editorconfig
+├── .gitignore
 ├── .jscsrc
 ├── .jshintrc
-├── .gitignore
 ├── .yo-rc.json
 ├── bower.json
 ├── build.config.js
