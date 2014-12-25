@@ -1,5 +1,6 @@
 'use strict';
-var path = require('path')
+var chalk = require('chalk')
+  , path = require('path')
   , utils = require('../utils')
   , yeoman = require('yeoman-generator')
   , yosay = require('yosay')
@@ -393,6 +394,11 @@ Generator.prototype.writing = function writing() {
 Generator.prototype.install = function install() {
   if (!this.options['skip-install']) {
     this.installDependencies();
+    if (this.appScript === 'ts') {
+      this.log('Running ' + chalk.yellow.bold('tsd reinstall && tsd rebundle') + '. If this fails run the commands ' +
+        'yourself. Tsd must be installed via `npm install -g tsd@next`.');
+      this.spawnCommand('tsd reinstall && tsd rebundle');
+    }
   }
 };
 

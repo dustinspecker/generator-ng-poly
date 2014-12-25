@@ -5,7 +5,6 @@ var a = require('a')
   , fs = require('fs')
   , path = require('path')
   , proxyquire = require('proxyquire')
-  , sinon = require('sinon')
   , utils = require('../utils/module');
 
 describe('Module Utils', function () {
