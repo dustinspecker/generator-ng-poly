@@ -81,16 +81,16 @@ Generator.prototype.prompting = function prompting() {
       default: 'js',
       choices: [
         {
-          name: 'TypeScript',
-          value: 'ts'
-        },
-        {
           name: 'CoffeeScript',
           value: 'coffee'
         },
         {
           name: 'JavaScript',
           value: 'js'
+        },
+        {
+          name: 'TypeScript',
+          value: 'ts'
         }
       ]
     },
@@ -130,16 +130,16 @@ Generator.prototype.prompting = function prompting() {
       default: 'js',
       choices: [
         {
-          name: 'TypeScript',
-          value: 'ts'
-        },
-        {
           name: 'CoffeeScript',
           value: 'coffee'
         },
         {
           name: 'JavaScript',
           value: 'js'
+        },
+        {
+          name: 'TypeScript',
+          value: 'ts'
         }
       ]
     },
