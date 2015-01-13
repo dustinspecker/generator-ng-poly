@@ -6,6 +6,7 @@ var gulp = require('gulp')
     pattern: [
       'gulp-*',
       'main-bower-files',
+      'nib',
       'rimraf',
       'streamqueue',
       'uglify-save-license',
@@ -80,7 +81,9 @@ gulp.task('styles', ['clean'], function () {
     .pipe($.sass())
     .pipe(scssFilter.restore())
     .pipe(stylusFilter)
-    .pipe($.stylus())
+    .pipe($.stylus({
+      use: $.nib()
+    }))
     .pipe(stylusFilter.restore())
     .pipe($.autoprefixer())
     .pipe($.if(isProd, $.concat('app.css')))
