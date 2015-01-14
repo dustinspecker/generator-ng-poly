@@ -37,7 +37,8 @@ gulp.task('karmaFiles', ['build'], function () {
 
   // add application javascript
   stream.queue(gulp.src([
-    buildJsFiles,
+    buildJsFiles<% if (polymer) { %>,
+    '!**/webcomponents.js'<% } %>,
     '!**/*_test.*'
   ])
     .pipe($.angularFilesort()));
