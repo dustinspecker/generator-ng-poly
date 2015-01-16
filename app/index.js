@@ -349,12 +349,12 @@ Generator.prototype.configuring = function configuring() {
   this.copy('.editorconfig', '.editorconfig');
   this.copy('.jscsrc', '.jscsrc');
   this.copy('.jshintrc', '.jshintrc');
-  this.copy('.gitignore', '.gitignore');
   this.template('_bower.json', 'bower.json', this.context);
   this.template('_build.config.js', 'build.config.js', this.context);
   this.template('_gulpfile.js', 'Gulpfile.js', this.context);
   this.template('_karma.config.js', 'karma.config.js');
   this.template('_package.json', 'package.json', this.context);
+  this.copy('gitignore', '.gitignore');
   this.copy('protractor.config.js', 'protractor.config.js');
   this.template('_readme.md', 'README.md');
 
