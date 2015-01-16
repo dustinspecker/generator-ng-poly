@@ -358,7 +358,6 @@ Generator.prototype.configuring = function configuring() {
   this.copy('.editorconfig', '.editorconfig');
   this.copy('.jscsrc', '.jscsrc');
   this.copy('.jshintrc', '.jshintrc');
-  this.copy('.gitignore', '.gitignore');
   this.template('_bower.json', 'bower.json', this.context);
   this.template('_build.config.js', 'build.config.js', this.context);
   this.template('_gulpfile.js', 'Gulpfile.js', this.context);
@@ -367,6 +366,7 @@ Generator.prototype.configuring = function configuring() {
   if (this.appScript === 'ts') {
     this.template('_tsd.json', 'tsd.json', this.context);
   }
+  this.copy('gitignore', '.gitignore');
   this.copy('protractor.config.js', 'protractor.config.js');
   this.template('_readme.md', 'README.md');
 

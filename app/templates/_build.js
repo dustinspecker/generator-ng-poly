@@ -60,9 +60,9 @@ gulp.task('styles', ['clean'], function () {
     , stylusFilter = $.filter('**/*.styl')
     , onError = function (err) {
       $.notify.onError({
-        title: 'Syntax error in CSS',
+        title: 'Error linting at ' + err.plugin,
         subtitle: ' ', //overrides defaults
-        message: ' ', //overrides defaults
+        message: err.message.replace(/\u001b\[.*?m/g, ''),
         sound: ' ' //overrides defaults
       })(err);
 

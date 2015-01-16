@@ -16,9 +16,9 @@ gulp.task('lint', function () {
     , jsFilter = $.filter('**/*.js')
     , onError = function (err) {
       $.notify.onError({
-        title: 'Error linting the JS',
+        title: 'Error linting at ' + err.plugin,
         subtitle: ' ', //overrides defaults
-        message: ' ', //overrides defaults
+        message: err.message.replace(/\u001b\[.*?m/g, ''),
         sound: ' ' //overrides defaults
       })(err);
 
