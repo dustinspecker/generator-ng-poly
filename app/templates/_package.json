@@ -62,6 +62,7 @@
     "protractor": "^1.0.0",
     "require-dir": "^0.1.0",
     "rimraf": "^2.2.8",
+    "run-sequence": "^1.0.2",
     "streamqueue": "~0.1.2",
     "typescript": "^1.0.1",
     "uglify-save-license": "^0.4.1",

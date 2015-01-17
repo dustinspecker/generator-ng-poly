@@ -4,19 +4,18 @@ var buildConfig = require('./build.config.js')
   , buildDir
   , jsDir;
 
-buildDir = buildConfig.buildDir;
+buildDir = 'tmp/' + buildConfig.buildDir;
 // add slash if missing to properly strip prefix from directive templates
 if (buildDir[buildDir.length - 1] !== '/') {
   buildDir = buildDir + '/';
 }
 
-jsDir = buildConfig.buildJs;
+jsDir = 'tmp/' + buildConfig.buildJs;
 // add slash if missing to properly strip prefix from directive templates
 if (jsDir[jsDir.length - 1] !== '/') {
   jsDir = jsDir + '/';
 }
 
-preprocessors['**/*.coffee'] = ['coffee'];
 preprocessors[jsDir + '**/!(*_test)+(.js)'] = ['coverage'];
 preprocessors[buildDir + '**/*-directive.tpl.html'] = ['ng-html2js'];
 

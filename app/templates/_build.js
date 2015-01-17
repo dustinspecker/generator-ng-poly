@@ -236,8 +236,8 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
       .pipe(gulp.dest(buildConfig.buildDir));
   }
 });
-
-<% if (polymer) { %>// compile components and copy into build directory
+<% if (polymer) { %>
+// compile components and copy into build directory
 gulp.task('components', ['bowerInject'], function () {
   var typeScriptFilter = $.filter('**/*.ts')
     , coffeeFilter = $.filter('**/*.coffee')

@@ -6,15 +6,19 @@ var gulp = require('gulp')
     pattern: [
       'gulp-*',
       'karma',
+      'rimraf',
+      'run-sequence',
       'streamqueue',
       'wiredep'
     ]
   })
   , buildConfig = require('../build.config.js')
-  , buildDirectiveTemplateFiles = path.join(buildConfig.buildDir, '**/*directive.tpl.html')
-  , buildJsFiles = path.join(buildConfig.buildJs, '**/*.js')
+  , buildDirectiveTemplateFiles = path.join('tmp', buildConfig.buildDir, '**/*directive.tpl.html')
+  , buildJsFiles = path.join('tmp', buildConfig.buildJs, '**/*.js')
 
   , unitTests = path.join(buildConfig.unitTestDir, '**/*_test.*')
+  , compiledUnitTestsDir = path.join('tmp', buildConfig.unitTestDir)
+  , compiledUnitTests = path.join(compiledUnitTestsDir, '**/*_test.js')
   , e2eTestFiles = 'e2e/**/*_test.*'
 
   , karmaConf = require('../karma.config.js');
@@ -22,8 +26,46 @@ var gulp = require('gulp')
 // karmaConf.files get populated in karmaFiles
 karmaConf.files = [];
 
+gulp.task('clean:test', function (cb) {
+  return $.rimraf('tmp', cb);
+});
+
+gulp.task('build:test', ['clean:test'], function (cb) {
+  buildConfig.buildDir = path.join('tmp', buildConfig.buildDir);
+  buildConfig.buildCss = path.join('tmp', buildConfig.buildCss);
+  buildConfig.buildFonts = path.join('tmp', buildConfig.buildFonts);
+  buildConfig.buildImages = path.join('tmp', buildConfig.buildImages);
+  buildConfig.buildJs = path.join('tmp', buildConfig.buildJs);
+  buildConfig.extCss = path.join('tmp', buildConfig.extCss);
+  buildConfig.extFonts = path.join('tmp', buildConfig.extFonts);
+  buildConfig.extJs = path.join('tmp', buildConfig.extJs);
+  $.runSequence('build', cb);
+});
+
+var tsProject = $.typescript.createProject({
+  declarationFiles: true,
+  noExternalResolve: false
+});
+
+gulp.task('buildTests', ['lint', 'clean:test'], function () {
+  var typescriptFilter = $.filter('**/*.ts')
+    , coffeeFilter = $.filter('**/*.coffee')
+    , jsFilter = $.filter('**/*.js');
+
+  return gulp.src([unitTests])
+    .pipe(typescriptFilter)
+    .pipe($.typescript(tsProject))
+    .pipe(typescriptFilter.restore())
+    .pipe(coffeeFilter)
+    .pipe($.coffee())
+    .pipe(coffeeFilter.restore())
+    .pipe(jsFilter)
+    .pipe(gulp.dest(compiledUnitTestsDir))
+    .pipe(jsFilter.restore());
+});
+
 // inject scripts in karma.config.js
-gulp.task('karmaFiles', ['build'], function () {
+gulp.task('karmaFiles', ['build:test', 'buildTests'], function () {
   var stream = $.streamqueue({objectMode: true});
 
   // add bower javascript
@@ -44,7 +86,7 @@ gulp.task('karmaFiles', ['build'], function () {
     .pipe($.angularFilesort()));
 
   // add unit tests
-  stream.queue(gulp.src(unitTests));
+  stream.queue(gulp.src([compiledUnitTests]));
 
   return stream.done()
     .on('data', function (file) {
