@@ -31,31 +31,31 @@
     }<% } %><% if (framework === 'uibootstrap') { %>,
     "angular-ui-bootstrap/angular-ui-bootstrap.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
-    }<% } %><% if (testFramework === 'mocha') { %>,
+    }<% } %><% if (testFramework === 'mocha' || e2eTestFramework === 'mocha') { %>,
     "chai/chai.d.ts": {
       "commit:" "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
     }<% } %><% if (framework === 'foundation') { %>,
     "foundation/foundation.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
-    }<% } %><% if (testFramework === 'jasmine') { %>,
+    }<% } %><% if (testFramework === 'jasmine' || e2eTestFramework === 'jasmine') { %>,
     "jasmine/jasmine.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
     }<% } %>,
     "jquery/jquery.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
-    }<% if (testFramework === 'jasmine') { %>,
+    }<% if (testFramework === 'jasmine' || e2eTestFramework === 'jasmine') { %>,
     "karma-jasmine/karma-jasmine.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
     }<% } %><% if (bower.indexOf('lodash') > -1) { %>,
     "lodash/lodash.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
-    }<% } %><% if (testFramework === 'mocha') { %>,
+    }<% } %><% if (testFramework === 'mocha' || e2eTestFramework === 'mocha') { %>,
     "mocha/mocha.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
     }<% } %><% if (bower.indexOf('restangular') > -1) { %>,
     "restangular/restangular.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
-    }<% } %><% if (testFramework === 'mocha') { %>,
+    }<% } %><% if (testFramework === 'mocha' || e2eTestFramework === 'mocha') { %>,
     "sinon/sinon.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
     }<% } %>
