@@ -1,4 +1,4 @@
-///<reference path='<%= referencePath %>/references.d.ts' />
+///<reference path='<%= referencePath %>' />
 
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
