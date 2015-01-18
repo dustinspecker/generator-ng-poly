@@ -19,7 +19,9 @@ var gulp = require('gulp')
   , unitTests = path.join(buildConfig.unitTestDir, '**/*_test.*')
   , compiledUnitTestsDir = path.join('tmp', buildConfig.unitTestDir)
   , compiledUnitTests = path.join(compiledUnitTestsDir, '**/*_test.js')
-  , e2eTestFiles = 'e2e/**/*_test.*'
+  , e2eFiles = 'e2e/**/*'
+  , compiledE2eTestsDir = 'tmp/e2e/'
+  , compiledE2eTests = compiledE2eTestsDir + '**/*_test.*'
 
   , karmaConf = require('../karma.config.js');
 
@@ -99,20 +101,32 @@ gulp.task('unitTest', ['lint', 'karmaFiles'], function (done) {
   $.karma.server.start(karmaConf, done);
 });
 
+gulp.task('build:e2eTest', function () {
+  var typescriptFilter = $.filter('**/*.ts')
+    , coffeeFilter = $.filter('**/*.coffee')
+    , jsFilter = $.filter('**/*.js');
+
+  return gulp.src([e2eFiles])
+    .pipe(typescriptFilter)
+    .pipe($.typescript(tsProject))
+    .pipe(typescriptFilter.restore())
+    .pipe(coffeeFilter)
+    .pipe($.coffee())
+    .pipe(coffeeFilter.restore())
+    .pipe(jsFilter)
+    .pipe(gulp.dest(compiledE2eTestsDir))
+    .pipe(jsFilter.restore());
+});
+
 // run e2e tests - SERVER MUST BE RUNNING FIRST
-gulp.task('e2eTest', ['lint'], function () {
-  return gulp.src(e2eTestFiles)
+gulp.task('e2eTest', ['lint', 'build', 'build:e2eTest'], function () {
+  return gulp.src(compiledE2eTests)
     .pipe($.protractor.protractor({
       configFile: 'protractor.config.js'
     }))
     .on('error', function (e) {
       console.log(e);
     });
-});
-
-// run unit and e2e tests
-gulp.task('test', ['build', 'unitTest'], function () {
-  gulp.start('e2eTest');
 });
 
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
