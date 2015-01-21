@@ -172,8 +172,8 @@ describe('Route generator', function () {
         'app/home/test2-controller_test.ts',
         'app/home/test2.tpl.jade',
         'app/home/test2.css',
-        'e2e/test2/test2.po.ts',
-        'e2e/test2/test2_test.ts'
+        'e2e/test2/test2.po.js',
+        'e2e/test2/test2_test.js'
       ]);
     });
 
