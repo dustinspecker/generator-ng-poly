@@ -237,7 +237,7 @@ Generator.prototype.prompting = function prompting() {
     {
       type: 'checkbox',
       name: 'bower',
-      message: 'Which additonal Bower components should be installed?',
+      message: 'Which additional Bower components should be installed?',
       choices: function (answers) {
         var choices = [
           {
