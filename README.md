@@ -67,7 +67,7 @@ Languages and Features supported:
   * Application scripting languages
     - CoffeeScript, JavaScript, TypeScript
   * Testing scripting languages
-    - CoffeeScript, JavaScript
+    - CoffeeScript, JavaScript, TypeScript†
   * Style languages
     - CSS, LESS, SCSS, Stylus
   * Routers
@@ -102,6 +102,8 @@ Languages and Features supported:
     - [Controller As](#controller-as-syntax)
     - [Pass Function](#pass-function)
     - [Named Functions](#named-functions)
+
+† e2e tests are not supported in TypeScript. JavaScript will instead be used for e2e tests.
 
 ### Gulp Tasks
 `gulp` will start a localhost and open in the default browser
