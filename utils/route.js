@@ -42,7 +42,8 @@ function hasParam(fileContents, config) {
  * @return {Array}
  */
 function addParam(lines, config) {
-  var param = config.ngRoute ? 'routeProvider' : 'stateProvider';
+  var param = config.ngRoute ? 'routeProvider' : 'stateProvider'
+    , type = config.ngRoute ? 'ng.route.IRouteProvider' : 'ng.ui.IStateProvider';
 
   lines.forEach(function (line, i) {
     if (config.appScript === 'ts') {
@@ -50,9 +51,9 @@ function addParam(lines, config) {
         (!config.passFunc && line.indexOf('.config(function') > -1)) {
         // check if function has a parameter already
         if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') {';
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ': ' + type + ') {';
         } else {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') {';
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ': ' + type + ') {';
         }
       }
     } else {

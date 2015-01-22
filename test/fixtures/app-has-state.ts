@@ -17,7 +17,7 @@ angular
 
 angular
   .module('home')
-  .config(function ($stateProvider) {
+  .config(function ($stateProvider: ng.ui.IStateProvider) {
     $stateProvider
       .state('home', {
         url: '/home',

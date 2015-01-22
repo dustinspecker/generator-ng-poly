@@ -6,7 +6,7 @@ module <%= upperCamel %> {
     public static $inject = [
     ];
 
-    constructor() {      
+    constructor() {
     }
 
     get(): string {

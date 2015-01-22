@@ -22,7 +22,7 @@ module <%= upperCamel %> {
     .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
     .directive('<%= lowerCamel %>', <%= lowerCamel %>);
 
-  function <%= lowerCamel %>(): <% if (!ngRoute) { %>ng.IDirective<% } %> {
+  function <%= lowerCamel %>(): ng.IDirective {
     return {
       restrict: 'EA',
       scope: {},

@@ -450,7 +450,7 @@ describe('Route Utils', function () {
       });
 
       it('should only have 1 $stateProvider param', function () {
-        assert(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$stateProvider.*\)/).length === 1);
+        assert(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$stateProvider: ng.ui.IStateProvider.*\)/).length === 1);
       });
     });
 
@@ -495,7 +495,7 @@ describe('Route Utils', function () {
         });
 
         it('should add $stateProvider as param', function () {
-          assert(/config\(.*, \$stateProvider.*\)/
+          assert(/config\(.*, \$stateProvider: ng.ui.IStateProvider.*\)/
             .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 
@@ -525,7 +525,7 @@ describe('Route Utils', function () {
         });
 
         it('should add $stateProvider as param', function () {
-          assert(/.config\(function[^$]*\(\$stateProvider\)/
+          assert(/.config\(function[^$]*\(\$stateProvider: ng.ui.IStateProvider\)/
             .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 

@@ -12,7 +12,7 @@
  * @ngInject
  *
  */
-function config($routeProvider) {
+function config($routeProvider: ng.route.IRouteProvider) {
   $routeProvider
     .when('/home', {
       templateUrl: 'home/home.tpl.html',

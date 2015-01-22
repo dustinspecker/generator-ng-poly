@@ -33,7 +33,10 @@
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
     }<% } %><% if (testFramework === 'mocha') { %>,
     "chai/chai.d.ts": {
-      "commit:" "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+    }<% } %><% if (testFramework === 'mocha') { %>,
+    "expect.js/expect.js.d.ts": {
+      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
     }<% } %><% if (framework === 'foundation') { %>,
     "foundation/foundation.d.ts": {
       "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
