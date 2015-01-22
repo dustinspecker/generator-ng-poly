@@ -140,7 +140,7 @@ describe('Element generator', function () {
 
     it('should create element files', function () {
       assert.file([
-        'app/components/test4-element/test4-element.ts',
+        'app/components/test4-element/test4-element.js',
         'app/components/test4-element/test4-element.jade',
         'app/components/test4-element/test4-element.css'
       ]);

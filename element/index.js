@@ -17,6 +17,6 @@ Generator.prototype.writing = function writing() {
 
   this.copy('element.' + config.style, path.join(elementDir, config.hyphenName + '.' + config.style));
   this.template('_element.' + config.markup, path.join(elementDir, config.hyphenName + '.' + config.markup), config);
-  this.template('_element.' + config.appScript,
-    path.join(elementDir, config.hyphenName + '.' + config.appScript), config);
+  this.template('_element.' + (config.appScript === 'ts' ? 'js' : config.appScript),
+    path.join(elementDir, config.hyphenName + '.' + (config.appScript === 'ts' ? 'js' : config.appScript)), config);
 };
