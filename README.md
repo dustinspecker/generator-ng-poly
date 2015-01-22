@@ -19,10 +19,22 @@ Install `generator-ng-poly`:
 npm install -g generator-ng-poly
 ```
 
+Be sure to install `yo` before running any Yeoman generators:
+
+```
+npm install -g yo
+```
+
+If TypeScript is going to be used, `tsd@next` will need to be installed:
+
+```
+npm install -g tsd@next
+```
+
 Run `yo ng-poly`
 Yeoman will then ask for an app name and language preferences.
 
-Run `gulp` to build and start the development environment.
+Install `Gulp` via `npm install -g gulp` and run `gulp` to build and start the development environment.
 
 ## User Groups
 
@@ -53,7 +65,7 @@ Languages and Features supported:
   * Markup
     - HAML, HTML, Jade
   * Application scripting languages
-    - CoffeeScript †, JavaScript
+    - CoffeeScript, JavaScript, TypeScript
   * Testing scripting languages
     - CoffeeScript, JavaScript
   * Style languages
@@ -90,8 +102,6 @@ Languages and Features supported:
     - [Controller As](#controller-as-syntax)
     - [Pass Function](#pass-function)
     - [Named Functions](#named-functions)
-
-† Code coverage isn't currently performed on CoffeeScript application source code
 
 ### Gulp Tasks
 `gulp` will start a localhost and open in the default browser
@@ -174,6 +184,7 @@ root/
 │   ├── test.js
 │   └── watch.js
 ├── node_modules/
+├── typings/*
 ├── .bowerrc
 ├── .editorconfig
 ├── .gitignore
@@ -186,9 +197,10 @@ root/
 ├── karma.config.js
 ├── package.json
 ├── protractor.config.js
-└── README.md
+├── README.md
+└── tsd.json*
 ```
-
+\* Only TypeScript projects will have this.
 ### Constant
 Generates a constant and its test.
 
@@ -942,7 +954,7 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 
 | Option | Possible Values|
 | ------ | -------------- |
-| app-script | coffee, js |
+| app-script | coffee, js, ts |
 | markup | haml, html, jade|
 | style | css, less, scss, styl|
 | test-script | coffee, js|
