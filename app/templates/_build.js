@@ -4,10 +4,10 @@ var gulp = require('gulp')
   , path = require('path')
   , $ = require('gulp-load-plugins')({
     pattern: [
+      'del',
       'gulp-*',
       'main-bower-files',
       'nib',
-      'rimraf',
       'streamqueue',
       'uglify-save-license',
       'wiredep',
@@ -32,7 +32,7 @@ var gulp = require('gulp')
 
 // delete build directory
 gulp.task('clean', function (cb) {
-  return $.rimraf(buildConfig.buildDir, cb);
+  return $.del(buildConfig.buildDir, cb);
 });
 
 // compile markup files and copy into build directory
@@ -330,4 +330,24 @@ gulp.task('images', ['clean'], function () {
     .pipe(gulp.dest(buildConfig.buildImages));
 });
 
-gulp.task('build', [<% if (polymer) { %>'components'<% } else { %>'bowerInject'<% } %>, 'images', 'fonts']);
+gulp.task('deleteTemplates', [<% if (polymer) { %>'components'<% } else { %>'bowerInject'<% } %>], function (cb) {
+  // only delete templates in production
+  // the templates are injected into the app during prod build
+  if (!isProd) {
+    return cb();
+  }
+
+  $.del([
+    buildConfig.buildDir + '*'<% if (polymer) { %>,
+    '!' + buildConfig.buildComponents<% } %>,
+    '!' + buildConfig.buildCss,
+    '!' + buildConfig.buildFonts,
+    '!' + buildConfig.buildImages,
+    '!' + buildConfig.buildImages,
+    '!' + buildConfig.buildJs,
+    '!' + buildConfig.extDir,
+    '!' + buildConfig.buildDir + 'index.html'
+  ], {mark: true}, cb);
+});
+
+gulp.task('build', ['deleteTemplates', 'images', 'fonts']);

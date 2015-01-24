@@ -4,9 +4,9 @@ var gulp = require('gulp')
   , path = require('path')
   , $ = require('gulp-load-plugins')({
     pattern: [
+      'del',
       'gulp-*',
       'karma',
-      'rimraf',
       'run-sequence',
       'streamqueue',
       'wiredep'
@@ -29,7 +29,7 @@ var gulp = require('gulp')
 karmaConf.files = [];
 
 gulp.task('clean:test', function (cb) {
-  return $.rimraf('tmp', cb);
+  return $.del('tmp', cb);
 });
 
 gulp.task('build:test', ['clean:test'], function (cb) {
