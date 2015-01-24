@@ -19,11 +19,11 @@ Generator.prototype.writing = function writing() {
     markupFile = markupFile + '.tpl.html';
   }
 
-  // remove tplhtml from lowerCamel
-  config.lowerCamel = config.lowerCamel.replace(/tplhtml$/, '');
+  // remove TplHtml from lowerCamel
+  config.lowerCamel = config.lowerCamel.replace(/TplHtml$/, '');
 
-  // remove tplhtml from ctrlName
-  config.ctrlName = config.ctrlName.replace(/tplhtml$/, '');
+  // remove TplHtml from ctrlName
+  config.ctrlName = config.ctrlName.replace(/TplHtml$/, '');
 
   // create the style file
   styleFile = markupFile.replace(/tpl[.]html$/, config.style);
