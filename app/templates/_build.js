@@ -1,6 +1,7 @@
 'use strict';
 
-var gulp = require('gulp')
+var _ = require('underscore.string')
+  , gulp = require('gulp')
   , path = require('path')
   , $ = require('gulp-load-plugins')({
     pattern: [
@@ -119,7 +120,8 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     .pipe(coffeeFilter.restore())
     .pipe($.if(isProd, htmlFilter))
     .pipe($.if(isProd, $.ngHtml2js({
-      moduleName: require('../package.json').name,
+      // lower camel case all app names
+      moduleName: _.camelize(_.slugify(_.humanize(require('../package.json').name))),
       declareModule: false
     })))
     .pipe($.if(isProd, htmlFilter.restore()))
