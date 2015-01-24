@@ -15,8 +15,19 @@ Generator.prototype.writing = function writing() {
     config.referencePath = path.relative(elementDir, config.appDir);
   }
 
-  this.copy('element.' + config.style, path.join(elementDir, config.hyphenName + '.' + config.style));
-  this.template('_element.' + config.markup, path.join(elementDir, config.hyphenName + '.' + config.markup), config);
-  this.template('_element.' + (config.appScript === 'ts' ? 'js' : config.appScript),
-    path.join(elementDir, config.hyphenName + '.' + (config.appScript === 'ts' ? 'js' : config.appScript)), config);
+  this.fs.copy(
+    this.templatePath('element.' + config.style),
+    this.destinationPath(elementDir + '/' + config.hyphenName + '.' + config.style)
+  );
+  this.fs.copyTpl(
+    this.templatePath('_element.' + config.markup),
+    this.destinationPath(elementDir + '/' + config.hyphenName + '.' + config.markup),
+    config
+  );
+  this.fs.copyTpl(
+    this.templatePath('_element.' + (config.appScript === 'ts' ? 'js' : config.appScript)),
+    this.destinationPath(elementDir + '/' + config.hyphenName + '.' +
+      (config.appScript === 'ts' ? 'js' : config.appScript)),
+    config
+  );
 };

@@ -73,10 +73,13 @@ Generator.prototype.writing = function writing() {
   depName += this.context.lowerCamel;
   fs.writeFileSync(filePath, utils.addDependency(file, depName));
 
-  // create app.js
-  this.template('_app.' + this.context.appScript,
-    path.join(this.context.appDir, this.context.modulePath,
-      this.context.hyphenModule + '.' + this.context.appScript), this.context);
+  // create app.{cofee,js,ts}
+  this.fs.copyTpl(
+    this.templatePath('_app.' + this.context.appScript),
+    this.destinationPath(this.context.appDir + '/' + this.context.modulePath + '/' + this.context.hyphenModule +
+      '.' + this.context.appScript),
+    this.context
+  );
 };
 
 Generator.prototype.end = function end() {

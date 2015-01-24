@@ -71,13 +71,19 @@ Generator.prototype.writing = function writing() {
 
   // e2e testing
   // create page object model
-  this.template('page.po.' + (config.testScript === 'ts' ? 'js' : config.testScript),
-    path.join('e2e', config.hyphenName, config.hyphenName + '.po.' +
-    (config.testScript === 'ts' ? 'js' : config.testScript)), config);
+  this.fs.copyTpl(
+    this.templatePath('page.po.' + (config.testScript === 'ts' ? 'js' : config.testScript)),
+    this.destinationPath('e2e/' + config.hyphenName + '/' + config.hyphenName + '.po.' +
+      (config.testScript === 'ts' ? 'js' : config.testScript)),
+    config
+  );
   // create test
-  this.template('page_test.' + (config.testScript === 'ts' ? 'js' : config.testScript),
-    path.join('e2e', config.hyphenName, config.hyphenName + '_test.' +
-    (config.testScript === 'ts' ? 'js' : config.testScript)), config);
+  this.fs.copyTpl(
+    this.templatePath('page_test.' + (config.testScript === 'ts' ? 'js' : config.testScript)),
+    this.destinationPath('e2e/' + config.hyphenName + '/' + config.hyphenName + '_test.' +
+      (config.testScript === 'ts' ? 'js' : config.testScript)),
+    config
+  );
 
   if (!config.skipController) {
     // call controller subgenerator
