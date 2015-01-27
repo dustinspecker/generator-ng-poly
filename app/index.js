@@ -406,9 +406,10 @@ Generator.prototype.configuring = function configuring() {
     this.templatePath('gitignore'),
     this.destinationPath('.gitignore')
   );
-  this.fs.copy(
-    this.templatePath('protractor.config.js'),
-    this.destinationPath('protractor.config.js')
+  this.fs.copyTpl(
+    this.templatePath('_protractor.config.js'),
+    this.destinationPath('protractor.config.js'),
+    this.context
   );
   this.fs.copyTpl(
     this.templatePath('_readme.md'),
