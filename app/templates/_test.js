@@ -9,12 +9,13 @@ var gulp = require('gulp')
       'karma',
       'run-sequence',
       'streamqueue',
-      'wiredep'
+      'wiredep',
+      'yargs'
     ]
   })
   , buildConfig = require('../build.config.js')
-  , buildDirectiveTemplateFiles = path.join('tmp', buildConfig.buildDir, '**/*directive.tpl.html')
-  , buildJsFiles = path.join('tmp', buildConfig.buildJs, '**/*.js')
+  , buildDirectiveTemplateFiles = path.join(buildConfig.buildDir, '**/*directive.tpl.html')
+  , buildJsFiles = path.join(buildConfig.buildJs, '**/*.js')
 
   , unitTests = path.join(buildConfig.unitTestDir, '**/*_test.*')
   , compiledUnitTestsDir = path.join('tmp', buildConfig.unitTestDir)
@@ -23,30 +24,25 @@ var gulp = require('gulp')
   , compiledE2eTestsDir = 'tmp/e2e/'
   , compiledE2eTests = compiledE2eTestsDir + '**/*_test.*'
 
-  , karmaConf = require('../karma.config.js');
+  , karmaConf = require('../karma.config.js')
+
+  , isProd = $.yargs.argv.stage === 'prod'
+
+  , tsProject = $.typescript.createProject({
+    declarationFiles: true,
+    noExternalResolve: false
+  });
 
 // karmaConf.files get populated in karmaFiles
 karmaConf.files = [];
 
+// production builds move templates to tmp/
+if (isProd) {
+  buildDirectiveTemplateFiles = 'tmp/' + buildDirectiveTemplateFiles;
+}
+
 gulp.task('clean:test', function (cb) {
   return $.del('tmp', cb);
-});
-
-gulp.task('build:test', ['clean:test'], function (cb) {
-  buildConfig.buildDir = path.join('tmp', buildConfig.buildDir);
-  buildConfig.buildCss = path.join('tmp', buildConfig.buildCss);
-  buildConfig.buildFonts = path.join('tmp', buildConfig.buildFonts);
-  buildConfig.buildImages = path.join('tmp', buildConfig.buildImages);
-  buildConfig.buildJs = path.join('tmp', buildConfig.buildJs);
-  buildConfig.extCss = path.join('tmp', buildConfig.extCss);
-  buildConfig.extFonts = path.join('tmp', buildConfig.extFonts);
-  buildConfig.extJs = path.join('tmp', buildConfig.extJs);
-  $.runSequence('build', cb);
-});
-
-var tsProject = $.typescript.createProject({
-  declarationFiles: true,
-  noExternalResolve: false
 });
 
 gulp.task('buildTests', ['lint', 'clean:test'], function () {
@@ -67,7 +63,7 @@ gulp.task('buildTests', ['lint', 'clean:test'], function () {
 });
 
 // inject scripts in karma.config.js
-gulp.task('karmaFiles', ['build:test', 'buildTests'], function () {
+gulp.task('karmaFiles', ['build', 'buildTests'], function () {
   var stream = $.streamqueue({objectMode: true});
 
   // add bower javascript

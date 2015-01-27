@@ -29,7 +29,12 @@ var _ = require('underscore.string')
   , path = require('path')
   , bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep
 
-<% } %>  , isProd = $.yargs.argv.stage === 'prod';
+<% } %>  , isProd = $.yargs.argv.stage === 'prod'
+
+  , tsProject = $.typescript.createProject({
+    declarationFiles: true,
+    noExternalResolve: false
+  });
 
 // delete build directory
 gulp.task('clean', function (cb) {
@@ -91,11 +96,6 @@ gulp.task('styles', ['clean'], function () {
     .pipe($.if(isProd, $.cssmin()))
     .pipe($.if(isProd, $.rev()))
     .pipe(gulp.dest(buildConfig.buildCss));
-});
-
-var tsProject = $.typescript.createProject({
-  declarationFiles: true,
-  noExternalResolve: false
 });
 
 // compile scripts and copy into build directory
@@ -307,17 +307,21 @@ gulp.task('deleteTemplates', [<% if (polymer) { %>'components'<% } else { %>'bow
     return cb();
   }
 
-  $.del([
-    buildConfig.buildDir + '*'<% if (polymer) { %>,
-    '!' + buildConfig.buildComponents<% } %>,
-    '!' + buildConfig.buildCss,
-    '!' + buildConfig.buildFonts,
-    '!' + buildConfig.buildImages,
-    '!' + buildConfig.buildImages,
-    '!' + buildConfig.buildJs,
-    '!' + buildConfig.extDir,
-    '!' + buildConfig.buildDir + 'index.html'
-  ], {mark: true}, cb);
+  gulp.src([buildConfig.buildDir + '**/*.html'])
+    .pipe(gulp.dest('tmp/' + buildConfig.buildDir))
+    .on('end', function () {
+      $.del([
+        buildConfig.buildDir + '*'<% if (polymer) { %>,
+        '!' + buildConfig.buildComponents<% } %>,
+        '!' + buildConfig.buildCss,
+        '!' + buildConfig.buildFonts,
+        '!' + buildConfig.buildImages,
+        '!' + buildConfig.buildImages,
+        '!' + buildConfig.buildJs,
+        '!' + buildConfig.extDir,
+        '!' + buildConfig.buildDir + 'index.html'
+      ], {mark: true}, cb);
+    });
 });
 
 gulp.task('build', ['deleteTemplates', 'images', 'fonts']);
