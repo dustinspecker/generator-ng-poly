@@ -47,7 +47,7 @@
     "chalk": "^0.5.1",
     "class-extend": "^0.1.1",
     "findup-sync": "^0.2.0",
-    "lodash": "^2.4.1",
+    "lodash": "^3.0.0",
     "underscore.string": "^3.0.1",
     "update-notifier": "^0.3.0",
     "yeoman-generator": "~0.18.5",
