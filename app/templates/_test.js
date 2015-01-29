@@ -14,7 +14,7 @@ var gulp = require('gulp')
     ]
   })
   , buildConfig = require('../build.config.js')
-  , buildDirectiveTemplateFiles = path.join(buildConfig.buildDir, '**/*directive.tpl.html')
+  , buildDirectiveTemplateFiles = path.join(buildConfig.buildTestDir, '**/*directive.tpl.html')
   , buildJsFiles = path.join(buildConfig.buildJs, '**/*.js')
 
   , unitTests = path.join(buildConfig.unitTestDir, '**/*_test.*')
@@ -25,8 +25,6 @@ var gulp = require('gulp')
   , compiledE2eTests = path.join(compiledE2eTestsDir, '**/*_test.*')
 
   , karmaConf = require('../karma.config.js')
-
-  , isProd = $.yargs.argv.stage === 'prod'
 
   , tsProject = $.typescript.createProject({
     declarationFiles: true,
