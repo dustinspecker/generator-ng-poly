@@ -300,7 +300,19 @@ gulp.task('images', ['clean'], function () {
     .pipe(gulp.dest(buildConfig.buildImages));
 });
 
-gulp.task('deleteTemplates', [<% if (polymer) { %>'components'<% } else { %>'bowerInject'<% } %>], function (cb) {
+gulp.task('copyTemplates', [<% if (polymer) { %>'components'<% } else { %>'bowerInject'<% } %>], function () {
+  // always copy templates to testBuild directory
+  var buildDirectiveTemplateFiles = path.join(buildConfig.buildDir, '**/*directive.tpl.html')
+    , testDirectiveTemplateDir = path.join(buildConfig.buildTestDir, 'templates')
+    , stream = $.streamqueue({objectMode: true});
+
+  stream.queue(gulp.src([buildDirectiveTemplateFiles]));
+
+  return stream.done()
+    .pipe(gulp.dest(testDirectiveTemplateDir));
+});
+
+gulp.task('deleteTemplates', ['copyTemplates'], function (cb) {
   // only delete templates in production
   // the templates are injected into the app during prod build
   if (!isProd) {

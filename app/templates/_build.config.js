@@ -1,5 +1,7 @@
 'use strict';
 
+var outDir = 'build/';
+
 module.exports = {
   host: '<%= host %>',
   port: <%= port %>,
@@ -10,15 +12,18 @@ module.exports = {
   // unit test directories
   unitTestDir: '<%= unitTestDir %>',
 
+  // build test dir
+  buildTestDir: outDir + 'test/',
+
   // build directories
-  buildDir: 'build/',<% if (polymer) { %>
-  buildComponents: 'build/components/',<% } %>
-  buildCss: 'build/css/',
-  buildFonts: 'build/fonts/',
-  buildImages: 'build/images/',
-  buildJs: 'build/js/',
-  extDir: 'build/vendor/',
-  extCss: 'build/vendor/css/',
-  extFonts: 'build/vendor/fonts/',
-  extJs: 'build/vendor/js/'
+  buildDir: outDir + '<%= appDir %>/',<% if (polymer) { %>
+  buildComponents: outDir + '<%= appDir %>/components/',<% } %>
+  buildCss: outDir + '<%= appDir %>/css/',
+  buildFonts: outDir + '<%= appDir %>/fonts/',
+  buildImages: outDir + '<%= appDir %>/images/',
+  buildJs: outDir + '<%= appDir %>/js/',
+  extDir: outDir + '<%= appDir %>/vendor/',
+  extCss: outDir + '<%= appDir %>/vendor/css/',
+  extFonts: outDir + '<%= appDir %>/vendor/fonts/',
+  extJs: outDir + '<%= appDir %>/vendor/js/'
 };

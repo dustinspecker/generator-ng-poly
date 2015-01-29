@@ -18,11 +18,11 @@ var gulp = require('gulp')
   , buildJsFiles = path.join(buildConfig.buildJs, '**/*.js')
 
   , unitTests = path.join(buildConfig.unitTestDir, '**/*_test.*')
-  , compiledUnitTestsDir = path.join('tmp', buildConfig.unitTestDir)
+  , compiledUnitTestsDir = path.join(buildConfig.buildTestDir, buildConfig.unitTestDir)
   , compiledUnitTests = path.join(compiledUnitTestsDir, '**/*_test.js')
   , e2eFiles = 'e2e/**/*'
-  , compiledE2eTestsDir = 'tmp/e2e/'
-  , compiledE2eTests = compiledE2eTestsDir + '**/*_test.*'
+  , compiledE2eTestsDir = path.join(buildConfig.buildTestDir, 'e2e/')
+  , compiledE2eTests = path.join(compiledE2eTestsDir, '**/*_test.*')
 
   , karmaConf = require('../karma.config.js')
 
@@ -36,13 +36,8 @@ var gulp = require('gulp')
 // karmaConf.files get populated in karmaFiles
 karmaConf.files = [];
 
-// production builds move templates to tmp/
-if (isProd) {
-  buildDirectiveTemplateFiles = 'tmp/' + buildDirectiveTemplateFiles;
-}
-
 gulp.task('clean:test', function (cb) {
-  return $.del('tmp', cb);
+  return $.del(buildConfig.buildTestDir, cb);
 });
 
 gulp.task('buildTests', ['lint', 'clean:test'], function () {
