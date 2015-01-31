@@ -8,9 +8,6 @@ describe('Filter generator', function () {
   before(function (done) {
     helpers
       .run(join(__dirname, '../app'))
-      .withOptions({
-        'skip-install': true
-      })
       .withPrompts({
         appName: 'temp-filter',
         markup: 'html',
