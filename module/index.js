@@ -1,6 +1,7 @@
 'use strict';
 var fs = require('fs')
   , genBase = require('../genBase')
+  , ngAddDep = require('ng-add-dep')
   , path = require('path')
   , utils = require('../utils')
   , _ = require('lodash')
@@ -71,7 +72,7 @@ Generator.prototype.writing = function writing() {
   // save modifications
   depName = (this.context.parentModuleName) ? this.context.parentModuleName + '.' : '';
   depName += this.context.lowerCamel;
-  fs.writeFileSync(filePath, utils.addDependency(file, depName));
+  fs.writeFileSync(filePath, ngAddDep(file, depName));
 
   // create app.{cofee,js,ts}
   this.fs.copyTpl(
