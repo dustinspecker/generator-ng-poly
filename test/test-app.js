@@ -2,15 +2,18 @@
 'use strict';
 var assert = require('yeoman-generator').assert
   , helpers = require('yeoman-generator').test
-  , join = require('path').join;
+  , join = require('path').join
+  , sinon = require('sinon');
 
 describe('App generator', function () {
   describe('with HTML markup, CSS style, JS app, and JS test', function () {
+    var gen; // used to test if methods have been called
+
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
         .withOptions({
-          'skip-install': true
+          'skip-install': false
         })
         .withPrompts({
           appName: 'temp-app-diff',
@@ -31,7 +34,15 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
+        .on('ready', function (generator) {
+          gen = generator;
+          generator.installDependencies = sinon.spy();
+        })
         .on('end', done);
+    });
+
+    it('should call installDependencies once', function () {
+      assert(gen.installDependencies.calledOnce);
     });
 
     it('should create files in temp-app-diff directory', function () {
@@ -75,11 +86,13 @@ describe('App generator', function () {
   });
 
   describe('with HAML markup, LESS style, TypeScript app, and TypeScript test', function () {
+    var gen; // used to test if methods have been called
+
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
         .withOptions({
-          'skip-install': true
+          'skip-install': false
         })
         .withPrompts({
           appName: 'temp-app',
@@ -101,11 +114,20 @@ describe('App generator', function () {
           join(__dirname, '../controller'),
           join(__dirname, '../view')
         ])
-        .on('end', function () {
-          // TODO: determine why done is called before files are finished writing
-          // setTimeout is used to allow files to be finished writing before running tests
-          setTimeout(done, 400);
-        });
+        .on('ready', function (generator) {
+          gen = generator;
+          generator.installDependencies = sinon.spy();
+          generator.spawnCommand = sinon.spy();
+        })
+        .on('end', done);
+    });
+
+    it('should call installDependencies once', function () {
+      assert(gen.installDependencies.calledOnce);
+    });
+
+    it('should call spawnCommand once', function () {
+      assert(gen.spawnCommand.calledOnce);
     });
 
     it('should create files', function () {
@@ -146,9 +168,6 @@ describe('App generator', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
-        .withOptions({
-          'skip-install': true
-        })
         .withPrompts({
           appName: 'temp-app',
           appDir: 'app',
@@ -213,9 +232,6 @@ describe('App generator', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
-        .withOptions({
-          'skip-install': true
-        })
         .withPrompts({
           appName: 'temp-app',
           markup: 'jade',
@@ -275,9 +291,6 @@ describe('App generator', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
-        .withOptions({
-          'skip-install': true
-        })
         .withPrompts({
           appName: 'temp-app',
           markup: 'html',
