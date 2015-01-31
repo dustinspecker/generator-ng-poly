@@ -3,7 +3,6 @@ var exports = module.exports
   , findup = require('findup-sync')
   , fs = require('fs')
   , nameUtils = require('./name')
-  , ngAddDep = require('ng-add-dep')
   , path = require('path');
 
 /**
@@ -95,16 +94,3 @@ exports.moduleExists = function moduleExists(modulePath) {
 
   return fs.existsSync(fullPath);
 };
-
-/**
- * Returns if dependency is listed in app's dependencies
- * @param {String} fileContents
- * @param {String} dependency
- * @return {Boolean}
- */
-exports.dependencyExists = function dependencyExists(fileContents, dependency) {
-  var regex = new RegExp('[.]module[^$]*\'[^$]*\', \\[[^$]*\'' + dependency + '\'[^$]*\\]');
-  return regex.test(fileContents);
-};
-
-exports.addDependency = ngAddDep;

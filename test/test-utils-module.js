@@ -2,8 +2,6 @@
 'use strict';
 var a = require('a')
   , assert = require('assert')
-  , fs = require('fs')
-  , path = require('path')
   , proxyquire = require('proxyquire')
   , utils = require('../utils/module');
 
@@ -75,21 +73,6 @@ describe('Module Utils', function () {
     //   utilsProxy.moduleExists('app/home');
     //   assert(fsStub.existsSync.callCount === 1);
     // });
-  });
-
-  describe('dependencyExists', function () {
-    var fileContents;
-    beforeEach(function () {
-      fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.js'), 'utf8');
-    });
-
-    it('should find existing dependency', function () {
-      assert(utils.dependencyExists(fileContents, 'ui.router') === true);
-    });
-
-    it('should not find non-existing dependency', function () {
-      assert(utils.dependencyExists(fileContents, 'ngResource') === false);
-    });
   });
 
 });

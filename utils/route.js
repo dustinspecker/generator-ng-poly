@@ -1,7 +1,8 @@
 'use strict';
 var endOfLine = require('os').EOL
   , exports = module.exports
-  , moduleUtils = require('./module');
+  , moduleUtils = require('./module')
+  , ngAddDep = require('ng-add-dep');
 
 /**
  * Returns the number of spaces at beginning of a line
@@ -365,9 +366,7 @@ exports.addRoute = function addRoute(fileContents, state, config) {
     , newState;
 
   // if file doesn't have the dependency, add it
-  if (!moduleUtils.dependencyExists(fileContents, dependency)) {
-    fileContents = moduleUtils.addDependency(fileContents, dependency);
-  }
+  fileContents = ngAddDep(fileContents, dependency);
 
   lines = fileContents.split(endOfLine);
   analysis = analyzeLines(lines, config);
