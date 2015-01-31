@@ -1,6 +1,5 @@
 'use strict';
 var genBase = require('../genBase')
-  , path = require('path')
   , Generator;
 
 Generator = module.exports = genBase.extend();
