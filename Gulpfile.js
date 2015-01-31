@@ -11,7 +11,9 @@ var gulp = require('gulp')
 gulp.task('lint', function () {
   return gulp.src([srcFiles, testFiles])
     .pipe(jscs())
-    .pipe(jshint());
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('test', ['lint'], function (cb) {
