@@ -1,7 +1,6 @@
 'use strict';
 var endOfLine = require('os').EOL
   , exports = module.exports
-  , moduleUtils = require('./module')
   , ngAddDep = require('ng-add-dep');
 
 /**
@@ -24,9 +23,7 @@ function hasParam(fileContents, config) {
   var param = config.ngRoute ? 'routeProvider' : 'stateProvider'
     , regex; // regex to test
 
-  if (config.appScript === 'ts') {
-    regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)');
-  } else if (config.appScript === 'js') {
+  if (config.appScript === 'ts' || config.appScript === 'js') {
     regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)');
   } else {
     regex = new RegExp('\\(.*\\$' + param + '.*\\) ->');
@@ -175,71 +172,27 @@ function analyzeLines(lines, config) {
  * @return {Array}
  */
 function prepareState(state, analysis, config) {
-  var newState;
+  var newState = [];
 
-  if (config.appScript === 'ts') {
+  if (config.appScript === 'ts' || config.appScript === 'js') {
     // base route logic
     if (config.ngRoute) {
-      newState = [
-        '  .when(\'' + state.url + '\', {',
-        '    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ',')
-      ];
+      newState.push('  .when(\'' + state.url + '\', {');
     } else {
-      newState = [
-        '  .state(\'' + state.lowerCamel + '\', {',
-        '    url: \'' + state.url + '\',',
-        '    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ',')
-      ];
+      newState.push('  .state(\'' + state.lowerCamel + '\', {');
+      newState.push('    url: \'' + state.url + '\',');
     }
+    newState.push('    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ','));
 
-    // controller as logic
     if (!config.skipController) {
-      if (config.controllerAs && config.ngRoute) {
-        newState.push('    controller: \'' + state.ctrlName + '\',');
-        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
-      } else if (config.controllerAs && !config.ngRoute) {
-        newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
-      } else {
-        newState.push('    controller: \'' + state.ctrlName + '\'');
-      }
+      newState.push('    controller: \'' + state.ctrlName + '\'' + (config.controllerAs ? ',' : ''));
+    }
+    if (config.controllerAs) {
+      newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
     }
 
     if (analysis.routeStartIndex > -1) {
-      // add cloasing to squeeze new state between existing route and the final });
-      newState.unshift('  })');
-    } else {
-      // close up this new state, which is the first state
-      newState.push('  });');
-    }
-  } else if (config.appScript === 'js') {
-    // base route logic
-    if (config.ngRoute) {
-      newState = [
-        '  .when(\'' + state.url + '\', {',
-        '    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ',')
-      ];
-    } else {
-      newState = [
-        '  .state(\'' + state.name + '\', {',
-        '    url: \'' + state.url + '\',',
-        '    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ',')
-      ];
-    }
-
-    // controller as logic
-    if (!config.skipController) {
-      if (config.controllerAs && config.ngRoute) {
-        newState.push('    controller: \'' + state.ctrlName + '\',');
-        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
-      } else if (config.controllerAs && !config.ngRoute) {
-        newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
-      } else {
-        newState.push('    controller: \'' + state.ctrlName + '\'');
-      }
-    }
-
-    if (analysis.routeStartIndex > -1) {
-      // add cloasing to squeeze new state between existing route and the final });
+      // add closing to squeeze new state between existing route and the final });
       newState.unshift('  })');
     } else {
       // close up this new state, which is the first state
@@ -248,28 +201,18 @@ function prepareState(state, analysis, config) {
   } else {
     // base route logic
     if (config.ngRoute) {
-      newState = [
-        '  .when \'' + state.url + '\',',
-        '    templateUrl: \'' + state.templateUrl + '\''
-      ];
+      newState.push('  .when \'' + state.url + '\',');
     } else {
-      newState = [
-        '  .state \'' + state.name + '\',',
-        '    url: \'' + state.url + '\'',
-        '    templateUrl: \'' + state.templateUrl + '\''
-      ];
+      newState.push('  .state \'' + state.name + '\',');
+      newState.push('    url: \'' + state.url + '\'');
     }
+    newState.push('    templateUrl: \'' + state.templateUrl + '\'');
 
-    // controller as logic
     if (!config.skipController) {
-      if (config.controllerAs && config.ngRoute) {
-        newState.push('    controller: \'' + state.ctrlName + '\'');
-        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
-      } else if (config.controllerAs && !config.ngRoute) {
-        newState.push('    controller: \'' + state.ctrlName + ' as ' + state.lowerCamel + '\'');
-      } else {
-        newState.push('    controller: \'' + state.ctrlName + '\'');
-      }
+      newState.push('    controller: \'' + state.ctrlName + '\'');
+    }
+    if (!config.skipController && config.controllerAs) {
+      newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
     }
   }
 
