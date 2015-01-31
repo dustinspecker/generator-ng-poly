@@ -8,9 +8,6 @@ describe('Controller generator', function () {
   before(function (done) {
     helpers
       .run(join(__dirname, '../app'))
-      .withOptions({
-        'skip-install': true
-      })
       .withPrompts({
         appName: 'temp-controller',
         markup: 'html',

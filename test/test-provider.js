@@ -7,12 +7,7 @@ var assert = require('yeoman-generator').assert
 describe('Provider generator', function () {
   before(function (done) {
     helpers
-      .run(join(__dirname, '../app'), {
-        tmpdir: false
-      })
-      .withOptions({
-        'skip-install': true
-      })
+      .run(join(__dirname, '../app'))
       .withPrompts({
         appName: 'temp-provider',
         markup: 'html',
