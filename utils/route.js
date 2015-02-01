@@ -203,7 +203,7 @@ function prepareState(state, analysis, config) {
     if (config.ngRoute) {
       newState.push('  .when \'' + state.url + '\',');
     } else {
-      newState.push('  .state \'' + state.name + '\',');
+      newState.push('  .state \'' + state.lowerCamel + '\',');
       newState.push('    url: \'' + state.url + '\'');
     }
     newState.push('    templateUrl: \'' + state.templateUrl + '\'');

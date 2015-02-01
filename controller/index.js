@@ -9,18 +9,6 @@ Generator.prototype.prompting = function prompting() {
 };
 
 Generator.prototype.writing = function writing() {
-  var config = this.getConfig();
-
-  this.fs.copyTpl(
-    this.templatePath('_controller.' + config.appScript),
-    this.destinationPath(config.appDir + '/' + config.modulePath + '/' + config.hyphenName + '-controller.' +
-      config.appScript),
-    config
-  );
-  this.fs.copyTpl(
-    this.templatePath('_spec.' + config.testScript),
-    this.destinationPath(config.testDir + '/' + config.modulePath + '/' + config.hyphenName + '-controller_test.' +
-      config.testScript),
-    config
-  );
+  this.copySrc('controller');
+  this.copyUnitTest('controller');
 };
