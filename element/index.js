@@ -19,11 +19,7 @@ Generator.prototype.writing = function writing() {
     this.templatePath('element.' + config.style),
     this.destinationPath(elementDir + '/' + config.hyphenName + '.' + config.style)
   );
-  this.fs.copyTpl(
-    this.templatePath('_element.' + config.markup),
-    this.destinationPath(elementDir + '/' + config.hyphenName + '.' + config.markup),
-    config
-  );
+  this.copyMarkup('element', path.join(elementDir, config.hyphenName + '.' + config.markup), config);
   this.fs.copyTpl(
     this.templatePath('_element.' + (config.appScript === 'ts' ? 'js' : config.appScript)),
     this.destinationPath(elementDir + '/' + config.hyphenName + '.' +

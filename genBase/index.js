@@ -140,4 +140,52 @@ Generator.prototype.getConfig = function getConfig() {
   return config;
 };
 
+Generator.prototype.copyMarkup = function copyMarkup(type, dest, context) {
+  var config = this.getConfig();
+  if (typeof dest === 'object') {
+    context = dest;
+    dest = null;
+  }
+  if (!dest) {
+    dest = path.join(config.appDir, config.modulePath, config.hyphenName + '-' + type + '.tpl.' + config.markup);
+  }
+  if (!context) {
+    context = config;
+  }
+
+  this.fs.copyTpl(this.templatePath('_' + type + '.' + config.markup), this.destinationPath(dest), context);
+};
+
+Generator.prototype.copySrc = function copySrc(type, dest, context) {
+  var config = this.getConfig();
+  if (typeof dest === 'object') {
+    context = dest;
+    dest = null;
+  }
+  if (!dest) {
+    dest = path.join(config.appDir, config.modulePath, config.hyphenName + '-' + type + '.' + config.appScript);
+  }
+  if (!context) {
+    context = config;
+  }
+
+  this.fs.copyTpl(this.templatePath('_' + type + '.' + config.appScript), this.destinationPath(dest), context);
+};
+
+Generator.prototype.copyUnitTest = function copyUnitTest(type, dest, context) {
+  var config = this.getConfig();
+  if (typeof dest === 'object') {
+    context = dest;
+    dest = null;
+  }
+  if (!dest) {
+    dest = path.join(config.testDir, config.modulePath, config.hyphenName + '-' + type + '_test.' + config.testScript);
+  }
+  if (!context) {
+    context = config;
+  }
+
+  this.fs.copyTpl(this.templatePath('_spec.' + config.testScript), this.destinationPath(dest), context);
+};
+
 Generator.extend = require('class-extend').extend;
