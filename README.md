@@ -100,7 +100,7 @@ Languages and Features supported:
 [Configurations](#configurations):
   * Syntax
     - [Controller As](#controller-as-syntax)
-    - [Pass Function](#pass-function)
+    - [Pass Function](#pass-functions)
     - [Named Functions](#named-functions)
 
 † e2e tests are not supported in TypeScript. JavaScript will instead be used for e2e tests.
