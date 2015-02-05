@@ -1,6 +1,8 @@
 'use strict';
-var path = require('path')
+var _ = require('lodash')
+  , path = require('path')
   , pkg = require(path.join(__dirname, '../package.json'))
+  , recursiveReaddir = require('recursive-readdir')
   , updateNotifier = require('update-notifier')
   , utils = require('../utils')
   , yeoman = require('yeoman-generator')
@@ -23,15 +25,39 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
 
   this.prompt([
     {
+      type: 'list',
       name: 'module',
       message: 'Which module is this for?',
       default: this.config.get('lastUsedModule'),
       when: function () {
         return !(this.options && this.options.module);
       }.bind(this),
-      validate: function (input) {
-        return utils.moduleExists(input);
-      }.bind(this)
+      choices: function () {
+        var done = this.async();
+        recursiveReaddir(utils.getAppDir(), function (err, files) {
+          if (err) {
+            throw err;
+          }
+          // only get the directories
+          files = files.map(function (file) {
+            return path.dirname(file);
+          });
+          // remove duplicates
+          files = _.uniq(files);
+          // remove non-module directories
+          files = files.filter(function (file) {
+            return file.indexOf('images') < 0 && file.indexOf('fonts') < 0;
+          });
+          // display full name as name, but remove app/ from value
+          files = files.map(function (file) {
+            return {
+              name: file,
+              value: file.replace(utils.getAppDir() + '\\', '').replace(utils.getAppDir() + '/', '')
+            };
+          });
+          done(files);
+        });
+      }
     },
     {
       name: 'url',

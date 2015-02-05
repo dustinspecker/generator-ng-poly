@@ -49,6 +49,7 @@
     "findup-sync": "^0.2.0",
     "lodash": "^3.0.0",
     "ng-add-dep": "^0.2.0",
+    "recursive-readdir": "^1.2.1",
     "underscore.string": "^3.0.1",
     "update-notifier": "^0.3.0",
     "yeoman-generator": "~0.18.5",
