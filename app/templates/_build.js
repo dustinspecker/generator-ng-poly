@@ -92,6 +92,10 @@ gulp.task('styles', ['clean'], function () {
     }))
     .pipe(stylusFilter.restore())
     .pipe($.autoprefixer())
+    .pipe($.if(isProd, $.cssRebaseUrls()))
+    .pipe($.if(isProd, $.cssUrlAdjuster({
+      prepend: '../'
+    })))
     .pipe($.if(isProd, $.concat('app.css')))
     .pipe($.if(isProd, $.cssmin()))
     .pipe($.if(isProd, $.rev()))
