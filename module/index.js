@@ -1,10 +1,10 @@
 'use strict';
-var fs = require('fs')
+var _ = require('lodash')
+  , fs = require('fs')
   , genBase = require('../genBase')
   , ngAddDep = require('ng-add-dep')
   , path = require('path')
   , utils = require('../utils')
-  , _ = require('lodash')
   , Generator;
 
 Generator = module.exports = genBase.extend();

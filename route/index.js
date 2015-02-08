@@ -1,5 +1,6 @@
 'use strict';
-var fs = require('fs')
+var _ = require('lodash')
+  , fs = require('fs')
   , path = require('path')
   , genBase = require('../genBase')
   , utils = require('../utils')
@@ -29,7 +30,7 @@ Generator.prototype.writing = function writing() {
     }
 
     // module file to add route to
-    , filePath, file, newState;
+    , modulePathTemplate, modulePath, file, newState;
 
   // move this logic to utils-route
   config.url = this.url;
@@ -48,26 +49,20 @@ Generator.prototype.writing = function writing() {
     templateUrl: this.templateUrl
   };
 
-  filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
-    utils.hyphenName(config.moduleName) + '.ts');
+  // create module path minus extension
+  modulePathTemplate = path.join(this.config.path, '..', config.appDir, config.modulePath,
+    utils.hyphenName(config.moduleName));
+  // find module.{coffee, js, ts}
+  modulePath = _.find([
+    modulePathTemplate + '.coffee',
+    modulePathTemplate + '.js',
+    modulePathTemplate + '.ts'
+    ], function (appFile) {
+      return fs.existsSync(appFile);
+    });
+  file = fs.readFileSync(modulePath, 'utf8');
 
-  if (fs.existsSync(filePath)) {
-    file = fs.readFileSync(filePath, 'utf8');
-  } else {
-    filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
-      utils.hyphenName(config.moduleName) + '.coffee');
-
-    // load JavaScript app if CoffeeScript app doesn't exist
-    if (fs.existsSync(filePath)) {
-      file = fs.readFileSync(filePath, 'utf8');
-    } else {
-      filePath = path.join(this.config.path, '..', config.appDir, config.modulePath,
-        utils.hyphenName(config.moduleName) + '.js');
-      file = fs.readFileSync(filePath, 'utf8');
-    }
-  }
-
-  fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
+  fs.writeFileSync(modulePath, utils.addRoute(file, newState, newRouteConfig));
 
   this.copyE2e(config);
 
