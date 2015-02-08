@@ -54,27 +54,25 @@ function addParam(lines, config) {
           lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ': ' + type + ') {';
         }
       }
-    } else {
-      if (config.appScript === 'js') {
-        if ((config.passFunc && line.indexOf('function config(') > -1) ||
-          (!config.passFunc && line.indexOf('.config(function') > -1)) {
-          // check if function has a parameter already
-          if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
-            lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') {';
-          } else {
-            lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') {';
-          }
+    } else if (config.appScript === 'js') {
+      if ((config.passFunc && line.indexOf('function config(') > -1) ||
+        (!config.passFunc && line.indexOf('.config(function') > -1)) {
+        // check if function has a parameter already
+        if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') {';
+        } else {
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') {';
         }
-      } else {
-        if (line.indexOf('.config') > -1 && line.indexOf('->') > -1) {
-          // check if function has a parameter already
-          if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
-            lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') ->';
-          } else if (line.lastIndexOf('(') === -1 && line.lastIndexOf(')') === -1) {
-            lines[i] = lines[i].slice(0, line.lastIndexOf('g')) + 'g ($' + param + ') ->';
-          } else {
-            lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') ->';
-          }
+      }
+    } else {
+      if (line.indexOf('.config') > -1 && line.indexOf('->') > -1) {
+        // check if function has a parameter already
+        if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') ->';
+        } else if (line.lastIndexOf('(') === -1 && line.lastIndexOf(')') === -1) {
+          lines[i] = lines[i].slice(0, line.lastIndexOf('g')) + 'g ($' + param + ') ->';
+        } else {
+          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') ->';
         }
       }
     }
@@ -174,6 +172,15 @@ function analyzeLines(lines, config) {
 function prepareState(state, analysis, config) {
   var newState = [];
 
+  if (analysis.routeStartIndex === -1) {
+    // add provider
+    if (config.ngRoute) {
+      newState.push('$routeProvider');
+    } else {
+      newState.push('$stateProvider');
+    }
+  }
+
   if (config.appScript === 'ts' || config.appScript === 'js') {
     // base route logic
     if (config.ngRoute) {
@@ -186,9 +193,9 @@ function prepareState(state, analysis, config) {
 
     if (!config.skipController) {
       newState.push('    controller: \'' + state.ctrlName + '\'' + (config.controllerAs ? ',' : ''));
-    }
-    if (config.controllerAs) {
-      newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
+      if (config.controllerAs) {
+        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
+      }
     }
 
     if (analysis.routeStartIndex > -1) {
@@ -210,18 +217,9 @@ function prepareState(state, analysis, config) {
 
     if (!config.skipController) {
       newState.push('    controller: \'' + state.ctrlName + '\'');
-    }
-    if (!config.skipController && config.controllerAs) {
-      newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
-    }
-  }
-
-  if (analysis.routeStartIndex === -1) {
-    // add provider
-    if (config.ngRoute) {
-      newState.unshift('$routeProvider');
-    } else {
-      newState.unshift('$stateProvider');
+      if (config.controllerAs) {
+        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
+      }
     }
   }
 
