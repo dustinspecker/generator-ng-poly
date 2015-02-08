@@ -69,8 +69,7 @@ Generator.prototype.writing = function writing() {
 
   fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
 
-  this.copyE2ePO(config);
-  this.copyE2eTest(config);
+  this.copyE2e(config);
 
   if (!config.skipController) {
     // call controller subgenerator

@@ -217,20 +217,16 @@ Generator.prototype.copyUnitTest = function copyUnitTest(type, dest, context) {
   this.simpleCopy('_spec.' + config.testScript, dest, context);
 };
 
-Generator.prototype.copyE2ePO = function copyE2ePO(context) {
+Generator.prototype.copyE2e = function copyE2e(context) {
+  var testScript = (context.testScript === 'ts' ? 'js' : context.testScript);
   this.simpleCopy(
-    'page.po.' + (context.testScript === 'ts' ? 'js' : context.testScript),
-    'e2e/' + context.hyphenName + '/' + context.hyphenName + '.po.' +
-      (context.testScript === 'ts' ? 'js' : context.testScript),
+    'page.po.' + testScript,
+    'e2e/' + context.hyphenName + '/' + context.hyphenName + '.po.' + testScript,
     context
   );
-};
-
-Generator.prototype.copyE2eTest = function copyE2eTest(context) {
   this.simpleCopy(
-    'page_test.' + (context.testScript === 'ts' ? 'js' : context.testScript),
-    'e2e/' + context.hyphenName + '/' + context.hyphenName + '_test.' +
-          (context.testScript === 'ts' ? 'js' : context.testScript),
+    'page_test.' + testScript,
+    'e2e/' + context.hyphenName + '/' + context.hyphenName + '_test.' + testScript,
     context
   );
 };
