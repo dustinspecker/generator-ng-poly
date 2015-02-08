@@ -69,21 +69,8 @@ Generator.prototype.writing = function writing() {
 
   fs.writeFileSync(filePath, utils.addRoute(file, newState, newRouteConfig));
 
-  // e2e testing
-  // create page object model
-  this.fs.copyTpl(
-    this.templatePath('page.po.' + (config.testScript === 'ts' ? 'js' : config.testScript)),
-    this.destinationPath('e2e/' + config.hyphenName + '/' + config.hyphenName + '.po.' +
-      (config.testScript === 'ts' ? 'js' : config.testScript)),
-    config
-  );
-  // create test
-  this.fs.copyTpl(
-    this.templatePath('page_test.' + (config.testScript === 'ts' ? 'js' : config.testScript)),
-    this.destinationPath('e2e/' + config.hyphenName + '/' + config.hyphenName + '_test.' +
-      (config.testScript === 'ts' ? 'js' : config.testScript)),
-    config
-  );
+  this.copyE2ePO(config);
+  this.copyE2eTest(config);
 
   if (!config.skipController) {
     // call controller subgenerator

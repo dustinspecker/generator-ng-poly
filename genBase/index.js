@@ -166,6 +166,18 @@ Generator.prototype.getConfig = function getConfig() {
   return config;
 };
 
+Generator.prototype.simpleCopy = function simplyCopy(src, dest, context) {
+  if (!context) {
+    context = this.getConfig();
+  }
+
+  this.fs.copyTpl(
+    this.templatePath(src),
+    this.destinationPath(dest),
+    context
+  );
+};
+
 Generator.prototype.copyMarkup = function copyMarkup(type, dest, context) {
   var config = this.getConfig();
   if (typeof dest === 'object') {
@@ -175,11 +187,8 @@ Generator.prototype.copyMarkup = function copyMarkup(type, dest, context) {
   if (!dest) {
     dest = path.join(config.appDir, config.modulePath, config.hyphenName + '-' + type + '.tpl.' + config.markup);
   }
-  if (!context) {
-    context = config;
-  }
 
-  this.fs.copyTpl(this.templatePath('_' + type + '.' + config.markup), this.destinationPath(dest), context);
+  this.simpleCopy('_' + type + '.' + config.markup, dest, context);
 };
 
 Generator.prototype.copySrc = function copySrc(type, dest, context) {
@@ -191,11 +200,8 @@ Generator.prototype.copySrc = function copySrc(type, dest, context) {
   if (!dest) {
     dest = path.join(config.appDir, config.modulePath, config.hyphenName + '-' + type + '.' + config.appScript);
   }
-  if (!context) {
-    context = config;
-  }
 
-  this.fs.copyTpl(this.templatePath('_' + type + '.' + config.appScript), this.destinationPath(dest), context);
+  this.simpleCopy('_' + type + '.' + config.appScript, dest, context);
 };
 
 Generator.prototype.copyUnitTest = function copyUnitTest(type, dest, context) {
@@ -207,11 +213,26 @@ Generator.prototype.copyUnitTest = function copyUnitTest(type, dest, context) {
   if (!dest) {
     dest = path.join(config.testDir, config.modulePath, config.hyphenName + '-' + type + '_test.' + config.testScript);
   }
-  if (!context) {
-    context = config;
-  }
 
-  this.fs.copyTpl(this.templatePath('_spec.' + config.testScript), this.destinationPath(dest), context);
+  this.simpleCopy('_spec.' + config.testScript, dest, context);
+};
+
+Generator.prototype.copyE2ePO = function copyE2ePO(context) {
+  this.simpleCopy(
+    'page.po.' + (context.testScript === 'ts' ? 'js' : context.testScript),
+    'e2e/' + context.hyphenName + '/' + context.hyphenName + '.po.' +
+      (context.testScript === 'ts' ? 'js' : context.testScript),
+    context
+  );
+};
+
+Generator.prototype.copyE2eTest = function copyE2eTest(context) {
+  this.simpleCopy(
+    'page_test.' + (context.testScript === 'ts' ? 'js' : context.testScript),
+    'e2e/' + context.hyphenName + '/' + context.hyphenName + '_test.' +
+          (context.testScript === 'ts' ? 'js' : context.testScript),
+    context
+  );
 };
 
 Generator.extend = require('class-extend').extend;
