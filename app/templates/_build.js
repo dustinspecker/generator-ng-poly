@@ -93,8 +93,25 @@ gulp.task('styles', ['clean'], function () {
     .pipe(stylusFilter.restore())
     .pipe($.autoprefixer())
     .pipe($.if(isProd, $.cssRebaseUrls()))
-    .pipe($.if(isProd, $.cssUrlAdjuster({
-      prepend: '../'
+    .pipe($.if(isProd, $.modifyCssUrls({
+      modify: function (url) {
+        // determine if url is using http, https, or data protocol
+        // cssRebaseUrls rebases these URLs, too, so we need to fix that
+        var beginUrl = url.indexOf('http:');
+        if (beginUrl < 0) {
+          beginUrl = url.indexOf('https:');
+        }
+        if (beginUrl < 0) {
+          beginUrl = url.indexOf('data:');
+        }
+
+        if (beginUrl > -1) {
+          return url.substring(beginUrl, url.length);
+        }
+
+        // prepend all other urls
+        return '../' + url;
+      }
     })))
     .pipe($.if(isProd, $.concat('app.css')))
     .pipe($.if(isProd, $.cssmin()))
