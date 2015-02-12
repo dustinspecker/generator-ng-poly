@@ -1,4 +1,4 @@
-/*global describe, beforeEach, it */
+/*global describe, beforeEach, after, it */
 'use strict';
 var assert = require('assert')
   , fs = require('fs')
@@ -17,6 +17,31 @@ var assert = require('assert')
 
 describe('Route Utils', function () {
   describe('CoffeeScript addRoute using UI Router', function () {
+    describe('child state', function () {
+      var config
+        , fileContents;
+
+      beforeEach(function () {
+        config = {
+          appScript: 'coffee',
+          controllerAs: false,
+          passFunc: false,
+          ngRoute: false
+        };
+        newState.name = 'test.test';
+        fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.coffee'), 'utf8');
+      });
+
+      after(function () {
+        newState.name = 'test';
+      });
+
+      it('should add child state', function () {
+        assert(/.state \'test.test\',[\n\r]*        url: \'\/test\'[\n\r]*        templateUrl: \'home\/test.tpl.html\'[\n\r]*        controller: \'TestCtrl\'[\n\r]/
+          .test(routeUtils.addRoute(fileContents, newState, config)));
+      });
+    });
+
     describe('controllerAs', function () {
       var config
         , fileContents;
@@ -193,6 +218,31 @@ describe('Route Utils', function () {
   });
 
   describe('JavaScript addRoute using UI Router', function () {
+    describe('child state', function () {
+      var config
+        , fileContents;
+
+      beforeEach(function () {
+        config = {
+          appScript: 'js',
+          controllerAs: false,
+          passFunc: false,
+          ngRoute: false
+        };
+        newState.name = 'test.test';
+        fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.js'), 'utf8');
+      });
+
+      after(function () {
+        newState.name = 'test';
+      });
+
+      it('should add child state', function () {
+        assert(/.state\(\'test.test\', {[\n\r]*        url: \'\/test\',[\n\r]*        templateUrl: \'home\/test.tpl.html\',[\n\r]*        controller: \'TestCtrl\'[^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config)));
+      });
+    });
+
     describe('controllerAs', function () {
       var config
         , fileContents;
