@@ -1,9 +1,13 @@
 sudo: false
 language: node_js
 node_js:
-  - 'iojs'
-  - '0.12'
-  - '0.10'
+- iojs
+- '0.12'
+- '0.10'
 before_install:
-  - npm install -g gulp
+- npm install -g gulp
 after_success: npm run-script coveralls
+notifications:
+  slack:
+    rooms:
+      secure: HFzTuz67kFewMd1bZM1RxMWji+CGKf9qpGFj2k0DtDieCSuAG48gYr+ccxNvG8qalLAKrqb4Q0TX9MZbwREDqfbin5shFjtV9WBsL1issuSmo6vwqy63Fxz+7mzI16TpTLvxoxGOtwUi2OKLNAjmtdXsyxaQl6LOxRFtf3cFiWM=
