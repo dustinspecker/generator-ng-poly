@@ -8,9 +8,20 @@
  # @description
  #
 ###
+<% if (coffeeClasses) { %>
+class <% ctrlName %>
+ constructor: <% if (!controllerAs) { %>(@$scope) <% } %>->
+   @ctrlName = '<%= ctrlName %>'<% } else { %>$scope.<%= lowerCamel %> = {}
+   $scope.<%= lowerCamel %>.ctrlName = '<%= ctrlName %>'<% } %>
+
+angular
+  .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
+  .controller '<%= ctrlName %>', [<% if (!controllerAs) { %>'$scope'<% } %>, <%= ctrlName %>]
+<% } else { %>
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
   .controller '<%= ctrlName %>', <% if (!controllerAs) { %>($scope) <% } %>->
     <% if (controllerAs) { %>vm = @
     vm.ctrlName = '<%= ctrlName %>'<% } else { %>$scope.<%= lowerCamel %> = {}
     $scope.<%= lowerCamel %>.ctrlName = '<%= ctrlName %>'<% } %>
+<% } %>
