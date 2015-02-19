@@ -9,14 +9,13 @@
  #
 ###
 <% if (coffeeClasses) { %>
-class <% ctrlName %>
- constructor: <% if (!controllerAs) { %>(@$scope) <% } %>->
-   @ctrlName = '<%= ctrlName %>'<% } else { %>$scope.<%= lowerCamel %> = {}
-   $scope.<%= lowerCamel %>.ctrlName = '<%= ctrlName %>'<% } %>
+class <%= ctrlName %>
+  constructor: <% if (!controllerAs) { %>(@$scope) <% } %>->
+    @ctrlName = '<%= ctrlName %>'
 
 angular
   .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
-  .controller '<%= ctrlName %>', [<% if (!controllerAs) { %>'$scope'<% } %>, <%= ctrlName %>]
+  .controller '<%= ctrlName %>', [<% if (!controllerAs) { %>'$scope, '<% } %><%= ctrlName %>]
 <% } else { %>
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'

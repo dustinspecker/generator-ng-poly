@@ -142,6 +142,9 @@ Generator.prototype.getConfig = function getConfig() {
     ngRoute: (this.options['ng-route'] !== undefined && this.options['ng-route'] !== null) ?
       this.options['ng-route'] : this.config.get('ngRoute'),
 
+    coffeeClasses: (this.options['coffee-classes'] !== undefined && this.options['coffee-classes'] !== null) ?
+      this.options['coffee-classes'] : this.config.get('coffeeClasses'),
+
     appName: utils.getAppName(this.config.path),
     appDir: utils.getAppDir(this.config.path),
     testDir: utils.getUnitTestDir(this.config.path),
