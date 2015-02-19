@@ -96,11 +96,11 @@ Generator.prototype.prompting = function prompting() {
     },
     {
       type: 'confirm',
-      name: 'coffeeClasses',
-      message: 'Do you want to use classes as controllers',
-      default: false,
-      when: function(props) {
-        return props.appScript === 'coffee';
+      name: 'classes',
+      message: 'Want to use Classes syntax?',
+      default: true,
+      when: function (props) {
+        return (props.appScript === 'coffee' || props.appScript === 'ts');
       }
     },
     {
@@ -318,7 +318,7 @@ Generator.prototype.prompting = function prompting() {
     this.ngRoute = props.ngRoute;
     this.framework = props.framework;
     this.bower = props.bower.join(',');
-    this.coffeeClasses = props.coffeeClasses;
+    this.classes = props.classes;
 
     done();
   }.bind(this));
@@ -339,7 +339,7 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('passFunc', this.passFunc);
   this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
-  this.config.set('coffeeClasses', this.coffeeClasses);
+  this.config.set('classes', this.classes);
   this.config.set('testFramework', this.testFramework);
   this.config.set('e2eTestFramework', this.e2eTestFramework);
   this.config.set('style', this.style);
@@ -362,7 +362,7 @@ Generator.prototype.configuring = function configuring() {
     e2eTestFramework: this.e2eTestFramework,
     ngRoute: this.ngRoute,
     bower: this.bower,
-    coffeeClasses: this.coffeeClasses
+    classes: this.classes
   };
 
   // copy over common project files
@@ -494,8 +494,7 @@ Generator.prototype.end = function end() {
       'skip-controller': this.skipController,
       'pass-func': this.passFunc,
       'named-func': this.namedFunc,
-      'ng-route': this.ngRoute,
-      'coffee-classes': this.coffeeClasses
+      'ng-route': this.ngRoute
     }
   }, {
     local: require.resolve('../module'),

@@ -8,7 +8,7 @@
  # @description
  #
 ###
-<% if (coffeeClasses) { %>
+<% if (classes) { %>
 class <%= ctrlName %>
   constructor: <% if (!controllerAs) { %>(@$scope) <% } %>->
     @ctrlName = '<%= ctrlName %>'

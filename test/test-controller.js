@@ -51,7 +51,7 @@ describe('Controller generator', function () {
 
   });
 
-  describe('with Coffee app, and Coffee test', function () {
+  describe('with Coffee app, and Coffee test, and without classes syntax', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../controller'), {
@@ -63,6 +63,31 @@ describe('Controller generator', function () {
           markup: 'jade',
           'app-script': 'coffee',
           'test-script': 'coffee'
+        })
+        .on('end', done);
+    });
+
+    it('should create controller files', function () {
+      assert.file([
+        'app/home/test1-controller.coffee',
+        'app/home/test1-controller_test.coffee'
+      ]);
+    });
+  });
+
+  describe('with Coffee app, and Coffee test, and with classes syntax', function () {
+    before(function (done) {
+      helpers
+        .run(join(__dirname, '../controller'), {
+          tmpdir: false
+        })
+        .withArguments(['test1'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'coffee',
+          'test-script': 'coffee'
+          'classes': 'true'
         })
         .on('end', done);
     });
