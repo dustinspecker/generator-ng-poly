@@ -135,6 +135,9 @@ Generator.prototype.getConfig = function getConfig() {
     namedFunc: (this.options['named-func'] !== undefined && this.options['named-func'] !== null) ?
       this.options['named-func'] : this.config.get('namedFunc'),
 
+    material: (this.options.material !== undefined && this.options.material !== null) ?
+      this.options.material : this.config.get('material'),
+
     testScript: this.options['test-script'] || this.config.get('testScript'),
     testFramework: this.config.get('testFramework'),
     e2eTestFramework: this.config.get('e2eTestFramework') || 'jasmine',

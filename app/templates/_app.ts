@@ -15,7 +15,8 @@ module <%= moduleName %> {
       <% if (ngRoute) { %>'ngRoute'<% } else { %>'ui.router'<% } %><% if (framework === 'angularstrap') { %>,
       'mgcrea.ngStrap'<% } %><% if (framework === 'uibootstrap') { %>,
       'ui.bootstrap'<% } %><% if (framework === 'foundation') { %>,
-      'mm.foundation'<% } %>
+      'mm.foundation'<% } %><% if ( material ) { %>,
+      'ngMaterial'<% } %>
     ]);
 
   angular

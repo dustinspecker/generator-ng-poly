@@ -14,7 +14,8 @@
 <% if (passFunc) { %>  <% } %>    <% if (ngRoute) { %>'ngRoute'<% } else { %>'ui.router'<% } %><% if (framework === 'angularstrap') { %>,
 <% if (passFunc) { %>  <% } %>    'mgcrea.ngStrap'<% } %><% if (framework === 'uibootstrap') { %>,
 <% if (passFunc) { %>  <% } %>    'ui.bootstrap'<% } %><% if (framework === 'foundation') { %>,
-<% if (passFunc) { %>  <% } %>    'mm.foundation'<% } %>
+<% if (passFunc) { %>  <% } %>    'mm.foundation'<% } %><% if ( material ) { %>,
+<% if (passFunc) { %>  <% } %>    'ngMaterial'<% } %>
 <% if (passFunc) { %>  <% } %>  ]);
 
 <% if (passFunc) { %>  <% } %>angular

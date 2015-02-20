@@ -201,6 +201,15 @@ Generator.prototype.prompting = function prompting() {
     },
     {
       type: 'confirm',
+      name: 'material',
+      message: 'Should Angular-Material support be enabled?',
+      default: false,
+      when: function (props) {
+        return props.ngversion === '1.3.*';
+      }
+    },
+    {
+      type: 'confirm',
       name: 'polymer',
       message: 'Should Polymer support be enabled?',
       default: false
@@ -309,7 +318,7 @@ Generator.prototype.prompting = function prompting() {
     this.ngRoute = props.ngRoute;
     this.framework = props.framework;
     this.bower = props.bower.join(',');
-
+    this.material = props.material;
     done();
   }.bind(this));
 
@@ -346,6 +355,7 @@ Generator.prototype.configuring = function configuring() {
     passFunc: this.passFunc,
     namedFunc: this.namedFunc,
     polymer: this.polymer,
+    material: this.material,
     framework: this.framework,
     testFramework: this.testFramework,
     e2eTestFramework: this.e2eTestFramework,
