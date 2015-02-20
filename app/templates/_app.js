@@ -10,12 +10,12 @@
 <% if (passFunc) { %>  <% } %> */
 <% if (passFunc) { %>  <% } %>angular
 <% if (passFunc) { %>  <% } %>  .module('<%= moduleName %>', [<% if (bower.indexOf('aria') > -1) { %>
-<% if (passFunc) { %>  <% } %>    'ngAria',<% } %>
+<% if (passFunc) { %>  <% } %>    'ngAria',<% } %><% if (framework === 'material') { %>
+<% if (passFunc) { %>  <% } %>    'ngMaterial',<% } %>
 <% if (passFunc) { %>  <% } %>    <% if (ngRoute) { %>'ngRoute'<% } else { %>'ui.router'<% } %><% if (framework === 'angularstrap') { %>,
 <% if (passFunc) { %>  <% } %>    'mgcrea.ngStrap'<% } %><% if (framework === 'uibootstrap') { %>,
 <% if (passFunc) { %>  <% } %>    'ui.bootstrap'<% } %><% if (framework === 'foundation') { %>,
-<% if (passFunc) { %>  <% } %>    'mm.foundation'<% } %><% if ( material ) { %>,
-<% if (passFunc) { %>  <% } %>    'ngMaterial'<% } %>
+<% if (passFunc) { %>  <% } %>    'mm.foundation'<% } %>
 <% if (passFunc) { %>  <% } %>  ]);
 
 <% if (passFunc) { %>  <% } %>angular

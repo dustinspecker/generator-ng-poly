@@ -201,15 +201,6 @@ Generator.prototype.prompting = function prompting() {
     },
     {
       type: 'confirm',
-      name: 'material',
-      message: 'Should Angular-Material support be enabled?',
-      default: false,
-      when: function (props) {
-        return props.ngversion === '1.3.*';
-      }
-    },
-    {
-      type: 'confirm',
       name: 'polymer',
       message: 'Should Polymer support be enabled?',
       default: false
@@ -218,24 +209,36 @@ Generator.prototype.prompting = function prompting() {
       type: 'list',
       name: 'framework',
       message: 'Should a framework be setup?',
-      choices: [
-        {
-          name: 'none',
-          value: 'none'
-        },
-        {
-          name: 'Bootstrap with AngularStrap',
-          value: 'angularstrap'
-        },
-        {
-          name: 'Bootstrap with UI Bootstrap',
-          value: 'uibootstrap'
-        },
-        {
-          name: 'Foundation with Angular Foundation',
-          value: 'foundation'
+      choices: function (answers) {
+        var choices = [
+          {
+            name: 'none',
+            value: 'none'
+          },
+          {
+            name: 'Bootstrap with AngularStrap',
+            value: 'angularstrap'
+          },
+          {
+            name: 'Bootstrap with UI Bootstrap',
+            value: 'uibootstrap'
+          },
+          {
+            name: 'Foundation with Angular Foundation',
+            value: 'foundation'
+          }
+        ];
+
+        if (answers.ngversion === '1.3.*') {
+          choices.splice(1, 0, {
+            name: 'Angular Material',
+            value: 'material'
+          });
         }
-      ]
+
+        return choices;
+      }
+
     },
     {
       type: 'confirm',
@@ -318,7 +321,7 @@ Generator.prototype.prompting = function prompting() {
     this.ngRoute = props.ngRoute;
     this.framework = props.framework;
     this.bower = props.bower.join(',');
-    this.material = props.material;
+
     done();
   }.bind(this));
 
@@ -355,7 +358,6 @@ Generator.prototype.configuring = function configuring() {
     passFunc: this.passFunc,
     namedFunc: this.namedFunc,
     polymer: this.polymer,
-    material: this.material,
     framework: this.framework,
     testFramework: this.testFramework,
     e2eTestFramework: this.e2eTestFramework,
