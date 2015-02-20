@@ -12,6 +12,7 @@ describe('Controller generator', function () {
         appName: 'temp-controller',
         markup: 'html',
         appScript: 'js',
+        classes: false,
         controllerAs: false,
         passFunc: true,
         namedFunc: true,
@@ -51,7 +52,7 @@ describe('Controller generator', function () {
 
   });
 
-  describe('with Coffee app, and Coffee test, and without classes syntax', function () {
+  describe('with Coffee app, and Coffee test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../controller'), {
@@ -75,7 +76,7 @@ describe('Controller generator', function () {
     });
   });
 
-  describe('with Coffee app, and Coffee test, and with classes syntax', function () {
+  describe('with Coffee app, and Coffee test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../controller'), {
@@ -87,7 +88,6 @@ describe('Controller generator', function () {
           markup: 'jade',
           'app-script': 'coffee',
           'test-script': 'coffee'
-          'classes': 'true'
         })
         .on('end', done);
     });

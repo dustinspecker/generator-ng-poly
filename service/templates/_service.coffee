@@ -7,12 +7,21 @@
  # @description
  #
 ###
+<% if (classes) { %>
+class <%= upperCamel %>
+  constructor: ->
+    @name = '<%= upperCamel %>'
+
+  get: ->
+    @name
+
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
-  .service '<%= upperCamel %>', ->
+  .service '<%= upperCamel %>', [<%= upperCamel %>]
+<% } else { %>
     self = @
 
     self.get = ->
       '<%= upperCamel %>'
-
     return
+<% } %>

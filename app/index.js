@@ -100,7 +100,9 @@ Generator.prototype.prompting = function prompting() {
       message: 'Want to use Classes syntax?',
       default: true,
       when: function (props) {
-        return (props.appScript === 'coffee' || props.appScript === 'ts');
+        // TODO: enable
+        // return (props.appScript === 'coffee' || props.appScript === 'ts');
+        return props.appScript === 'coffee';
       }
     },
     {
@@ -335,11 +337,14 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('markup', this.markup);
   this.config.set('appScript', this.appScript);
   this.config.set('controllerAs', this.controllerAs);
+  // TODO: enable typescript support
+  if (this.appScript === 'coffee' /*|| this.appScript === 'ts'*/) {
+    this.config.set('classes', this.classes);
+  }
   this.config.set('skipController', this.skipController);
   this.config.set('passFunc', this.passFunc);
   this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
-  this.config.set('classes', this.classes);
   this.config.set('testFramework', this.testFramework);
   this.config.set('e2eTestFramework', this.e2eTestFramework);
   this.config.set('style', this.style);
