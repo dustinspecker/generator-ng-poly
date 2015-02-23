@@ -1,11 +1,11 @@
 'use strict'
 
-###
+###*
  # @ngdoc service
  # @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.factory:<%= upperCamel %>
- #
+
  # @description
- #
+
 ###
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
