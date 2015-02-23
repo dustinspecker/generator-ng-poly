@@ -1,11 +1,11 @@
 'use strict'
 
-### @ngdoc object
+###* @ngdoc object
  # @name <%= moduleName %>
  # @requires <% if (ngRoute) { %>$routeProvider<% } else { %>$urlRouterProvider<% } %>
- #
+
  # @description
- #
+
 ###
 angular
   .module '<%= moduleName %>', [<% if (bower.indexOf('aria') > -1) { %>

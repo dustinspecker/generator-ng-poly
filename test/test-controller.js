@@ -12,6 +12,7 @@ describe('Controller generator', function () {
         appName: 'temp-controller',
         markup: 'html',
         appScript: 'js',
+        classes: false,
         controllerAs: false,
         passFunc: true,
         namedFunc: true,
@@ -49,6 +50,30 @@ describe('Controller generator', function () {
       ]);
     });
 
+  });
+
+  describe('with Coffee app, and Coffee test', function () {
+    before(function (done) {
+      helpers
+        .run(join(__dirname, '../controller'), {
+          tmpdir: false
+        })
+        .withArguments(['test1'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'coffee',
+          'test-script': 'coffee'
+        })
+        .on('end', done);
+    });
+
+    it('should create controller files', function () {
+      assert.file([
+        'app/home/test1-controller.coffee',
+        'app/home/test1-controller_test.coffee'
+      ]);
+    });
   });
 
   describe('with Coffee app, and Coffee test', function () {

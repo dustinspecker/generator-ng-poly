@@ -12,4 +12,4 @@ describe '<%= ctrlName %>', ->
 
   it 'should have ctrlName as <%= ctrlName %>', ->
     <% if (controllerAs) { %>expect(ctrl.ctrlName).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %> '<%= ctrlName %>'<% } else { %>expect(scope.<%= lowerCamel %>.ctrlName).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %> '<%= ctrlName %>'<% } %>
-    
+

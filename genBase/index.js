@@ -142,6 +142,9 @@ Generator.prototype.getConfig = function getConfig() {
     ngRoute: (this.options['ng-route'] !== undefined && this.options['ng-route'] !== null) ?
       this.options['ng-route'] : this.config.get('ngRoute'),
 
+    classes: (this.options.classes !== undefined && this.options.classes !== null) ?
+      this.options.classes : this.config.get('classes'),
+
     appName: utils.getAppName(this.config.path),
     appDir: utils.getAppDir(this.config.path),
     testDir: utils.getUnitTestDir(this.config.path),
