@@ -1,20 +1,20 @@
 'use strict'
 
-###
+###*
  # @ngdoc directive
  # @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.directive:<%= lowerCamel %>
  # @restrict EA
  # @element
- #
+
  # @description
- #
+
  # @example
    <example module="<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>">
      <file name="index.html">
       <<%= hyphenName %>></<%= hyphenName %>>
      </file>
    </example>
- #
+
 ###
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
