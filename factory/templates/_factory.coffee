@@ -7,7 +7,6 @@
  # @description
 
 ###
-<% if (classes) { %>
 class <%= upperCamel %>
   @instance = undefined
   @someValue = '<%= upperCamel %>'
@@ -20,14 +19,3 @@ class <%= upperCamel %>
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
   .factory '<%= upperCamel %>', [<%= upperCamel %>]
-<% } else { %>
-angular
-  .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
-  .factory '<%= upperCamel %>', ->
-    <%= upperCamel %>Base = {}
-    <%= upperCamel %>Base.someValue = '<%= upperCamel %>'
-    <%= upperCamel %>Base.someMethod = ->
-      '<%= upperCamel %>'
-
-    <%= upperCamel %>Base
-<% } %>
