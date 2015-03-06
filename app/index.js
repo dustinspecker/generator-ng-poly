@@ -209,24 +209,36 @@ Generator.prototype.prompting = function prompting() {
       type: 'list',
       name: 'framework',
       message: 'Should a framework be setup?',
-      choices: [
-        {
-          name: 'none',
-          value: 'none'
-        },
-        {
-          name: 'Bootstrap with AngularStrap',
-          value: 'angularstrap'
-        },
-        {
-          name: 'Bootstrap with UI Bootstrap',
-          value: 'uibootstrap'
-        },
-        {
-          name: 'Foundation with Angular Foundation',
-          value: 'foundation'
+      choices: function (answers) {
+        var choices = [
+          {
+            name: 'none',
+            value: 'none'
+          },
+          {
+            name: 'Bootstrap with AngularStrap',
+            value: 'angularstrap'
+          },
+          {
+            name: 'Bootstrap with UI Bootstrap',
+            value: 'uibootstrap'
+          },
+          {
+            name: 'Foundation with Angular Foundation',
+            value: 'foundation'
+          }
+        ];
+
+        if (answers.ngversion === '1.3.*') {
+          choices.splice(1, 0, {
+            name: 'Angular Material',
+            value: 'material'
+          });
         }
-      ]
+
+        return choices;
+      }
+
     },
     {
       type: 'confirm',

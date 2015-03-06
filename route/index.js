@@ -76,6 +76,7 @@ Generator.prototype.writing = function writing() {
         markup: this.options.markup,
         'app-script': this.options['app-script'],
         'controller-as': this.options['controller-as'],
+        classes: this.options.classes,
         'pass-func': this.options['pass-func'],
         'named-func': this.options['named-func'],
         'test-script': this.options['test-script'],
