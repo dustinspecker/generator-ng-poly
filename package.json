@@ -44,7 +44,7 @@
     "polymer"
   ],
   "dependencies": {
-    "chalk": "^0.5.1",
+    "chalk": "^1.0.0",
     "class-extend": "^0.1.1",
     "findup-sync": "^0.2.0",
     "lodash": "^3.0.0",
