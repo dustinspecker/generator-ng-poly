@@ -27,5 +27,10 @@
   },
   "devDependencies": {
     "angular-mocks": "~<%= ngversion %>"
-  }
+  }<% if (framework === 'foundation') { %>,
+  "overrides": {
+    "modernizr": {
+      "main": "modernizr.js"
+    }
+  }<% } %>
 }

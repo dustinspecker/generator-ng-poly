@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore.string')
+  , fs = require('fs')
   , gulp = require('gulp')
   , path = require('path')
   , $ = require('gulp-load-plugins')({
@@ -24,12 +25,9 @@ var _ = require('underscore.string')
   , appMarkupFiles = path.join(appBase, '**/*.{haml,html,jade}')
   , appScriptFiles = path.join(appBase, '**/*.{ts,coffee,js}')
   , appStyleFiles = path.join(appBase, '**/*.{css,less,scss,styl}')
-
-<% if (polymer) { %>  , fs = require('fs')
-  , path = require('path')
   , bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep
 
-<% } %>  , isProd = $.yargs.argv.stage === 'prod'
+  , isProd = $.yargs.argv.stage === 'prod'
 
   , tsProject = $.typescript.createProject({
     declarationFiles: true,
@@ -187,25 +185,27 @@ gulp.task('inject', ['markup', 'styles', 'scripts'], function () {
 // copy bower components into build directory
 gulp.task('bowerCopy', ['inject'], function () {
   var cssFilter = $.filter('**/*.css')
-    , jsFilter = $.filter('**/*.js')
+    , jsFilter = $.filter('**/*.js');
 
-    , stream = $.streamqueue({objectMode: true})
-    , wiredep = $.wiredep(<% if (polymer || framework === 'uibootstrap') { %>{exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /webcomponents/<% } %><% if (polymer || framework === 'uibootstrap') { %>]}<% } %>);
-
-  if (wiredep.js) {
-    stream.queue(gulp.src(wiredep.js));
-  }
-
-  if (wiredep.css) {
-    stream.queue(gulp.src(wiredep.css));
-  }
-
-  return stream.done()
+  return gulp.src($.mainBowerFiles(), {base: bowerDir})
     .pipe(cssFilter)
+    .pipe($.if(isProd, $.modifyCssUrls({
+      modify: function (url, filePath) {
+        if (url.indexOf('http') !== 0 && url.indexOf('data:') !== 0) {
+          filePath = path.dirname(filePath) + path.sep;
+          filePath = filePath.substring(filePath.indexOf(bowerDir) + bowerDir.length,
+            filePath.length);
+        }
+        url = path.normalize(filePath + url);
+        url = url.replace(/[/\\]/g, '/');
+        console.log(url);
+        return url;
+      }
+    })))
     .pipe($.if(isProd, $.concat('vendor.css')))
     .pipe($.if(isProd, $.cssmin()))
     .pipe($.if(isProd, $.rev()))
-    .pipe(gulp.dest(buildConfig.extCss))
+    .pipe(gulp.dest(buildConfig.extDir))
     .pipe(cssFilter.restore())
     .pipe(jsFilter)
     .pipe($.if(isProd, $.concat('vendor.js')))
@@ -213,7 +213,7 @@ gulp.task('bowerCopy', ['inject'], function () {
       preserveComments: $.uglifySaveLicense
     })))
     .pipe($.if(isProd, $.rev()))
-    .pipe(gulp.dest(buildConfig.extJs))
+    .pipe(gulp.dest(buildConfig.extDir))
     .pipe(jsFilter.restore());
 });
 
@@ -222,8 +222,8 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
   if (isProd) {
     return gulp.src(buildConfig.buildDir + 'index.html')
       .pipe($.inject(gulp.src([
-        buildConfig.extCss + 'vendor*.css',
-        buildConfig.extJs + 'vendor*.js'
+        buildConfig.extDir + 'vendor*.css',
+        buildConfig.extDir + 'vendor*.js'
       ], {
         read: false
       }), {
@@ -241,16 +241,17 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
     return gulp.src(buildConfig.buildDir + 'index.html')
       .pipe($.wiredep.stream({<% if (polymer || framework === 'uibootstrap') { %>
         exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /webcomponents/<% } %><% if (polymer || framework === 'uibootstrap') { %>],<% } %>
+        ignorePath: '../../' + bowerDir.replace(/\\/g, '/'),
         fileTypes: {
           html: {
             replace: {
               css: function (filePath) {
-                return '<link rel="stylesheet" href="' + buildConfig.extCss.replace(buildConfig.buildDir, '') +
-                  filePath.split('/').pop() + '">';
+                return '<link rel="stylesheet" href="' + buildConfig.extDir.replace(buildConfig.buildDir, '') +
+                  filePath + '">';
               },
               js: function (filePath) {
-                return '<script src="' + buildConfig.extJs.replace(buildConfig.buildDir, '') +
-                  filePath.split('/').pop() + '"></script>';
+                return '<script src="' + buildConfig.extDir.replace(buildConfig.buildDir, '') +
+                  filePath + '"></script>';
               }
             }
           }
@@ -308,9 +309,9 @@ gulp.task('fonts', ['fontsBower'], function () {
 // copy Bower fonts into build directory
 gulp.task('fontsBower', ['clean'], function () {
   var fontFilter = $.filter('**/*.{eot,otf,svg,ttf,woff}');
-  return gulp.src($.mainBowerFiles())
+  return gulp.src($.mainBowerFiles(), {base: bowerDir})
     .pipe(fontFilter)
-    .pipe(gulp.dest(buildConfig.extFonts))
+    .pipe(gulp.dest(buildConfig.extDir))
     .pipe(fontFilter.restore());
 });
 
