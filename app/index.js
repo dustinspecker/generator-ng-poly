@@ -368,105 +368,33 @@ Generator.prototype.configuring = function configuring() {
   };
 
   // copy over common project files
-  this.fs.copy(
-    this.templatePath('.bowerrc'),
-    this.destinationPath('.bowerrc')
-  );
-  this.fs.copy(
-    this.templatePath('.editorconfig'),
-    this.destinationPath('.editorconfig')
-  );
-  this.fs.copy(
-    this.templatePath('.jscsrc'),
-    this.destinationPath('.jscsrc')
-  );
-  this.fs.copy(
-    this.templatePath('.jshintrc'),
-    this.destinationPath('.jshintrc')
-  );
-  this.fs.copyTpl(
-    this.templatePath('_bower.json'),
-    this.destinationPath('bower.json'),
-    this.context
-  );
-  this.fs.copyTpl(
-    this.templatePath('_build.config.js'),
-    this.destinationPath('build.config.js'),
-    this.context
-  );
-  this.fs.copyTpl(
-    this.templatePath('_gulpfile.js'),
-    this.destinationPath('Gulpfile.js'),
-    this.context
-  );
-  this.fs.copyTpl(
-    this.templatePath('_karma.config.js'),
-    this.destinationPath('karma.config.js'),
-    this.context
-  );
-  this.fs.copyTpl(
-    this.templatePath('_package.json'),
-    this.destinationPath('package.json'),
-    this.context
-  );
+  this.copyFile('.bowerrc');
+  this.copyFile('.editorconfig');
+  this.copyFile('.jscsrc');
+  this.copyFile('.jshintrc');
+  this.copyFile('_bower.json');
+  this.copyFile('_build.config.js');
+  this.copyFile('_Gulpfile.js');
+  this.copyFile('_karma.config.js');
+  this.copyFile('_package.json');
   if (this.appScript === 'ts') {
-    this.fs.copyTpl(
-      this.templatePath('_tsd.json'),
-      this.destinationPath('tsd.json'),
-      this.context
-    );
+    this.copyFile('_tsd.json');
   }
-  this.fs.copy(
-    this.templatePath('gitignore'),
-    this.destinationPath('.gitignore')
-  );
-  this.fs.copyTpl(
-    this.templatePath('_protractor.config.js'),
-    this.destinationPath('protractor.config.js'),
-    this.context
-  );
-  this.fs.copyTpl(
-    this.templatePath('_readme.md'),
-    this.destinationPath('README.md'),
-    this.context
-  );
+  this.copyFile('gitignore', '.gitignore');
+  this.copyFile('_protractor.config.js');
+  this.copyFile('_README.md');
 
   // copy over gulp files
-  this.mkdir('gulp');
-  this.fs.copy(
-    this.templatePath('analyze.js'),
-    this.destinationPath('gulp/analyze.js')
-  );
-  this.fs.copyTpl(
-    this.templatePath('_build.js'),
-    this.destinationPath('gulp/build.js'),
-    this.context
-  );
-  this.fs.copyTpl(
-    this.templatePath('_test.js'),
-    this.destinationPath('gulp/test.js'),
-    this.context
-  );
-  this.fs.copy(
-    this.templatePath('watch.js'),
-    this.destinationPath('gulp/watch.js')
-  );
+  this.copyFile('gulp/analyze.js');
+  this.copyFile('gulp/_build.js');
+  this.copyFile('gulp/_test.js');
+  this.copyFile('gulp/watch.js');
 };
 
 Generator.prototype.writing = function writing() {
-  this.mkdir(this.appDir);
-
   // create main module and index.html
-  this.fs.copyTpl(
-    this.templatePath('_app.' + this.appScript),
-    this.destinationPath(this.appDir + '/app.' + this.appScript),
-    this.context
-  );
-  this.fs.copyTpl(
-    this.templatePath('_index.' + this.markup),
-    this.destinationPath(this.appDir + '/index.' + this.markup),
-    this.context
-  );
+  this.copyFile('_app.' + this.appScript, path.join(this.appDir, 'app.' + this.appScript));
+  this.copyFile('_index.' + this.markup, path.join(this.appDir, 'index.' + this.markup));
 
   this.mkdir(path.join(this.appDir, 'fonts'));
   this.mkdir(path.join(this.appDir, 'images'));
@@ -502,4 +430,22 @@ Generator.prototype.end = function end() {
     local: require.resolve('../module'),
     link: 'strong'
   });
+};
+
+Generator.prototype.copyFile = function copyFile(src, dest) {
+  // prevents yeoman running copyFile as a task
+  if (arguments.length === 0) {
+    return;
+  }
+
+  // remove underscore from templated file names
+  if (!dest) {
+    dest = src.replace(/_/g, '');
+  }
+
+  this.fs.copyTpl(
+    this.templatePath(src),
+    this.destinationPath(dest),
+    this.context
+  );
 };
