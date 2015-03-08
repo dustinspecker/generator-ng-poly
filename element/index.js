@@ -13,17 +13,10 @@ Generator.prototype.writing = function writing() {
 
   if (config.appScript === 'ts') {
     config.referencePath = path.relative(elementDir, config.appDir);
+    config.appScript = 'js';
   }
 
-  this.fs.copy(
-    this.templatePath('element.' + config.style),
-    this.destinationPath(elementDir + '/' + config.hyphenName + '.' + config.style)
-  );
-  this.copyMarkup('element', path.join(elementDir, config.hyphenName + '.' + config.markup), config);
-  this.fs.copyTpl(
-    this.templatePath('_element.' + (config.appScript === 'ts' ? 'js' : config.appScript)),
-    this.destinationPath(elementDir + '/' + config.hyphenName + '.' +
-      (config.appScript === 'ts' ? 'js' : config.appScript)),
-    config
-  );
+  this.copyStyleFile('element', path.join(elementDir, config.hyphenName + '.' + config.style), config);
+  this.copyMarkupFile('element', path.join(elementDir, config.hyphenName + '.' + config.markup), config);
+  this.copySrcFile('element', path.join(elementDir, config.hyphenName + '.' + config.appScript), config);
 };

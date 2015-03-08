@@ -30,7 +30,7 @@ Generator.prototype.writing = function writing() {
     }
 
     // module file to add route to
-    , modulePathTemplate, modulePath, file, newState;
+    , modulePathTemplate, modulePath, file, newState, p;
 
   // move this logic to utils-route
   config.url = this.url;
@@ -50,8 +50,9 @@ Generator.prototype.writing = function writing() {
   };
 
   // create module path minus extension
-  modulePathTemplate = path.join(this.config.path, '..', config.appDir, config.modulePath,
+  p = path.join(this.config.path, '..', config.appDir, config.modulePath,
     utils.hyphenName(config.moduleName));
+  modulePathTemplate = p;
   // find module.{coffee, js, ts}
   modulePath = _.find([
     modulePathTemplate + '.coffee',

@@ -9,6 +9,6 @@ Generator.prototype.prompting = function prompting() {
 };
 
 Generator.prototype.writing = function writing() {
-  this.copySrc('filter');
+  this.copySrcFile('filter');
   this.copyUnitTest('filter');
 };

@@ -31,9 +31,6 @@ Generator.prototype.writing = function writing() {
   // replace file extension with markup type being used
   markupFile = markupFile.replace(/html$/, config.markup);
 
-  this.copyMarkup('view', path.join(config.appDir, config.modulePath, markupFile), config);
-  this.fs.copy(
-    this.templatePath('style.' + config.style),
-    this.destinationPath(config.appDir + '/' + config.modulePath + '/' + styleFile)
-  );
+  this.copyFile('markup', 'view', path.join(config.appDir, config.modulePath, markupFile), config);
+  this.copyStyleFile('view', path.join(config.appDir, config.modulePath, styleFile), config);
 };

@@ -169,9 +169,42 @@ Generator.prototype.getConfig = function getConfig() {
   return config;
 };
 
-Generator.prototype.simpleCopy = function simplyCopy(src, dest, context) {
+Generator.prototype.copyFile = function copyFile(type, component, dest, context) {
+  var src;
+
+  if (typeof dest === 'object') {
+    context = dest;
+    dest = null;
+  }
   if (!context) {
     context = this.getConfig();
+  }
+  if (!dest) {
+    if (type === 'markup') {
+      dest = path.join(context.appDir, context.modulePath,
+        context.hyphenName + '-' + component + '.tpl.' + context.markup);
+    }
+    if (type === 'src') {
+      dest = path.join(context.appDir, context.modulePath,
+        context.hyphenName + '-' + component + '.' + context.appScript);
+    }
+    if (type === 'unit') {
+      dest = path.join(context.testDir, context.modulePath,
+        context.hyphenName + '-' + component + '_test.' + context.testScript);
+    }
+  }
+
+  if (type === 'markup') {
+    src = '_' + component + '.' + context.markup;
+  }
+  if (type === 'src') {
+    src = '_' + component + '.' + context.appScript;
+  }
+  if (type === 'style') {
+    src = component + '.' + context.style;
+  }
+  if (type === 'unit') {
+    src = '_spec.' + context.testScript;
   }
 
   this.fs.copyTpl(
@@ -181,55 +214,32 @@ Generator.prototype.simpleCopy = function simplyCopy(src, dest, context) {
   );
 };
 
-Generator.prototype.copyMarkup = function copyMarkup(type, dest, context) {
-  var config = this.getConfig();
-  if (typeof dest === 'object') {
-    context = dest;
-    dest = null;
-  }
-  if (!dest) {
-    dest = path.join(config.appDir, config.modulePath, config.hyphenName + '-' + type + '.tpl.' + config.markup);
-  }
-
-  this.simpleCopy('_' + type + '.' + config.markup, dest, context);
+Generator.prototype.copyMarkupFile = function copyMarkupFile(component, dest, context) {
+  return this.copyFile('markup', component, dest, context);
 };
 
-Generator.prototype.copySrc = function copySrc(type, dest, context) {
-  var config = this.getConfig();
-  if (typeof dest === 'object') {
-    context = dest;
-    dest = null;
-  }
-  if (!dest) {
-    dest = path.join(config.appDir, config.modulePath, config.hyphenName + '-' + type + '.' + config.appScript);
-  }
-
-  this.simpleCopy('_' + type + '.' + config.appScript, dest, context);
+Generator.prototype.copySrcFile = function copySrcFile(component, dest, context) {
+  return this.copyFile('src', component, dest, context);
 };
 
-Generator.prototype.copyUnitTest = function copyUnitTest(type, dest, context) {
-  var config = this.getConfig();
-  if (typeof dest === 'object') {
-    context = dest;
-    dest = null;
-  }
-  if (!dest) {
-    dest = path.join(config.testDir, config.modulePath, config.hyphenName + '-' + type + '_test.' + config.testScript);
-  }
+Generator.prototype.copyStyleFile = function copyStyleFile(component, dest, context) {
+  return this.copyFile('style', component, dest, context);
+};
 
-  this.simpleCopy('_spec.' + config.testScript, dest, context);
+Generator.prototype.copyUnitTest = function copyUnitTest(component, dest, context) {
+  return this.copyFile('unit', component, dest, context);
 };
 
 Generator.prototype.copyE2e = function copyE2e(context) {
   var testScript = (context.testScript === 'ts' ? 'js' : context.testScript);
-  this.simpleCopy(
-    'page.po.' + testScript,
-    'e2e/' + context.hyphenName + '/' + context.hyphenName + '.po.' + testScript,
+  this.fs.copyTpl(
+    this.templatePath('page.po.' + testScript),
+    this.destinationPath('e2e/' + context.hyphenName + '/' + context.hyphenName + '.po.' + testScript),
     context
   );
-  this.simpleCopy(
-    'page_test.' + testScript,
-    'e2e/' + context.hyphenName + '/' + context.hyphenName + '_test.' + testScript,
+  this.fs.copyTpl(
+    this.templatePath('page_test.' + testScript),
+    this.destinationPath('e2e/' + context.hyphenName + '/' + context.hyphenName + '_test.' + testScript),
     context
   );
 };

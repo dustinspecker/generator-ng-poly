@@ -74,13 +74,8 @@ Generator.prototype.writing = function writing() {
   depName += this.context.lowerCamel;
   fs.writeFileSync(filePath, ngAddDep(file, depName));
 
-  // create app.{cofee,js,ts}
-  this.fs.copyTpl(
-    this.templatePath('_app.' + this.context.appScript),
-    this.destinationPath(this.context.appDir + '/' + this.context.modulePath + '/' + this.context.hyphenModule +
-      '.' + this.context.appScript),
-    this.context
-  );
+  this.copySrcFile('module', path.join(this.context.appDir, this.context.modulePath,
+    this.context.hyphenModule + '.' + this.context.appScript), this.context);
 };
 
 Generator.prototype.end = function end() {

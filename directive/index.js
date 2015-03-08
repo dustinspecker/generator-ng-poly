@@ -12,7 +12,7 @@ Generator.prototype.writing = function writing() {
   var config = this.getConfig();
   config.templateUrl = config.modulePath.replace('\\', '/');
 
-  this.copySrc('directive', config);
-  this.copyMarkup('directive', config);
+  this.copyMarkupFile('directive', config);
+  this.copySrcFile('directive', config);
   this.copyUnitTest('directive', config);
 };
