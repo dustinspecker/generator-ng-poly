@@ -78,9 +78,11 @@ Languages and Features supported:
   * e2e testing
     - Jasmine (ran with Protractor) for AngularJS
     - Mocha, Chai, and Chai as Promised (ran with Protractor) for AngularJS
-  * Frameworks
+  * Frameworks (scaffolds simple navbar)
+    - Angular Material (1.3.* only)
+      - Doesn't scaffold navbar, yet
     - Bootstrap with AngularStrap
-    - Bootstrap with UI Bootstrap
+    - Bootstrap with UI Bootstrap (1.2.* only)
     - Foundation with Angular Foundation
   * Polymer
     - Core, Paper
