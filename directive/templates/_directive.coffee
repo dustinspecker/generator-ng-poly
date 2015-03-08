@@ -33,4 +33,4 @@ class <%= upperCamel %>
 
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
-  .directive '<%= lowerCamel %>', [<%= upperCamel %>]
+  .directive '<%= lowerCamel %>', <%= upperCamel %>

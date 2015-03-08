@@ -16,4 +16,4 @@ class <%= upperCamel %>
 
 angular
   .module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
-  .service '<%= upperCamel %>', [<%= upperCamel %>]
+  .service '<%= upperCamel %>', <%= upperCamel %>
