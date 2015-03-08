@@ -2,12 +2,10 @@
 var exports = module.exports;
 
 /**
- * Validates element name
- * @param {String} name
- * @throws
+ * Validates element name by making sure a hyphen exists
+ * @param {String} name - element name
+ * @return {Boolean} is element name valid?
  */
 exports.checkElementName = function checkElementName(name) {
-  if (name.indexOf('-') < 1 || name.indexOf('-') === name.length - 1) {
-    throw 'Element name must have a hyphen (-) in it.';
-  }
+  return name.indexOf('-') < 1 || name.indexOf('-') === name.length - 1;
 };

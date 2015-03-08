@@ -49,7 +49,6 @@ describe('Controller generator', function () {
         'app/home/test-controller_test.js'
       ]);
     });
-
   });
 
   describe('with Coffee app, and Coffee test', function () {
@@ -123,5 +122,4 @@ describe('Controller generator', function () {
       ]);
     });
   });
-
 });

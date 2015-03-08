@@ -7,7 +7,8 @@ var assert = require('yeoman-generator').assert
 
 describe('App generator', function () {
   describe('with HTML markup, CSS style, JS app, and JS test', function () {
-    var gen; // used to test if methods have been called
+    // used to test if methods have been called
+    var gen;
 
     before(function (done) {
       helpers
@@ -87,7 +88,8 @@ describe('App generator', function () {
   });
 
   describe('with HAML markup, LESS style, TypeScript app, and TypeScript test', function () {
-    var gen; // used to test if methods have been called
+    // used to test if methods have been called
+    var gen;
 
     before(function (done) {
       helpers
@@ -347,5 +349,4 @@ describe('App generator', function () {
       ]);
     });
   });
-
 });

@@ -48,7 +48,6 @@ describe('Service generator', function () {
         'app/home/test-service_test.js'
       ]);
     });
-
   });
 
   describe('with Coffee app and Coffee test', function () {
@@ -73,7 +72,6 @@ describe('Service generator', function () {
         'app/home/test1-service_test.coffee'
       ]);
     });
-
   });
 
   describe('with TypeScript app and TypeScript test', function () {
@@ -98,7 +96,5 @@ describe('Service generator', function () {
         'app/home/test2-service_test.ts'
       ]);
     });
-
   });
-
 });

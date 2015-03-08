@@ -49,7 +49,6 @@ describe('Directive generator', function () {
         'app/home/test-directive_test.js'
       ]);
     });
-
   });
 
   describe('with Jade markup, Coffee app, and Coffee test', function () {
@@ -75,7 +74,6 @@ describe('Directive generator', function () {
         'app/home/test1-directive_test.coffee'
       ]);
     });
-
   });
 
   describe('with Jade markup, TypeScript app, and TypeScript test', function () {
@@ -101,7 +99,6 @@ describe('Directive generator', function () {
         'app/home/test3-directive_test.ts'
       ]);
     });
-
   });
 
   describe('with HAML markup, JS app, and JS test', function () {
@@ -125,7 +122,5 @@ describe('Directive generator', function () {
         'app/home/test2-directive_test.js'
       ]);
     });
-
   });
-
 });

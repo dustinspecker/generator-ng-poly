@@ -5,8 +5,8 @@ var endOfLine = require('os').EOL
 
 /**
  * Returns the number of spaces at beginning of a line
- * @param {String} line
- * @return {Number}
+ * @param {String} line - line to analyze
+ * @return {Number} - number of spaces at beginning of line
  */
 function numOfSpacesAtStart(line) {
   return line.substring(0, line.search(/[^ ]/)).length;
@@ -14,14 +14,14 @@ function numOfSpacesAtStart(line) {
 
 /**
  * Returns whether the module's config function is injecting parameter
- * @param {String} fileContents
- * @param {String} param
- * @param {Object} config
- * @return {Boolean}
+ * @param {String} fileContents - file contents of module
+ * @param {Object} config - user's config
+ * @return {Boolean} - does module have param?
  */
 function hasParam(fileContents, config) {
   var param = config.ngRoute ? 'routeProvider' : 'stateProvider'
-    , regex; // regex to test
+    // regex to test
+    , regex;
 
   if (config.appScript === 'ts' || config.appScript === 'js') {
     regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)');
@@ -34,10 +34,9 @@ function hasParam(fileContents, config) {
 
 /**
  * Injects the parameter into the module's config function
- * @param {Array} lines
- * @param {String} param
- * @param {Object} config
- * @return {Array}
+ * @param {Array} lines - lines to modify
+ * @param {Object} config - user's config
+ * @return {Array} - modified lines
  */
 function addParam(lines, config) {
   var param = config.ngRoute ? 'routeProvider' : 'stateProvider'
@@ -64,16 +63,14 @@ function addParam(lines, config) {
           lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') {';
         }
       }
-    } else {
-      if (line.indexOf('.config') > -1 && line.indexOf('->') > -1) {
-        // check if function has a parameter already
-        if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') ->';
-        } else if (line.lastIndexOf('(') === -1 && line.lastIndexOf(')') === -1) {
-          lines[i] = lines[i].slice(0, line.lastIndexOf('g')) + 'g ($' + param + ') ->';
-        } else {
-          lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') ->';
-        }
+    } else if (line.indexOf('.config') > -1 && line.indexOf('->') > -1) {
+      // check if function has a parameter already
+      if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
+        lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') ->';
+      } else if (line.lastIndexOf('(') === -1 && line.lastIndexOf(')') === -1) {
+        lines[i] = lines[i].slice(0, line.lastIndexOf('g')) + 'g ($' + param + ') ->';
+      } else {
+        lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ') ->';
       }
     }
   });
@@ -83,9 +80,9 @@ function addParam(lines, config) {
 
 /**
  * Analyzes lines to determine where to insert new route
- * @param {Array} lines
- * @param {Object} config
- * @return {Object}
+ * @param {Array} lines - lines to analyze
+ * @param {Object} config - user's config
+ * @return {Object} - info regarding insertion points
  */
 function analyzeLines(lines, config) {
   var analysis = {
@@ -164,10 +161,10 @@ function analyzeLines(lines, config) {
 
 /**
  * Returns new state to add
- * @param {Object} state
- * @param {Object} analysis
- * @param {Object} config
- * @return {Array}
+ * @param {Object} state - state info to format
+ * @param {Object} analysis - information for insertion
+ * @param {Object} config - user's config
+ * @return {Array} - lines of new state
  */
 function prepareState(state, analysis, config) {
   var newState = [];
@@ -228,14 +225,14 @@ function prepareState(state, analysis, config) {
 
 /**
  * Adds state to lines
- * @param {Array} lines
- * @param {Object} state
- * @param {Object} analysis
- * @param {Object} config
- * @return {Array}
+ * @param {Array} lines - lines to modify with state
+ * @param {Object} state - state info to add to lines
+ * @param {Object} analysis - insertion info
+ * @param {Object} config - user's config
+ * @return {Array} - modified lines with added state
  */
 function addState(lines, state, analysis, config) {
-  var insertLine, lineToCheck, numOfSpaces, numOfSpacesCounter;
+  var insertLine, lineToCheck, numOfSpaces, numOfSpacesCounter, i;
 
   // count spaces to prepend to state
   if (analysis.routeStartIndex > -1) {
@@ -256,7 +253,7 @@ function addState(lines, state, analysis, config) {
 
   // prepend spaces
   state = state.map(function (stateLine) {
-    for (var i = 0; i < numOfSpaces; i++) {
+    for (i = 0; i < numOfSpaces; i++) {
       stateLine = ' ' + stateLine;
     }
     return stateLine;
@@ -266,20 +263,18 @@ function addState(lines, state, analysis, config) {
     insertLine = (analysis.routeStartIndex > -1) ? analysis.routeEndIndex : analysis.configFunctionIndex + 1;
   } else if (config.appScript === 'js') {
     insertLine = (analysis.routeStartIndex > -1) ? analysis.routeEndIndex : analysis.configFunctionIndex + 1;
-  } else {
-    if (analysis.routeStartIndex > -1) {
-      // determine where last state ends by examining spaces
-      // insert new route on first line to have less spaces at the start
-      numOfSpaces = numOfSpacesAtStart(lines[analysis.routeStartIndex]);
-      numOfSpacesCounter = numOfSpaces;
-      insertLine = analysis.routeStartIndex;
-      while (numOfSpacesCounter >= numOfSpaces) {
-        insertLine++;
-        numOfSpacesCounter = numOfSpacesAtStart(lines[insertLine]);
-      }
-    } else {
-      insertLine = analysis.configFunctionIndex + 1;
+  } else if (analysis.routeStartIndex > -1) {
+    // determine where last state ends by examining spaces
+    // insert new route on first line to have less spaces at the start
+    numOfSpaces = numOfSpacesAtStart(lines[analysis.routeStartIndex]);
+    numOfSpacesCounter = numOfSpaces;
+    insertLine = analysis.routeStartIndex;
+    while (numOfSpacesCounter >= numOfSpaces) {
+      insertLine++;
+      numOfSpacesCounter = numOfSpacesAtStart(lines[insertLine]);
     }
+  } else {
+    insertLine = analysis.configFunctionIndex + 1;
   }
 
   lines.splice(insertLine, 0, state.map(function (stateLine) {
@@ -291,19 +286,22 @@ function addState(lines, state, analysis, config) {
 
 /**
  * Adds route to module's config
- * @param {String} fileContents
- * @param {Object} state
- * @param {Object} config
- * @return {String}
+ * @param {String} fileContents - file contents of module
+ * @param {Object} state - state info to add
+ * @param {Object} config - user's config
+ * @return {String} - modified file contents with added state
  */
 exports.addRoute = function addRoute(fileContents, state, config) {
   var dependency = config.ngRoute ? 'ngRoute' : 'ui.router'
 
-    , needsParam = !hasParam(fileContents, config) // checking if provider is used
+    // checking if provider is used
+    , needsParam = !hasParam(fileContents, config)
 
-    , lines // split fileContents
+    // split fileContents
+    , lines
 
-    , analysis // new state insertion info
+    // new state insertion info
+    , analysis
     , newState;
 
   // if file doesn't have the dependency, add it

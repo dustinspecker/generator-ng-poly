@@ -48,7 +48,6 @@ describe('Value generator', function () {
         'app/home/test-value_test.js'
       ]);
     });
-
   });
 
   describe('with Coffee app and Coffee test', function () {
@@ -73,7 +72,6 @@ describe('Value generator', function () {
         'app/home/test1-value_test.coffee'
       ]);
     });
-
   });
 
   describe('with TypeScript app and TypeScript test', function () {
@@ -98,7 +96,5 @@ describe('Value generator', function () {
         'app/home/test2-value_test.ts'
       ]);
     });
-
   });
-
 });

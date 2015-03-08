@@ -73,7 +73,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
         return '/' + utils.hyphenName(this.name);
       }.bind(this),
       when: function () {
-        return ((params && params.url) && !this.config.get('ngRoute') && !(this.options && this.options.url));
+        return params && params.url && !this.config.get('ngRoute') && !this.options && !this.options.url;
       }.bind(this)
     },
     {
@@ -84,7 +84,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
         return utils.normalizeModulePath(module) + '/' + utils.hyphenName(this.name.replace('.', '-')) + '.tpl.html';
       }.bind(this),
       when: function () {
-        return ((params && params.templateUrl) && !(this.options && this.options['template-url']));
+        return params && params.templateUrl && !this.options && !this.options['template-url'];
       }.bind(this)
     }
   ], function (props) {
@@ -111,7 +111,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
     }
 
     // append .tpl.html if not existing
-    if (!/[.]tpl[.]html$/.test(this.templateUrl)) {
+    if (!(/[.]tpl[.]html$/).test(this.templateUrl)) {
       this.templateUrl = this.templateUrl + '.tpl.html';
     }
 
@@ -123,23 +123,23 @@ Generator.prototype.getConfig = function getConfig() {
   var config = {
     markup: this.options.markup || this.config.get('markup'),
     appScript: this.options['app-script'] || this.config.get('appScript'),
-    controllerAs: (this.options['controller-as'] !== undefined && this.options['controller-as'] !== null) ?
+    controllerAs: this.options['controller-as'] !== undefined && this.options['controller-as'] !== null ?
       this.options['controller-as'] : this.config.get('controllerAs'),
 
-    skipController: (this.options['skip-controller'] !== undefined && this.options['skip-controller'] !== null) ?
+    skipController: this.options['skip-controller'] !== undefined && this.options['skip-controller'] !== null ?
       this.options['skip-controller'] : this.config.get('skipController'),
 
-    passFunc: (this.options['pass-func'] !== undefined && this.options['pass-func'] !== null) ?
+    passFunc: this.options['pass-func'] !== undefined && this.options['pass-func'] !== null ?
       this.options['pass-func'] : this.config.get('passFunc'),
 
-    namedFunc: (this.options['named-func'] !== undefined && this.options['named-func'] !== null) ?
+    namedFunc: this.options['named-func'] !== undefined && this.options['named-func'] !== null ?
       this.options['named-func'] : this.config.get('namedFunc'),
 
     testScript: this.options['test-script'] || this.config.get('testScript'),
     testFramework: this.config.get('testFramework'),
     e2eTestFramework: this.config.get('e2eTestFramework') || 'jasmine',
     style: this.options.style || this.config.get('style'),
-    ngRoute: (this.options['ng-route'] !== undefined && this.options['ng-route'] !== null) ?
+    ngRoute: this.options['ng-route'] !== undefined && this.options['ng-route'] !== null ?
       this.options['ng-route'] : this.config.get('ngRoute'),
 
     appName: utils.getAppName(this.config.path),
@@ -231,7 +231,7 @@ Generator.prototype.copyUnitTest = function copyUnitTest(component, dest, contex
 };
 
 Generator.prototype.copyE2e = function copyE2e(context) {
-  var testScript = (context.testScript === 'ts' ? 'js' : context.testScript);
+  var testScript = context.testScript === 'ts' ? 'js' : context.testScript;
   this.fs.copyTpl(
     this.templatePath('page.po.' + testScript),
     this.destinationPath('e2e/' + context.hyphenName + '/' + context.hyphenName + '.po.' + testScript),

@@ -48,7 +48,6 @@ describe('Provider generator', function () {
         'app/home/test-provider_test.js'
       ]);
     });
-
   });
 
   describe('with Coffee app and Coffee test', function () {
@@ -73,7 +72,6 @@ describe('Provider generator', function () {
         'app/home/test1-provider_test.coffee'
       ]);
     });
-
   });
 
   describe('with TypeScript app and TypeScript test', function () {
@@ -98,6 +96,5 @@ describe('Provider generator', function () {
         'app/home/test2-provider_test.ts'
       ]);
     });
-
   });
 });

@@ -58,7 +58,6 @@ describe('Route generator', function () {
         'app/home/test-controller_test.js'
       ]);
     });
-
   });
 
   describe('with Jade markup, CSS style, Coffee app, and Coffee test', function () {
@@ -88,7 +87,6 @@ describe('Route generator', function () {
         'e2e/test1/test1_test.coffee'
       ]);
     });
-
   });
 
   describe('with HAML markup, SCSS style, JS app, and JS test', function () {
@@ -116,7 +114,6 @@ describe('Route generator', function () {
         'e2e/test-child/test-child_test.js'
       ]);
     });
-
   });
 
   describe('with HTML markup, Stylus style, JS app, and JS test', function () {
@@ -143,7 +140,6 @@ describe('Route generator', function () {
         'e2e/test/test_test.js'
       ]);
     });
-
   });
 
   describe('with Jade markup, CSS style, TypeScript app, and TypeScript test', function () {
@@ -173,7 +169,5 @@ describe('Route generator', function () {
         'e2e/test2/test2_test.js'
       ]);
     });
-
   });
-
 });

@@ -43,7 +43,6 @@ Generator.prototype.writing = function writing() {
   // if yes - get root app.js to prepare adding dep
   // else - get parent app.js to prepare adding dep
   if (this.context.moduleName === this.module) {
-
     filePath = _.find([
       path.join(this.context.appDir, 'app.ts'),
       path.join(this.context.appDir, 'app.coffee'),
@@ -51,7 +50,6 @@ Generator.prototype.writing = function writing() {
     ], function (appFile) {
       return fs.existsSync(appFile);
     });
-
   } else {
     parentDir = path.resolve(path.join(this.context.appDir, this.context.modulePath), '..');
 
@@ -70,7 +68,7 @@ Generator.prototype.writing = function writing() {
   file = fs.readFileSync(filePath, 'utf8');
 
   // save modifications
-  depName = (this.context.parentModuleName) ? this.context.parentModuleName + '.' : '';
+  depName = this.context.parentModuleName ? this.context.parentModuleName + '.' : '';
   depName += this.context.lowerCamel;
   fs.writeFileSync(filePath, ngAddDep(file, depName));
 

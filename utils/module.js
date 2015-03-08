@@ -7,9 +7,9 @@ var exports = module.exports
 
 /**
  * Returns modules' names in path
- * @param {String} modulePath
- * @param {String} symbol
- * @return {Array}
+ * @param {String} modulePath - path to module
+ * @param {String} symbol - character to split by
+ * @return {Array} - module names
  */
 function extractBasedOnChar(modulePath, symbol) {
   var modules = []
@@ -41,29 +41,30 @@ exports.getAppDir = function getAppDir() {
 
 /**
  * Returns child and parent module names
- * @param {String} name
- * @return {Array}
+ * @param {String} modulePath - path to module
+ * @return {Array} - [child, parent]
  */
-exports.extractModuleNames = function extractModuleNames(name) {
+exports.extractModuleNames = function extractModuleNames(modulePath) {
+  var appName;
   // return appName for app.js
-  if (name === exports.getAppDir()) {
-    var appName = require(path.join(path.dirname(findup('.yo-rc.json')), 'package.json')).name;
+  if (modulePath === exports.getAppDir()) {
+    appName = require(path.join(path.dirname(findup('.yo-rc.json')), 'package.json')).name;
     return [appName, null];
   }
 
-  name = name.replace(/\\/g, '/');
+  modulePath = modulePath.replace(/\\/g, '/');
   // uses module syntax
-  if (name.indexOf('/') > -1) {
-    return extractBasedOnChar(name, '/');
+  if (modulePath.indexOf('/') > -1) {
+    return extractBasedOnChar(modulePath, '/');
   }
 
-  return [name, null];
+  return [modulePath, null];
 };
 
 /**
  * Converts backslashes and forwardslashes to path separator
- * @param {String} modulePath
- * @return {String}
+ * @param {String} modulePath - path to module
+ * @return {String} - normalized module path
  */
 exports.normalizeModulePath = function normalizeModulePath(modulePath) {
   if (modulePath === exports.getAppDir()) {
@@ -78,8 +79,8 @@ exports.normalizeModulePath = function normalizeModulePath(modulePath) {
 
 /**
  * Returns if module exists in app
- * @param {String} modulePath
- * @return {Boolean}
+ * @param {String} modulePath - path to module
+ * @return {Boolean} - does module exist?
  */
 exports.moduleExists = function moduleExists(modulePath) {
   // check if file exists

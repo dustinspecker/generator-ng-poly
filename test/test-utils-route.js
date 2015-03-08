@@ -354,7 +354,6 @@ describe('Route Utils', function () {
             .test(routeUtils.addRoute(fileContents, newState, config)));
         });
       });
-
     });
   });
 
@@ -585,7 +584,6 @@ describe('Route Utils', function () {
             .test(routeUtils.addRoute(fileContents, newState, config)));
         });
       });
-
     });
   });
 
@@ -703,5 +701,4 @@ describe('Route Utils', function () {
       });
     });
   });
-
 });

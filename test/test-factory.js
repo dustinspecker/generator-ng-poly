@@ -48,7 +48,6 @@ describe('Factory generator', function () {
         'app/home/test-factory_test.js'
       ]);
     });
-
   });
 
   describe('with Coffee app and Coffee test', function () {
@@ -73,7 +72,6 @@ describe('Factory generator', function () {
         'app/home/test1-factory_test.coffee'
       ]);
     });
-
   });
 
   describe('with TypeScript app and TypeScript test', function () {
@@ -97,7 +95,5 @@ describe('Factory generator', function () {
         'app/home/test2-factory_test.ts'
       ]);
     });
-
   });
-
 });

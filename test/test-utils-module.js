@@ -78,5 +78,4 @@ describe('Module Utils', function () {
       assert(fsStub.existsSync.callCount === 1);
     });
   });
-
 });

@@ -326,7 +326,6 @@ Generator.prototype.prompting = function prompting() {
 
     done();
   }.bind(this));
-
 };
 
 Generator.prototype.configuring = function configuring() {

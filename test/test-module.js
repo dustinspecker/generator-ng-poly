@@ -5,7 +5,6 @@ var assert = require('yeoman-generator').assert
   , path = require('path');
 
 describe('Module generator', function () {
-
   // generate default app
   // appName different than directory for code coverage
   // stub installDependencies for code coverage
@@ -174,7 +173,6 @@ describe('Module generator', function () {
     it('should add myModule state to app/home/my-module/my-modules.js', function () {
       assert.fileContent('app/home/my-module/my-module.js', /[.]state\(\'myModule\', /);
     });
-
   });
 
   describe('adding a deep level Typescript module', function () {
@@ -228,9 +226,6 @@ describe('Module generator', function () {
       it('should name module in app/home/my-house/my-house.ts home.myHouse', function () {
         assert.fileContent('app/home/my-house/my-house.ts', /angular[^$]*.module[^$]*\'home.myHouse\'/);
       });
-
     });
-
   });
-
 });

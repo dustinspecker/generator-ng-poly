@@ -48,7 +48,6 @@ describe('Constant generator', function () {
         'app/home/test-constant_test.js'
       ]);
     });
-
   });
 
   describe('with TypeScript app, and TypeScript test', function () {
@@ -102,5 +101,4 @@ describe('Constant generator', function () {
       ]);
     });
   });
-
 });

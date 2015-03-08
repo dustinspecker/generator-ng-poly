@@ -15,7 +15,6 @@ Generator.prototype.prompting = function prompting() {
   if (this.templateUrl) {
     this.templateUrl = this.templateUrl.replace('\\', '/');
   }
-
 };
 
 Generator.prototype.writing = function writing() {

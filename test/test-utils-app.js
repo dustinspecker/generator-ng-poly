@@ -24,5 +24,4 @@ describe('App Utils', function () {
       assert(utilsProxy.getAppDir('test') === 'app');
     });
   });
-
 });

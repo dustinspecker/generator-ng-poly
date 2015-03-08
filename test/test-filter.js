@@ -48,7 +48,6 @@ describe('Filter generator', function () {
         'app/home/test-filter_test.js'
       ]);
     });
-
   });
 
   describe('with Coffee app and Coffee test', function () {
@@ -73,7 +72,6 @@ describe('Filter generator', function () {
         'app/home/test1-filter_test.coffee'
       ]);
     });
-
   });
 
   describe('with TypeScript app and TypeScript test', function () {
@@ -97,7 +95,5 @@ describe('Filter generator', function () {
         'app/home/test2-filter_test.ts'
       ]);
     });
-
   });
-
 });

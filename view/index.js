@@ -15,8 +15,8 @@ Generator.prototype.writing = function writing() {
   , styleFile;
 
   // if markupFile doesn't end with .tpl.html, append it
-  if (!/[.]tpl[.]html$/.test(this.name)) {
-    markupFile = markupFile + '.tpl.html';
+  if (!(/[.]tpl[.]html$/).test(this.name)) {
+    markupFile += '.tpl.html';
   }
 
   // remove TplHtml from lowerCamel

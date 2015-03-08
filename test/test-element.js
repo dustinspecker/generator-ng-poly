@@ -46,7 +46,6 @@ describe('Element generator', function () {
         'app/components/test-element/test-element.less'
       ]);
     });
-
   });
 
   describe('with Jade markup, Coffee app, and CSS style', function () {
@@ -71,7 +70,6 @@ describe('Element generator', function () {
         'app/components/test1-element/test1-element.css'
       ]);
     });
-
   });
 
   describe('with HAML markup, JS app, and SCSS style', function () {
@@ -95,7 +93,6 @@ describe('Element generator', function () {
         'app/components/test2-element/test2-element.scss'
       ]);
     });
-
   });
 
   describe('with HTML markup, JS app, and Stylus style', function () {
@@ -142,7 +139,5 @@ describe('Element generator', function () {
         'app/components/test4-element/test4-element.css'
       ]);
     });
-
   });
-
 });
