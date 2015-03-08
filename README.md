@@ -38,7 +38,7 @@ Install `Gulp` via `npm install -g gulp` and run `gulp` to build and start the d
 
 ## User Groups
 
-Please feel free to ask any questions on our [GitHub Issues](https://github.com/dustinspecker/generator-ng-poly/issues) or [Google Group](https://groups.google.com/forum/#!forum/generator-ng-poly)
+Please feel free to ask any questions on our [GitHub Issues](https://github.com/dustinspecker/generator-ng-poly/issues) or [Google Group](https://groups.google.com/forum/#!forum/generator-ng-poly).
 
 ## Generators
 
