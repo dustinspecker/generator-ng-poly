@@ -40,7 +40,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
           }
           // remove non-script files
           // will remove folders such as fonts, images, styles
-          // not 100% full proof, as a user to could create a directory with a script file that's
+          // not 100% full proof, as a user could create a directory with a script file that's
           // not part of a module
           files = files.filter(function (file) {
             return file.indexOf('.coffee') >= 0 || file.indexOf('.js') >= 0 || file.indexOf('.ts') >= 0;
