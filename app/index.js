@@ -330,10 +330,8 @@ Generator.prototype.prompting = function prompting() {
 };
 
 Generator.prototype.configuring = function configuring() {
-  // create a directory with appName, unless user is in a directory named appName
-  if (this.appName !== this._.last(this.destinationRoot().split(path.sep))) {
-    this.destinationRoot(this.appName);
-  }
+  // create a directory named `appName`
+  this.destinationRoot(this.appName);
 
   // save config info
   this.config.set('markup', this.markup);
