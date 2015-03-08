@@ -2,6 +2,9 @@
   "env": {
     "node": true
   },
+  "globals": {
+    "angular": true
+  },
   "rules": {
     "block-scoped-var": [2, true],
     "brace-style": [2, "1tbs", {"allowSingleLine": false}],
