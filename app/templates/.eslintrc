@@ -14,7 +14,7 @@
     "comma-style": [],
     "complexity": [2, 17],
     "consistent-return": [2, true],
-    "consistent-this": [2, true],
+    "consistent-this": [],
     "curly": [2, true],
     "default-case": [2, true],
     "dot-notation": [2, true],

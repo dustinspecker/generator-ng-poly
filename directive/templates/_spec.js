@@ -16,5 +16,4 @@ describe('<%= lowerCamel %>', function () {
     scope.$digest();
     expect(element.isolateScope().<%= lowerCamel %>.name).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %>('<%= lowerCamel %>');
   });
-
 });

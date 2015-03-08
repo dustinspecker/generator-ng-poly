@@ -52,8 +52,8 @@
       },
       link: function (scope, element, attrs) {
         /*jshint unused:false */
+        /*eslint "no-unused-vars": [2, {"args": "none"}]*/
       }
     };
   }
-
-})();<% } %>
+}());<% } %>

@@ -367,6 +367,7 @@ Generator.prototype.configuring = function configuring() {
   // copy over common project files
   this.copyFile('.bowerrc');
   this.copyFile('.editorconfig');
+  this.copyFile('.eslintrc');
   this.copyFile('.jscsrc');
   this.copyFile('.jshintrc');
   this.copyFile('_bower.json');

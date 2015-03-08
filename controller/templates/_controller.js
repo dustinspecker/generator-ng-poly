@@ -23,5 +23,4 @@
     vm.ctrlName = '<%= ctrlName %>';<% } else { %>$scope.<%= lowerCamel %> = {};
     $scope.<%= lowerCamel %>.ctrlName = '<%= ctrlName %>';<% } %>
   }
-
-})();<% } %>
+}());<% } %>

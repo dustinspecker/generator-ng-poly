@@ -13,5 +13,4 @@ describe('<%= upperCamel %>', function () {
   it('should equal <%= upperCamel %>', function () {
     expect(provider).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %>('<%= upperCamel %>');
   });
-
 });

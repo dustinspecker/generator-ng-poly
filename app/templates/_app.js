@@ -32,5 +32,4 @@
       redirectTo: '/home'
     });<% } else { %>$urlRouterProvider.otherwise('/home');<% } %>
   }
-
-})();<% } %>
+}());<% } %>
