@@ -28,6 +28,7 @@ Generator.prototype.prompting = function prompting() {
       type: 'list',
       name: 'ngversion',
       message: 'Which version of Angular should be used?',
+      default: '1.3.*',
       choices: [
         {
           name: '1.2.*',
