@@ -221,16 +221,17 @@ Generator.prototype.prompting = function prompting() {
             value: 'angularstrap'
           },
           {
-            name: 'Bootstrap with UI Bootstrap',
-            value: 'uibootstrap'
-          },
-          {
             name: 'Foundation with Angular Foundation',
             value: 'foundation'
           }
         ];
 
-        if (answers.ngversion === '1.3.*') {
+        if (answers.ngversion === '1.2.*') {
+          choices.splice(2, 0, {
+            name: 'Bootstrap with UI Bootstrap',
+            value: 'uibootstrap'
+          });
+        } else {
           choices.splice(1, 0, {
             name: 'Angular Material',
             value: 'material'
