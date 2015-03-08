@@ -73,7 +73,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
         return '/' + utils.hyphenName(this.name);
       }.bind(this),
       when: function () {
-        return (params && params.url && !this.config.get('ngRoute') && !this.options && !this.options.url);
+        return params && params.url && !this.config.get('ngRoute') && !(this.options && this.options.url);
       }.bind(this)
     },
     {
