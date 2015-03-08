@@ -3,6 +3,7 @@
 var a = require('a')
   , assert = require('assert')
   , proxyquire = require('proxyquire')
+  , sinon = require('sinon')
   , utils = require('../utils/module');
 
 describe('Module Utils', function () {
@@ -62,17 +63,20 @@ describe('Module Utils', function () {
       assert(utilsProxy.moduleExists('app') === true);
     });
 
-    // it('should call fs.exstsSync', function () {
-    //   var fsStub = {
-    //     existsSync: sinon.stub().returns(true)
-    //   };
-    //   utilsProxy = proxyquire('../utils/module', {fs: fsStub, path: pathStub});
-    //   utilsProxy.normalizeModulePath = function normalizeModulePath() {
-    //     return 'app/home';
-    //   };
-    //   utilsProxy.moduleExists('app/home');
-    //   assert(fsStub.existsSync.callCount === 1);
-    // });
+    it('should call fs.exstsSync', function () {
+      var fsStub = {
+        existsSync: sinon.stub().returns(true)
+      };
+      utilsProxy = proxyquire('../utils/module', {fs: fsStub, path: pathStub});
+      utilsProxy.getAppDir = function getAppDir() {
+        return 'app';
+      };
+      utilsProxy.normalizeModulePath = function normalizeModulePath() {
+        return 'app/home';
+      };
+      utilsProxy.moduleExists('app/home');
+      assert(fsStub.existsSync.callCount === 1);
+    });
   });
 
 });

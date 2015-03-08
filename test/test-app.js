@@ -17,6 +17,7 @@ describe('App generator', function () {
         })
         .withPrompts({
           appName: 'temp-app-diff',
+          ngversion: '1.2.*',
           appDir: 'front/',
           markup: 'html',
           appScript: 'js',
