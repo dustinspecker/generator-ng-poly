@@ -5,16 +5,16 @@ var assert = require('assert')
 
 describe('Element Utils', function () {
   describe('checkElementName', function () {
-    it('should throw error on name without a hyphen', function () {
-      assert.throws(elementUtils.checkElementName.bind(this, 'elementname'));
+    it('should return false for name without a hyphen', function () {
+      assert(elementUtils.checkElementName('elementname') === false);
     });
 
-    it('should throw error on name ending with a hyphen', function () {
-      assert.throws(elementUtils.checkElementName.bind(this, 'elementname-'));
+    it('should return false for name ending with a hyphen', function () {
+      assert(elementUtils.checkElementName('elementname-') === false);
     });
 
-    it('should not throw an error on name with hyphen in middle', function () {
-      assert.doesNotThrow(elementUtils.checkElementName.bind(this, 'element-name'));
+    it('should return true for name with hyphen in middle', function () {
+      assert(elementUtils.checkElementName('element-name') === true);
     });
   });
 });

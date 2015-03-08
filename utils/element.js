@@ -7,5 +7,5 @@ var exports = module.exports;
  * @return {Boolean} is element name valid?
  */
 exports.checkElementName = function checkElementName(name) {
-  return name.indexOf('-') < 1 || name.indexOf('-') === name.length - 1;
+  return name.indexOf('-') > 0 && name.indexOf('-') < name.length - 1;
 };

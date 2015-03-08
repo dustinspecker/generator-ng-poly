@@ -73,7 +73,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
         return '/' + utils.hyphenName(this.name);
       }.bind(this),
       when: function () {
-        return params && params.url && !this.config.get('ngRoute') && !this.options && !this.options.url;
+        return (params && params.url && !this.config.get('ngRoute') && !this.options && !this.options.url);
       }.bind(this)
     },
     {
@@ -84,7 +84,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
         return utils.normalizeModulePath(module) + '/' + utils.hyphenName(this.name.replace('.', '-')) + '.tpl.html';
       }.bind(this),
       when: function () {
-        return params && params.templateUrl && !this.options && !this.options['template-url'];
+        return params && params.templateUrl && !(this.options && this.options['template-url']);
       }.bind(this)
     }
   ], function (props) {

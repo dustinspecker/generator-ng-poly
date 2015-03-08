@@ -166,7 +166,7 @@
     "valid-typeof": [2, true],
     "vars-on-top": [2, true],
     "wrap-iife": [2, "outside"],
-    "wrap-regex": [2, false],
+    "wrap-regex": [2, "always"],
     "yoda": [2, "never"]
   }
 }
