@@ -33,7 +33,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
         return !(this.options && this.options.module);
       }.bind(this),
       choices: function () {
-        var done = this.async();
+        var moduleDone = this.async();
         recursiveReaddir(utils.getAppDir(), function (err, files) {
           if (err) {
             throw err;
@@ -58,7 +58,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
               value: file.replace(utils.getAppDir() + '\\', '').replace(utils.getAppDir() + '/', '')
             };
           });
-          done(files);
+          moduleDone(files);
         });
       }
     },

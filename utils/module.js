@@ -7,22 +7,22 @@ var exports = module.exports
 
 /**
  * Returns modules' names in path
- * @param {String} name
+ * @param {String} modulePath
  * @param {String} symbol
  * @return {Array}
  */
-function extractBasedOnChar(path, symbol) {
+function extractBasedOnChar(modulePath, symbol) {
   var modules = []
     // path after last symbol is module name
-    , moduleName = path.slice(path.lastIndexOf(symbol)).replace(symbol, '')
+    , moduleName = modulePath.slice(modulePath.lastIndexOf(symbol)).replace(symbol, '')
     , parentModuleName;
 
   modules.push(moduleName);
 
   // determine if user provided more than 1 symbol
-  parentModuleName = path.slice(0, path.lastIndexOf(symbol));
+  parentModuleName = modulePath.slice(0, modulePath.lastIndexOf(symbol));
   if (parentModuleName.indexOf(symbol) > -1) {
-    parentModuleName = path.slice(parentModuleName.lastIndexOf(symbol), path.lastIndexOf(symbol));
+    parentModuleName = modulePath.slice(parentModuleName.lastIndexOf(symbol), modulePath.lastIndexOf(symbol));
     parentModuleName = parentModuleName.replace(symbol, '');
   }
 

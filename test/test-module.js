@@ -89,11 +89,11 @@ describe('Module generator', function () {
     });
 
     it('should add comma to ui.router in app/app.js', function () {
-      assert.fileContent('app/app.js', /    \'ui.router\',/);
+      assert.fileContent('app/app.js', / {4}\'ui.router\',/);
     });
 
     it('should add test to app/app.js deps', function () {
-      assert.fileContent('app/app.js', /    \'test\'/);
+      assert.fileContent('app/app.js', / {4}\'test\'/);
     });
   });
 
@@ -131,7 +131,7 @@ describe('Module generator', function () {
       });
 
       it('should add door.handle to app/home/my-door.coffee', function () {
-        assert.fileContent('app/home/my-door/my-door.coffee', /    \'myDoor.handle\'/);
+        assert.fileContent('app/home/my-door/my-door.coffee', / {4}\'myDoor.handle\'/);
       });
 
       it('should name module in app/home/my-door/my-door.coffee home.myDoor', function () {
@@ -140,11 +140,11 @@ describe('Module generator', function () {
     });
 
     it('should add comma to ui.router in app/home/home.js deps', function () {
-      assert.fileContent('app/home/home.js', /    \'ui.router\',/);
+      assert.fileContent('app/home/home.js', / {4}\'ui.router\',/);
     });
 
     it('should add home.door to app/home/home.js deps', function () {
-      assert.fileContent('app/home/home.js', /    \'home.myDoor\'/);
+      assert.fileContent('app/home/home.js', / {4}\'home.myDoor\'/);
     });
   });
 
@@ -168,7 +168,7 @@ describe('Module generator', function () {
     });
 
     it('should add home.myModule in app/home/home.js', function () {
-      assert.fileContent('app/home/home.js', /    \'home.myModule\'/);
+      assert.fileContent('app/home/home.js', / {4}\'home.myModule\'/);
     });
 
     it('should add myModule state to app/home/my-module/my-modules.js', function () {
@@ -196,11 +196,11 @@ describe('Module generator', function () {
     });
 
     it('should add comma to ui.router in app/home/home.js deps', function () {
-      assert.fileContent('app/home/home.js', /    \'ui.router\',/);
+      assert.fileContent('app/home/home.js', / {4}\'ui.router\',/);
     });
 
     it('should add home.myHouse to app/home/home.js deps', function () {
-      assert.fileContent('app/home/home.js', /    \'home.myHouse\'/);
+      assert.fileContent('app/home/home.js', / {4}\'home.myHouse\'/);
     });
 
     describe('adding a deeper level module', function () {
@@ -222,7 +222,7 @@ describe('Module generator', function () {
       });
 
       it('should add myHouse.handle to app/home/my-house.ts', function () {
-        assert.fileContent('app/home/my-house/my-house.ts', /    \'myHouse.handle\'/);
+        assert.fileContent('app/home/my-house/my-house.ts', / {4}\'myHouse.handle\'/);
       });
 
       it('should name module in app/home/my-house/my-house.ts home.myHouse', function () {

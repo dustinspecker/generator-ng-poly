@@ -1,0 +1,10 @@
+{
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "no-mixed-requires": false,
+    "quotes": "single",
+    "strict": "global"
+  }
+}
