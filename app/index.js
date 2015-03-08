@@ -372,7 +372,7 @@ Generator.prototype.configuring = function configuring() {
   this.copyFile('.jshintrc');
   this.copyFile('_bower.json');
   this.copyFile('_build.config.js');
-  this.copyFile('_Gulpfile.js');
+  this.copyFile('_gulpfile.js', 'Gulpfile.js');
   this.copyFile('_karma.config.js');
   this.copyFile('_package.json');
   if (this.appScript === 'ts') {
@@ -380,7 +380,7 @@ Generator.prototype.configuring = function configuring() {
   }
   this.copyFile('gitignore', '.gitignore');
   this.copyFile('_protractor.config.js');
-  this.copyFile('_README.md');
+  this.copyFile('_readme.md', 'README.md');
 
   // copy over gulp files
   this.copyFile('gulp/analyze.js');
