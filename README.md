@@ -191,6 +191,7 @@ root/
 ├── typings/*
 ├── .bowerrc
 ├── .editorconfig
+├── .eslintrc
 ├── .gitignore
 ├── .jscsrc
 ├── .jshintrc
@@ -247,7 +248,6 @@ describe('TheHero', function () {
   it('should equal 0', function () {
     expect(constant).toBe(0);
   });
-
 });
 ```
 
@@ -298,7 +298,6 @@ describe('MicroCtrl', function () {
   it('should have ctrlName as MicroCtrl', function () {
     expect(scope.micro.ctrlName).toEqual('MicroCtrl');
   });
-
 });
 ```
 
@@ -345,6 +344,7 @@ angular
       },
       link: function (scope, element, attrs) {
         /*jshint unused:false */
+        /*eslint "no-unused-vars": [2, {"args": "none"}]*/
       }
     };
   });
@@ -375,7 +375,6 @@ describe('fancyButton', function () {
     scope.$digest();
     expect(element.isolateScope().fancyButton.name).toEqual('fancyButton');
   });
-
 });
 ```
 **The directive's template (HAML, HTML, or Jade) is converted to a temporary module automatically for testing.**
@@ -433,7 +432,6 @@ describe('Cake', function () {
   it('should have someMethod return Cake', function () {
     expect(factory.someMethod()).toEqual('Cake');
   });
-
 });
 ```
 
@@ -486,7 +484,6 @@ describe('coffee', function () {
   it('should filter our numbers not greater than 3', inject(function ($filter) {
     expect($filter('coffee')([1,2,3,4])).toEqual([4]);
   }));
-
 });
 ```
 
@@ -679,7 +676,6 @@ describe('Bacon', function () {
   it('should equal Bacon', function () {
     expect(provider).toEqual('Bacon');
   });
-
 });
 ```
 
@@ -824,7 +820,6 @@ describe('CheapOrGood', function () {
   it('should equal CheapOrGood', function () {
     expect(service.get()).toEqual('CheapOrGood');
   });
-
 });
 ```
 
@@ -870,7 +865,6 @@ describe('Morals', function () {
   it('should equal 0', function () {
     expect(value).toBe(0);
   });
-
 });
 ```
 
@@ -1012,7 +1006,6 @@ describe('HomeCtrl', function () {
   it('should have ctrlName as HomeCtrl', function () {
     expect(ctrl.ctrlName).toEqual('HomeCtrl');
   });
-
 });
 ```
 
@@ -1081,6 +1074,7 @@ angular
       },
       link: function (scope, element, attrs) {
         /*jshint unused:false */
+        /*eslint "no-unused-vars": [2, {"args": "none"}]*/
       }
     };
   });
@@ -1122,7 +1116,7 @@ If enabled, the app source code will pass functions, such as:
     vm.ctrlName = 'HomeCtrl';
   }
 
-})();
+}());
 ```
 
 ### Named Functions
@@ -1157,7 +1151,7 @@ If enabled, the app source code will have named functions, such as:
     return CakeBase;
   }
 
-})();
+}());
 ```
 
 ### License

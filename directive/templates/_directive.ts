@@ -36,6 +36,7 @@ module <%= upperCamel %> {
       },
       link: function (scope: ng.IScope, element: JQuery, attrs: any) {
         /*jshint unused:false */
+        /*eslint "no-unused-vars": [2, {"args": "none"}]*/
       }
     };
   }
