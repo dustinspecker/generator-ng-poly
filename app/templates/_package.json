@@ -12,6 +12,7 @@
     "coffee-script": "^1.7.1",
     "del": "^1.1.1",
     "eslint-path-formatter": "^0.1.1",
+    "eslint-plugin-angular": "Gillespie59/eslint-plugin-angular#b9b2677bc886ea73c0864232aad8bcd850a44ecd",
     "findup-sync": "^0.2.0",
     "glob": "^5.0.1",
     "gulp": "^3.8.7"<% if (polymer) { %>,
