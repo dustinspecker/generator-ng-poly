@@ -372,7 +372,7 @@ describe('fancyButton', function () {
   }));
 
   it('should have correct text', function () {
-    scope.$digest();
+    scope.$apply();
     expect(element.isolateScope().fancyButton.name).toEqual('fancyButton');
   });
 });

@@ -12,5 +12,5 @@ describe '<%= lowerCamel %>', ->
     element = $compile(angular.element('<<%= lowerCamel %>></<%= lowerCamel %>>')) scope
 
   it 'should have correct text', ->
-    scope.$digest()
+    scope.$apply()
     expect(element.isolateScope().<%= lowerCamel %>.name).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toEqual<% } %> '<%= lowerCamel %>'
