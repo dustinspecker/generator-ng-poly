@@ -259,8 +259,8 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
       }))
       .pipe(gulp.dest(buildConfig.buildDir));
   }
-});
-<% if (polymer) { %>
+});<% if (polymer) { %>
+
 // compile components and copy into build directory
 gulp.task('components', ['bowerInject'], function () {
   var typeScriptFilter = $.filter('**/*.ts')
@@ -295,23 +295,23 @@ gulp.task('components', ['bowerInject'], function () {
     .pipe($.stylus())
     .pipe(stylFilter.restore())
     .pipe(gulp.dest(buildConfig.buildComponents));
+});<% } %>
+
+// copy Bower fonts and images into build directory
+gulp.task('bowerAssets', ['clean'], function () {
+  var assetFilter = $.filter('**/*.{eot,otf,svg,ttf,woff,gif,jpg,jpeg,png}');
+  return gulp.src($.mainBowerFiles(), {base: bowerDir})
+    .pipe(assetFilter)
+    .pipe(gulp.dest(buildConfig.extDir))
+    .pipe(assetFilter.restore());
 });
 
-<% } %>
 // copy custom fonts into build directory
-gulp.task('fonts', ['fontsBower'], function () {
+gulp.task('fonts', ['clean'], function () {
   var fontFilter = $.filter('**/*.{eot,otf,svg,ttf,woff}');
   return gulp.src([appFontFiles])
     .pipe(fontFilter)
     .pipe(gulp.dest(buildConfig.buildFonts))
-    .pipe(fontFilter.restore());
-});
-// copy Bower fonts into build directory
-gulp.task('fontsBower', ['clean'], function () {
-  var fontFilter = $.filter('**/*.{eot,otf,svg,ttf,woff}');
-  return gulp.src($.mainBowerFiles(), {base: bowerDir})
-    .pipe(fontFilter)
-    .pipe(gulp.dest(buildConfig.extDir))
     .pipe(fontFilter.restore());
 });
 
@@ -358,4 +358,4 @@ gulp.task('deleteTemplates', ['copyTemplates'], function (cb) {
     });
 });
 
-gulp.task('build', ['deleteTemplates', 'images', 'fonts']);
+gulp.task('build', ['deleteTemplates', 'bowerAssets', 'images', 'fonts']);
