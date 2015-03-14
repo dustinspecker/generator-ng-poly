@@ -5,6 +5,9 @@
   "globals": {
     "angular": true
   },
+  "plugins": [
+    "angular"
+  ],
   "rules": {
     "angular/ng_angularelement": [2, true],
     "angular/ng_controller_name": [2, "/[A-Z].*Ctrl$/"],
