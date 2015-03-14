@@ -883,14 +883,7 @@ Produces `app/module/nice-view.tpl.html`:
 <p>{{nice.ctrlName}}</p>
 ```
 
-Produces `app/module/nice-view.less`:
-```css
-@bg-color: #E5E5E5;
-
-body {
-  background-color: @bg-color;
-}
-```
+Produces an empty file `app/module/nice-view.less`
 
 * * *
 
