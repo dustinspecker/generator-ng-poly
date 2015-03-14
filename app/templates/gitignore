@@ -1,7 +1,14 @@
 # Mac
 .DS_Store
 
-#yeomen
+# Win
+Thumbs.db
+ehthumbs.db
+
+#IntelliJ
+.idea
+
+#yeoman
 # node_modules
 node_modules
 report
