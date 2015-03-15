@@ -129,9 +129,6 @@ Generator.prototype.getConfig = function getConfig() {
     skipController: this.options['skip-controller'] !== undefined && this.options['skip-controller'] !== null ?
       this.options['skip-controller'] : this.config.get('skipController'),
 
-    passFunc: this.options['pass-func'] !== undefined && this.options['pass-func'] !== null ?
-      this.options['pass-func'] : this.config.get('passFunc'),
-
     namedFunc: this.options['named-func'] !== undefined && this.options['named-func'] !== null ?
       this.options['named-func'] : this.config.get('namedFunc'),
 

@@ -13,7 +13,6 @@ describe('Element generator', function () {
         markup: 'html',
         appScript: 'js',
         controllerAs: false,
-        passFunc: true,
         namedFunc: true,
         testScript: 'js',
         testDir: 'app',

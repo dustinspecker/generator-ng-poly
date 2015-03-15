@@ -44,8 +44,7 @@ function addParam(lines, config) {
 
   lines.forEach(function (line, i) {
     if (config.appScript === 'ts') {
-      if ((config.passFunc && line.indexOf('function config(') > -1) ||
-        (!config.passFunc && line.indexOf('.config(function') > -1)) {
+      if (line.indexOf('function config(') > -1) {
         // check if function has a parameter already
         if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
           lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ': ' + type + ') {';
@@ -54,8 +53,7 @@ function addParam(lines, config) {
         }
       }
     } else if (config.appScript === 'js') {
-      if ((config.passFunc && line.indexOf('function config(') > -1) ||
-        (!config.passFunc && line.indexOf('.config(function') > -1)) {
+      if (line.indexOf('function config(') > -1) {
         // check if function has a parameter already
         if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
           lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + '$' + param + ') {';
@@ -95,7 +93,7 @@ function analyzeLines(lines, config) {
 
   lines.forEach(function (line, i) {
     if (config.appScript === 'ts') {
-      if (line.indexOf('function config(') > -1 || line.indexOf('.config(function') > -1) {
+      if (line.indexOf('function config(') > -1) {
         analysis.configFunctionIndex = i;
       }
 
@@ -120,7 +118,7 @@ function analyzeLines(lines, config) {
         analysis.routeEndIndex = i;
       }
     } else if (config.appScript === 'js') {
-      if (line.indexOf('function config(') > -1 || line.indexOf('.config(function') > -1) {
+      if (line.indexOf('function config(') > -1) {
         analysis.configFunctionIndex = i;
       }
 

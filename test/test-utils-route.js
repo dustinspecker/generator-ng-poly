@@ -25,7 +25,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'coffee',
           controllerAs: false,
-          passFunc: false,
           ngRoute: false
         };
         newState.name = 'test.test';
@@ -50,7 +49,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'coffee',
           controllerAs: false,
-          passFunc: false,
           ngRoute: false
         };
         fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.coffee'), 'utf8');
@@ -80,7 +78,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'coffee',
           skipController: true,
-          passFunc: false,
           ngRoute: false
         };
         fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.coffee'), 'utf-8');
@@ -101,7 +98,6 @@ describe('Route Utils', function () {
           config = {
             appScript: 'coffee',
             controllerAs: false,
-            passFunc: true,
             ngRoute: false
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-no-state.coffee'), 'utf8');
@@ -131,7 +127,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'coffee',
           controllerAs: false,
-          passFunc: true,
           ngRoute: false
         };
       });
@@ -161,7 +156,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'coffee',
           controllerAs: false,
-          passFunc: true,
           ngRoute: true
         };
         fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-when.coffee'), 'utf8');
@@ -192,7 +186,6 @@ describe('Route Utils', function () {
           config = {
             appScript: 'coffee',
             controllerAs: false,
-            passFunc: false,
             ngRoute: true
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-no-state.coffee'), 'utf8');
@@ -226,7 +219,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'js',
           controllerAs: false,
-          passFunc: false,
           ngRoute: false
         };
         newState.name = 'test.test';
@@ -251,7 +243,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'js',
           controllerAs: false,
-          passFunc: false,
           ngRoute: false
         };
         fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.js'), 'utf8');
@@ -281,7 +272,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'js',
           skipController: true,
-          passFunc: false,
           ngRoute: false
         };
         fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.js'), 'utf8');
@@ -302,7 +292,6 @@ describe('Route Utils', function () {
           config = {
             appScript: 'js',
             controllerAs: false,
-            passFunc: true,
             ngRoute: false
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.js'), 'utf8');
@@ -323,37 +312,6 @@ describe('Route Utils', function () {
             .test(routeUtils.addRoute(fileContents, newState, config)));
         });
       });
-
-      describe('defined inline config function', function () {
-        var config
-          , fileContents;
-
-        beforeEach(function () {
-          config = {
-            appScript: 'js',
-            controllerAs: false,
-            passFunc: false,
-            ngRoute: false
-          };
-          fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-inline-no-state.js'), 'utf8');
-        });
-
-        it('should add ui.router as depdendency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ui.router\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
-        it('should add $stateProvider as param', function () {
-          assert(/.config\(function[^$]*\(\$stateProvider\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
-        it('should add state with controllerAs', function () {
-          config.controllerAs = true;
-          assert(/\$stateProvider[\n\r]* {6}.state\(\'test\', {[\n\r]* {8}url: \'\/test\',[\n\r]* {8}templateUrl: \'home\/test.tpl.html\',[\n\r]* {8}controller: \'TestCtrl\',[\n\r]* {8}controllerAs: \'test\'[^$]*}\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-      });
     });
   });
 
@@ -366,7 +324,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'js',
           controllerAs: false,
-          passFunc: true,
           ngRoute: true
         };
         fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-has-when.js'), 'utf8');
@@ -396,7 +353,6 @@ describe('Route Utils', function () {
         config = {
           appScript: 'js',
           skipController: true,
-          passFunc: true,
           ngRoute: true
         };
         fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-has-when.js'), 'utf8');
@@ -417,7 +373,6 @@ describe('Route Utils', function () {
           config = {
             appScript: 'js',
             controllerAs: false,
-            passFunc: true,
             ngRoute: true
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.js'), 'utf8');
@@ -438,37 +393,6 @@ describe('Route Utils', function () {
             .test(routeUtils.addRoute(fileContents, newState, config)));
         });
       });
-
-      describe('defined inline config function', function () {
-        var config
-          , fileContents;
-
-        beforeEach(function () {
-          config = {
-            appScript: 'js',
-            controllerAs: false,
-            passFunc: false,
-            ngRoute: true
-          };
-          fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-inline-no-state.js'), 'utf8');
-        });
-
-        it('should add ngRoute as depdendency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ngRoute\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
-        it('should add $routeProvider as param', function () {
-          assert(/.config\(function[^$]*\(\$routeProvider\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
-        it('should add when with controllerAs', function () {
-          config.controllerAs = true;
-          assert(/\$routeProvider[\n\r]* {6}.when\(\'\/test\', {[\n\r]* {8}templateUrl: \'home\/test.tpl.html\',[\n\r]* {8}controller: \'TestCtrl\',[\n\r]* {8}controllerAs: \'test\'[^$]*}\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-      });
     });
   });
 
@@ -481,20 +405,19 @@ describe('Route Utils', function () {
         config = {
           appScript: 'ts',
           controllerAs: false,
-          passFunc: false,
           ngRoute: false
         };
         fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.ts'), 'utf8');
       });
 
       it('should add new state without controllerAs', function () {
-        assert(/.state\(\'test\', {[\n\r]* {8}url: \'\/test\',[\n\r]* {8}templateUrl: \'home\/test.tpl.html\',[\n\r]* {8}controller: \'TestCtrl\'[^$]*}\)/
+        assert(/.state\(\'test\', {[\n\r]* {6}url: \'\/test\',[\n\r]* {6}templateUrl: \'home\/test.tpl.html\',[\n\r]* {6}controller: \'TestCtrl\'[^$]*}\)/
           .test(routeUtils.addRoute(fileContents, newState, config)));
       });
 
       it('should add new state with controllerAs', function () {
         config.controllerAs = true;
-        assert(/.state\(\'test\', {[\n\r]* {8}url: \'\/test\',[\n\r]* {8}templateUrl: \'home\/test.tpl.html\',[\n\r]* {8}controller: \'TestCtrl\',[\n\r]* {8}controllerAs: \'test\'[^$]*}\)/
+        assert(/.state\(\'test\', {[\n\r]* {6}url: \'\/test\',[\n\r]* {6}templateUrl: \'home\/test.tpl.html\',[\n\r]* {6}controller: \'TestCtrl\',[\n\r]* {6}controllerAs: \'test\'[^$]*}\)/
           .test(routeUtils.addRoute(fileContents, newState, config)));
       });
 
@@ -511,14 +434,13 @@ describe('Route Utils', function () {
         config = {
           appScript: 'ts',
           skipController: true,
-          passFunc: false,
           ngRoute: false
         };
         fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-has-state.ts'), 'utf8');
       });
 
       it('should add state without controller', function () {
-        assert(/.state\(\'test\', {[\n\r]* {8}url: \'\/test\',[\n\r]* {8}templateUrl: \'home\/test.tpl.html\'[\n\r][^$]*}\)/
+        assert(/.state\(\'test\', {[\n\r]* {6}url: \'\/test\',[\n\r]* {6}templateUrl: \'home\/test.tpl.html\'[\n\r][^$]*}\)/
           .test(routeUtils.addRoute(fileContents, newState, config)));
       });
     });
@@ -532,7 +454,6 @@ describe('Route Utils', function () {
           config = {
             appScript: 'ts',
             controllerAs: false,
-            passFunc: true,
             ngRoute: false
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.ts'), 'utf8');
@@ -550,37 +471,6 @@ describe('Route Utils', function () {
 
         it('should add state', function () {
           assert(/\$stateProvider[\n\r]* {4}.state\(\'test\', {[\n\r]* {6}url: \'\/test\',[\n\r]* {6}templateUrl: \'home\/test.tpl.html\',[\n\r]* {6}controller: \'TestCtrl\'[^$]*}\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-      });
-
-      describe('defined inline config function', function () {
-        var config
-          , fileContents;
-
-        beforeEach(function () {
-          config = {
-            appScript: 'ts',
-            controllerAs: false,
-            passFunc: false,
-            ngRoute: false
-          };
-          fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-inline-no-state.ts'), 'utf8');
-        });
-
-        it('should add ui.router as depdendency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ui.router\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
-        it('should add $stateProvider as param', function () {
-          assert(/.config\(function[^$]*\(\$stateProvider: ng.ui.IStateProvider\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
-        it('should add state with controllerAs', function () {
-          config.controllerAs = true;
-          assert(/\$stateProvider[\n\r]* {6}.state\(\'test\', {[\n\r]* {8}url: \'\/test\',[\n\r]* {8}templateUrl: \'home\/test.tpl.html\',[\n\r]* {8}controller: \'TestCtrl\',[\n\r]* {8}controllerAs: \'test\'[^$]*}\)/
             .test(routeUtils.addRoute(fileContents, newState, config)));
         });
       });
@@ -645,9 +535,8 @@ describe('Route Utils', function () {
 
         beforeEach(function () {
           config = {
-            appScript: 'js',
+            appScript: 'ts',
             controllerAs: false,
-            passFunc: true,
             ngRoute: true
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.ts'), 'utf8');
@@ -665,37 +554,6 @@ describe('Route Utils', function () {
 
         it('should add when', function () {
           assert(/\$routeProvider[\n\r]* {4}.when\(\'\/test\', {[\n\r]* {6}templateUrl: \'home\/test.tpl.html\',[\n\r]* {6}controller: \'TestCtrl\'[^$]*}\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-      });
-
-      describe('defined inline config function', function () {
-        var config
-          , fileContents;
-
-        beforeEach(function () {
-          config = {
-            appScript: 'js',
-            controllerAs: false,
-            passFunc: false,
-            ngRoute: true
-          };
-          fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-inline-no-state.ts'), 'utf8');
-        });
-
-        it('should add ngRoute as depdendency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ngRoute\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
-        it('should add $routeProvider as param', function () {
-          assert(/.config\(function[^$]*\(\$routeProvider\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
-        it('should add when with controllerAs', function () {
-          config.controllerAs = true;
-          assert(/\$routeProvider[\n\r]* {6}.when\(\'\/test\', {[\n\r]* {8}templateUrl: \'home\/test.tpl.html\',[\n\r]* {8}controller: \'TestCtrl\',[\n\r]* {8}controllerAs: \'test\'[^$]*}\)/
             .test(routeUtils.addRoute(fileContents, newState, config)));
         });
       });

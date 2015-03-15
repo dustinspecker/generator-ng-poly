@@ -109,12 +109,6 @@ Generator.prototype.prompting = function prompting() {
     },
     {
       type: 'confirm',
-      name: 'passFunc',
-      message: 'Should functions be defined and passed instead of defined inline (in callbacks)?',
-      default: true
-    },
-    {
-      type: 'confirm',
       name: 'namedFunc',
       message: 'Want to use named functions instead of anonymous?',
       default: true
@@ -312,7 +306,6 @@ Generator.prototype.prompting = function prompting() {
     this.appScript = props.appScript;
     this.controllerAs = props.controllerAs;
     this.skipController = !props.skipController;
-    this.passFunc = props.passFunc;
     this.namedFunc = props.namedFunc;
     this.testScript = props.testScript;
     this.testFramework = props.testFramework;
@@ -337,7 +330,6 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('appScript', this.appScript);
   this.config.set('controllerAs', this.controllerAs);
   this.config.set('skipController', this.skipController);
-  this.config.set('passFunc', this.passFunc);
   this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
   this.config.set('testFramework', this.testFramework);
@@ -354,7 +346,6 @@ Generator.prototype.configuring = function configuring() {
     host: this.host,
     port: this.port,
     moduleName: utils.lowerCamel(this.appName),
-    passFunc: this.passFunc,
     namedFunc: this.namedFunc,
     polymer: this.polymer,
     framework: this.framework,
@@ -420,7 +411,6 @@ Generator.prototype.end = function end() {
       'test-script': this.testScript,
       'controller-as': this.controllerAs,
       'skip-controller': this.skipController,
-      'pass-func': this.passFunc,
       'named-func': this.namedFunc,
       'ng-route': this.ngRoute
     }

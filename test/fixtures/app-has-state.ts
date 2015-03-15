@@ -10,6 +10,15 @@
  *
  *
  */
+function config($stateProvider: ng.ui.IStateProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/home',
+      templateUrl: 'home/home.tpl.html',
+      controller: 'HomeCtrl'
+    });
+}
+
 angular
   .module('home', [
     'ui.router'
@@ -17,11 +26,4 @@ angular
 
 angular
   .module('home')
-  .config(function ($stateProvider: ng.ui.IStateProvider) {
-    $stateProvider
-      .state('home', {
-        url: '/home',
-        templateUrl: 'home/home.tpl.html',
-        controller: 'HomeCtrl'
-      });
-  });
+  .config(config);

@@ -102,7 +102,6 @@ Languages and Features supported:
 [Configurations](#configurations):
   * Syntax
     - [Controller As](#controller-as-syntax)
-    - [Pass Function](#pass-functions)
     - [Named Functions](#named-functions)
 
 † e2e tests are not supported in TypeScript. JavaScript will instead be used for e2e tests.
@@ -217,18 +216,21 @@ yo ng-poly:constant theHero
 
 Produces `app/module/the-hero-constant.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc service
- * @name module.constant:TheHero
- *
- * @description
- *
- */
-angular
-  .module('module')
-  .constant('TheHero', 0);
+  /**
+   * @ngdoc service
+   * @name module.constant:TheHero
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module')
+    .constant('TheHero', 0);
+}());
+
 ```
 
 Produces `app/module/the-hero-constant_test.js`:
@@ -249,6 +251,7 @@ describe('TheHero', function () {
     expect(constant).toBe(0);
   });
 });
+
 ```
 
 ### Controller
@@ -262,22 +265,27 @@ yo ng-poly:controller micro
 
 Produces `app/module/micro-controller.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc object
- * @name module.controller:MicroCtrl
- * @requires $scope
- *
- * @description
- *
- */
-angular
-  .module('module')
-  .controller('MicroCtrl', function ($scope) {
+  /**
+   * @ngdoc object
+   * @name module.controller:MicroCtrl
+   * @requires $scope
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module')
+    .controller('MicroCtrl', MicroCtrl);
+
+  function MicroCtrl($scope) {
     $scope.micro = {};
     $scope.micro.ctrlName = 'MicroCtrl';
-  });
+  }
+}());
+
 ```
 
 Produces `app/module/micro-controller_test.js`:
@@ -299,6 +307,7 @@ describe('MicroCtrl', function () {
     expect(scope.micro.ctrlName).toEqual('MicroCtrl');
   });
 });
+
 ```
 
 ### Directive
@@ -312,27 +321,30 @@ yo ng-poly:directive fancy-button
 
 Produces `app/module/fancy-button-directive.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc directive
- * @name module.directive:fancyButton
- * @restrict EA
- * @element
- *
- * @description
- *
- * @example
-   <example module="module">
-     <file name="index.html">
-      <fancy-button></fancy-button>
-     </file>
-   </example>
- *
- */
-angular
-  .module('module')
-  .directive('fancyButton', function () {
+  /**
+   * @ngdoc directive
+   * @name module.directive:fancyButton
+   * @restrict EA
+   * @element
+   *
+   * @description
+   *
+   * @example
+     <example module="module">
+       <file name="index.html">
+        <fancy-button></fancy-button>
+       </file>
+     </example>
+   *
+   */
+  angular
+    .module('module')
+    .directive('fancyButton', fancyButton);
+
+  function fancyButton() {
     return {
       restrict: 'EA',
       scope: {},
@@ -347,7 +359,9 @@ angular
         /*eslint "no-unused-vars": [2, {"args": "none"}]*/
       }
     };
-  });
+  }
+}());
+
 ```
 
 Produces `app/module/fancy-button-directive.tpl.html`:
@@ -376,6 +390,7 @@ describe('fancyButton', function () {
     expect(element.isolateScope().fancyButton.name).toEqual('fancyButton');
   });
 });
+
 ```
 **The directive's template (HAML, HTML, or Jade) is converted to a temporary module automatically for testing.**
 
@@ -390,25 +405,30 @@ yo ng-poly:factory cake
 
 Produces `app/module/cake-factory.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc service
- * @name module.factory:Cake
- *
- * @description
- *
- */
-angular
-  .module('module')
-  .factory('Cake', function () {
+  /**
+   * @ngdoc service
+   * @name module.factory:Cake
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module')
+    .factory('Cake', Cake);
+
+  function Cake() {
     var CakeBase = {};
     CakeBase.someValue = 'Cake';
     CakeBase.someMethod = function () {
       return 'Cake';
     };
     return CakeBase;
-  });
+  }
+}());
+
 ```
 
 Produces `app/module/Cake-factory_test.js`:
@@ -433,6 +453,7 @@ describe('Cake', function () {
     expect(factory.someMethod()).toEqual('Cake');
   });
 });
+
 ```
 
 ### Filter
@@ -446,21 +467,24 @@ yo ng-poly:filter coffee
 
 Produces `app/module/coffee-filter.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc filter
- * @name module.filter:coffee
- *
- * @description
- *
- * @param {Array} input The array to filter
- * @returns {Array} The filtered array
- *
- */
-angular
-  .module('module')
-  .filter('coffee', function () {
+  /**
+   * @ngdoc filter
+   * @name module.filter:coffee
+   *
+   * @description
+   *
+   * @param {Array} input The array to filter
+   * @returns {Array} The filtered array
+   *
+   */
+  angular
+    .module('module')
+    .filter('coffee', coffee);
+
+  function coffee() {
     return function (input) {
       var temp = [];
       angular.forEach(input, function (item) {
@@ -470,7 +494,9 @@ angular
       });
       return temp;
     };
-  });
+  }
+}());
+
 ```
 
 Produces `app/module/coffee-filter_test.js`:
@@ -485,6 +511,7 @@ describe('coffee', function () {
     expect($filter('coffee')([1,2,3,4])).toEqual([4]);
   }));
 });
+
 ```
 
 ### Module
@@ -497,56 +524,65 @@ yo ng-poly:module top
 
 Produces `app/top/top.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/* @ngdoc object
- * @name top
- *
- * @description
- *
- */
-angular
-  .module('top', [
-    'ui.router'
-  ]);
+  /* @ngdoc object
+   * @name top
+   *
+   * @description
+   *
+   */
+  angular
+    .module('top', [
+      'ui.router'
+    ]);
 
-angular
-  .module('top')
-  .config(function ($stateProvider) {
+  angular
+    .module('top')
+    .config(config);
+
+  function config($stateProvider) {
     $stateProvider
       .state('top', {
         url: '/top',
         templateUrl: 'top/top.tpl.html',
         controller: 'TopCtrl'
       });
-  });
+  }
+}());
+
 ```
 
 Produces `app/top/top-controller.js`, `app/top/top-controller_test.js`, `app/top/top.tpl.html`, `app/top/top.less`, `e2e/top/top.po.js`, `e2e/top/top_test.js`
 
 Updates `app/app.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/* @ngdoc object
- * @name module
- * @requires $urlRouterProvider
- *
- * @description
- *
- */
-angular
-  .module('module', [
-    'ui.router',
-    'home',
-    'top'
-  ]);
+  /* @ngdoc object
+   * @name module
+   * @requires $urlRouterProvider
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module', [
+      'ui.router',
+      'home',
+      'top'
+    ]);
 
-angular
-  .module('module')
-  .config(function ($urlRouterProvider) {
+  angular
+    .module('module')
+    .config(config);
+
+  function config($urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
-  });
+  }
+}());
 ```
 
 * * *
@@ -560,31 +596,36 @@ Produces `app/top/bottom/bottom.js`, `app/top/bottom/bottom-controller.js`, `app
 
 Updates `app/top/top.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/* @ngdoc object
- * @name top
- * @requires $stateProvider
- *
- * @description
- *
- */
-angular
-  .module('top', [
-    'ui.router',
-    'top.bottom'
-  ]);
+  /* @ngdoc object
+   * @name top
+   * @requires $stateProvider
+   *
+   * @description
+   *
+   */
+  angular
+    .module('top', [
+      'ui.router',
+      'top.bottom'
+    ]);
 
-angular
-  .module('top')
-  .config(function ($stateProvider) {
+  angular
+    .module('top')
+    .config(config);
+
+  function config($stateProvider) {
     $stateProvider
       .state('top', {
         url: '/top',
         templateUrl: 'top/top.tpl.html',
         controller: 'TopCtrl'
       });
-  });
+  }
+}());
+
 ```
 
 **Notice the module in `app/top/bottom/` is called 'top.bottom'. All tests in this directory use this nomenclature, as well.**
@@ -609,22 +650,27 @@ It just keeps going...
 
 By running `ng-poly:module newHome --empty` a module without a route will be created as such:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/* @ngdoc object
- * @name newHome
- *
- * @description
- *
- */
-angular
-  .module('newHome', [
-  ]);
+  /* @ngdoc object
+   * @name newHome
+   *
+   * @description
+   *
+   */
+  angular
+    .module('newHome', [
+    ]);
 
-angular
-  .module('newHome')
-  .config(function () {
-  });
+  angular
+    .module('newHome')
+    .config(config);
+
+  function config() {
+  }
+}());
+
 ```
 **It is still possible to add a route to this module via [ng-poly:route](#route).** The route subgenerator will also add the ui.router dependency and $stateProvider paramater for the config function.
 
@@ -639,24 +685,29 @@ yo ng-poly:provider bacon
 
 Produces `app/module/bacon-provider.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc service
- * @name module.provider:Bacon
- *
- * @description
- *
- */
-angular
-  .module('module')
-  .provider('Bacon', function () {
+  /**
+   * @ngdoc service
+   * @name module.provider:Bacon
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module')
+    .provider('Bacon', Bacon);
+
+  function Bacon() {
     return {
       $get: function () {
         return 'Bacon';
       }
     };
-  });
+  }
+}());
+
 ```
 
 Produces `app/module/Bacon-provider_test.js`:
@@ -677,6 +728,7 @@ describe('Bacon', function () {
     expect(provider).toEqual('Bacon');
   });
 });
+
 ```
 
 ### Route
@@ -692,23 +744,26 @@ yo ng-poly:route your-place
 
 Updates `app/module/module.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/* @ngdoc object
- * @name module
- * @requires $stateProvider
- *
- * @description
- *
- */
-angular
-  .module('module', [
-    'ui.router'
-  ]);
+  /* @ngdoc object
+   * @name module
+   * @requires $stateProvider
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module', [
+      'ui.router'
+    ]);
 
-angular
-  .module('module')
-  .config(function ($stateProvider) {
+  angular
+    .module('module')
+    .config(config);
+
+  function config($stateProvider) {
     $stateProvider
       .state('module', {
         url: '/module',
@@ -720,7 +775,9 @@ angular
         templateUrl: 'module/your-place.tpl.html',
         controller: 'YourPlaceCtrl'
       });
-  });
+  }
+}());
+
 ```
 
 Produces `e2e/your-place/your-place.po.js`:
@@ -758,6 +815,7 @@ describe('Your place page', function () {
     expect(yourPlacePage.text.getText()).toEqual('YourPlaceCtrl');
   });
 });
+
 ```
 
 Produces `app/module/your-place-controller.js`, `app/module/your-place-controller_test.js`, `app/module/your-place.tpl.html`, and `app/module/your-place.less`
@@ -783,24 +841,29 @@ yo ng-poly:service cheap-or-good
 
 Produces `app/module/cheap-or-good-service.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc service
- * @name home.service:CheapOrGood
- *
- * @description
- *
- */
-angular
-  .module('module')
-  .service('CheapOrGood', function CheapOrGood() {
+  /**
+   * @ngdoc service
+   * @name home.service:CheapOrGood
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module')
+    .service('CheapOrGood', CheapOrGood);
+
+  function CheapOrGood() {
     var self = this;
 
     self.get = function get() {
       return 'CheapOrGood';
     };
-  });
+  }
+}());
+
 ```
 
 Produces `app/module/cheap-or-good-service_test.js`:
@@ -821,6 +884,7 @@ describe('CheapOrGood', function () {
     expect(service.get()).toEqual('CheapOrGood');
   });
 });
+
 ```
 
 ### Value
@@ -834,18 +898,21 @@ yo ng-poly:value morals
 
 Produces `app/module/morals-value.js`:
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc service
- * @name module.constant:Morals
- *
- * @description
- *
- */
-angular
-  .module('module')
-  .value('Morals', 0);
+  /**
+   * @ngdoc service
+   * @name module.constant:Morals
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module')
+    .value('Morals', 0);
+}());
+
 ```
 
 Produces `app/module/Morals-value_test.js`:
@@ -866,6 +933,7 @@ describe('Morals', function () {
     expect(value).toBe(0);
   });
 });
+
 ```
 
 ### View
@@ -951,7 +1019,6 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 | test-script | coffee, js|
 | controller-as | true, false |
 | skip-controller | true, false |
-| pass-func | true, false |
 | named-func | true, false |
 | ng-route | true, false|
 
@@ -964,21 +1031,25 @@ This generator has support for the Controller As syntax. Yeoman will ask if this
 This will generate controllers like:
 
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc object
- * @name home.controller:HomeCtrl
- *
- * @description
- *
- */
-angular
-  .module('home')
-  .controller('HomeCtrl', function () {
+  /**
+   * @ngdoc object
+   * @name home.controller:HomeCtrl
+   *
+   * @description
+   *
+   */
+  angular
+    .module('home')
+    .controller('HomeCtrl', HomeCtrl);
+
+  function () {
     var vm = this;
     vm.ctrlName = 'HomeCtrl';
-  });
+  }
+}());
 ```
 
 ...and their tests like:
@@ -1000,61 +1071,70 @@ describe('HomeCtrl', function () {
     expect(ctrl.ctrlName).toEqual('HomeCtrl');
   });
 });
+
 ```
 
 It'll also modify the state's controller like:
 
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/* @ngdoc object
- * @name home
- * @requires $stateProvider
- *
- * @description
- *
- */
-angular
-  .module('home', [
-    'ui.router'
-  ]);
+  /* @ngdoc object
+   * @name home
+   * @requires $stateProvider
+   *
+   * @description
+   *
+   */
+  angular
+    .module('home', [
+      'ui.router'
+    ]);
 
-angular
-  .module('home')
-  .config(function ($stateProvider) {
+  angular
+    .module('home')
+    .config(config);
+
+  function config($stateProvider) {
     $stateProvider
       .state('home', {
         url: '/home',
         templateUrl: 'home/home.tpl.html',
         controller: 'HomeCtrl as home'
       });
-  });
+  }
+}());
+
 ```
 
 Directives will be generated like:
 
 ```javascript
-'use strict';
+(function () {
+  'use strict';
 
-/**
- * @ngdoc directive
- * @name home.directive:fancyButton
- * @restrict EA
- * @element
- *
- * @description
- *
- * @example
-   <example module="home">
-     <file name="index.html">
-      <fancy-button></fancy-button>
-     </file>
-   </example>
- *
- */
-angular
-  .module('home')
-  .directive('fancyButton', function fancyButton() {
+  /**
+   * @ngdoc directive
+   * @name home.directive:fancyButton
+   * @restrict EA
+   * @element
+   *
+   * @description
+   *
+   * @example
+     <example module="home">
+       <file name="index.html">
+        <fancy-button></fancy-button>
+       </file>
+     </example>
+   *
+   */
+  angular
+    .module('home')
+    .directive('fancyButton', fancyButton);
+
+  function fancyButton() {
     return {
       restrict: 'EA',
       scope: {},
@@ -1070,7 +1150,9 @@ angular
         /*eslint "no-unused-vars": [2, {"args": "none"}]*/
       }
     };
-  });
+  }
+}());
+
 ```
 
 
@@ -1079,37 +1161,6 @@ Lastly, views will be generated like:
 ```html
 <h2>home</h2>
 <p>{{home.ctrlName}}</p>
-```
-
-### Pass Functions
-
-The generator will ask when `ng-poly:app` is ran if it should pass defined functions instead of defining inline.
-
-**This is currently only supported in JavaScript files.**
-
-If enabled, the app source code will pass functions, such as:
-
-```javascript
-(function () {
-  'use strict';
-
-  /**
-   * @ngdoc object
-   * @name home.controller:HomeCtrl
-   *
-   * @description
-   *
-   */
-  angular
-    .module('home')
-    .controller('HomeCtrl', HomeCtrl);
-
-  function HomeCtrl() {
-    var vm = this;
-    vm.ctrlName = 'HomeCtrl';
-  }
-
-}());
 ```
 
 ### Named Functions
