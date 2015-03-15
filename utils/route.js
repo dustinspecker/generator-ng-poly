@@ -259,7 +259,7 @@ function addState(lines, state, analysis, config) {
 
   if (config.appScript === 'ts') {
     insertLine = (analysis.routeStartIndex > -1) ? analysis.routeEndIndex : analysis.configFunctionIndex + 1;
-  } else if (config.appScript === 'js') {
+  } else if (config.appScript === 'js' || config.appScript === 'es6') {
     insertLine = (analysis.routeStartIndex > -1) ? analysis.routeEndIndex : analysis.configFunctionIndex + 1;
   } else if (analysis.routeStartIndex > -1) {
     // determine where last state ends by examining spaces
