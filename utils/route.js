@@ -23,7 +23,7 @@ function hasParam(fileContents, config) {
     // regex to test
     , regex;
 
-  if (config.appScript === 'ts' || config.appScript === 'js') {
+  if (config.appScript === 'ts' || config.appScript === 'js' || config.appScript === 'es6') {
     regex = new RegExp('function.*\\(.*\\$' + param + '.*\\)');
   } else {
     regex = new RegExp('\\(.*\\$' + param + '.*\\) ->');
@@ -52,7 +52,7 @@ function addParam(lines, config) {
           lines[i] = lines[i].slice(0, line.lastIndexOf(')')) + ', $' + param + ': ' + type + ') {';
         }
       }
-    } else if (config.appScript === 'js') {
+    } else if (config.appScript === 'js' || config.appScript === 'es6') {
       if (line.indexOf('function config(') > -1) {
         // check if function has a parameter already
         if (line.lastIndexOf('(') === line.lastIndexOf(')') - 1) {
@@ -117,7 +117,7 @@ function analyzeLines(lines, config) {
       if (analysis.routeStartIndex > -1 && braceCount === 0) {
         analysis.routeEndIndex = i;
       }
-    } else if (config.appScript === 'js') {
+    } else if (config.appScript === 'js' || config.appScript === 'es6') {
       if (line.indexOf('function config(') > -1) {
         analysis.configFunctionIndex = i;
       }
@@ -176,7 +176,7 @@ function prepareState(state, analysis, config) {
     }
   }
 
-  if (config.appScript === 'ts' || config.appScript === 'js') {
+  if (config.appScript === 'ts' || config.appScript === 'js' || config.appScript === 'es6') {
     // base route logic
     if (config.ngRoute) {
       newState.push('  .when(\'' + state.url + '\', {');

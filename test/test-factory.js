@@ -94,4 +94,27 @@ describe('Factory generator', function () {
       ]);
     });
   });
+
+  describe('with ES6 app and ES6 test', function () {
+    before(function (done) {
+      helpers.run(join(__dirname, '../factory'), {
+        tmpdir: false
+      })
+        .withArguments(['test2'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'es6',
+          'test-script': 'es6'
+        })
+        .on('end', done);
+    });
+
+    it('should create factory files', function () {
+      assert.file([
+        'app/home/test2-factory.es6',
+        'app/home/test2-factory_test.es6'
+      ]);
+    });
+  });
 });

@@ -228,16 +228,16 @@ describe('App generator', function () {
     });
   });
 
-  describe('with Jade markup, Stylus style, JS app, and JS test', function () {
+  describe('with Jade markup, Stylus style, ES6 app, and ES6 test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
         .withPrompts({
           appName: 'temp-app',
           markup: 'jade',
-          appScript: 'js',
+          appScript: 'es6',
           controllerAs: false,
-          testScript: 'js',
+          testScript: 'es6',
           unitTestDir: 'app',
           style: 'styl',
           bower: []
@@ -254,16 +254,16 @@ describe('App generator', function () {
     it('should create files', function () {
       assert.file([
         'app/fonts',
-        'app/home/home.js',
+        'app/home/home.es6',
         'app/home/home.styl',
         'app/home/home.tpl.jade',
-        'app/home/home-controller.js',
-        'app/home/home-controller_test.js',
+        'app/home/home-controller.es6',
+        'app/home/home-controller_test.es6',
         'app/images',
-        'app/app.js',
+        'app/app.es6',
         'app/index.jade',
-        'e2e/home/home.po.js',
-        'e2e/home/home_test.js',
+        'e2e/home/home.po.es6',
+        'e2e/home/home_test.es6',
         'gulp/analyze.js',
         'gulp/build.js',
         'gulp/test.js',

@@ -23,7 +23,7 @@ var _ = require('underscore.string')
   , appFontFiles = path.join(appBase, 'fonts/**/*')
   , appImages = path.join(appBase, 'images/**/*')
   , appMarkupFiles = path.join(appBase, '**/*.{haml,html,jade}')
-  , appScriptFiles = path.join(appBase, '**/*.{ts,coffee,js}')
+  , appScriptFiles = path.join(appBase, '**/*.{coffee,es6,js,ts}')
   , appStyleFiles = path.join(appBase, '**/*.{css,less,scss,styl}')
   , bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep
 
@@ -121,6 +121,7 @@ gulp.task('styles', ['clean'], function () {
 gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
   var typescriptFilter = $.filter('**/*.ts')
     , coffeeFilter = $.filter('**/*.coffee')
+    , es6Filter = $.filter('**/*.es6')
     , htmlFilter = $.filter('**/*.html')
     , jsFilter = $.filter('**/*.js');
 
@@ -131,6 +132,12 @@ gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
     '!**/*_test.*',
     '!**/index.html'
   ])
+    .pipe(es6Filter)
+    .pipe($.babel())
+    .pipe($.rename(function (filePath) {
+      filePath.extname = '.js';
+    }))
+    .pipe(es6Filter.restore())
     .pipe(typescriptFilter)
     .pipe($.typescript(tsProject))
     .pipe(typescriptFilter.restore())

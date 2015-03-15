@@ -99,7 +99,7 @@ describe('Directive generator', function () {
     });
   });
 
-  describe('with HAML markup, JS app, and JS test', function () {
+  describe('with HAML markup, ES6 app, and ES6 test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../directive'), {
@@ -108,16 +108,18 @@ describe('Directive generator', function () {
         .withArguments(['test2'])
         .withOptions({
           module: 'home',
-          markup: 'haml'
+          markup: 'haml',
+          'app-script': 'es6',
+          'test-script': 'es6'
         })
         .on('end', done);
     });
 
     it('should create directive files', function () {
       assert.file([
-        'app/home/test2-directive.js',
+        'app/home/test2-directive.es6',
         'app/home/test2-directive.tpl.haml',
-        'app/home/test2-directive_test.js'
+        'app/home/test2-directive_test.es6'
       ]);
     });
   });

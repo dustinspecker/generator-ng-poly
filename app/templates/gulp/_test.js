@@ -41,9 +41,16 @@ gulp.task('clean:test', function (cb) {
 gulp.task('buildTests', ['lint', 'clean:test'], function () {
   var typescriptFilter = $.filter('**/*.ts')
     , coffeeFilter = $.filter('**/*.coffee')
+    , es6Filter = $.filter('**/*.es6')
     , jsFilter = $.filter('**/*.js');
 
   return gulp.src([unitTests])
+    .pipe(es6Filter)
+    .pipe($.babel())
+    .pipe($.rename(function (filePath) {
+      filePath.extname = '.js';
+    }))
+    .pipe(es6Filter.restore())
     .pipe(typescriptFilter)
     .pipe($.typescript(tsProject))
     .pipe(typescriptFilter.restore())
@@ -93,9 +100,16 @@ gulp.task('unitTest', ['lint', 'karmaFiles'], function (done) {
 gulp.task('build:e2eTest', function () {
   var typescriptFilter = $.filter('**/*.ts')
     , coffeeFilter = $.filter('**/*.coffee')
+    , es6Filter = $.filter('**/*.es6')
     , jsFilter = $.filter('**/*.js');
 
   return gulp.src([e2eFiles])
+    .pipe(es6Filter)
+    .pipe($.babel())
+    .pipe($.rename(function (filePath) {
+      filePath.extname = '.js';
+    }))
+    .pipe(es6Filter.restore())
     .pipe(typescriptFilter)
     .pipe($.typescript(tsProject))
     .pipe(typescriptFilter.restore())

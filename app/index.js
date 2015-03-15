@@ -86,7 +86,11 @@ Generator.prototype.prompting = function prompting() {
           value: 'coffee'
         },
         {
-          name: 'JavaScript',
+          name: 'EcmaScript2015 (ES6) using Babel',
+          value: 'es6'
+        },
+        {
+          name: 'JavaScript (ES5)',
           value: 'js'
         },
         {
@@ -123,7 +127,11 @@ Generator.prototype.prompting = function prompting() {
           value: 'coffee'
         },
         {
-          name: 'JavaScript',
+          name: 'EcmaScript2015 (ES6) using Babel',
+          value: 'es6'
+        },
+        {
+          name: 'JavaScript (ES5)',
           value: 'js'
         },
         {

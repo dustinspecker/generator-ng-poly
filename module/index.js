@@ -44,6 +44,7 @@ Generator.prototype.writing = function writing() {
   // else - get parent app.js to prepare adding dep
   if (this.context.moduleName === this.module) {
     filePath = _.find([
+      path.join(this.context.appDir, 'app.es6'),
       path.join(this.context.appDir, 'app.ts'),
       path.join(this.context.appDir, 'app.coffee'),
       path.join(this.context.appDir, 'app.js')
@@ -57,6 +58,7 @@ Generator.prototype.writing = function writing() {
     parentModuleDir = path.basename(parentDir);
 
     filePath = _.find([
+      path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.es6'),
       path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.ts'),
       path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.coffee'),
       path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.js')

@@ -70,7 +70,7 @@ describe('Element generator', function () {
     });
   });
 
-  describe('with HAML markup, JS app, and SCSS style', function () {
+  describe('with HAML markup, ES6 app, and SCSS style', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../element'), {
@@ -79,14 +79,15 @@ describe('Element generator', function () {
         .withArguments(['test2-element'])
         .withOptions({
           markup: 'haml',
-          style: 'scss'
+          style: 'scss',
+          'app-script': 'es6'
         })
         .on('end', done);
     });
 
     it('should create element files', function () {
       assert.file([
-        'app/components/test2-element/test2-element.js',
+        'app/components/test2-element/test2-element.es6',
         'app/components/test2-element/test2-element.haml',
         'app/components/test2-element/test2-element.scss'
       ]);

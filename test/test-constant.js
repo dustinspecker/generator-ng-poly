@@ -27,7 +27,7 @@ describe('Constant generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app, and JS test', function () {
+  describe('with JS app and JS test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../constant'), {
@@ -48,7 +48,7 @@ describe('Constant generator', function () {
     });
   });
 
-  describe('with TypeScript app, and TypeScript test', function () {
+  describe('with TypeScript app and TypeScript test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../constant'), {
@@ -59,7 +59,6 @@ describe('Constant generator', function () {
           module: 'app'
         })
         .withOptions({
-          markup: 'jade',
           'app-script': 'ts',
           'test-script': 'ts'
         })
@@ -74,18 +73,17 @@ describe('Constant generator', function () {
     });
   });
 
-  describe('with Coffee app, and Coffee test', function () {
+  describe('with Coffee app and Coffee test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../constant'), {
           tmpdir: false
         })
-        .withArguments(['test1'])
+        .withArguments(['test2'])
         .withPrompt({
           module: 'app'
         })
         .withOptions({
-          markup: 'jade',
           'app-script': 'coffee',
           'test-script': 'coffee'
         })
@@ -94,8 +92,30 @@ describe('Constant generator', function () {
 
     it('should create constant files', function () {
       assert.file([
-        'app/test1-constant.coffee',
-        'app/test1-constant_test.coffee'
+        'app/test2-constant.coffee',
+        'app/test2-constant_test.coffee'
+      ]);
+    });
+  });
+
+  describe('with ES6 app and ES6 test', function () {
+    before(function (done) {
+      helpers
+        .run(join(__dirname, '../constant'), {
+          tmpdir: false
+        })
+        .withArguments(['test3'])
+        .withOptions({
+          'app-script': 'es6',
+          'test-script': 'es6'
+        })
+        .on('end', done);
+    });
+
+    it('should create constant files', function () {
+      assert.file([
+        'app/test3-constant.es6',
+        'app/test3-constant_test.es6'
       ]);
     });
   });

@@ -65,9 +65,9 @@ Languages and Features supported:
   * Markup
     - HAML, HTML, Jade
   * Application scripting languages
-    - CoffeeScript, JavaScript, TypeScript
+    - CoffeeScript, EcmaScript (ES6) with Babel, JavaScript (ES5), TypeScript
   * Testing scripting languages
-    - CoffeeScript, JavaScript, TypeScript†
+    - CoffeeScript, EcmaScript (ES6) with Babel, JavaScript (ES5), TypeScript†
   * Style languages
     - CSS, LESS, SCSS, Stylus
   * Routers
@@ -165,19 +165,19 @@ root/
 ├── app/
 │   ├── fonts/ (empty)
 │   ├── home/
-│   │   ├── home.{coffee,js}
+│   │   ├── home.{coffee,es6,js,ts}
 │   │   ├── home.{css,less,scss,styl}
 │   │   ├── home.tpl.{haml,html,jade}
-│   │   ├── home-controller.{coffee,js}
-│   │   └── home-controller_test.{coffee,js}
+│   │   ├── home-controller.{coffee,es6,js,ts}
+│   │   └── home-controller_test.{coffee,es6,js,ts}
 │   ├── images/ (empty)
-│   ├── app.{coffee,js}
+│   ├── app.{coffee,es6,js,ts}
 │   └── index.{haml,html,jade}
 ├── bower_components/
 ├── e2e/
 │   └── home/
-│       ├── home.po.{coffee,js}
-│       └── home_test.{coffee,js}
+│       ├── home.po.{coffee,es6,js}
+│       └── home_test.{coffee,es6,js}
 ├── gulp/
 │   ├── analyze.js
 │   ├── build.js

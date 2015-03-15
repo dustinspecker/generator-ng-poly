@@ -28,7 +28,7 @@ describe('Controller generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app, and JS test', function () {
+  describe('with JS app and JS test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../controller'), {
@@ -49,7 +49,7 @@ describe('Controller generator', function () {
     });
   });
 
-  describe('with Coffee app, and Coffee test', function () {
+  describe('with Coffee app and Coffee test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../controller'), {
@@ -58,7 +58,6 @@ describe('Controller generator', function () {
         .withArguments(['test1'])
         .withOptions({
           module: 'home',
-          markup: 'jade',
           'app-script': 'coffee',
           'test-script': 'coffee'
         })
@@ -73,7 +72,7 @@ describe('Controller generator', function () {
     });
   });
 
-  describe('with Coffee app, and Coffee test', function () {
+  describe('with Coffee app and Coffee test', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../controller'), {
@@ -82,7 +81,6 @@ describe('Controller generator', function () {
         .withArguments(['test1'])
         .withOptions({
           module: 'home',
-          markup: 'jade',
           'app-script': 'coffee',
           'test-script': 'coffee'
         })
@@ -106,7 +104,6 @@ describe('Controller generator', function () {
         .withArguments(['test1'])
         .withOptions({
           module: 'home',
-          markup: 'jade',
           'app-script': 'ts',
           'test-script': 'ts'
         })
@@ -117,6 +114,29 @@ describe('Controller generator', function () {
       assert.file([
         'app/home/test1-controller.ts',
         'app/home/test1-controller_test.ts'
+      ]);
+    });
+  });
+
+  describe('with ES6 app, and ES6 test', function () {
+    before(function (done) {
+      helpers
+        .run(join(__dirname, '../controller'), {
+          tmpdir: false
+        })
+        .withArguments(['test1'])
+        .withOptions({
+          module: 'home',
+          'app-script': 'es6',
+          'test-script': 'es6'
+        })
+        .on('end', done);
+    });
+
+    it('should create controller files', function () {
+      assert.file([
+        'app/home/test1-controller.es6',
+        'app/home/test1-controller_test.es6'
       ]);
     });
   });

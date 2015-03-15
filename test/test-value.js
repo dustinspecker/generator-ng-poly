@@ -95,4 +95,28 @@ describe('Value generator', function () {
       ]);
     });
   });
+
+  describe('with ES6 app and ES6 test', function () {
+    before(function (done) {
+      helpers
+        .run(join(__dirname, '../value'), {
+          tmpdir: false
+        })
+        .withArguments(['test2'])
+        .withOptions({
+          module: 'home',
+          markup: 'jade',
+          'app-script': 'es6',
+          'test-script': 'es6'
+        })
+        .on('end', done);
+    });
+
+    it('should create value files', function () {
+      assert.file([
+        'app/home/test2-value.es6',
+        'app/home/test2-value_test.es6'
+      ]);
+    });
+  });
 });
