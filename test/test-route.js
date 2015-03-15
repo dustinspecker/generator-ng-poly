@@ -13,7 +13,6 @@ describe('Route generator', function () {
         markup: 'html',
         appScript: 'js',
         controllerAs: false,
-        namedFunc: true,
         testScript: 'js',
         testDir: 'app',
         style: 'less',

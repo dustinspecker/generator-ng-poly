@@ -102,7 +102,6 @@ Languages and Features supported:
 [Configurations](#configurations):
   * Syntax
     - [Controller As](#controller-as-syntax)
-    - [Named Functions](#named-functions)
 
 † e2e tests are not supported in TypeScript. JavaScript will instead be used for e2e tests.
 
@@ -149,8 +148,6 @@ yo ng-poly
 [?] Which is the preferred application scripting language?
 [?] Want to use Controller As syntax?
 [?] By default, should the route generator create controllers?
-[?] Should functions be defined and passed instead of defined inline (in callbacks)?
-[?] Want to use named functions instead of anonymous?
 [?] Where should unit tests be saved?
 [?] Which is the preferred test scripting language?
 [?] Which is the preferred unit testing framework?
@@ -1019,7 +1016,6 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 | test-script | coffee, js|
 | controller-as | true, false |
 | skip-controller | true, false |
-| named-func | true, false |
 | ng-route | true, false|
 
 **It's not recommended to mix ngRoute and UI Router, but it's possible.**
@@ -1155,47 +1151,11 @@ Directives will be generated like:
 
 ```
 
-
 Lastly, views will be generated like:
 
 ```html
 <h2>home</h2>
 <p>{{home.ctrlName}}</p>
-```
-
-### Named Functions
-
-The generator will ask when `ng-poly:app` is ran if it should use named functions or anonymous functions. Named functions create a stack trace that is easier to understand.
-
-**This is only supported in JavaScript files.**
-
-If enabled, the app source code will have named functions, such as:
-
-```javascript
-(function () {
-  'use strict';
-
-  /**
-   * @ngdoc service
-   * @name module.factory:Cake
-   *
-   * @description
-   *
-   */
-  angular
-    .module('module')
-    .factory('Cake', Cake);
-
-  function Cake() {
-    var CakeBase = {};
-    CakeBase.someValue = 'Cake';
-    CakeBase.someMethod = function someMethod() {
-      return 'Cake';
-    };
-    return CakeBase;
-  }
-
-}());
 ```
 
 ### License

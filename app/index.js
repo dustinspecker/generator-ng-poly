@@ -108,12 +108,6 @@ Generator.prototype.prompting = function prompting() {
       default: true
     },
     {
-      type: 'confirm',
-      name: 'namedFunc',
-      message: 'Want to use named functions instead of anonymous?',
-      default: true
-    },
-    {
       name: 'unitTestDir',
       message: 'Where should unit tests be saved?',
       default: 'app'
@@ -306,7 +300,6 @@ Generator.prototype.prompting = function prompting() {
     this.appScript = props.appScript;
     this.controllerAs = props.controllerAs;
     this.skipController = !props.skipController;
-    this.namedFunc = props.namedFunc;
     this.testScript = props.testScript;
     this.testFramework = props.testFramework;
     this.e2eTestFramework = props.e2eTestFramework;
@@ -330,7 +323,6 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('appScript', this.appScript);
   this.config.set('controllerAs', this.controllerAs);
   this.config.set('skipController', this.skipController);
-  this.config.set('namedFunc', this.namedFunc);
   this.config.set('testScript', this.testScript);
   this.config.set('testFramework', this.testFramework);
   this.config.set('e2eTestFramework', this.e2eTestFramework);
@@ -346,7 +338,6 @@ Generator.prototype.configuring = function configuring() {
     host: this.host,
     port: this.port,
     moduleName: utils.lowerCamel(this.appName),
-    namedFunc: this.namedFunc,
     polymer: this.polymer,
     framework: this.framework,
     testFramework: this.testFramework,
@@ -411,7 +402,6 @@ Generator.prototype.end = function end() {
       'test-script': this.testScript,
       'controller-as': this.controllerAs,
       'skip-controller': this.skipController,
-      'named-func': this.namedFunc,
       'ng-route': this.ngRoute
     }
   }, {

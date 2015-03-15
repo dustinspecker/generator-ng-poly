@@ -15,7 +15,7 @@
   function <%= upperCamel %>() {
     var <%= upperCamel %>Base = {};
     <%= upperCamel %>Base.someValue = '<%= upperCamel %>';
-    <%= upperCamel %>Base.someMethod = function <% if (namedFunc) { %>someMethod<% } %>() {
+    <%= upperCamel %>Base.someMethod = function () {
       return '<%= upperCamel %>';
     };
     return <%= upperCamel %>Base;

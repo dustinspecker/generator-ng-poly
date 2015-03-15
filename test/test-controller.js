@@ -14,7 +14,6 @@ describe('Controller generator', function () {
         appScript: 'js',
         classes: false,
         controllerAs: false,
-        namedFunc: true,
         testScript: 'js',
         testDir: 'app',
         style: 'less',

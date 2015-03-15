@@ -15,7 +15,7 @@
   function <%= upperCamel %>() {
     var self = this;
 
-    self.get = function <% if (namedFunc) { %>get<% } %>() {
+    self.get = function () {
       return '<%= upperCamel %>';
     };
   }

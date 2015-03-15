@@ -129,9 +129,6 @@ Generator.prototype.getConfig = function getConfig() {
     skipController: this.options['skip-controller'] !== undefined && this.options['skip-controller'] !== null ?
       this.options['skip-controller'] : this.config.get('skipController'),
 
-    namedFunc: this.options['named-func'] !== undefined && this.options['named-func'] !== null ?
-      this.options['named-func'] : this.config.get('namedFunc'),
-
     testScript: this.options['test-script'] || this.config.get('testScript'),
     testFramework: this.config.get('testFramework'),
     e2eTestFramework: this.config.get('e2eTestFramework') || 'jasmine',
