@@ -1,13 +1,11 @@
 /*global describe, beforeEach, it, browser<% if (e2eTestFramework === 'jasmine') { %>, expect<% } %> */
 'use strict';
 
-import <%= upperCamel %>Page from './<%= hyphenName %>.po';
+import <%= upperCamel %>Page from './<%= hyphenName %>.po';<% if (e2eTestFramework === 'mocha') { %>
 
-let buildConfigFile = require('findup-sync')('build.config.js')
-  , buildConfig = require(buildConfigFile)<% if (e2eTestFramework === 'mocha') { %>
-  , chai = require('chai')
+let chai = require('chai')
   , chaiAsPromised = require('chai-as-promised')
-  , expect = chai.expect<% } %>;<% if (e2eTestFramework === 'mocha') { %>
+  , expect = chai.expect;
 
 chai.use(chaiAsPromised);<% } %>
 
@@ -16,7 +14,7 @@ describe('<%= humanName %> page', () => {
 
   beforeEach(() => {
     <%= lowerCamel %>Page = new <%= upperCamel %>Page();
-    browser.driver.get(buildConfig.host + ':' + buildConfig.port + '/#<%= url %>');
+    browser.get('/#<%= url %>');
   });
 
   it('should say <%= ctrlName %>', () => {
