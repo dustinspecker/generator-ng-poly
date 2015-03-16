@@ -272,14 +272,21 @@ gulp.task('bowerInject', ['bowerCopy'], function () {
 gulp.task('components', ['bowerInject'], function () {
   var typeScriptFilter = $.filter('**/*.ts')
     , coffeeFilter = $.filter('**/*.coffee')
+    , es6Filter = $.filter('**/*.es6')
     , hamlFilter = $.filter('**/*.haml')
     , jadeFilter = $.filter('**/*.jade')
     , lessFilter = $.filter('**/*.less')
     , scssFilter = $.filter('**/*.scss')
     , stylFilter = $.filter('**/*.styl');
 
-  return gulp.src(appComponents)<% if (polymer) { %>
-    .pipe($.addSrc(bowerDir + 'polymer/{layout,polymer}.{html,js}', {base: bowerDir}))<% } %>
+  return gulp.src(appComponents)
+    .pipe($.addSrc(bowerDir + 'polymer/{layout,polymer}.{html,js}', {base: bowerDir}))
+    .pipe(es6Filter)
+    .pipe($.babel())
+    .pipe($.rename(function (filePath) {
+      filePath.extname = '.js';
+    }))
+    .pipe(es6Filter.restore())
     .pipe(typeScriptFilter)
     .pipe($.typescript())
     .pipe(typeScriptFilter.restore())
