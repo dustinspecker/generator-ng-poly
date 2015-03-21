@@ -150,7 +150,7 @@ Generator.prototype.getConfig = function getConfig() {
 
     testScript: this.options['test-script'] || this.config.get('testScript'),
     testFramework: this.config.get('testFramework'),
-    e2eTestFramework: this.config.get('e2eTestFramework') || 'jasmine',
+    e2eTestFramework: this.config.get('e2eTestFramework'),
     style: this.options.style || this.config.get('style'),
     ngRoute: this.options['ng-route'] !== undefined && this.options['ng-route'] !== null ?
       this.options['ng-route'] : this.config.get('ngRoute'),
