@@ -5,62 +5,62 @@
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {<% if (!ngRoute) { %>
-    "angular-ui/angular-ui-router.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+    "angular-ui-router/angular-ui-router.d.ts": {
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     },<% } %>
     "angularjs/angular.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% if (bower.indexOf('animate') > -1) { %>,
     "angularjs/angular-animate.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (bower.indexOf('cookies') > -1) { %>,
     "angularjs/angular-cookies.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %>,
     "angularjs/angular-mocks.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% if (bower.indexOf('resource') > -1) { %>,
     "angularjs/angular-resource.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (ngRoute) { %>,
     "angularjs/angular-route.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (bower.indexOf('sanitize') > -1) { %>,
     "angularjs/angular-sanitize.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (framework === 'uibootstrap') { %>,
     "angular-ui-bootstrap/angular-ui-bootstrap.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (testFramework === 'mocha') { %>,
     "chai/chai.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (testFramework === 'mocha') { %>,
     "expect.js/expect.js.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (framework === 'foundation') { %>,
     "foundation/foundation.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (testFramework === 'jasmine') { %>,
     "jasmine/jasmine.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %>,
     "jquery/jquery.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% if (testFramework === 'jasmine') { %>,
     "karma-jasmine/karma-jasmine.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (bower.indexOf('lodash') > -1 || bower.indexOf('lodash')) { %>,
     "lodash/lodash.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (testFramework === 'mocha') { %>,
     "mocha/mocha.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %><% if (bower.indexOf('restangular') > -1) { %>,
     "restangular/restangular.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }<% } %>,
     "sinon/sinon.d.ts": {
-      "commit": "dd4398796d746c4a7bfc739fedfcaadb0a8feb77"
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }
   }
 }
