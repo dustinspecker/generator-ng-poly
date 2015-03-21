@@ -160,7 +160,7 @@ yo ng-poly
 [?] Which additional Bower components should be installed?
 ```
 
-A **module-only** structure Produces:
+A **module-only** structure produces:
 ```
 root/
 ├── app/
@@ -1056,10 +1056,10 @@ Each generator is able to take the following arguments. For example, `yo ng-poly
 
 | Option | Possible Values|
 | ------ | -------------- |
-| app-script | coffee, js, ts |
+| app-script | coffee, es6, js, ts |
 | markup | haml, html, jade|
 | style | css, less, scss, styl|
-| test-script | coffee, js|
+| test-script | coffee, es6, js, ts |
 | controller-as | true, false |
 | skip-controller | true, false |
 | ng-route | true, false|
