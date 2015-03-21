@@ -27,7 +27,7 @@ describe('Value generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and JS test', function () {
+  describe('with JS app and JS test with module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../value'), {
@@ -35,6 +35,7 @@ describe('Value generator', function () {
         })
         .withArguments(['test'])
         .withOptions({
+          structure: 'module-type',
           module: 'home'
         })
         .on('end', done);
@@ -42,8 +43,8 @@ describe('Value generator', function () {
 
     it('should create value files', function () {
       assert.file([
-        'app/home/test-value.js',
-        'app/home/test-value_test.js'
+        'app/home/values/test-value.js',
+        'app/home/values/test-value_test.js'
       ]);
     });
   });

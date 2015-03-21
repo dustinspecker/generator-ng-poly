@@ -27,13 +27,16 @@ describe('Constant generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and JS test', function () {
+  describe('with JS app and JS test with module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../constant'), {
           tmpdir: false
         })
         .withArguments(['test'])
+        .withOptions({
+          structure: 'module-type'
+        })
         .withPrompt({
           module: 'home/'
         })
@@ -42,8 +45,8 @@ describe('Constant generator', function () {
 
     it('should create constant files', function () {
       assert.file([
-        'app/home/test-constant.js',
-        'app/home/test-constant_test.js'
+        'app/home/constants/test-constant.js',
+        'app/home/constants/test-constant_test.js'
       ]);
     });
   });

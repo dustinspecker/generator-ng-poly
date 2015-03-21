@@ -58,7 +58,7 @@ describe('Route generator', function () {
     });
   });
 
-  describe('with Jade markup, CSS style, Coffee app, and Coffee test', function () {
+  describe('with Jade markup, CSS style, Coffee app, and Coffee test with module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../route'), {
@@ -66,6 +66,7 @@ describe('Route generator', function () {
         })
         .withArguments(['test1'])
         .withOptions({
+          structure: 'module-type',
           module: 'home',
           markup: 'jade',
           style: 'css',
@@ -77,10 +78,10 @@ describe('Route generator', function () {
 
     it('should create route files', function () {
       assert.file([
-        'app/home/test1-controller.coffee',
-        'app/home/test1-controller_test.coffee',
-        'app/home/test1.tpl.jade',
-        'app/home/test1.css',
+        'app/home/controllers/test1-controller.coffee',
+        'app/home/controllers/test1-controller_test.coffee',
+        'app/home/views/test1.tpl.jade',
+        'app/home/views/test1.css',
         'e2e/test1/test1.po.coffee',
         'e2e/test1/test1_test.coffee'
       ]);

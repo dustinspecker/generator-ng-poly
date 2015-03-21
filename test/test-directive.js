@@ -27,7 +27,7 @@ describe('Directive generator', function () {
       .on('end', done);
   });
 
-  describe('with HTML markup, JS app, and JS test', function () {
+  describe('with HTML markup, JS app, and JS test with module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../directive'), {
@@ -35,6 +35,7 @@ describe('Directive generator', function () {
         })
         .withArguments(['test'])
         .withOptions({
+          structure: 'module-type',
           module: 'home'
         })
         .on('end', done);
@@ -42,9 +43,9 @@ describe('Directive generator', function () {
 
     it('should create directive files', function () {
       assert.file([
-        'app/home/test-directive.js',
-        'app/home/test-directive.tpl.html',
-        'app/home/test-directive_test.js'
+        'app/home/directives/test-directive.js',
+        'app/home/directives/test-directive.tpl.html',
+        'app/home/directives/test-directive_test.js'
       ]);
     });
   });
@@ -74,7 +75,7 @@ describe('Directive generator', function () {
     });
   });
 
-  describe('with Jade markup, TypeScript app, and TypeScript test', function () {
+  describe('with Jade markup, TypeScript app, and TypeScript test using module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../directive'), {
@@ -82,6 +83,7 @@ describe('Directive generator', function () {
         })
         .withArguments(['test3'])
         .withOptions({
+          structure: 'module-type',
           module: 'home',
           markup: 'jade',
           'app-script': 'ts',
@@ -92,9 +94,9 @@ describe('Directive generator', function () {
 
     it('should create directive files', function () {
       assert.file([
-        'app/home/test3-directive.ts',
-        'app/home/test3-directive.tpl.jade',
-        'app/home/test3-directive_test.ts'
+        'app/home/directives/test3-directive.ts',
+        'app/home/directives/test3-directive.tpl.jade',
+        'app/home/directives/test3-directive_test.ts'
       ]);
     });
   });

@@ -27,7 +27,7 @@ describe('Service generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and JS test', function () {
+  describe('with JS app and JS test with module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../service'), {
@@ -35,6 +35,7 @@ describe('Service generator', function () {
         })
         .withArguments(['test'])
         .withOptions({
+          structure: 'module-type',
           module: 'home'
         })
         .on('end', done);
@@ -42,8 +43,8 @@ describe('Service generator', function () {
 
     it('should create service files', function () {
       assert.file([
-        'app/home/test-service.js',
-        'app/home/test-service_test.js'
+        'app/home/services/test-service.js',
+        'app/home/services/test-service_test.js'
       ]);
     });
   });

@@ -6,7 +6,7 @@ var assert = require('yeoman-generator').assert
   , sinon = require('sinon');
 
 describe('App generator', function () {
-  describe('with HTML markup, CSS style, JS app, and JS test', function () {
+  describe('with HTML markup, CSS style, JS app, and JS test with module-type', function () {
     // used to test if methods have been called
     var gen;
 
@@ -18,6 +18,7 @@ describe('App generator', function () {
         })
         .withPrompts({
           appName: 'temp-app-diff',
+          structure: 'module-type',
           ngversion: '1.2.*',
           appDir: 'front/',
           markup: 'html',
@@ -51,10 +52,10 @@ describe('App generator', function () {
       assert.file([
         'front/fonts',
         'front/home/home.js',
-        'front/home/home.css',
-        'front/home/home.tpl.html',
-        'front/home/home-controller.js',
-        'front/home/home-controller_test.js',
+        'front/home/views/home.css',
+        'front/home/views/home.tpl.html',
+        'front/home/controllers/home-controller.js',
+        'front/home/controllers/home-controller_test.js',
         'front/images',
         'front/app.js',
         'front/index.html',

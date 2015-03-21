@@ -141,6 +141,7 @@ Example:
 yo ng-poly
 [?] What is the app's name?
 [?] Which version of Angular should be used?
+[?] Which structure should be used?
 [?] What host should the app run on?
 [?] Which port should the app run on?
 [?] Which folder should the app be developed in?
@@ -159,7 +160,7 @@ yo ng-poly
 [?] Which additional Bower components should be installed?
 ```
 
-Produces:
+A **module-only** structure Produces:
 ```
 root/
 ├── app/
@@ -170,6 +171,51 @@ root/
 │   │   ├── home.tpl.{haml,html,jade}
 │   │   ├── home-controller.{coffee,es6,js,ts}
 │   │   └── home-controller_test.{coffee,es6,js,ts}
+│   ├── images/ (empty)
+│   ├── app.{coffee,es6,js,ts}
+│   └── index.{haml,html,jade}
+├── bower_components/
+├── e2e/
+│   └── home/
+│       ├── home.po.{coffee,es6,js}
+│       └── home_test.{coffee,es6,js}
+├── gulp/
+│   ├── analyze.js
+│   ├── build.js
+│   ├── test.js
+│   └── watch.js
+├── node_modules/
+├── typings/*
+├── .bowerrc
+├── .editorconfig
+├── .eslintrc
+├── .gitignore
+├── .jscsrc
+├── .jshintrc
+├── .yo-rc.json
+├── bower.json
+├── build.config.js
+├── Gulpfile.js
+├── karma.config.js
+├── package.json
+├── protractor.config.js
+├── README.md
+└── tsd.json*
+```
+
+A **module-type** structure produces:
+```
+root/
+├── app/
+│   ├── fonts/ (empty)
+│   ├── home/
+│   │   ├── controllers/
+│   │   │   ├── home-controller.{coffee,es6,js,ts}
+│   │   │   └── home-controller_test.{coffee,es6,js,ts}
+│   │   ├── views/
+│   │   │   ├── home.{css,less,scss,styl}
+│   │   │   └── home.tpl.{haml,html,jade}
+│   │   └── home.{coffee,es6,js,ts}
 │   ├── images/ (empty)
 │   ├── app.{coffee,es6,js,ts}
 │   └── index.{haml,html,jade}

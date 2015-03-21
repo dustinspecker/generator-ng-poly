@@ -28,7 +28,7 @@ describe('Controller generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and JS test', function () {
+  describe('with JS app and JS test with module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../controller'), {
@@ -36,6 +36,7 @@ describe('Controller generator', function () {
         })
         .withArguments(['test'])
         .withOptions({
+          structure: 'module-type',
           module: 'home'
         })
         .on('end', done);
@@ -43,8 +44,8 @@ describe('Controller generator', function () {
 
     it('should create controller files', function () {
       assert.file([
-        'app/home/test-controller.js',
-        'app/home/test-controller_test.js'
+        'app/home/controllers/test-controller.js',
+        'app/home/controllers/test-controller_test.js'
       ]);
     });
   });

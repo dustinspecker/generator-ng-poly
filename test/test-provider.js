@@ -27,7 +27,7 @@ describe('Provider generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and JS test', function () {
+  describe('with JS app and JS test with module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../provider'), {
@@ -35,6 +35,7 @@ describe('Provider generator', function () {
         })
         .withArguments(['test'])
         .withOptions({
+          structure: 'module-type',
           module: 'home'
         })
         .on('end', done);
@@ -42,8 +43,8 @@ describe('Provider generator', function () {
 
     it('should create provider files', function () {
       assert.file([
-        'app/home/test-provider.js',
-        'app/home/test-provider_test.js'
+        'app/home/providers/test-provider.js',
+        'app/home/providers/test-provider_test.js'
       ]);
     });
   });

@@ -27,7 +27,7 @@ describe('View generator', function () {
       .on('end', done);
   });
 
-  describe('with HTML markup and LESS style', function () {
+  describe('with HTML markup and LESS style with module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../view'), {
@@ -35,6 +35,7 @@ describe('View generator', function () {
         })
         .withArguments(['test'])
         .withOptions({
+          structure: 'module-type',
           module: 'home'
         })
         .on('end', done);
@@ -42,13 +43,13 @@ describe('View generator', function () {
 
     it('should create view files', function () {
       assert.file([
-        'app/home/test.tpl.html',
-        'app/home/test.less'
+        'app/home/views/test.tpl.html',
+        'app/home/views/test.less'
       ]);
     });
 
     it('should have correct template contents', function () {
-      assert.fileContent('app/home/test.tpl.html', /<h2>test<\/h2>[^$]*<p>{{test.ctrlName}}<\/p>/);
+      assert.fileContent('app/home/views/test.tpl.html', /<h2>test<\/h2>[^$]*<p>{{test.ctrlName}}<\/p>/);
     });
   });
 

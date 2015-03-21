@@ -52,6 +52,18 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
           });
           // remove duplicates
           files = _.uniq(files);
+          // remove components and types folder
+          files = files.filter(function (file) {
+            var ignoreDirectories = ['components', 'constants', 'controllers', 'directives', 'factories',
+              'filters', 'services', 'providers', 'values', 'views']
+              , i;
+            for (i = 0; i < ignoreDirectories.length; i++) {
+              if (file.indexOf(ignoreDirectories[i]) > -1) {
+                return false;
+              }
+            }
+            return true;
+          });
           // display full name as name, but remove app/ from value
           files = files.map(function (file) {
             return {
@@ -82,7 +94,11 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
       message: 'What\'s the templateURL for this route?',
       default: function (answers) {
         var module = answers.module || this.options.module;
-        return utils.normalizeModulePath(module) + '/' + utils.hyphenName(this.name.replace('.', '-')) + '.tpl.html';
+
+        return utils.normalizeModulePath(module) + '/' +
+          ((this.options.structure === 'module-type' ||
+            this.config.get('structure') === 'module-type') ? 'views/' : '') +
+          utils.hyphenName(this.name.replace('.', '-')) + '.tpl.html';
       }.bind(this),
       when: function () {
         return params && params.templateUrl && !(this.options && this.options['template-url']);
@@ -124,6 +140,8 @@ Generator.prototype.getConfig = function getConfig() {
   var config = {
     markup: this.options.markup || this.config.get('markup'),
     appScript: this.options['app-script'] || this.config.get('appScript'),
+
+    structure: this.options.structure || this.config.get('structure'),
     controllerAs: this.options['controller-as'] !== undefined && this.options['controller-as'] !== null ?
       this.options['controller-as'] : this.config.get('controllerAs'),
 
@@ -154,10 +172,17 @@ Generator.prototype.getConfig = function getConfig() {
     config.moduleName = utils.lowerCamel(modules[0]);
     config.parentModuleName = utils.lowerCamel(modules[1]);
 
+    // create reference path to typings/tsd.d.ts from generated file
     if (config.appScript === 'ts') {
+      // relative path between module path
       config.referencePath = path.relative(config.modulePath, path.dirname(this.config.path));
+      // replace Windows path separators with Unix
       config.referencePath = config.referencePath.replace('\\', '/');
       config.referencePath = '../' + config.referencePath + '/typings/tsd.d.ts';
+      // if module/type structure we need to go up one more folder
+      if (config.structure === 'module-type') {
+        config.referencePath = '../' + config.referencePath;
+      }
     }
   }
 
@@ -165,7 +190,8 @@ Generator.prototype.getConfig = function getConfig() {
 };
 
 Generator.prototype.copyFile = function copyFile(type, component, dest, context) {
-  var src;
+  var pluralComponent = component === 'factory' ? 'factories' : component + 's'
+    , src;
 
   if (typeof dest === 'object') {
     context = dest;
@@ -177,14 +203,17 @@ Generator.prototype.copyFile = function copyFile(type, component, dest, context)
   if (!dest) {
     if (type === 'markup') {
       dest = path.join(context.appDir, context.modulePath,
+        (component !== 'module' && context.structure === 'module-type') ? pluralComponent : '',
         context.hyphenName + '-' + component + '.tpl.' + context.markup);
     }
     if (type === 'src') {
       dest = path.join(context.appDir, context.modulePath,
+        (component !== 'module' && context.structure === 'module-type') ? pluralComponent : '',
         context.hyphenName + '-' + component + '.' + context.appScript);
     }
     if (type === 'unit') {
       dest = path.join(context.testDir, context.modulePath,
+        (component !== 'module' && context.structure === 'module-type') ? pluralComponent : '',
         context.hyphenName + '-' + component + '_test.' + context.testScript);
     }
   }

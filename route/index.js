@@ -73,7 +73,7 @@ Generator.prototype.writing = function writing() {
       args: [this.name.replace('.', '-')],
       options: {
         module: this.module,
-
+        structure: this.options.structure,
         markup: this.options.markup,
         'app-script': this.options['app-script'],
         'controller-as': this.options['controller-as'],
@@ -95,7 +95,7 @@ Generator.prototype.writing = function writing() {
     args: [path.basename(this.templateUrl)],
     options: {
       module: this.module,
-
+      structure: this.options.structure,
       markup: this.options.markup,
       'app-script': this.options['app-script'],
       'controller-as': this.options['controller-as'],

@@ -27,7 +27,7 @@ describe('Factory generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and JS test', function () {
+  describe('with JS app and JS test with module-type', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../factory'), {
@@ -35,6 +35,7 @@ describe('Factory generator', function () {
         })
         .withArguments(['test'])
         .withOptions({
+          structure: 'module-type',
           module: 'home'
         })
         .on('end', done);
@@ -42,8 +43,8 @@ describe('Factory generator', function () {
 
     it('should create factory files', function () {
       assert.file([
-        'app/home/test-factory.js',
-        'app/home/test-factory_test.js'
+        'app/home/factories/test-factory.js',
+        'app/home/factories/test-factory_test.js'
       ]);
     });
   });

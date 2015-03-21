@@ -41,6 +41,33 @@ Generator.prototype.prompting = function prompting() {
       ]
     },
     {
+      type: 'list',
+      name: 'structure',
+      message: 'Which structure should be used?',
+      default: 'module-only',
+      choices: [
+        {
+          name: ['app/',
+                '├── module1/',
+                '│   ├── module2/',
+                '│   ├── module1.js',
+                '│   └── module1-controller.js',
+                '└── app.js'].join('\n'),
+          value: 'module-only'
+        },
+        {
+          name: ['app/',
+                '├── module1/',
+                '│   ├── controllers/',
+                '│   │   └── module1-controller.js',
+                '│   ├── module2/',
+                '│   └── module1.js',
+                '└── app.js'].join('\n'),
+          value: 'module-type'
+        }
+      ]
+    },
+    {
       name: 'host',
       message: 'What host should the app run on?',
       default: 'localhost'
@@ -301,6 +328,7 @@ Generator.prototype.prompting = function prompting() {
   ], function (props) {
     this.appName = props.appName;
     this.ngversion = props.ngversion;
+    this.structure = props.structure;
     this.appDir = props.appDir;
     this.host = props.host;
     this.port = props.port;
@@ -327,6 +355,7 @@ Generator.prototype.configuring = function configuring() {
   this.destinationRoot(this.appName);
 
   // save config info
+  this.config.set('structure', this.structure);
   this.config.set('markup', this.markup);
   this.config.set('appScript', this.appScript);
   this.config.set('controllerAs', this.controllerAs);
@@ -340,6 +369,7 @@ Generator.prototype.configuring = function configuring() {
 
   this.context = {
     appName: this.appName,
+    structure: this.structure,
     ngversion: this.ngversion,
     appDir: this.appDir,
     unitTestDir: this.unitTestDir,
