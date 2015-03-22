@@ -8,7 +8,12 @@ var _ = require('lodash')
   , yeoman = require('yeoman-generator')
   , Generator;
 
-Generator = module.exports = yeoman.generators.NamedBase.extend();
+Generator = module.exports = yeoman.generators.Base.extend({
+  constructor: function () {
+    yeoman.generators.Base.apply(this, arguments);
+    this.name = arguments['0'][0];
+  }
+});
 
 Generator.prototype.askForModuleName = function askForModuleName(params) {
   var done = this.async()
@@ -198,9 +203,7 @@ Generator.prototype.copyFile = function copyFile(type, component, dest, context)
     context = dest;
     dest = null;
   }
-  if (!context) {
-    context = this.getConfig();
-  }
+  context = context || this.getConfig();
   if (!dest) {
     // test or app directory?
     dest = (type === 'unit') ? context.testDir : context.appDir;
@@ -238,6 +241,14 @@ Generator.prototype.copyFile = function copyFile(type, component, dest, context)
     src = '_spec.' + context.testScript;
   }
 
+  this.copySimpleFile(src, dest, context);
+};
+
+Generator.prototype.copySimpleFile = function copySimpleFile(src, dest, context) {
+  context = context || this.context;
+  // remove underscore from templated file names
+  dest = dest || src.replace(/_/g, '');
+
   this.fs.copyTpl(
     this.templatePath(src),
     this.destinationPath(dest),
@@ -262,17 +273,10 @@ Generator.prototype.copyUnitTest = function copyUnitTest(component, dest, contex
 };
 
 Generator.prototype.copyE2e = function copyE2e(context) {
-  var testScript = context.testScript === 'ts' ? 'js' : context.testScript;
-  this.fs.copyTpl(
-    this.templatePath('page.po.' + testScript),
-    this.destinationPath('e2e/' + context.hyphenName + '/' + context.hyphenName + '.po.' + testScript),
-    context
-  );
-  this.fs.copyTpl(
-    this.templatePath('page_test.' + testScript),
-    this.destinationPath('e2e/' + context.hyphenName + '/' + context.hyphenName + '_test.' + testScript),
-    context
-  );
+  var testScript = context.testScript === 'ts' ? 'js' : context.testScript
+    , e2eFile = path.join('e2e', context.hyphenName, context.hyphenName);
+  this.copySimpleFile('page.po.' + testScript, e2eFile + '.po.' + testScript, context);
+  this.copySimpleFile('page_test.' + testScript, e2eFile + '_test.' + testScript, context);
 };
 
 Generator.extend = require('class-extend').extend;

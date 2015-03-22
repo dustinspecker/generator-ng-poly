@@ -1,12 +1,12 @@
 'use strict';
 var chalk = require('chalk')
+  , genBase = require('../genBase')
   , path = require('path')
   , utils = require('../utils')
-  , yeoman = require('yeoman-generator')
   , yosay = require('yosay')
   , Generator;
 
-Generator = module.exports = yeoman.generators.Base.extend();
+Generator = module.exports = genBase.extend();
 
 Generator.prototype.prompting = function prompting() {
   var done = this.async();
@@ -385,34 +385,34 @@ Generator.prototype.configuring = function configuring() {
   };
 
   // copy over common project files
-  this.copyFile('.bowerrc');
-  this.copyFile('.editorconfig');
-  this.copyFile('.eslintrc');
-  this.copyFile('.jscsrc');
-  this.copyFile('.jshintrc');
-  this.copyFile('_bower.json');
-  this.copyFile('_build.config.js');
-  this.copyFile('_gulpfile.js', 'Gulpfile.js');
-  this.copyFile('_karma.config.js');
-  this.copyFile('_package.json');
+  this.copySimpleFile('.bowerrc');
+  this.copySimpleFile('.editorconfig');
+  this.copySimpleFile('.eslintrc');
+  this.copySimpleFile('.jscsrc');
+  this.copySimpleFile('.jshintrc');
+  this.copySimpleFile('_bower.json');
+  this.copySimpleFile('_build.config.js');
+  this.copySimpleFile('_gulpfile.js', 'Gulpfile.js');
+  this.copySimpleFile('_karma.config.js');
+  this.copySimpleFile('_package.json');
   if (this.appScript === 'ts') {
-    this.copyFile('_tsd.json');
+    this.copySimpleFile('_tsd.json');
   }
-  this.copyFile('gitignore', '.gitignore');
-  this.copyFile('_protractor.config.js');
-  this.copyFile('_readme.md', 'README.md');
+  this.copySimpleFile('gitignore', '.gitignore');
+  this.copySimpleFile('_protractor.config.js');
+  this.copySimpleFile('_readme.md', 'README.md');
 
   // copy over gulp files
-  this.copyFile('gulp/analyze.js');
-  this.copyFile('gulp/_build.js');
-  this.copyFile('gulp/_test.js');
-  this.copyFile('gulp/watch.js');
+  this.copySimpleFile('gulp/analyze.js');
+  this.copySimpleFile('gulp/_build.js');
+  this.copySimpleFile('gulp/_test.js');
+  this.copySimpleFile('gulp/watch.js');
 };
 
 Generator.prototype.writing = function writing() {
   // create main module and index.html
-  this.copyFile('_app.' + this.appScript, path.join(this.appDir, 'app.' + this.appScript));
-  this.copyFile('_index.' + this.markup, path.join(this.appDir, 'index.' + this.markup));
+  this.copySimpleFile('_app.' + this.appScript, path.join(this.appDir, 'app.' + this.appScript));
+  this.copySimpleFile('_index.' + this.markup, path.join(this.appDir, 'index.' + this.markup));
 
   this.mkdir(path.join(this.appDir, 'fonts'));
   this.mkdir(path.join(this.appDir, 'images'));
@@ -446,22 +446,4 @@ Generator.prototype.end = function end() {
     local: require.resolve('../module'),
     link: 'strong'
   });
-};
-
-Generator.prototype.copyFile = function copyFile(src, dest) {
-  // prevents yeoman running copyFile as a task
-  if (arguments.length === 0) {
-    return;
-  }
-
-  // remove underscore from templated file names
-  if (!dest) {
-    dest = src.replace(/_/g, '');
-  }
-
-  this.fs.copyTpl(
-    this.templatePath(src),
-    this.destinationPath(dest),
-    this.context
-  );
 };
