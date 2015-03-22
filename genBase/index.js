@@ -166,6 +166,7 @@ Generator.prototype.getConfig = function getConfig() {
   }
   , modules;
 
+  // only run for Angular components
   if (this.module) {
     modules = utils.extractModuleNames(this.module);
     config.modulePath = utils.normalizeModulePath(this.module);
@@ -180,7 +181,7 @@ Generator.prototype.getConfig = function getConfig() {
       config.referencePath = config.referencePath.replace('\\', '/');
       config.referencePath = '../' + config.referencePath + '/typings/tsd.d.ts';
       // if module/type structure we need to go up one more folder
-      if (config.structure === 'module-type') {
+      if (config.structure === 'module-type' && !this.isModule) {
         config.referencePath = '../' + config.referencePath;
       }
     }

@@ -12,6 +12,10 @@ Generator = module.exports = genBase.extend();
 Generator.prototype.initialize = function initialize() {
   this.module = this.name;
 
+  // used by genBase to know this is not a normal component for module-type structures
+  // used for creating TypeScript reference path
+  this.isModule = true;
+
   // if moduleName ends with a slash remove it
   if (this.module.charAt(this.module.length - 1) === '/' || this.module.charAt(this.module.length - 1) === '\\') {
     this.module = this.module.slice(0, this.module.length - 1);
@@ -19,61 +23,55 @@ Generator.prototype.initialize = function initialize() {
 };
 
 Generator.prototype.writing = function writing() {
-  var filePath, file, parentDir, depName, parentModuleDir;
+  var filePath, filePathToCheck, depName, parentDir, parentModuleName;
 
   this.context = this.getConfig();
 
+  // extrac the new module name (last part of path)
   this.context.moduleName = path.basename(this.module);
+
+  // modify context because these were all performed on the ENTIRE module path
+  // instead of just the new module's name
   this.context.lowerCamel = utils.lowerCamel(this.context.moduleName);
   this.context.hyphenModule = utils.hyphenName(this.context.moduleName);
   this.context.upperModule = utils.upperCamel(this.context.moduleName);
-  parentModuleDir = null;
   this.context.templateUrl = path.join(this.module).replace(/\\/g, '/');
   this.context.modulePath = utils.normalizeModulePath(this.module);
-  if (this.context.appScript === 'ts') {
-    this.context.referncePath = path.relative(this.context.modulePath, path.dirname(this.config.path));
-    this.context.referncePath = this.context.referncePath.replace('\\', '/');
-    this.context.referncePath = '../' + this.context.referncePath + '/typings/tsd.d.ts';
-  }
 
   // create new module directory
   this.mkdir(path.join(this.context.appDir, this.context.modulePath));
 
   // check if path and moduleName are the same
-  // if yes - get root app.js to prepare adding dep
-  // else - get parent app.js to prepare adding dep
+  // if yes - get root app.js file to prepare adding dep
+  // else - get parent module file to prepare adding dep
   if (this.context.moduleName === this.module) {
-    filePath = _.find([
-      path.join(this.context.appDir, 'app.es6'),
-      path.join(this.context.appDir, 'app.ts'),
-      path.join(this.context.appDir, 'app.coffee'),
-      path.join(this.context.appDir, 'app.js')
-    ], function (appFile) {
-      return fs.existsSync(appFile);
-    });
+    filePathToCheck = path.join(this.context.appDir, 'app');
   } else {
-    parentDir = path.resolve(path.join(this.context.appDir, this.context.modulePath), '..');
+    // go up one driectory from new module's path to retrieve parent's directory
+    parentDir = path.join(this.context.appDir, this.context.modulePath, '..');
+    // get parent module's name
+    parentModuleName = path.basename(parentDir);
 
-    // for templating to create a parent.child module name
-    parentModuleDir = path.basename(parentDir);
-
-    filePath = _.find([
-      path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.es6'),
-      path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.ts'),
-      path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.coffee'),
-      path.join(this.context.appDir, this.context.modulePath, '..', parentModuleDir + '.js')
-    ], function (appFile) {
-      return fs.existsSync(appFile);
-    });
+    filePathToCheck = path.join(this.context.appDir, this.context.modulePath, '..', parentModuleName);
   }
 
-  file = fs.readFileSync(filePath, 'utf8');
+  // test each app script in case of mixing app scripts
+  filePath = _.find([
+    filePathToCheck + '.es6',
+    filePathToCheck + '.ts',
+    filePathToCheck + '.coffee',
+    filePathToCheck + '.js'
+  ], function (moduleFile) {
+    return fs.existsSync(moduleFile);
+  });
 
-  // save modifications
-  depName = this.context.parentModuleName ? this.context.parentModuleName + '.' : '';
-  depName += this.context.lowerCamel;
-  fs.writeFileSync(filePath, ngAddDep(file, depName));
+  // if adding dep to app file, then dep is `module
+  // else dep is `parent.module`
+  depName = (this.context.parentModuleName ? this.context.parentModuleName + '.' : '') + this.context.lowerCamel;
+    // add dep and save modifications
+  fs.writeFileSync(filePath, ngAddDep(fs.readFileSync(filePath, 'utf8'), depName));
 
+  // create new module
   this.copySrcFile('module', path.join(this.context.appDir, this.context.modulePath,
     this.context.hyphenModule + '.' + this.context.appScript), this.context);
 };
