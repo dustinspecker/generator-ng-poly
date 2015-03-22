@@ -191,7 +191,7 @@ Generator.prototype.getConfig = function getConfig() {
 
 Generator.prototype.copyFile = function copyFile(type, component, dest, context) {
   var pluralComponent = component === 'factory' ? 'factories' : component + 's'
-    , src;
+    , fileName, src;
 
   if (typeof dest === 'object') {
     context = dest;
@@ -201,21 +201,27 @@ Generator.prototype.copyFile = function copyFile(type, component, dest, context)
     context = this.getConfig();
   }
   if (!dest) {
+    // test or app directory?
+    dest = (type === 'unit') ? context.testDir : context.appDir;
+    // append module path and type (if using module-type)
+    dest = path.join(dest, context.modulePath,
+      (component !== 'module' && context.structure === 'module-type') ? pluralComponent : '');
+
+    // create file name
+    fileName = context.hyphenName + '-' + component;
     if (type === 'markup') {
-      dest = path.join(context.appDir, context.modulePath,
-        (component !== 'module' && context.structure === 'module-type') ? pluralComponent : '',
-        context.hyphenName + '-' + component + '.tpl.' + context.markup);
+      fileName += '.tpl.' + context.markup;
     }
     if (type === 'src') {
-      dest = path.join(context.appDir, context.modulePath,
-        (component !== 'module' && context.structure === 'module-type') ? pluralComponent : '',
-        context.hyphenName + '-' + component + '.' + context.appScript);
+      fileName += '.' + context.appScript;
     }
     if (type === 'unit') {
-      dest = path.join(context.testDir, context.modulePath,
-        (component !== 'module' && context.structure === 'module-type') ? pluralComponent : '',
-        context.hyphenName + '-' + component + '_test.' + context.testScript);
+      fileName += '_test.' + context.testScript;
     }
+    // style types ALWAYS send a dest
+
+    // append file name to dest
+    dest = path.join(dest, fileName);
   }
 
   if (type === 'markup') {
