@@ -65,9 +65,9 @@ Languages and Features supported:
   * Markup
     - HAML, HTML, Jade
   * Application scripting languages
-    - CoffeeScript, EcmaScript (ES6) with Babel, JavaScript (ES5), TypeScript
+    - CoffeeScript, EcmaScript2015 (ES6) with Babel, JavaScript (ES5), TypeScript
   * Testing scripting languages
-    - CoffeeScript, EcmaScript (ES6) with Babel, JavaScript (ES5), TypeScript†
+    - CoffeeScript, EcmaScript2015 (ES6) with Babel, JavaScript (ES5), TypeScript†
   * Style languages
     - CSS, LESS, SCSS, Stylus
   * Routers
