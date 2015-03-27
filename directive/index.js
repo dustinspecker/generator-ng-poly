@@ -16,7 +16,6 @@ Generator.prototype.writing = function writing() {
     config.templateUrl = path.join(config.modulePath, 'directives');
   }
   config.templateUrl = config.templateUrl.replace('\\', '/');
-  console.log(config.templateUrl);
 
   this.copyMarkupFile('directive', config);
   this.copySrcFile('directive', config);
