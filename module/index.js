@@ -68,7 +68,7 @@ Generator.prototype.writing = function writing() {
   // if adding dep to app file, then dep is `module
   // else dep is `parent.module`
   depName = (this.context.parentModuleName ? this.context.parentModuleName + '.' : '') + this.context.lowerCamel;
-    // add dep and save modifications
+  // add dep and save modifications
   fs.writeFileSync(filePath, ngAddDep(fs.readFileSync(filePath, 'utf8'), depName));
 
   // create new module
