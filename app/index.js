@@ -1,6 +1,7 @@
 'use strict';
 var chalk = require('chalk')
   , genBase = require('../genBase')
+  , mkdirp = require('mkdirp')
   , path = require('path')
   , utils = require('../utils')
   , yosay = require('yosay')
@@ -414,8 +415,8 @@ Generator.prototype.writing = function writing() {
   this.copySimpleFile('_app.' + this.appScript, path.join(this.appDir, 'app.' + this.appScript));
   this.copySimpleFile('_index.' + this.markup, path.join(this.appDir, 'index.' + this.markup));
 
-  this.mkdir(path.join(this.appDir, 'fonts'));
-  this.mkdir(path.join(this.appDir, 'images'));
+  mkdirp.sync(path.join(this.appDir, 'fonts'));
+  mkdirp.sync(path.join(this.appDir, 'images'));
 };
 
 Generator.prototype.install = function install() {

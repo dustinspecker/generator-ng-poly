@@ -2,6 +2,7 @@
 var _ = require('lodash')
   , fs = require('fs')
   , genBase = require('../genBase')
+  , mkdirp = require('mkdirp')
   , ngAddDep = require('ng-add-dep')
   , path = require('path')
   , utils = require('../utils')
@@ -39,7 +40,7 @@ Generator.prototype.writing = function writing() {
   this.context.modulePath = utils.normalizeModulePath(this.module);
 
   // create new module directory
-  this.mkdir(path.join(this.context.appDir, this.context.modulePath));
+  mkdirp.sync(path.join(this.context.appDir, this.context.modulePath));
 
   // check if path and moduleName are the same
   // if yes - get root app.js file to prepare adding dep

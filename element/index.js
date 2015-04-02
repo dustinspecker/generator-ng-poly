@@ -1,5 +1,6 @@
 'use strict';
 var genBase = require('../genBase')
+  , mkdirp = require('mkdirp')
   , path = require('path')
   , Generator;
 
@@ -9,7 +10,7 @@ Generator.prototype.writing = function writing() {
   var config = this.getConfig()
     , elementDir = path.join(config.appDir, 'components', config.hyphenName);
 
-  this.mkdir(elementDir);
+  mkdirp.sync(elementDir);
 
   if (config.appScript === 'ts') {
     config.referencePath = path.relative(elementDir, config.appDir);
