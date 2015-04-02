@@ -94,7 +94,7 @@ gulp.task('karmaFiles', ['build', 'buildTests'], function () {
 
 // run unit tests
 gulp.task('unitTest', ['lint', 'karmaFiles'], function (done) {
-  $.karma.server.start(karmaConf, function() {
+  $.karma.server.start(karmaConf, function () {
     done()
   });
 });
