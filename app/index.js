@@ -148,7 +148,9 @@ Generator.prototype.prompting = function prompting() {
       type: 'list',
       name: 'testScript',
       message: 'Which is the preferred test scripting language?',
-      default: 'js',
+      default: function (answers) {
+        return answers.appScript;
+      },
       choices: [
         {
           name: 'CoffeeScript',
@@ -188,7 +190,9 @@ Generator.prototype.prompting = function prompting() {
       type: 'list',
       name: 'e2eTestFramework',
       message: 'Which is the preferred e2e testing framework?',
-      default: 'jasmine',
+      default: function (answers) {
+        return answers.testFramework;
+      },
       choices: [
         {
           name: 'Jasmine',
