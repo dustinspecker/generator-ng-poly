@@ -1,7 +1,9 @@
 'use strict';
 
 var gulp = require('gulp')
+  , multiGlob = require('multi-glob')
   , path = require('path')
+  , plato = require('plato')
   , $ = require('gulp-load-plugins')()
 
   , appBase = require('../build.config.js').appDir
@@ -46,17 +48,23 @@ gulp.task('lint', function () {
     .pipe($.jscs());
 });
 
-// run plato anaylysis on JavaScript files
-gulp.task('staticAnalysis', function () {
-  var jsFilter = $.filter('**/*.js');
+// run plato anaylysis on JavaScript (ES5) files
+gulp.task('staticAnalysis', function (done) {
+  multiGlob.glob([appScriptFiles, e2eFiles, unitTests], function (err, matches) {
+    if (err) {
+      throw new Error('Couldn\'t find files.');
+    }
 
-  return gulp.src([
-    appScriptFiles,
-    e2eFiles,
-    unitTests
-  ])
-    .pipe(jsFilter)
-    .pipe($.plato('report'));
+    matches = matches.filter(function (file) {
+      return file.match(/.*[.]js/);
+    });
+
+    if (matches.length > 0) {
+      plato.inspect(matches, './report', {}, function () {
+        done();
+      });
+    }
+  });
 });
 
 gulp.task('analyze', ['lint', 'staticAnalysis']);
