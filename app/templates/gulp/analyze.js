@@ -55,6 +55,7 @@ gulp.task('staticAnalysis', function (done) {
       throw new Error('Couldn\'t find files.');
     }
 
+    // only inspect JS (ES5) files
     matches = matches.filter(function (file) {
       return file.match(/.*[.]js/);
     });
@@ -63,6 +64,8 @@ gulp.task('staticAnalysis', function (done) {
       plato.inspect(matches, './report', {}, function () {
         done();
       });
+    } else {
+      done();
     }
   });
 });
