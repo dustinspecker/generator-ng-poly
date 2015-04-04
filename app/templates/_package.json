@@ -61,6 +61,7 @@
     "karma-ng-html2js-preprocessor": "^0.1.0",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-sinon": "^1.0.3",
+    "lodash": "^3.6.0",
     "main-bower-files": "^2.0.0"<% if (e2eTestFramework === 'mocha') { %>,
     "mocha": "^2.2.0"<% } %>,
     "multi-glob": "^0.4.0",
