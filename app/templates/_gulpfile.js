@@ -3,7 +3,6 @@
 var _ = require('lodash')
   , buildConfig = require('./build.config')
   , config = {}
-  , filters = {}
   , gulp = require('gulp')
   , gulpFiles = require('require-dir')('./gulp')
   , path = require('path')
@@ -55,20 +54,8 @@ config.tsProject = $.typescript.createProject({
   noExternalResolve: false
 });
 
-filters.coffee = $.filter('**/*.coffee');
-filters.css = $.filter('**/*.css');
-filters.es6 = $.filter('**/*.es6');
-filters.haml = $.filter('**/*.haml');
-filters.html = $.filter('**/*.html');
-filters.jade = $.filter('**/*.jade');
-filters.js = $.filter('**/*.js');
-filters.less = $.filter('**/*.less');
-filters.scss = $.filter('**/*.scss');
-filters.styl = $.filter('**/*.styl');
-filters.ts = $.filter('**/*.ts');
-
 for (key in gulpFiles) {
-  gulpFiles[key](gulp, $, config, filters);
+  gulpFiles[key](gulp, $, config);
 }
 
 gulp.task('dev', ['build'], function () {
