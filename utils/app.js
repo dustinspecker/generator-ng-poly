@@ -12,7 +12,7 @@ exports.getAppName = function getAppName(yoRcAbsolutePath) {
 };
 
 /**
- * Gets the appDir from the root build.ocnfig.js
+ * Gets the appDir from the root build.config.js
  * @param {String} yoRcAbsolutePath - path to .yo-rc.json file
  * @return {String} - app directory path
  */
@@ -21,7 +21,7 @@ exports.getAppDir = function getAppName(yoRcAbsolutePath) {
 };
 
 /**
- * Gets the unitTestDir from the root build.ocnfig.js
+ * Gets the unitTestDir from the root build.config.js
  * @param {String} yoRcAbsolutePath - path to .yo-rc.json file
  * @return {String} - unit test directory path
  */
