@@ -4,8 +4,14 @@ module.exports = function (gulp, $, config) {
   // lint CoffeeScript and jshint and jscs JavaScript
   gulp.task('lint', function () {
     var coffeeFilter = $.filter('**/*.coffee')
-      , jsFilter = $.filter('**/*.js')
-      , onError = function (err) {
+      , jsFilter = $.filter('**/*.js');
+
+    return gulp.src([
+      config.appScriptFiles,
+      config.e2eFiles,
+      config.unitTestFiles
+    ])
+      .pipe($.plumber({errorHandler: function (err) {
         $.notify.onError({
           title: 'Error linting at ' + err.plugin,
           subtitle: ' ', //overrides defaults
@@ -14,14 +20,7 @@ module.exports = function (gulp, $, config) {
         })(err);
 
         this.emit('end');
-      };
-
-    return gulp.src([
-      config.appScriptFiles,
-      config.e2eFiles,
-      config.unitTestFiles
-    ])
-      .pipe($.plumber({errorHandler: onError}))
+      }}))
       .pipe(coffeeFilter)
       .pipe($.coffeelint())
       .pipe($.coffeelint.reporter())

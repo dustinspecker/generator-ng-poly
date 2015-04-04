@@ -36,8 +36,13 @@ module.exports = function (gulp, $, config) {
   gulp.task('styles', ['clean'], function () {
     var lessFilter = $.filter('**/*.less')
       , scssFilter = $.filter('**/*.scss')
-      , stylusFilter = $.filter('**/*.styl')
-      , onError = function (err) {
+      , stylusFilter = $.filter('**/*.styl');
+
+    return gulp.src([
+      config.appStyleFiles<% if (polymer) { %>,
+      '!' + appComponents<% } %>
+    ])
+      .pipe($.plumber({errorHandler: function (err) {
         $.notify.onError({
           title: 'Error linting at ' + err.plugin,
           subtitle: ' ', //overrides defaults
@@ -46,13 +51,7 @@ module.exports = function (gulp, $, config) {
         })(err);
 
         this.emit('end');
-      };
-
-    return gulp.src([
-      config.appStyleFiles<% if (polymer) { %>,
-      '!' + appComponents<% } %>
-    ])
-      .pipe($.plumber({errorHandler: onError}))
+      }}))
       .pipe(lessFilter)
       .pipe($.less())
       .pipe(lessFilter.restore())
