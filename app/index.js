@@ -64,7 +64,7 @@ Generator.prototype.prompting = function prompting() {
           name: ['app/',
                 '├── module1/',
                 '│   ├── module2/',
-                '│   ├── module1.js',
+                '│   ├── module1-module.js',
                 '│   └── module1-controller.js',
                 '└── app.js'].join('\n'),
           value: 'module-only'
@@ -75,7 +75,7 @@ Generator.prototype.prompting = function prompting() {
                 '│   ├── controllers/',
                 '│   │   └── module1-controller.js',
                 '│   ├── module2/',
-                '│   └── module1.js',
+                '│   └── module1-module.js',
                 '└── app.js'].join('\n'),
           value: 'module-type'
         }
@@ -399,7 +399,7 @@ Generator.prototype.configuring = function configuring() {
 
 Generator.prototype.writing = function writing() {
   // create main module and index.html
-  this.copySimpleFile('_app.' + this.appScript, path.join(this.appDir, 'app.' + this.appScript));
+  this.copySimpleFile('_app.' + this.appScript, path.join(this.appDir, 'app-module.' + this.appScript));
   this.copySimpleFile('_index.' + this.markup, path.join(this.appDir, 'index.' + this.markup));
 
   mkdirp.sync(path.join(this.appDir, 'fonts'));

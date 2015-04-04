@@ -54,6 +54,10 @@ Generator.prototype.writing = function writing() {
   modulePathTemplate = p;
   // find module.{coffee, js, ts}
   modulePath = _.find([
+    modulePathTemplate + '-module.es6',
+    modulePathTemplate + '-module.coffee',
+    modulePathTemplate + '-module.js',
+    modulePathTemplate + '-module.ts',
     modulePathTemplate + '.es6',
     modulePathTemplate + '.coffee',
     modulePathTemplate + '.js',

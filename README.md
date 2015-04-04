@@ -170,13 +170,13 @@ root/
 ├── app/
 │   ├── fonts/ (empty)
 │   ├── home/
-│   │   ├── home.{coffee,es6,js,ts}
+│   │   ├── home-module.{coffee,es6,js,ts}
 │   │   ├── home.{css,less,scss,styl}
 │   │   ├── home.tpl.{haml,html,jade}
 │   │   ├── home-controller.{coffee,es6,js,ts}
 │   │   └── home-controller_test.{coffee,es6,js,ts}
 │   ├── images/ (empty)
-│   ├── app.{coffee,es6,js,ts}
+│   ├── app-module.{coffee,es6,js,ts}
 │   └── index.{haml,html,jade}
 ├── bower_components/
 ├── e2e/
@@ -219,9 +219,9 @@ root/
 │   │   ├── views/
 │   │   │   ├── home.{css,less,scss,styl}
 │   │   │   └── home.tpl.{haml,html,jade}
-│   │   └── home.{coffee,es6,js,ts}
+│   │   └── home-module.{coffee,es6,js,ts}
 │   ├── images/ (empty)
-│   ├── app.{coffee,es6,js,ts}
+│   ├── app-module.{coffee,es6,js,ts}
 │   └── index.{haml,html,jade}
 ├── bower_components/
 ├── e2e/
@@ -569,7 +569,7 @@ Generates a new module and create a new route. Updates parent module's dependenc
 yo ng-poly:module top
 ```
 
-Produces `app/top/top.js`:
+Produces `app/top/top-module.js`:
 ```javascript
 (function () {
   'use strict';
@@ -603,7 +603,7 @@ Produces `app/top/top.js`:
 
 Produces `app/top/top-controller.js`, `app/top/top-controller_test.js`, `app/top/top.tpl.html`, `app/top/top.less`, `e2e/top/top.po.js`, `e2e/top/top_test.js`
 
-Updates `app/app.js`:
+Updates `app/app-module.js`:
 ```javascript
 (function () {
   'use strict';
@@ -641,7 +641,7 @@ yo ng-poly:module top/bottom
 
 Produces `app/top/bottom/bottom.js`, `app/top/bottom/bottom-controller.js`, `app/top/bottom/bottom-controller_test.js`, `app/top/bottom/bottom.tpl.html`, `app/top/bottom/bottom.less`, `e2e/bottom/bottom.po.js`, `e2e/bottom/bottom_test.js`
 
-Updates `app/top/top.js`:
+Updates `app/top/top-module.js`:
 ```javascript
 (function () {
   'use strict';
@@ -789,7 +789,7 @@ yo ng-poly:route your-place
 [?] What's the templateURL for this route?
 ```
 
-Updates `app/module/module.js`:
+Updates `app/module/module-module.js`:
 ```javascript
 (function () {
   'use strict';

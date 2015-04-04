@@ -58,6 +58,10 @@ Generator.prototype.writing = function writing() {
 
   // test each app script in case of mixing app scripts
   filePath = _.find([
+    filePathToCheck + '-module.es6',
+    filePathToCheck + '-module.ts',
+    filePathToCheck + '-module.coffee',
+    filePathToCheck + '-module.js',
     filePathToCheck + '.es6',
     filePathToCheck + '.ts',
     filePathToCheck + '.coffee',
@@ -74,7 +78,7 @@ Generator.prototype.writing = function writing() {
 
   // create new module
   this.copySrcFile('module', path.join(this.context.appDir, this.context.modulePath,
-    this.context.hyphenModule + '.' + this.context.appScript), this.context);
+    this.context.hyphenModule + '-module.' + this.context.appScript), this.context);
 };
 
 Generator.prototype.end = function end() {
