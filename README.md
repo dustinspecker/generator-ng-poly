@@ -3,6 +3,8 @@
 
 > [Yeoman](http://yeoman.io) generator for modular AngularJS apps with Gulp and optional Polymer support
 
+*Inspired by [John Papa](https://github.com/johnpapa)'s [Angular Style Guide](https://github.com/johnpapa/angular-styleguide) and [Todd Motto](https://github.com/toddmotto)'s [AngularJS styleguide](https://github.com/toddmotto/angularjs-styleguide).*
+
 ## Purpose
 
 This generator focuses on organizing Angular components by feature (home, about, video player, etc.) instead of by type (controller, service, directive, etc.) to encourage the development of self-contained, reusable components.
