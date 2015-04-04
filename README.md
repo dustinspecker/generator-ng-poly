@@ -137,19 +137,17 @@ yo ng-poly:view newView --module=home/kitchen
 Asks for application name and language preferences to scaffold out an application with a home module. It will also ask if tests should be placed in the `app/` or `tests/` directory. It'll ask for some additional Bower dependencies and then install npm and Bower dependencies.
 
 Example:
+
+Run `yo ng-poly` to get started. ng-poly will then asks you some questions:
+
 ```
-yo ng-poly
 [?] What is the app's name?
 [?] Which version of Angular should be used?
 [?] Which structure should be used?
-[?] What host should the app run on?
-[?] Which port should the app run on?
-[?] Which folder should the app be developed in?
 [?] Which is the preferred markup language?
 [?] Which is the preferred application scripting language?
 [?] Want to use Controller As syntax?
 [?] By default, should the route generator create controllers?
-[?] Where should unit tests be saved?
 [?] Which is the preferred test scripting language?
 [?] Which is the preferred unit testing framework?
 [?] Which is the preferred e2e testing framework?
@@ -159,6 +157,17 @@ yo ng-poly
 [?] Should ngRoute be used instead of UI Router?
 [?] Which additional Bower components should be installed?
 ```
+
+ng-poly makes some assumptions, but these can be overridden.
+
+| Option | Default Value| Info |
+| ------ | ------------ | ---- |
+| host | localhost | BrowserSync and Protractor will use this host. |
+| port | 3000 | BrowserSync and Protractor will use this port. |
+| app-dir | app | Source code will be generated here. |
+| unit-test-dir | app | Unit tests will be generated here. |
+
+Example: `yo ng-poly --port=8080 --app-dir=src` to override the default port and app directory.
 
 A **module-only** structure produces:
 ```

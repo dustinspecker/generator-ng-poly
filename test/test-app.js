@@ -16,16 +16,20 @@ describe('App generator', function () {
         .withOptions({
           'skip-install': false
         })
+        .withOptions({
+          host: '127.0.0.1',
+          port: 8000,
+          'app-dir': 'front/',
+          'unit-test-dir': 'front/'
+        })
         .withPrompts({
           appName: 'temp-app-diff',
           structure: 'module-type',
           ngversion: '1.2.*',
-          appDir: 'front/',
           markup: 'html',
           appScript: 'js',
           controllerAs: false,
           testScript: 'js',
-          unitTestDir: 'front/',
           style: 'css',
           bower: []
         })
@@ -80,10 +84,30 @@ describe('App generator', function () {
         'protractor.config.js',
         'README.md'
       ]);
+    });
 
+    it('should not create tsd.json', function () {
       assert.noFile([
         'tsd.json'
       ]);
+    });
+
+    describe('build.config.js', function () {
+      it('should use \'front/\' for appDir in build.config.js', function () {
+        assert.fileContent('build.config.js', 'appDir: \'front/\'');
+      });
+
+      it('should use \'front/\' for unitTestDir in build.config.js', function () {
+        assert.fileContent('build.config.js', 'unitTestDir: \'front/\'');
+      });
+
+      it('should use 127.0.0.1 for host in build.config.js', function () {
+        assert.fileContent('build.config.js', 'host: \'127.0.0.1\'');
+      });
+
+      it('should use 8000 for port in build.config.js', function () {
+        assert.fileContent('build.config.js', 'port: 8000');
+      });
     });
   });
 

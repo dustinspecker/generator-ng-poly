@@ -1,5 +1,6 @@
 'use strict';
-var chalk = require('chalk')
+var _ = require('lodash')
+  , chalk = require('chalk')
   , genBase = require('../genBase')
   , mkdirp = require('mkdirp')
   , path = require('path')
@@ -8,6 +9,33 @@ var chalk = require('chalk')
   , Generator;
 
 Generator = module.exports = genBase.extend();
+
+Generator.prototype.initializing = function initializing() {
+  this.host = 'localhost';
+  this.port = 3000;
+  this.appDir = 'app';
+  this.unitTestDir = 'app';
+
+  if (this.options.host) {
+    this.host = this.options.host;
+    console.log(chalk.yellow('Using host: ' + this.host));
+  }
+
+  if (this.options.port) {
+    this.port = this.options.port;
+    console.log(chalk.yellow('Using port: ' + this.port));
+  }
+
+  if (this.options['app-dir']) {
+    this.appDir = this.options['app-dir'];
+    console.log(chalk.yellow('Using app directory: ' + this.appDir));
+  }
+
+  if (this.options['unit-test-dir']) {
+    this.unitTestDir = this.options['unit-test-dir'];
+    console.log(chalk.yellow('Using unit test directory: ' + this.unitTestDir));
+  }
+};
 
 Generator.prototype.prompting = function prompting() {
   var done = this.async();
@@ -69,21 +97,6 @@ Generator.prototype.prompting = function prompting() {
       ]
     },
     {
-      name: 'host',
-      message: 'What host should the app run on?',
-      default: 'localhost'
-    },
-    {
-      name: 'port',
-      message: 'Which port should the app run on?',
-      default: 3000
-    },
-    {
-      name: 'appDir',
-      message: 'Which folder should the app be developed in?',
-      default: 'app'
-    },
-    {
       type: 'list',
       name: 'markup',
       message: 'Which is the preferred markup language?',
@@ -138,11 +151,6 @@ Generator.prototype.prompting = function prompting() {
       name: 'skipController',
       message: 'By default, should the route generator create controllers?',
       default: true
-    },
-    {
-      name: 'unitTestDir',
-      message: 'Where should unit tests be saved?',
-      default: 'app'
     },
     {
       type: 'list',
@@ -331,25 +339,15 @@ Generator.prototype.prompting = function prompting() {
       }
     }
   ], function (props) {
-    this.appName = props.appName;
-    this.ngversion = props.ngversion;
-    this.structure = props.structure;
-    this.appDir = props.appDir;
-    this.host = props.host;
-    this.port = props.port;
-    this.markup = props.markup;
-    this.appScript = props.appScript;
-    this.controllerAs = props.controllerAs;
-    this.skipController = !props.skipController;
-    this.testScript = props.testScript;
-    this.testFramework = props.testFramework;
-    this.e2eTestFramework = props.e2eTestFramework;
-    this.unitTestDir = props.unitTestDir;
-    this.style = props.style;
-    this.polymer = props.polymer;
-    this.ngRoute = props.ngRoute;
-    this.framework = props.framework;
-    this.bower = props.bower.join(',');
+    // needs to be a string
+    props.bower = props.bower.join(',');
+    // question asks if controllers should be created, but
+    // we want to know if controllers should be skipped
+    // should rename to create controller in future
+    props.skipController = !props.skipController;
+
+    // attach answers to `this`
+    _.merge(this, props);
 
     done();
   }.bind(this));
