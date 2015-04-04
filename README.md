@@ -16,13 +16,7 @@ A typical workflow with this generator consists of creating an Angular module ([
 Install `generator-ng-poly`:
 
 ```
-npm install -g generator-ng-poly
-```
-
-Be sure to install `yo` before running any Yeoman generators:
-
-```
-npm install -g yo
+npm install -g bower gulp yo generator-ng-poly
 ```
 
 If TypeScript is going to be used, `tsd@next` will need to be installed:
@@ -34,7 +28,7 @@ npm install -g tsd@next
 Run `yo ng-poly`
 Yeoman will then ask for an app name and language preferences.
 
-Install `Gulp` via `npm install -g gulp` and run `gulp` to build and start the development environment.
+Run `gulp` to build and start the development environment.
 
 ## User Groups
 
@@ -161,11 +155,12 @@ Run `yo ng-poly` to get started. ng-poly will then asks you some questions:
 ng-poly makes some assumptions, but these can be overridden.
 
 | Option | Default Value| Info |
-| ------ | ------------ | ---- |
+| -------| ------------ | ---- |
 | host | localhost | BrowserSync and Protractor will use this host. |
 | port | 3000 | BrowserSync and Protractor will use this port. |
 | app-dir | app | Source code will be generated here. |
 | unit-test-dir | app | Unit tests will be generated here. |
+| skip-install | false | Should ng-poly skip installing Bower and npm dependencies? |
 
 Example: `yo ng-poly --port=8080 --app-dir=src` to override the default port and app directory.
 
