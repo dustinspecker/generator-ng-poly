@@ -15,11 +15,14 @@ Generator.prototype.initializing = function initializing() {
   this.port = this.options.port || 3000;
   this.appDir = this.options['app-dir'] || 'app';
   this.unitTestDir = this.options['unit-test-dir'] || 'app';
+  this.skipController = this.options['skip-controller'] || false;
 
   console.log(chalk.yellow('Using host: ' + this.host));
   console.log(chalk.yellow('Using port: ' + this.port));
   console.log(chalk.yellow('Using app directory: ' + this.appDir));
   console.log(chalk.yellow('Using unit test directory: ' + this.unitTestDir));
+  console.log(chalk.yellow('Route generator will ' +
+    (this.skipController ? chalk.red('NOT ') : '') + 'create controllers'));
 };
 
 Generator.prototype.prompting = function prompting() {
@@ -129,12 +132,6 @@ Generator.prototype.prompting = function prompting() {
       type: 'confirm',
       name: 'controllerAs',
       message: 'Want to use Controller As syntax?',
-      default: true
-    },
-    {
-      type: 'confirm',
-      name: 'skipController',
-      message: 'By default, should the route generator create controllers?',
       default: true
     },
     {
@@ -326,10 +323,6 @@ Generator.prototype.prompting = function prompting() {
   ], function (props) {
     // needs to be a string
     props.bower = props.bower.join(',');
-    // question asks if controllers should be created, but
-    // we want to know if controllers should be skipped
-    // should rename to create controller in future
-    props.skipController = !props.skipController;
 
     // attach answers to `this`
     _.merge(this, props);

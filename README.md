@@ -162,6 +162,7 @@ ng-poly makes some assumptions, but these can be overridden.
 | port | 3000 | BrowserSync and Protractor will use this port. |
 | app-dir | app | Source code will be generated here. |
 | unit-test-dir | app | Unit tests will be generated here. |
+| skip-controller | false | Should the route generator *skip* creating a controller? |
 | skip-install | false | Should ng-poly skip installing Bower and npm dependencies? |
 
 Example: `yo ng-poly --port=8080 --app-dir=src` to override the default port and app directory.

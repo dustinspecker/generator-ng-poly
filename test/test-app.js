@@ -315,6 +315,9 @@ describe('App generator', function () {
     before(function (done) {
       helpers
         .run(join(__dirname, '../app'))
+        .withOptions({
+          'skip-controller': true
+        })
         .withPrompts({
           appName: 'temp-app',
           markup: 'html',
@@ -341,8 +344,6 @@ describe('App generator', function () {
         'app/home/home-module.js',
         'app/home/home.scss',
         'app/home/home.tpl.html',
-        'app/home/home-controller.js',
-        'app/home/home-controller_test.js',
         'app/images',
         'app/app-module.js',
         'app/index.html',
@@ -366,6 +367,13 @@ describe('App generator', function () {
         'package.json',
         'protractor.config.js',
         'README.md'
+      ]);
+    });
+
+    it('should not create controllers', function () {
+      assert.noFile([
+        'app/home-controller.js',
+        'app/home-controller_test.js'
       ]);
     });
   });
