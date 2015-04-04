@@ -11,30 +11,15 @@ var _ = require('lodash')
 Generator = module.exports = genBase.extend();
 
 Generator.prototype.initializing = function initializing() {
-  this.host = 'localhost';
-  this.port = 3000;
-  this.appDir = 'app';
-  this.unitTestDir = 'app';
+  this.host = this.options.host || 'localhost';
+  this.port = this.options.port || 3000;
+  this.appDir = this.options['app-dir'] || 'app';
+  this.unitTestDir = this.options['unit-test-dir'] || 'app';
 
-  if (this.options.host) {
-    this.host = this.options.host;
-    console.log(chalk.yellow('Using host: ' + this.host));
-  }
-
-  if (this.options.port) {
-    this.port = this.options.port;
-    console.log(chalk.yellow('Using port: ' + this.port));
-  }
-
-  if (this.options['app-dir']) {
-    this.appDir = this.options['app-dir'];
-    console.log(chalk.yellow('Using app directory: ' + this.appDir));
-  }
-
-  if (this.options['unit-test-dir']) {
-    this.unitTestDir = this.options['unit-test-dir'];
-    console.log(chalk.yellow('Using unit test directory: ' + this.unitTestDir));
-  }
+  console.log(chalk.yellow('Using host: ' + this.host));
+  console.log(chalk.yellow('Using port: ' + this.port));
+  console.log(chalk.yellow('Using app directory: ' + this.appDir));
+  console.log(chalk.yellow('Using unit test directory: ' + this.unitTestDir));
 };
 
 Generator.prototype.prompting = function prompting() {
