@@ -3,6 +3,7 @@
 var _ = require('lodash')
   , buildConfig = require('./build.config')
   , config = {}
+  , filters = {}
   , gulp = require('gulp')
   , gulpFiles = require('require-dir')('./gulp')
   , path = require('path')
@@ -36,6 +37,7 @@ config.appMarkupFiles = path.join(config.appDir, '**/*.{haml,html,jade}');
 config.appScriptFiles = path.join(config.appDir, '**/*.{coffee,es6,js,ts}');
 config.appStyleFiles = path.join(config.appDir, '**/*.{css,less,scss,styl}');
 
+config.buildDirectiveTemplateFiles = path.join(config.buildDir, '**/*directive.tpl.html');
 config.buildJsFiles = path.join(config.buildJs, '**/*.js');
 
 config.buildTestDirectiveTemplateFiles = path.join(config.buildTestDir, '**/*directive.tpl.html');
@@ -53,8 +55,20 @@ config.tsProject = $.typescript.createProject({
   noExternalResolve: false
 });
 
+filters.coffee = $.filter('**/*.coffee');
+filters.css = $.filter('**/*.css');
+filters.es6 = $.filter('**/*.es6');
+filters.haml = $.filter('**/*.haml');
+filters.html = $.filter('**/*.html');
+filters.jade = $.filter('**/*.jade');
+filters.js = $.filter('**/*.js');
+filters.less = $.filter('**/*.less');
+filters.scss = $.filter('**/*.scss');
+filters.styl = $.filter('**/*.styl');
+filters.ts = $.filter('**/*.ts');
+
 for (key in gulpFiles) {
-  gulpFiles[key](gulp, $, config);
+  gulpFiles[key](gulp, $, config, filters);
 }
 
 gulp.task('dev', ['build'], function () {

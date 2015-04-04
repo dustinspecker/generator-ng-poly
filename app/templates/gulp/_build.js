@@ -102,7 +102,7 @@ module.exports = function (gulp, $, config) {
 
     return gulp.src([
       config.appScriptFiles,
-      config.buildDir + '**/*.html',<% if (polymer) { %>,
+      config.buildDir + '**/*.html'<% if (polymer) { %>,
       '!' + appComponents<% } %>,
       '!**/*_test.*',
       '!**/index.html'
@@ -315,14 +315,12 @@ module.exports = function (gulp, $, config) {
 
   gulp.task('copyTemplates', [<% if (polymer) { %>'components'<% } else { %>'bowerInject'<% } %>], function () {
     // always copy templates to testBuild directory
-    var buildDirectiveTemplateFiles = path.join(config.buildDir, '**/*directive.tpl.html')
-      , testDirectiveTemplateDir = path.join(config.buildTestDir, 'templates')
-      , stream = $.streamqueue({objectMode: true});
+    var stream = $.streamqueue({objectMode: true});
 
-    stream.queue(gulp.src([buildDirectiveTemplateFiles]));
+    stream.queue(gulp.src([config.buildDirectiveTemplateFiles]));
 
     return stream.done()
-      .pipe(gulp.dest(testDirectiveTemplateDir));
+      .pipe(gulp.dest(config.buildTestDirectiveTemplatesDir));
   });
 
   gulp.task('deleteTemplates', ['copyTemplates'], function (cb) {
@@ -336,7 +334,7 @@ module.exports = function (gulp, $, config) {
       .pipe(gulp.dest('tmp/' + config.buildDir))
       .on('end', function () {
         $.del([
-          config.buildDir + '*',<% if (polymer) { %>,
+          config.buildDir + '*'<% if (polymer) { %>,
           '!' + config.buildComponents<% } %>,
           '!' + config.buildCss,
           '!' + config.buildFonts,
