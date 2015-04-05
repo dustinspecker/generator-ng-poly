@@ -966,7 +966,7 @@ Produces `app/module/morals-value.js`:
 
 ```
 
-Produces `app/module/Morals-value_test.js`:
+Produces `app/module/morals-value_test.js`:
 ```javascript
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
