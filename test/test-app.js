@@ -111,6 +111,10 @@ describe('App generator', function () {
         assert.fileContent('build.config.js', 'port: 8000');
       });
     });
+
+    it('should create home/views/home.tpl.html templateUrl in front/home/home-routes.js', function () {
+      assert.fileContent('front/home/home-routes.js', 'templateUrl: \'home/views/home.tpl.html\',');
+    });
   });
 
   describe('with HAML markup, LESS style, TypeScript app, and TypeScript test', function () {
@@ -161,6 +165,7 @@ describe('App generator', function () {
       assert.file([
         'app/fonts',
         'app/home/home-module.ts',
+        'app/home/home-routes.ts',
         'app/home/home.less',
         'app/home/home.tpl.haml',
         'app/home/home-controller.ts',
@@ -190,6 +195,10 @@ describe('App generator', function () {
         'protractor.config.js',
         'README.md'
       ]);
+    });
+
+    it('should create home/home.tpl.html templateUrl in app/home/home-routes.ts', function () {
+      assert.fileContent('app/home/home-routes.ts', 'templateUrl: \'home/home.tpl.html\',');
     });
   });
 
@@ -221,6 +230,7 @@ describe('App generator', function () {
       assert.file([
         'app/fonts',
         'app/home/home-module.coffee',
+        'app/home/home-routes.coffee',
         'app/home/home.less',
         'app/home/home.tpl.haml',
         'app/home/home-controller.coffee',
@@ -284,6 +294,7 @@ describe('App generator', function () {
       assert.file([
         'app/fonts',
         'app/home/home-module.es6',
+        'app/home/home-routes.es6',
         'app/home/home.styl',
         'app/home/home.tpl.jade',
         'app/home/home-controller.es6',
@@ -347,6 +358,7 @@ describe('App generator', function () {
       assert.file([
         'app/fonts',
         'app/home/home-module.js',
+        'app/home/home-routes.js',
         'app/home/home.scss',
         'app/home/home.tpl.html',
         'app/images',

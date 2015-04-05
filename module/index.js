@@ -80,7 +80,8 @@ Generator.prototype.end = function end() {
       options: {
         module: this.module,
         url: '/' + this.context.hyphenModule,
-        'template-url': this.context.modulePath + '/' + this.context.hyphenModule + '.tpl.html',
+        'template-url': this.context.modulePath + '/' +
+          (this.context.structure === 'module-type' ? 'views/' : '') + this.context.hyphenModule + '.tpl.html',
 
         markup: this.options.markup,
         'app-script': this.options['app-script'],
