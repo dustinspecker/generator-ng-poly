@@ -9,5 +9,7 @@ before_install:
 after_success: npm run-script coveralls
 notifications:
   slack:
+    on_success: change
+    on_failure: always
     rooms:
       secure: HFzTuz67kFewMd1bZM1RxMWji+CGKf9qpGFj2k0DtDieCSuAG48gYr+ccxNvG8qalLAKrqb4Q0TX9MZbwREDqfbin5shFjtV9WBsL1issuSmo6vwqy63Fxz+7mzI16TpTLvxoxGOtwUi2OKLNAjmtdXsyxaQl6LOxRFtf3cFiWM=
