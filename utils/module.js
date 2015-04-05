@@ -1,5 +1,6 @@
 'use strict';
-var exports = module.exports
+var _ = require('lodash')
+  , exports = module.exports
   , findup = require('findup-sync')
   , fs = require('fs')
   , nameUtils = require('./name')
@@ -94,4 +95,47 @@ exports.moduleExists = function moduleExists(modulePath) {
   fullPath = path.join(yoPath, exports.getAppDir(), exports.normalizeModulePath(modulePath));
 
   return fs.existsSync(fullPath);
+};
+
+/**
+ * Return file path
+ * @param {String} filePath - path to module MINUS the convention {,-routes,-module} and extension
+ * @param {Boolean} isLookingForRoutes - looking for routes file? or just module?
+ * @return {String} file path
+*/
+function findFile(filePath, isLookingForRoutes) {
+  var files = []
+    , conventions = ['-module', '']
+    , extensions = ['coffee', 'es6', 'js', 'ts'];
+
+  if (isLookingForRoutes) {
+    conventions.unshift('-routes');
+  }
+
+  conventions.forEach(function (convention) {
+    extensions.forEach(function (extension) {
+      files.push(filePath + convention + '.' + extension);
+    });
+  });
+
+  return _.find(files, function (routesFile) {
+    return fs.existsSync(routesFile);
+  });
+}
+
+/**
+ * Returns routesfile path
+ * @param {String} routesPath - path to module MINUS the convention {,-routes,-module} and extension
+ * @return {String} - file path
+ */
+exports.findRoutesFile = function findRoutesFile(routesPath) {
+  return findFile(routesPath, true);
+};
+/**
+ * Returns module file path
+ * @param {String} modulePath - path to module MINUS the convention {,-module} and extension
+ * @return {String} - file path
+ */
+exports.findModuleFile = function findModuleFile(modulePath) {
+  return findFile(modulePath, false);
 };

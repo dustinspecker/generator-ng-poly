@@ -1,6 +1,5 @@
 'use strict';
-var _ = require('lodash')
-  , fs = require('fs')
+var fs = require('fs')
   , genBase = require('../genBase')
   , mkdirp = require('mkdirp')
   , ngAddDep = require('ng-add-dep')
@@ -56,19 +55,8 @@ Generator.prototype.writing = function writing() {
     filePathToCheck = path.join(this.context.appDir, this.context.modulePath, '..', parentModuleName);
   }
 
-  // test each app script in case of mixing app scripts
-  filePath = _.find([
-    filePathToCheck + '-module.es6',
-    filePathToCheck + '-module.ts',
-    filePathToCheck + '-module.coffee',
-    filePathToCheck + '-module.js',
-    filePathToCheck + '.es6',
-    filePathToCheck + '.ts',
-    filePathToCheck + '.coffee',
-    filePathToCheck + '.js'
-  ], function (moduleFile) {
-    return fs.existsSync(moduleFile);
-  });
+  // get module path
+  filePath = utils.findModuleFile(filePathToCheck);
 
   // if adding dep to app file, then dep is `module
   // else dep is `parent.module`

@@ -65,7 +65,7 @@ describe('Module generator', function () {
         .run(path.join(__dirname, '../module'), {
           tmpdir: false
         })
-        .withArguments(['test/'])
+        .withArguments(['test-coffee/'])
         .withOptions({
           'app-script': 'coffee'
         })
@@ -79,12 +79,12 @@ describe('Module generator', function () {
 
     it('should add test files', function () {
       assert.file([
-        'app/test/test-module.coffee',
-        'app/test/test-routes.coffee',
-        'app/test/test.less',
-        'app/test/test.tpl.html',
-        'app/test/test-controller.coffee',
-        'app/test/test-controller_test.js'
+        'app/test-coffee/test-coffee-module.coffee',
+        'app/test-coffee/test-coffee-routes.coffee',
+        'app/test-coffee/test-coffee.less',
+        'app/test-coffee/test-coffee.tpl.html',
+        'app/test-coffee/test-coffee-controller.coffee',
+        'app/test-coffee/test-coffee-controller_test.js'
       ]);
     });
 
@@ -92,8 +92,8 @@ describe('Module generator', function () {
       assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
     });
 
-    it('should add test to app/app-module.js deps', function () {
-      assert.fileContent('app/app-module.js', / {4}\'test\'/);
+    it('should add testCoffee to app/app-module.js deps', function () {
+      assert.fileContent('app/app-module.js', / {4}\'testCoffee\'/);
     });
   });
 
@@ -103,7 +103,7 @@ describe('Module generator', function () {
         .run(path.join(__dirname, '../module'), {
           tmpdir: false
         })
-        .withArguments(['test/'])
+        .withArguments(['test-es6/'])
         .withOptions({
           'app-script': 'es6'
         })
@@ -117,12 +117,12 @@ describe('Module generator', function () {
 
     it('should add test files', function () {
       assert.file([
-        'app/test/test-module.es6',
-        'app/test/test-routes.es6',
-        'app/test/test.less',
-        'app/test/test.tpl.html',
-        'app/test/test-controller.es6',
-        'app/test/test-controller_test.js'
+        'app/test-es6/test-es6-module.es6',
+        'app/test-es6/test-es6-routes.es6',
+        'app/test-es6/test-es6.less',
+        'app/test-es6/test-es6.tpl.html',
+        'app/test-es6/test-es6-controller.es6',
+        'app/test-es6/test-es6-controller_test.js'
       ]);
     });
 
@@ -130,8 +130,8 @@ describe('Module generator', function () {
       assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
     });
 
-    it('should add test to app/app-module.js deps', function () {
-      assert.fileContent('app/app-module.js', / {4}\'test\'/);
+    it('should add testEs6 to app/app-module.js deps', function () {
+      assert.fileContent('app/app-module.js', / {4}\'testEs6\'/);
     });
   });
 
@@ -142,7 +142,7 @@ describe('Module generator', function () {
         .run(path.join(__dirname, '../module'), {
           tmpdir: false
         })
-        .withArguments(['test/'])
+        .withArguments(['test-js/'])
         .withGenerators([
           path.join(__dirname, '../route'),
           path.join(__dirname, '../controller'),
@@ -153,12 +153,12 @@ describe('Module generator', function () {
 
     it('should add test files', function () {
       assert.file([
-        'app/test/test-module.js',
-        'app/test/test-routes.js',
-        'app/test/test.less',
-        'app/test/test.tpl.html',
-        'app/test/test-controller.js',
-        'app/test/test-controller_test.js'
+        'app/test-js/test-js-module.js',
+        'app/test-js/test-js-routes.js',
+        'app/test-js/test-js.less',
+        'app/test-js/test-js.tpl.html',
+        'app/test-js/test-js-controller.js',
+        'app/test-js/test-js-controller_test.js'
       ]);
     });
 
@@ -166,8 +166,8 @@ describe('Module generator', function () {
       assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
     });
 
-    it('should add test to app/app-module.js deps', function () {
-      assert.fileContent('app/app-module.js', / {4}\'test\'/);
+    it('should add testJs to app/app-module.js deps', function () {
+      assert.fileContent('app/app-module.js', / {4}\'testJs\'/);
     });
   });
 
@@ -177,7 +177,7 @@ describe('Module generator', function () {
         .run(path.join(__dirname, '../module'), {
           tmpdir: false
         })
-        .withArguments(['test/'])
+        .withArguments(['test-ts/'])
         .withOptions({
           'app-script': 'ts'
         })
@@ -191,12 +191,12 @@ describe('Module generator', function () {
 
     it('should add test files', function () {
       assert.file([
-        'app/test/test-module.ts',
-        'app/test/test-routes.ts',
-        'app/test/test.less',
-        'app/test/test.tpl.html',
-        'app/test/test-controller.ts',
-        'app/test/test-controller_test.js'
+        'app/test-ts/test-ts-module.ts',
+        'app/test-ts/test-ts-routes.ts',
+        'app/test-ts/test-ts.less',
+        'app/test-ts/test-ts.tpl.html',
+        'app/test-ts/test-ts-controller.ts',
+        'app/test-ts/test-ts-controller_test.js'
       ]);
     });
 
@@ -204,8 +204,8 @@ describe('Module generator', function () {
       assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
     });
 
-    it('should add test to app/app-module.js deps', function () {
-      assert.fileContent('app/app-module.js', / {4}\'test\'/);
+    it('should add testTs to app/app-module.js deps', function () {
+      assert.fileContent('app/app-module.js', / {4}\'testTs\'/);
     });
   });
 

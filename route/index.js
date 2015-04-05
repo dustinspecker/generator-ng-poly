@@ -1,6 +1,5 @@
 'use strict';
-var _ = require('lodash')
-  , fs = require('fs')
+var fs = require('fs')
   , path = require('path')
   , genBase = require('../genBase')
   , ngAddDep = require('ng-add-dep')
@@ -58,40 +57,14 @@ Generator.prototype.writing = function writing() {
   wipPath = path.join(this.config.path, '..', config.appDir, config.modulePath,
     utils.hyphenName(config.moduleName));
 
-  // find name-module.{coffee,js,ts}
-  modulePath = _.find([
-    wipPath + '-module.es6',
-    wipPath + '-module.coffee',
-    wipPath + '-module.js',
-    wipPath + '-module.ts',
-    wipPath + '.es6',
-    wipPath + '.coffee',
-    wipPath + '.js',
-    wipPath + '.ts'
-    ], function (appFile) {
-      return fs.existsSync(appFile);
-    });
+  // get name-module.{coffee,js,ts}
+  modulePath = utils.findModuleFile(wipPath);
   moduleFile = fs.readFileSync(modulePath, 'utf8');
   // if file doesn't have the dependency, add it
   fs.writeFileSync(modulePath, ngAddDep(moduleFile, dependency));
 
-  // find name-routes.{coffee,js,ts}
-  routesPath = _.find([
-    wipPath + '-routes.es6',
-    wipPath + '-routes.coffee',
-    wipPath + '-routes.js',
-    wipPath + '-routes.ts',
-    wipPath + '-module.es6',
-    wipPath + '-module.coffee',
-    wipPath + '-module.js',
-    wipPath + '-module.ts',
-    wipPath + '.es6',
-    wipPath + '.coffee',
-    wipPath + '.js',
-    wipPath + '.ts'
-    ], function (appFile) {
-      return fs.existsSync(appFile);
-    });
+  // get name-routes.{coffee,js,ts}
+  routesPath = utils.findRoutesFile(wipPath);
   routesFile = fs.readFileSync(routesPath, 'utf8');
   // add route to route file
   fs.writeFileSync(routesPath, utils.addRoute(routesFile, newState, newRouteConfig));
