@@ -336,18 +336,20 @@ Generator.prototype.configuring = function configuring() {
   // create a directory named `appName`
   this.destinationRoot(this.appName);
 
-  // save config info
-  this.config.set('structure', this.structure);
-  this.config.set('markup', this.markup);
-  this.config.set('appScript', this.appScript);
-  this.config.set('controllerAs', this.controllerAs);
-  this.config.set('skipController', this.skipController);
-  this.config.set('testScript', this.testScript);
-  this.config.set('testFramework', this.testFramework);
-  this.config.set('e2eTestFramework', this.e2eTestFramework);
-  this.config.set('style', this.style);
-  this.config.set('ngRoute', this.ngRoute);
-  this.config.set('lastUsedModule', 'home');
+  // save config
+  [
+    'appScript',
+    'controllerAs',
+    'e2eTestFramework',
+    'markup',
+    'ngRoute',
+    'structure',
+    'style',
+    'testFramework',
+    'testScript'
+  ].forEach(function (option) {
+    this.config.set(option, this[option]);
+  }.bind(this));
 
   this.context = {
     pkg: pkg,
@@ -368,28 +370,33 @@ Generator.prototype.configuring = function configuring() {
   };
 
   // copy over common project files
-  this.copySimpleFile('.bowerrc');
-  this.copySimpleFile('.editorconfig');
-  this.copySimpleFile('.eslintrc');
-  this.copySimpleFile('.jscsrc');
-  this.copySimpleFile('.jshintrc');
-  this.copySimpleFile('_bower.json');
-  this.copySimpleFile('_build.config.js');
+  [
+    '.bowerrc',
+    '.editorconfig',
+    '.eslintrc',
+    '.jscsrc',
+    '.jshintrc',
+    '_bower.json',
+    '_build.config.js',
+    '_karma.config.js',
+    '_package.json',
+    '_protractor.config.js',
+    'gulp/analyze.js',
+    'gulp/_build.js',
+    'gulp/_test.js',
+    'gulp/watch.js'
+  ].forEach(function (file) {
+    this.copySimpleFile(file);
+  }.bind(this));
+
+  // files that need to be renamed when copied
   this.copySimpleFile('_gulpfile.js', 'Gulpfile.js');
-  this.copySimpleFile('_karma.config.js');
-  this.copySimpleFile('_package.json');
+  this.copySimpleFile('gitignore', '.gitignore');
+  this.copySimpleFile('_readme.md', 'README.md');
+
   if (this.appScript === 'ts') {
     this.copySimpleFile('_tsd.json');
   }
-  this.copySimpleFile('gitignore', '.gitignore');
-  this.copySimpleFile('_protractor.config.js');
-  this.copySimpleFile('_readme.md', 'README.md');
-
-  // copy over gulp files
-  this.copySimpleFile('gulp/analyze.js');
-  this.copySimpleFile('gulp/_build.js');
-  this.copySimpleFile('gulp/_test.js');
-  this.copySimpleFile('gulp/watch.js');
 };
 
 Generator.prototype.writing = function writing() {
