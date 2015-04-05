@@ -103,7 +103,7 @@ Languages and Features supported:
 
 † e2e tests are not supported in TypeScript. JavaScript will instead be used for e2e tests.
 
-### Gulp Tasks
+### Gulp Tasks Briefing
 `gulp` will start a localhost and open in the default browser
 
 Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
@@ -118,6 +118,7 @@ Using `--stage prod` will concat and minify HTML, CSS, and Angular modules.
 
 `gulp e2eTest` will run e2e tests via Protractor (must start a localhost before running `gulp e2eTest`)
 
+[Gulp Tasks in Detail](#gulp-tasks-in-detail)
 
 * * *
 **All generators ask for a module name except app and element. All generators except app take a name as an argument. A name can be written with CamelCase or hyphens.**
@@ -1211,6 +1212,50 @@ Lastly, views will be generated like:
 <h2>home</h2>
 <p>{{home.ctrlName}}</p>
 ```
+
+* * *
+
+## Gulp Tasks in Detail
+
+*Items in italics are only ran in --stage=prod*
+
+Available tasks:
+- `gulp` or `gulp default`
+ - Runs `gulp dev`
+- `gulp dev`
+ - Runs `gulp build` and starts BrowserSync and Gulp's watch
+- `gulp build`
+ - Runs `gulp analyze`
+ - Runs `gulp clean` to delete build directory
+ - Runs `gulp markup` to compile Haml and Jade to HTML
+ - Runs `gulp styles` to compile Less, SCSS, and Stylus (with Nib), add vendor prefixes, *modify images and font URLs*, *concat*, *minify*, and *rev*
+ - Runs `gulp scripts` to compile ES2015, CoffeeScript, and TypeScript, *injects HTML templates in $templateCache*, *sorts Angular files*, *annotates*, *minifies*, and *rev*
+ - Runs `gulp inject` to inject sorted JS and CSS source files into build/index.html
+ - Runs `gulp bowerCopy` to *modify image and font URLs in vendor CSS files*, *concat vendor CSS*, *minify vendor CSS*, *rev vendor CSS*, copy vendor CSS to build, *concat vendor JS*, *minify vendor JS and leave licenses intact*, copy vendor JS to build
+ - Runs `gulp bowerInject` to inject vendor CSS and JS into build/index.html
+ - Runs `gulp bowerAssets` to copy over any vendor image and fonts to build/
+ - Runs `gulp fonts` to copy app fonts to build/
+ - Runs `gulp images` to copy app images to build/
+ - Runs `gulp copyTemplates` to copy compiled templates to a separate test directory used for unit testing
+ - Runs `gulp deleteTemplates` to *delete templates in build*
+- `gulp unitTest`
+ - Runs `gulp lint`
+ - Runs `gulp clean:test` to delete previous compiled unit tests
+ - Runs `gulp buildTests` to compile CoffeeScript, ES2015, and TypeScript unit tests
+ - Runs `gulp build`
+ - Runs `gulp karmaFiles` to automatically configure Bower dependencies, directive templates, sorted build JS files, and unit tests for Karma
+ - Run unit tests with Karma
+- `gulp e2eTest`
+ - Runs `gulp lint`
+ - Runs `gulp build`
+ - Runs `gulp build:e2eTest` to compile CoffeeScript, ES2015, and TypeScript tests
+ - Runs Protractor to perform e2eTest (**app needs to be running via `gulp default`**)
+- `gulp webdriverUpdate` downloads Selenium and webdrivers for e2e testing
+- `gulp analyze`
+ - Analyzes source and test code with CoffeeLint, ESLint, JSHint, and JSCS
+ - Uses Plato to inspect source and test for complexity and maintainability
+
+* * *
 
 ### License
 
