@@ -30,6 +30,8 @@ npm install -g tsd@next
 Run `yo ng-poly`
 Yeoman will then ask for an app name and language preferences.
 
+**If using Node 0.12, there is a bug in Yeoman or Node causing yeoman generators to hang. With ng-poly, if after it outputs the generated home module files it hangs, then it is safe to enter `Ctrl+C`, etc. The project is good to go and everything else should work normally.**
+
 Run `gulp` to build and start the development environment.
 
 ## User Groups
