@@ -1,13 +1,13 @@
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('<%= upperCamel %>', () => {
+describe('<%= lowerCamel %>', () => {
   let constant;
 
   beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
-  beforeEach(inject((<%= upperCamel %>) => {
-    constant = <%= upperCamel %>;
+  beforeEach(inject((<%= lowerCamel %>) => {
+    constant = <%= lowerCamel %>;
   }));
 
   it('should equal 0', () => {

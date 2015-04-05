@@ -277,14 +277,14 @@ Produces `app/module/the-hero-constant.js`:
 
   /**
    * @ngdoc service
-   * @name module.constant:TheHero
+   * @name module.constant:theHero
    *
    * @description
    *
    */
   angular
     .module('module')
-    .constant('TheHero', 0);
+    .constant('theHero', 0);
 }());
 
 ```
@@ -294,13 +294,13 @@ Produces `app/module/the-hero-constant_test.js`:
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('TheHero', function () {
+describe('theHero', function () {
   var constant;
 
   beforeEach(module('module'));
 
-  beforeEach(inject(function (TheHero) {
-    constant = TheHero;
+  beforeEach(inject(function (theHero) {
+    constant = theHero;
   }));
 
   it('should equal 0', function () {
@@ -971,13 +971,13 @@ Produces `app/module/morals-value_test.js`:
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('Morals', function () {
+describe('morals', function () {
   var value;
 
   beforeEach(module('module'));
 
-  beforeEach(inject(function (Morals) {
-    value = Morals;
+  beforeEach(inject(function (morals) {
+    value = morals;
   }));
 
   it('should equal 0', function () {

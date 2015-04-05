@@ -3,17 +3,16 @@
 /*global describe, beforeEach, it, expect, inject, module*/
 'use strict';
 
-describe('<%= upperCamel %>', function () {
+describe('<%= lowerCamel %>', function () {
   var constant;
 
   beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
-  beforeEach(inject(function (<%= upperCamel %>) {
-    constant = <%= upperCamel %>;
+  beforeEach(inject(function (<%= lowerCamel %>) {
+    constant = <%= lowerCamel %>;
   }));
 
   it('should equal 0', function () {
     expect(constant).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toBe<% } %>(0);
   });
-
 });
