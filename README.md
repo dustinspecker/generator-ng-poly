@@ -954,14 +954,14 @@ Produces `app/module/morals-value.js`:
 
   /**
    * @ngdoc service
-   * @name module.constant:Morals
+   * @name module.constant:morals
    *
    * @description
    *
    */
   angular
     .module('module')
-    .value('Morals', 0);
+    .value('morals', 0);
 }());
 
 ```

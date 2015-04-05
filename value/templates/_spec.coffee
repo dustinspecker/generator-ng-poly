@@ -1,13 +1,13 @@
 ###global describe, beforeEach, it, expect, inject, module###
 'use strict'
 
-describe '<%= upperCamel %>', ->
+describe '<%= lowerCamel %>', ->
   value = undefined
 
   beforeEach module '<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'
 
-  beforeEach inject (<%= upperCamel %>) ->
-    value = <%= upperCamel %>
+  beforeEach inject (<%= lowerCamel %>) ->
+    value = <%= lowerCamel %>
 
   it 'should equal 0', ->
     expect(value).<% if (testFramework === 'mocha') { %>to.equal<% } else { %>toBe<% } %> 0

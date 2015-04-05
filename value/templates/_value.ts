@@ -1,16 +1,16 @@
 ///<reference path='<%= referencePath %>' />
-module <%= upperCamel %> {
+module <%= lowerCamel %> {
   'use strict';
 
   /**
   * @ngdoc service
-  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.constant:<%= upperCamel %>
+  * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.constant:<%= lowerCamel %>
   *
   * @description
   *
   */
   angular
     .module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>')
-    .value('<%= upperCamel %>', 0);
+    .value('<%= lowerCamel %>', 0);
 
 }
