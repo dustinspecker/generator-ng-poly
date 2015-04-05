@@ -209,7 +209,7 @@ Generator.prototype.copyFile = function copyFile(type, component, dest, context)
     dest = (type === 'unit') ? context.testDir : context.appDir;
     // append module path and type (if using module-type)
     dest = path.join(dest, context.modulePath,
-      (component.indexOf('module') === -1 && context.structure === 'module-type') ? pluralComponent : '');
+      (component !== 'module' && context.structure === 'module-type') ? pluralComponent : '');
 
     // create file name
     fileName = context.hyphenName + '-' + component;

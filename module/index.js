@@ -23,7 +23,7 @@ Generator.prototype.initialize = function initialize() {
 };
 
 Generator.prototype.writing = function writing() {
-  var filePath, filePathToCheck, depName, parentDir, parentModuleName;
+  var filePath, filePathToCheck, depName, parentDir, parentModuleName, moduleDest;
 
   this.context = this.getConfig();
 
@@ -65,10 +65,9 @@ Generator.prototype.writing = function writing() {
   fs.writeFileSync(filePath, ngAddDep(fs.readFileSync(filePath, 'utf8'), depName));
 
   // create new module
-  this.copySrcFile('module', path.join(this.context.appDir, this.context.modulePath,
-    this.context.hyphenModule + '-module.' + this.context.appScript), this.context);
-  this.copySrcFile('module-routes', path.join(this.context.appDir, this.context.modulePath,
-    this.context.hyphenModule + '-routes.' + this.context.appScript), this.context);
+  moduleDest = path.join(this.context.appDir, this.context.modulePath, this.context.hyphenModule);
+  this.copySrcFile('module', moduleDest + '-module.' + this.context.appScript, this.context);
+  this.copySrcFile('module-routes', moduleDest + '-routes.' + this.context.appScript, this.context);
 };
 
 Generator.prototype.end = function end() {
