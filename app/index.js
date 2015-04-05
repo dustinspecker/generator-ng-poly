@@ -4,6 +4,7 @@ var _ = require('lodash')
   , genBase = require('../genBase')
   , mkdirp = require('mkdirp')
   , path = require('path')
+  , pkg = require('../package.json')
   , utils = require('../utils')
   , yosay = require('yosay')
   , Generator;
@@ -349,6 +350,7 @@ Generator.prototype.configuring = function configuring() {
   this.config.set('lastUsedModule', 'home');
 
   this.context = {
+    pkg: pkg,
     appName: this.appName,
     structure: this.structure,
     ngversion: this.ngversion,
