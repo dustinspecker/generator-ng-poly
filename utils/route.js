@@ -1,7 +1,6 @@
 'use strict';
 var endOfLine = require('os').EOL
-  , exports = module.exports
-  , ngAddDep = require('ng-add-dep');
+  , exports = module.exports;
 
 /**
  * Returns the number of spaces at beginning of a line
@@ -290,10 +289,8 @@ function addState(lines, state, analysis, config) {
  * @return {String} - modified file contents with added state
  */
 exports.addRoute = function addRoute(fileContents, state, config) {
-  var dependency = config.ngRoute ? 'ngRoute' : 'ui.router'
-
-    // checking if provider is used
-    , needsParam = !hasParam(fileContents, config)
+  // checking if provider is used
+  var needsParam = !hasParam(fileContents, config)
 
     // split fileContents
     , lines
@@ -301,9 +298,6 @@ exports.addRoute = function addRoute(fileContents, state, config) {
     // new state insertion info
     , analysis
     , newState;
-
-  // if file doesn't have the dependency, add it
-  fileContents = ngAddDep(fileContents, dependency);
 
   lines = fileContents.split(endOfLine);
   analysis = analyzeLines(lines, config);

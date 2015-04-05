@@ -393,6 +393,7 @@ Generator.prototype.configuring = function configuring() {
 Generator.prototype.writing = function writing() {
   // create main module and index.html
   this.copySimpleFile('_app.' + this.appScript, path.join(this.appDir, 'app-module.' + this.appScript));
+  this.copySimpleFile('_app-routes.' + this.appScript, path.join(this.appDir, 'app-routes.' + this.appScript));
   this.copySimpleFile('_index.' + this.markup, path.join(this.appDir, 'index.' + this.markup));
 
   mkdirp.sync(path.join(this.appDir, 'fonts'));

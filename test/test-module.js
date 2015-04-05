@@ -59,8 +59,84 @@ describe('Module generator', function () {
     });
   });
 
+  describe('adding a new CoffeeScript module', function () {
+    before(function (done) {
+      helpers
+        .run(path.join(__dirname, '../module'), {
+          tmpdir: false
+        })
+        .withArguments(['test/'])
+        .withOptions({
+          'app-script': 'coffee'
+        })
+        .withGenerators([
+          path.join(__dirname, '../route'),
+          path.join(__dirname, '../controller'),
+          path.join(__dirname, '../view')
+        ])
+        .on('end', done);
+    });
+
+    it('should add test files', function () {
+      assert.file([
+        'app/test/test-module.coffee',
+        'app/test/test-routes.coffee',
+        'app/test/test.less',
+        'app/test/test.tpl.html',
+        'app/test/test-controller.coffee',
+        'app/test/test-controller_test.js'
+      ]);
+    });
+
+    it('should add comma to ui.router in app/app-module.js', function () {
+      assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
+    });
+
+    it('should add test to app/app-module.js deps', function () {
+      assert.fileContent('app/app-module.js', / {4}\'test\'/);
+    });
+  });
+
+  describe('adding a new ES2105 module', function () {
+    before(function (done) {
+      helpers
+        .run(path.join(__dirname, '../module'), {
+          tmpdir: false
+        })
+        .withArguments(['test/'])
+        .withOptions({
+          'app-script': 'es6'
+        })
+        .withGenerators([
+          path.join(__dirname, '../route'),
+          path.join(__dirname, '../controller'),
+          path.join(__dirname, '../view')
+        ])
+        .on('end', done);
+    });
+
+    it('should add test files', function () {
+      assert.file([
+        'app/test/test-module.es6',
+        'app/test/test-routes.es6',
+        'app/test/test.less',
+        'app/test/test.tpl.html',
+        'app/test/test-controller.es6',
+        'app/test/test-controller_test.js'
+      ]);
+    });
+
+    it('should add comma to ui.router in app/app-module.js', function () {
+      assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
+    });
+
+    it('should add test to app/app-module.js deps', function () {
+      assert.fileContent('app/app-module.js', / {4}\'test\'/);
+    });
+  });
+
   // trailing slash to test trailing slash removal
-  describe('adding a new module', function () {
+  describe('adding a new JS module', function () {
     before(function (done) {
       helpers
         .run(path.join(__dirname, '../module'), {
@@ -78,9 +154,48 @@ describe('Module generator', function () {
     it('should add test files', function () {
       assert.file([
         'app/test/test-module.js',
+        'app/test/test-routes.js',
         'app/test/test.less',
         'app/test/test.tpl.html',
         'app/test/test-controller.js',
+        'app/test/test-controller_test.js'
+      ]);
+    });
+
+    it('should add comma to ui.router in app/app-module.js', function () {
+      assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
+    });
+
+    it('should add test to app/app-module.js deps', function () {
+      assert.fileContent('app/app-module.js', / {4}\'test\'/);
+    });
+  });
+
+  describe('adding a new TS module', function () {
+    before(function (done) {
+      helpers
+        .run(path.join(__dirname, '../module'), {
+          tmpdir: false
+        })
+        .withArguments(['test/'])
+        .withOptions({
+          'app-script': 'ts'
+        })
+        .withGenerators([
+          path.join(__dirname, '../route'),
+          path.join(__dirname, '../controller'),
+          path.join(__dirname, '../view')
+        ])
+        .on('end', done);
+    });
+
+    it('should add test files', function () {
+      assert.file([
+        'app/test/test-module.ts',
+        'app/test/test-routes.ts',
+        'app/test/test.less',
+        'app/test/test.tpl.html',
+        'app/test/test-controller.ts',
         'app/test/test-controller_test.js'
       ]);
     });
@@ -168,8 +283,8 @@ describe('Module generator', function () {
       assert.fileContent('app/home/home-module.js', / {4}\'home.myModule\'/);
     });
 
-    it('should add myModule state to app/home/my-module/my-module-module.js', function () {
-      assert.fileContent('app/home/my-module/my-module-module.js', /[.]state\(\'myModule\', /);
+    it('should add myModule state to app/home/my-module/my-module-routes.js', function () {
+      assert.fileContent('app/home/my-module/my-module-routes.js', /[.]state\(\'myModule\', /);
     });
   });
 

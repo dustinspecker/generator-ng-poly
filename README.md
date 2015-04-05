@@ -174,12 +174,14 @@ root/
 │   ├── fonts/ (empty)
 │   ├── home/
 │   │   ├── home-module.{coffee,es6,js,ts}
+│   │   ├── home-routes.{coffee,es6,js,ts}
 │   │   ├── home.{css,less,scss,styl}
 │   │   ├── home.tpl.{haml,html,jade}
 │   │   ├── home-controller.{coffee,es6,js,ts}
 │   │   └── home-controller_test.{coffee,es6,js,ts}
 │   ├── images/ (empty)
 │   ├── app-module.{coffee,es6,js,ts}
+│   ├── app-routes.{coffee,es6,js,ts}
 │   └── index.{haml,html,jade}
 ├── bower_components/
 ├── e2e/
@@ -222,9 +224,11 @@ root/
 │   │   ├── views/
 │   │   │   ├── home.{css,less,scss,styl}
 │   │   │   └── home.tpl.{haml,html,jade}
-│   │   └── home-module.{coffee,es6,js,ts}
+│   │   ├── home-module.{coffee,es6,js,ts}
+│   │   └── home-routes.{coffee,es6,js,ts}
 │   ├── images/ (empty)
 │   ├── app-module.{coffee,es6,js,ts}
+│   ├── app-routes.{coffee,es6,js,ts}
 │   └── index.{haml,html,jade}
 ├── bower_components/
 ├── e2e/
@@ -579,7 +583,6 @@ Produces `app/top/top-module.js`:
 
   /* @ngdoc object
    * @name top
-   *
    * @description
    *
    */
@@ -587,6 +590,14 @@ Produces `app/top/top-module.js`:
     .module('top', [
       'ui.router'
     ]);
+}());
+
+```
+
+Produces `pp/top/top-routes.js`:
+```javascript
+(function () {
+  'use strict';
 
   angular
     .module('top')
@@ -614,7 +625,6 @@ Updates `app/app-module.js`:
   /* @ngdoc object
    * @name module
    * @requires $urlRouterProvider
-   *
    * @description
    *
    */
@@ -624,15 +634,8 @@ Updates `app/app-module.js`:
       'home',
       'top'
     ]);
-
-  angular
-    .module('module')
-    .config(config);
-
-  function config($urlRouterProvider) {
-    $urlRouterProvider.otherwise('/home');
-  }
 }());
+
 ```
 
 * * *
@@ -642,7 +645,7 @@ Updates `app/app-module.js`:
 yo ng-poly:module top/bottom
 ```
 
-Produces `app/top/bottom/bottom.js`, `app/top/bottom/bottom-controller.js`, `app/top/bottom/bottom-controller_test.js`, `app/top/bottom/bottom.tpl.html`, `app/top/bottom/bottom.less`, `e2e/bottom/bottom.po.js`, `e2e/bottom/bottom_test.js`
+Produces `app/top/bottom/bottom-module.js`, `app/top/boottom/bottom-routes.js`, `app/top/bottom/bottom-controller.js`, `app/top/bottom/bottom-controller_test.js`, `app/top/bottom/bottom.tpl.html`, `app/top/bottom/bottom.less`, `e2e/bottom/bottom.po.js`, `e2e/bottom/bottom_test.js`
 
 Updates `app/top/top-module.js`:
 ```javascript
@@ -661,19 +664,6 @@ Updates `app/top/top-module.js`:
       'ui.router',
       'top.bottom'
     ]);
-
-  angular
-    .module('top')
-    .config(config);
-
-  function config($stateProvider) {
-    $stateProvider
-      .state('top', {
-        url: '/top',
-        templateUrl: 'top/top.tpl.html',
-        controller: 'TopCtrl'
-      });
-  }
 }());
 
 ```
@@ -686,7 +676,7 @@ Updates `app/top/top-module.js`:
 yo ng-poly:module top/bottom/bottomest
 ```
 
-Produces 'bottom.bottomest' module, a controller, controller test, style, and a view in `app/top/bottom/bottomest/`
+Produces 'bottom.bottomest' module and routes, a controller, controller test, style, and a view in `app/top/bottom/bottomest/`
 
 Updates 'top.bottom' module with the new 'bottom.bottemest' module as a dependency.
 
@@ -698,7 +688,22 @@ It just keeps going...
 * * *
 **Empty modules**
 
-By running `ng-poly:module newHome --empty` a module without a route will be created as such:
+By running `ng-poly:module newHome --empty` a module's routes file will have an empty config such as:
+```javascript
+(function () {
+  'use strict';
+
+  angular
+    .module('newHome')
+    .config(config);
+
+  function config() {
+  }
+}());
+
+```
+
+and the module file will omit the router dependency:
 ```javascript
 (function () {
   'use strict';
@@ -712,16 +717,10 @@ By running `ng-poly:module newHome --empty` a module without a route will be cre
   angular
     .module('newHome', [
     ]);
-
-  angular
-    .module('newHome')
-    .config(config);
-
-  function config() {
-  }
 }());
 
 ```
+
 **It is still possible to add a route to this module via [ng-poly:route](#route).** The route subgenerator will also add the ui.router dependency and $stateProvider paramater for the config function.
 
 ### Provider

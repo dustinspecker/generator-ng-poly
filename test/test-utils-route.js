@@ -103,11 +103,6 @@ describe('Route Utils', function () {
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-no-state.coffee'), 'utf8');
         });
 
-        it('should add ui.router as dependency', function () {
-          assert(/.module \'[^$]*\', \[[^$]*\'ui.router\'[^$]*\]/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
         it('should add $stateProvider as param', function () {
           assert(/config \(\$stateProvider\) ->/
             .test(routeUtils.addRoute(fileContents, newState, config)));
@@ -189,11 +184,6 @@ describe('Route Utils', function () {
             ngRoute: true
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-no-state.coffee'), 'utf8');
-        });
-
-        it('should add ngRoute as depdendency', function () {
-          assert(/.module \'[^$]*\', \[[^$]*\'ngRoute\'[^$]*\]/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 
         it('should add $routeProvider as param', function () {
@@ -297,11 +287,6 @@ describe('Route Utils', function () {
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.js'), 'utf8');
         });
 
-        it('should add ui.router as dependency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ui.router\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
         it('should add $stateProvider as param', function () {
           assert(/config\(.*, \$stateProvider.*\)/
             .test(routeUtils.addRoute(fileContents, newState, config)));
@@ -376,11 +361,6 @@ describe('Route Utils', function () {
             ngRoute: true
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.js'), 'utf8');
-        });
-
-        it('should add ngRoute as dependency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ngRoute\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 
         it('should add $routeProvider as param', function () {
@@ -483,11 +463,6 @@ describe('Route Utils', function () {
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.es6'), 'utf8');
         });
 
-        it('should add ui.router as dependency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ui.router\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
         it('should add $stateProvider as param', function () {
           assert(/config\(.*, \$stateProvider.*\)/
             .test(routeUtils.addRoute(fileContents, newState, config)));
@@ -562,11 +537,6 @@ describe('Route Utils', function () {
             ngRoute: true
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.es6'), 'utf8');
-        });
-
-        it('should add ngRoute as dependency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ngRoute\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 
         it('should add $routeProvider as param', function () {
@@ -645,11 +615,6 @@ describe('Route Utils', function () {
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.ts'), 'utf8');
         });
 
-        it('should add ui.router as dependency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ui.router\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
-        });
-
         it('should add $stateProvider as param', function () {
           assert(/config\(.*, \$stateProvider: ng.ui.IStateProvider.*\)/
             .test(routeUtils.addRoute(fileContents, newState, config)));
@@ -726,11 +691,6 @@ describe('Route Utils', function () {
             ngRoute: true
           };
           fileContents = fs.readFileSync(path.join(__dirname, 'fixtures', 'app-passed-no-state.ts'), 'utf8');
-        });
-
-        it('should add ngRoute as dependency', function () {
-          assert(/.module\(\'[^$]*\', \[[^$]*\'ngRoute\'[^$]*\]\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
         });
 
         it('should add $routeProvider as param', function () {

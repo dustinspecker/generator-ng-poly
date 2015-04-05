@@ -4,8 +4,6 @@ module <%= moduleName %> {
 
   /* @ngdoc object
    * @name <%= moduleName %>
-   * @requires <% if (ngRoute) { %>$routeProvider<% } else { %>$urlRouterProvider<% } %>
-   *
    * @description
    *
    */
@@ -18,14 +16,4 @@ module <%= moduleName %> {
       'ui.bootstrap'<% } %><% if (framework === 'foundation') { %>,
       'mm.foundation'<% } %>
     ]);
-
-  angular
-    .module('<%= moduleName %>')
-    .config(config);
-
-  function config(<% if (ngRoute) { %>$routeProvider: ng.route.IRouteProvider<% } else { %>$urlRouterProvider: ng.ui.IUrlRouterProvider<% } %>) {
-    <% if (ngRoute) { %>$routeProvider.otherwise({
-      redirectTo: '/home'
-    });<% } else { %>$urlRouterProvider.otherwise('/home');<% } %>
-  }
 }

@@ -3,6 +3,7 @@ var _ = require('lodash')
   , fs = require('fs')
   , path = require('path')
   , genBase = require('../genBase')
+  , ngAddDep = require('ng-add-dep')
   , utils = require('../utils')
   , Generator;
 
@@ -28,8 +29,13 @@ Generator.prototype.writing = function writing() {
       ngRoute: config.ngRoute
     }
 
-    // module file to add route to
-    , modulePathTemplate, modulePath, file, newState, p;
+    , dependency = config.ngRoute ? 'ngRoute' : 'ui.router'
+
+    // module file to add dep to
+    , modulePath, moduleFile
+    // route file to add route to
+    , routesPath, routesFile
+    , wipPath, newState;
 
   // move this logic to utils-route
   config.url = this.url;
@@ -49,25 +55,46 @@ Generator.prototype.writing = function writing() {
   };
 
   // create module path minus extension
-  p = path.join(this.config.path, '..', config.appDir, config.modulePath,
+  wipPath = path.join(this.config.path, '..', config.appDir, config.modulePath,
     utils.hyphenName(config.moduleName));
-  modulePathTemplate = p;
-  // find module.{coffee, js, ts}
+
+  // find name-module.{coffee,js,ts}
   modulePath = _.find([
-    modulePathTemplate + '-module.es6',
-    modulePathTemplate + '-module.coffee',
-    modulePathTemplate + '-module.js',
-    modulePathTemplate + '-module.ts',
-    modulePathTemplate + '.es6',
-    modulePathTemplate + '.coffee',
-    modulePathTemplate + '.js',
-    modulePathTemplate + '.ts'
+    wipPath + '-module.es6',
+    wipPath + '-module.coffee',
+    wipPath + '-module.js',
+    wipPath + '-module.ts',
+    wipPath + '.es6',
+    wipPath + '.coffee',
+    wipPath + '.js',
+    wipPath + '.ts'
     ], function (appFile) {
       return fs.existsSync(appFile);
     });
-  file = fs.readFileSync(modulePath, 'utf8');
+  moduleFile = fs.readFileSync(modulePath, 'utf8');
+  // if file doesn't have the dependency, add it
+  fs.writeFileSync(modulePath, ngAddDep(moduleFile, dependency));
 
-  fs.writeFileSync(modulePath, utils.addRoute(file, newState, newRouteConfig));
+  // find name-routes.{coffee,js,ts}
+  routesPath = _.find([
+    wipPath + '-routes.es6',
+    wipPath + '-routes.coffee',
+    wipPath + '-routes.js',
+    wipPath + '-routes.ts',
+    wipPath + '-module.es6',
+    wipPath + '-module.coffee',
+    wipPath + '-module.js',
+    wipPath + '-module.ts',
+    wipPath + '.es6',
+    wipPath + '.coffee',
+    wipPath + '.js',
+    wipPath + '.ts'
+    ], function (appFile) {
+      return fs.existsSync(appFile);
+    });
+  routesFile = fs.readFileSync(routesPath, 'utf8');
+  // add route to route file
+  fs.writeFileSync(routesPath, utils.addRoute(routesFile, newState, newRouteConfig));
 
   this.copyE2e(config);
 
