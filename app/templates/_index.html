@@ -13,7 +13,7 @@
     <!-- endinject -->
   </head>
   <body>
-
+    <%= framework %>
 <% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>    <div class='navbar navbar-inverse' role='navigation'<% if (framework === 'angularstrap') { %> data-bs-navbar data-bs-collapse data-start-collapsed='true'<% } %>>
       <div class='container'>
         <div class='navbar-header'>
@@ -57,8 +57,28 @@
         </ul>
       </div>
     </div>
+<% } else if (framework === 'material') { %> <md-sidenav class="md-locked-open" layout="row">
+      <md-content flex class="md-default-theme">
+      <ul>
+        <li>
+          <menu-link>
+            <span>
+              <a href='#/'><%= appName %></a>
+            </span>
+          </menu-link>
+        </li>
+        <li>
+          <menu-link>
+            <span>
+              <a <% if (ngRoute) { %>href='#/home'<% } else { %>data-ui-sref='home'<% } %>>Home</a>
+            </span>
+          </menu-link>
+        </li>
+      </ul>
+      </md-content>
+    </md-sidenav>
 
-<% } %><% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>    <div class='container'>
+    <% } %><% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>    <div class='container'>
   <% } %>    <div data-<% if (ngRoute) { %>ng<% } else { %>ui<% } %>-view>
 
 <% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>  <% } %>    </div><% if (framework === 'uibootstrap' || framework === 'angularstrap') { %>
