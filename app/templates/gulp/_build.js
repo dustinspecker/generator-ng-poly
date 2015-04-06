@@ -21,7 +21,7 @@ module.exports = function (gulp, $, config) {
 
     return gulp.src([
       config.appMarkupFiles<% if (polymer) { %>,
-      '!' + appComponents<% } %>
+      '!' + config.appComponents<% } %>
     ])
       .pipe(hamlFilter)
       .pipe($.haml())
@@ -40,7 +40,7 @@ module.exports = function (gulp, $, config) {
 
     return gulp.src([
       config.appStyleFiles<% if (polymer) { %>,
-      '!' + appComponents<% } %>
+      '!' + config.appComponents<% } %>
     ])
       .pipe($.plumber({errorHandler: function (err) {
         $.notify.onError({
@@ -102,7 +102,7 @@ module.exports = function (gulp, $, config) {
     return gulp.src([
       config.appScriptFiles,
       config.buildDir + '**/*.html'<% if (polymer) { %>,
-      '!' + appComponents<% } %>,
+      '!' + config.appComponents<% } %>,
       '!**/*_test.*',
       '!**/index.html'
     ])
@@ -255,7 +255,7 @@ module.exports = function (gulp, $, config) {
       , scssFilter = $.filter('**/*.scss')
       , stylFilter = $.filter('**/*.styl');
 
-    return gulp.src(appComponents)
+    return gulp.src(config.appComponents)
       .pipe($.addSrc(bowerDir + 'polymer/{layout,polymer}.{html,js}', {base: bowerDir}))
       .pipe(es6Filter)
       .pipe($.babel())
