@@ -37,7 +37,7 @@ describe('Constant generator', function () {
         .withOptions({
           structure: 'module-type'
         })
-        .withPrompt({
+        .withPrompts({
           module: 'home/'
         })
         .on('end', done);
@@ -58,7 +58,7 @@ describe('Constant generator', function () {
           tmpdir: false
         })
         .withArguments(['test1'])
-        .withPrompt({
+        .withPrompts({
           module: 'app'
         })
         .withOptions({
@@ -83,7 +83,7 @@ describe('Constant generator', function () {
           tmpdir: false
         })
         .withArguments(['test2'])
-        .withPrompt({
+        .withPrompts({
           module: 'app'
         })
         .withOptions({

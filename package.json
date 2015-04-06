@@ -53,7 +53,7 @@
     "recursive-readdir": "^1.2.1",
     "underscore.string": "^3.0.1",
     "update-notifier": "^0.3.0",
-    "yeoman-generator": "~0.18.5",
+    "yeoman-generator": "~0.19.1",
     "yosay": "^1.0.0"
   },
   "devDependencies": {
