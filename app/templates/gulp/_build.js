@@ -341,7 +341,6 @@ module.exports = function (gulp, $, config) {
           '!' + config.buildCss,
           '!' + config.buildFonts,
           '!' + config.buildImages,
-          '!' + config.buildImages,
           '!' + config.buildJs,
           '!' + config.extDir,
           '!' + config.buildDir + 'index.html'
