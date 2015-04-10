@@ -106,8 +106,8 @@ module.exports = function (gulp, $, config) {
       '!**/*_test.*',
       '!**/index.html'
     ])
-      .pipe(es6Filter)
       .pipe($.sourcemaps.init())
+      .pipe(es6Filter)
       .pipe($.babel())
       .pipe($.rename(function (filePath) {
         filePath.extname = '.js';
