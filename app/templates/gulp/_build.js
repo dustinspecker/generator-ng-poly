@@ -183,7 +183,6 @@ module.exports = function (gulp, $, config) {
           }
           url = path.normalize(filePath + url);
           url = url.replace(/[/\\]/g, '/');
-          console.log(url);
           return url;
         }
       })))
