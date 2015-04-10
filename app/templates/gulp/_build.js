@@ -107,6 +107,7 @@ module.exports = function (gulp, $, config) {
       '!**/index.html'
     ])
       .pipe(es6Filter)
+      .pipe($.sourcemaps.init())
       .pipe($.babel())
       .pipe($.rename(function (filePath) {
         filePath.extname = '.js';
@@ -132,6 +133,7 @@ module.exports = function (gulp, $, config) {
       .pipe($.if(isProd, $.uglify()))
       .pipe($.if(isProd, $.rev()))<% if (polymer) { %>
       .pipe($.addSrc($.mainBowerFiles({filter: /webcomponents/})))<% } %>
+      .pipe($.sourcemaps.write('.'))
       .pipe(gulp.dest(config.buildJs))
       .pipe(jsFilter.restore());
   });
@@ -257,6 +259,7 @@ module.exports = function (gulp, $, config) {
 
     return gulp.src(config.appComponents)
       .pipe($.addSrc(bowerDir + 'polymer/{layout,polymer}.{html,js}', {base: bowerDir}))
+      .pipe($.sourcemaps.init())
       .pipe(es6Filter)
       .pipe($.babel())
       .pipe($.rename(function (filePath) {
@@ -284,6 +287,7 @@ module.exports = function (gulp, $, config) {
       .pipe(stylFilter)
       .pipe($.stylus())
       .pipe(stylFilter.restore())
+      .pipe($.sourcemaps.write('.'))
       .pipe(gulp.dest(config.buildComponents));
   });<% } %>
 
