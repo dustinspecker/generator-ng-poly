@@ -96,7 +96,7 @@ module.exports = function (gulp, $, config) {
   });
 
   // run e2e tests - SERVER MUST BE RUNNING FIRST
-  gulp.task('e2eTest', ['lint', 'build', 'build:e2eTest'], function () {
+  gulp.task('e2eTest', ['lint', 'build:e2eTest'], function () {
     return gulp.src(config.buildE2eTests)
       .pipe($.protractor.protractor({
         configFile: 'protractor.config.js'
