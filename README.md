@@ -691,22 +691,9 @@ It just keeps going...
 * * *
 **Empty modules**
 
-By running `ng-poly:module newHome --empty` a module's routes file will have an empty config such as:
-```javascript
-(function () {
-  'use strict';
+By running `ng-poly:module newHome --empty` a module's routes file will **not** be created.
 
-  angular
-    .module('newHome')
-    .config(config);
-
-  function config() {
-  }
-}());
-
-```
-
-and the module file will omit the router dependency:
+The module file will omit the router dependency:
 ```javascript
 (function () {
   'use strict';
@@ -723,8 +710,6 @@ and the module file will omit the router dependency:
 }());
 
 ```
-
-**It is still possible to add a route to this module via [ng-poly:route](#route).** The route subgenerator will also add the ui.router dependency and $stateProvider paramater for the config function.
 
 ### Provider
 Generates a provider and its test.
