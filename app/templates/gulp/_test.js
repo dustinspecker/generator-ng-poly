@@ -3,7 +3,9 @@
 var karmaConf = require('../karma.config.js');
 
 // karmaConf.files get populated in karmaFiles
-karmaConf.files = [];
+karmaConf.files = [
+  'node_modules/karma-babel-preprocessor/node_modules/babel-core/browser-polyfill.js'
+];
 
 module.exports = function (gulp, $, config) {
   gulp.task('clean:test', function (cb) {
