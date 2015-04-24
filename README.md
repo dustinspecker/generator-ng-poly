@@ -59,7 +59,7 @@ Available generators:
 
 Languages and Features supported:
   * Angular Versions
-    - 1.2.\*, 1.3.\*
+    - 1.2.\*, 1.3.\*, 1.4.\* (currently in RC)
   * Markup
     - HAML, HTML, Jade
   * Application scripting languages
