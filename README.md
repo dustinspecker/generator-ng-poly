@@ -77,7 +77,7 @@ Languages and Features supported:
     - Jasmine (ran with Protractor) for AngularJS
     - Mocha, Chai, and Chai as Promised (ran with Protractor) for AngularJS
   * Frameworks (scaffolds simple navbar)
-    - Angular Material (1.3.* only)
+    - Angular Material (1.3.* or higher only)
       - Doesn't scaffold navbar, yet
     - Bootstrap with AngularStrap
     - Bootstrap with UI Bootstrap (1.2.* only)
