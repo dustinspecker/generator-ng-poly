@@ -49,12 +49,16 @@ Generator.prototype.prompting = function prompting() {
       default: '1.3.*',
       choices: [
         {
-          name: '1.2.*',
-          value: '1.2.*'
+          name: '1.4.* (Currently RC)',
+          value: '1.4.*'
         },
         {
           name: '1.3.*',
           value: '1.3.*'
+        },
+        {
+          name: '1.2.*',
+          value: '1.2.*'
         }
       ]
     },
@@ -307,7 +311,7 @@ Generator.prototype.prompting = function prompting() {
           }
         ];
 
-        if (answers.ngversion === '1.3.*') {
+        if (answers.ngversion !== '1.2.*') {
           choices.splice(1, 0, {
             name: 'Angular Aria',
             value: 'aria'
