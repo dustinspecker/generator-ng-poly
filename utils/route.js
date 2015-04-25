@@ -1,6 +1,9 @@
 'use strict';
-var endOfLine = require('os').EOL
-  , exports = module.exports;
+var _ = require('lodash')
+  , endOfLine = require('os').EOL
+  , exports = module.exports
+  , fs = require('fs')
+  , join = require('path').join;
 
 /**
  * Returns the number of spaces at beginning of a line
@@ -164,60 +167,17 @@ function analyzeLines(lines, config) {
  * @return {Array} - lines of new state
  */
 function prepareState(state, analysis, config) {
-  var newState = [];
+  var context = {}
+    , templateFile = '';
 
-  if (analysis.routeStartIndex === -1) {
-    // add provider
-    if (config.ngRoute) {
-      newState.push('$routeProvider');
-    } else {
-      newState.push('$stateProvider');
-    }
-  }
+  templateFile = join(__dirname, 'templates', '_' + (config.ngRoute ? 'ngroute' : 'uirouter') + '.');
+  templateFile += (config.appScript === 'coffee' ? 'coffee' : 'js');
 
-  if (config.appScript === 'ts' || config.appScript === 'js' || config.appScript === 'es6') {
-    // base route logic
-    if (config.ngRoute) {
-      newState.push('  .when(\'' + state.url + '\', {');
-    } else {
-      newState.push('  .state(\'' + state.name + '\', {');
-      newState.push('    url: \'' + state.url + '\',');
-    }
-    newState.push('    templateUrl: \'' + state.templateUrl + '\'' + (config.skipController ? '' : ','));
+  context.analysis = analysis;
+  context.config = config;
+  context.state = state;
 
-    if (!config.skipController) {
-      newState.push('    controller: \'' + state.ctrlName + '\'' + (config.controllerAs ? ',' : ''));
-      if (config.controllerAs) {
-        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
-      }
-    }
-
-    if (analysis.routeStartIndex > -1) {
-      // add closing to squeeze new state between existing route and the final });
-      newState.unshift('  })');
-    } else {
-      // close up this new state, which is the first state
-      newState.push('  });');
-    }
-  } else {
-    // base route logic
-    if (config.ngRoute) {
-      newState.push('  .when \'' + state.url + '\',');
-    } else {
-      newState.push('  .state \'' + state.name + '\',');
-      newState.push('    url: \'' + state.url + '\'');
-    }
-    newState.push('    templateUrl: \'' + state.templateUrl + '\'');
-
-    if (!config.skipController) {
-      newState.push('    controller: \'' + state.ctrlName + '\'');
-      if (config.controllerAs) {
-        newState.push('    controllerAs: \'' + state.lowerCamel + '\'');
-      }
-    }
-  }
-
-  return newState;
+  return _.template(fs.readFileSync(templateFile))(context).split(/\r?\n/);
 }
 
 /**
