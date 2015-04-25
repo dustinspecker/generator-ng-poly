@@ -54,9 +54,9 @@ Generator.prototype.writing = function writing() {
   };
 
   // create module path minus extension
+  // if modulePath is empty file name is app
   wipPath = path.join(this.config.path, '..', config.appDir, config.modulePath,
-    utils.hyphenName(config.moduleName));
-
+    (config.modulePath === '' ? 'app' : utils.hyphenName(config.moduleName)));
   // get name-module.{coffee,js,ts}
   modulePath = utils.findModuleFile(wipPath);
   moduleFile = fs.readFileSync(modulePath, 'utf8');
