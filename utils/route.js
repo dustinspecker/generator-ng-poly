@@ -94,32 +94,7 @@ function analyzeLines(lines, config) {
     , newRoute = config.ngRoute ? 'when' : 'state';
 
   lines.forEach(function (line, i) {
-    if (config.appScript === 'ts') {
-      if (line.indexOf('function config(') > -1) {
-        analysis.configFunctionIndex = i;
-      }
-
-      // look for .state and set routeStartIndex
-      if (line.indexOf('.' + newRoute + '(') > -1) {
-        analysis.routeStartIndex = i;
-      }
-
-      // open braces add to braceCount
-      if (analysis.routeStartIndex > -1 && line.indexOf('{') > -1) {
-        braceCount++;
-      }
-
-      // close braces subract from braceCount
-      if (analysis.routeStartIndex > -1 && line.indexOf('}') > -1) {
-        braceCount--;
-      }
-
-      // when braceCount = 0 the end of the state has been reached
-      // set routeEndIndex
-      if (analysis.routeStartIndex > -1 && braceCount === 0) {
-        analysis.routeEndIndex = i;
-      }
-    } else if (config.appScript === 'js' || config.appScript === 'es6') {
+    if (config.appScript === 'ts' || config.appScript === 'js' || config.appScript === 'es6') {
       if (line.indexOf('function config(') > -1) {
         analysis.configFunctionIndex = i;
       }
