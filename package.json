@@ -22,6 +22,7 @@
     "app",
     "constant",
     "controller",
+    "decorator",
     "directive",
     "element",
     "factory",

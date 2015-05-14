@@ -45,6 +45,7 @@ Available generators:
   - [ng-poly](#app) (a.k.a. [ng-poly:app](#app))
   - [ng-poly:constant](#constant)
   - [ng-poly:controller](#controller)
+  - [ng-poly:decorator](#decorator)
   - [ng-poly:directive](#directive)
   - [ng-poly:factory](#factory)
   - [ng-poly:filter](#filter)
@@ -362,6 +363,70 @@ describe('MicroCtrl', function () {
 
   it('should have ctrlName as MicroCtrl', function () {
     expect(scope.micro.ctrlName).toEqual('MicroCtrl');
+  });
+});
+
+```
+
+### Decorator
+Generates a decorator and its test.
+
+Example:
+```
+yo ng-poly:decorator awesomeService
+[?] Which module is this for?
+```
+
+**Note: If decorating a service starting with a `$` you must escape it like:**
+
+`yo ng-poly:decorator \$state`
+
+Produces `app/module/awesome-service-decorator.js`:
+```javascript
+(function () {
+  'use strict';
+
+  /**
+   * @ngdoc decorator
+   * @name home.decorator:awesomeService
+   * @restrict EA
+   * @element
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module')
+    .config(decorator);
+
+  function decorator($provide) {
+    $provide.decorator('awesomeService', function ($delegate) {
+      $delegate.simpleFunction = function () {
+        return 'awesomeService';
+      };
+      return $delegate;
+    });
+  }
+}());
+
+```
+
+Produces: `app/module/awesome-service-decorator_test.js`:
+```javascript
+/*global describe, beforeEach, it, expect, inject, module*/
+'use strict';
+
+describe('awesomeService', function () {
+  var decorator;
+
+  beforeEach(module('module'));
+
+  beforeEach(inject(function (awesomeService) {
+    decorator = awesomeService;
+  }));
+
+  it('should have simpleFunction return awesomeService', function () {
+    expect(decorator.simpleFunction()).toEqual('awesomeService');
   });
 });
 

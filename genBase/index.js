@@ -143,6 +143,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
 
 Generator.prototype.getConfig = function getConfig() {
   var config = {
+    name: this.name,
     markup: this.options.markup || this.config.get('markup'),
     appScript: this.options['app-script'] || this.config.get('appScript'),
 
