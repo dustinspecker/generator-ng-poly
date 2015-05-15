@@ -59,7 +59,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
           files = _.uniq(files);
           // remove components and types folder
           files = files.filter(function (file) {
-            var ignoreDirectories = ['components', 'constants', 'controllers', 'directives', 'factories',
+            var ignoreDirectories = ['components', 'constants', 'controllers', 'decorators', 'directives', 'factories',
               'filters', 'services', 'providers', 'values', 'views']
               , i;
             for (i = 0; i < ignoreDirectories.length; i++) {
