@@ -21,10 +21,10 @@ Install `generator-ng-poly`:
 npm install -g bower gulp yo generator-ng-poly
 ```
 
-If TypeScript is going to be used, `tsd@next` will need to be installed:
+If TypeScript is going to be used, `tsd` will need to be installed:
 
 ```
-npm install -g tsd@next
+npm install -g tsd
 ```
 
 Run `yo ng-poly`

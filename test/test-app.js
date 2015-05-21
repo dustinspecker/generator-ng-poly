@@ -157,8 +157,9 @@ describe('App generator', function () {
       assert(gen.installDependencies.calledOnce);
     });
 
-    it('should call spawnCommand once', function () {
+    it('should call spawnCommand once to install typings', function () {
       assert(gen.spawnCommand.calledOnce);
+      assert(gen.spawnCommand.calledWith('tsd', ['reinstall', '--save']));
     });
 
     it('should create files', function () {
