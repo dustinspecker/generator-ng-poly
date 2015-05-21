@@ -45,6 +45,7 @@ Available generators:
   - [ng-poly](#app) (a.k.a. [ng-poly:app](#app))
   - [ng-poly:constant](#constant)
   - [ng-poly:controller](#controller)
+  - [ng-poly:decorator](#decorator)
   - [ng-poly:directive](#directive)
   - [ng-poly:factory](#factory)
   - [ng-poly:filter](#filter)
@@ -59,7 +60,7 @@ Available generators:
 
 Languages and Features supported:
   * Angular Versions
-    - 1.2.\*, 1.3.\*
+    - 1.2.\*, 1.3.\*, 1.4.\* (currently in RC)
   * Markup
     - HAML, HTML, Jade
   * Application scripting languages
@@ -77,7 +78,7 @@ Languages and Features supported:
     - Jasmine (ran with Protractor) for AngularJS
     - Mocha, Chai, and Chai as Promised (ran with Protractor) for AngularJS
   * Frameworks (scaffolds simple navbar)
-    - Angular Material (1.3.* only)
+    - Angular Material (1.3.* or higher only)
       - Doesn't scaffold navbar, yet
     - Bootstrap with AngularStrap
     - Bootstrap with UI Bootstrap (1.2.* only)
@@ -362,6 +363,70 @@ describe('MicroCtrl', function () {
 
   it('should have ctrlName as MicroCtrl', function () {
     expect(scope.micro.ctrlName).toEqual('MicroCtrl');
+  });
+});
+
+```
+
+### Decorator
+Generates a decorator and its test.
+
+Example:
+```
+yo ng-poly:decorator awesomeService
+[?] Which module is this for?
+```
+
+**Note: If decorating a service starting with a `$` you must escape it like:**
+
+`yo ng-poly:decorator \$state`
+
+Produces `app/module/awesome-service-decorator.js`:
+```javascript
+(function () {
+  'use strict';
+
+  /**
+   * @ngdoc decorator
+   * @name home.decorator:awesomeService
+   * @restrict EA
+   * @element
+   *
+   * @description
+   *
+   */
+  angular
+    .module('module')
+    .config(decorator);
+
+  function decorator($provide) {
+    $provide.decorator('awesomeService', function ($delegate) {
+      $delegate.simpleFunction = function () {
+        return 'awesomeService';
+      };
+      return $delegate;
+    });
+  }
+}());
+
+```
+
+Produces: `app/module/awesome-service-decorator_test.js`:
+```javascript
+/*global describe, beforeEach, it, expect, inject, module*/
+'use strict';
+
+describe('awesomeService', function () {
+  var decorator;
+
+  beforeEach(module('module'));
+
+  beforeEach(inject(function (awesomeService) {
+    decorator = awesomeService;
+  }));
+
+  it('should have simpleFunction return awesomeService', function () {
+    expect(decorator.simpleFunction()).toEqual('awesomeService');
   });
 });
 
@@ -691,22 +756,9 @@ It just keeps going...
 * * *
 **Empty modules**
 
-By running `ng-poly:module newHome --empty` a module's routes file will have an empty config such as:
-```javascript
-(function () {
-  'use strict';
+By running `ng-poly:module newHome --empty` a module's routes file will **not** be created.
 
-  angular
-    .module('newHome')
-    .config(config);
-
-  function config() {
-  }
-}());
-
-```
-
-and the module file will omit the router dependency:
+The module file will omit the router dependency:
 ```javascript
 (function () {
   'use strict';
@@ -723,8 +775,6 @@ and the module file will omit the router dependency:
 }());
 
 ```
-
-**It is still possible to add a route to this module via [ng-poly:route](#route).** The route subgenerator will also add the ui.router dependency and $stateProvider paramater for the config function.
 
 ### Provider
 Generates a provider and its test.

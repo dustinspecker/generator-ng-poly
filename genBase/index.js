@@ -59,7 +59,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
           files = _.uniq(files);
           // remove components and types folder
           files = files.filter(function (file) {
-            var ignoreDirectories = ['components', 'constants', 'controllers', 'directives', 'factories',
+            var ignoreDirectories = ['components', 'constants', 'controllers', 'decorators', 'directives', 'factories',
               'filters', 'services', 'providers', 'values', 'views']
               , i;
             for (i = 0; i < ignoreDirectories.length; i++) {
@@ -143,6 +143,7 @@ Generator.prototype.askForModuleName = function askForModuleName(params) {
 
 Generator.prototype.getConfig = function getConfig() {
   var config = {
+    name: this.name,
     markup: this.options.markup || this.config.get('markup'),
     appScript: this.options['app-script'] || this.config.get('appScript'),
 

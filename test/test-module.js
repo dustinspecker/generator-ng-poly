@@ -50,6 +50,7 @@ describe('Module generator', function () {
 
     it('should not create a controller and view', function () {
       assert.noFile([
+        'app/test-group/test-group-routes.js',
         'app/test-group/test-group-controller.js',
         'app/test-group/test-group-controller_test.js',
         'app/test-group/test-group.tpl.html',

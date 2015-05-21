@@ -3,7 +3,9 @@
 var karmaConf = require('../karma.config.js');
 
 // karmaConf.files get populated in karmaFiles
-karmaConf.files = [];
+karmaConf.files = [
+  'node_modules/karma-babel-preprocessor/node_modules/babel-core/browser-polyfill.js'
+];
 
 module.exports = function (gulp, $, config) {
   gulp.task('clean:test', function (cb) {
@@ -96,7 +98,7 @@ module.exports = function (gulp, $, config) {
   });
 
   // run e2e tests - SERVER MUST BE RUNNING FIRST
-  gulp.task('e2eTest', ['lint', 'build', 'build:e2eTest'], function () {
+  gulp.task('e2eTest', ['lint', 'build:e2eTest'], function () {
     return gulp.src(config.buildE2eTests)
       .pipe($.protractor.protractor({
         configFile: 'protractor.config.js'

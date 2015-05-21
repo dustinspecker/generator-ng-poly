@@ -123,7 +123,7 @@ describe('Route generator', function () {
         })
         .withArguments(['test'])
         .withOptions({
-          module: 'home',
+          module: 'app',
           style: 'styl'
         })
         .on('end', done);
@@ -131,10 +131,10 @@ describe('Route generator', function () {
 
     it('should create route files', function () {
       assert.file([
-        'app/home/test-controller.js',
-        'app/home/test-controller_test.js',
-        'app/home/test.tpl.html',
-        'app/home/test.styl',
+        'app/test-controller.js',
+        'app/test-controller_test.js',
+        'app/test.tpl.html',
+        'app/test.styl',
         'e2e/test/test.po.js',
         'e2e/test/test_test.js'
       ]);

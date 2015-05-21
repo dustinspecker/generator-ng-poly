@@ -106,8 +106,8 @@ module.exports = function (gulp, $, config) {
       '!**/*_test.*',
       '!**/index.html'
     ])
-      .pipe(es6Filter)
       .pipe($.sourcemaps.init())
+      .pipe(es6Filter)
       .pipe($.babel())
       .pipe($.rename(function (filePath) {
         filePath.extname = '.js';
@@ -183,7 +183,6 @@ module.exports = function (gulp, $, config) {
           }
           url = path.normalize(filePath + url);
           url = url.replace(/[/\\]/g, '/');
-          console.log(url);
           return url;
         }
       })))
@@ -341,7 +340,6 @@ module.exports = function (gulp, $, config) {
           '!' + config.buildComponents<% } %>,
           '!' + config.buildCss,
           '!' + config.buildFonts,
-          '!' + config.buildImages,
           '!' + config.buildImages,
           '!' + config.buildJs,
           '!' + config.extDir,

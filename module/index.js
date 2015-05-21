@@ -67,7 +67,9 @@ Generator.prototype.writing = function writing() {
   // create new module
   moduleDest = path.join(this.context.appDir, this.context.modulePath, this.context.hyphenModule);
   this.copySrcFile('module', moduleDest + '-module.' + this.context.appScript, this.context);
-  this.copySrcFile('module-routes', moduleDest + '-routes.' + this.context.appScript, this.context);
+  if (this.options && !this.options.empty) {
+    this.copySrcFile('module-routes', moduleDest + '-routes.' + this.context.appScript, this.context);
+  }
 };
 
 Generator.prototype.end = function end() {
