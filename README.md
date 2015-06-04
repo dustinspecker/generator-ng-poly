@@ -1314,33 +1314,33 @@ Currently, this process isn't as simple as desired. **Pull requests are greatly 
 For this, we're going to install and setup `paper-toolbar`.
 
 1. Run `bower install --save polymerelements/paper-toolbar` to download `paper-toolbar` and its dependencies.
-2. Digging through `bower_components/paper-toolbar/`, we can determine it needs to have `paper-toolbar/paper-toolbar.html`, `paper-styles/paper-styles.html`, and `polymer/polymer`. We then dig through `bower_components/paper-styles/` to find it needs `paper-styles/paper-styles.html`, `paper-styles/color.html`, `paper-styles/default-theme.html`, `paper-styles/shadow.html`, `paper-styles/typography.html`, `iron-flex-layout/iron-flex-layout.html`, and `iron-flex-layout/classes/iron-flex-layout.html`. Then we dig through `iron-flex-layout/iron-flex-layout` to find out we just need to additionally include `iron-flex-layout/iron-flex-layout/classes/iron-shadow-flex-layout.html`.
-3. Edit the `components` task in `gulp/build.js` to include polymerBowerAssetsToCopy like:
+1. Digging through `bower_components/paper-toolbar/`, we can determine it needs to have `paper-toolbar/paper-toolbar.html`, `paper-styles/paper-styles.html`, and `polymer/polymer`. We then dig through `bower_components/paper-styles/` to find it needs `paper-styles/paper-styles.html`, `paper-styles/color.html`, `paper-styles/default-theme.html`, `paper-styles/shadow.html`, `paper-styles/typography.html`, `iron-flex-layout/iron-flex-layout.html`, and `iron-flex-layout/classes/iron-flex-layout.html`. Then we dig through `iron-flex-layout/iron-flex-layout` to find out we just need to additionally include `iron-flex-layout/iron-flex-layout/classes/iron-shadow-flex-layout.html`.
+1. Edit the `components` task in `gulp/build.js` to include polymerBowerAssetsToCopy like:
 
-```javascript
-polymerBowerAssetsToCopy = [
-  'polymer/polymer*.html',
-  'iron-flex-layout/iron-flex-layout.html',
-  'iron-flex-layout/classes/*.html',
-  'paper-styles/{color,default-theme,paper-styles,shadow.html,typography.html}',
-  'paper-toolbar/paper-toolbar.html'
-].map(function (file) {
-  return bowerDir + file;
-});
-```
+  ```javascript
+  polymerBowerAssetsToCopy = [
+    'polymer/polymer*.html',
+    'iron-flex-layout/iron-flex-layout.html',
+    'iron-flex-layout/classes/*.html',
+    'paper-styles/{color,default-theme,paper-styles,shadow.html,typography.html}',
+    'paper-toolbar/paper-toolbar.html'
+  ].map(function (file) {
+    return bowerDir + file;
+  });
+  ```
 
-4. Edit the `componentsInject` task in `gulp/build.js` to include
+1. Edit the `componentsInject` task in `gulp/build.js` to include
 
-```javascript
-var polymerAssetsToInject = [
-  'polymer/polymer.html',
-  'paper-styles/paper-styles.html'
-].map(function (file) {
-  return config.buildComponents + file;
-});
-```
+  ```javascript
+  var polymerAssetsToInject = [
+    'polymer/polymer.html',
+    'paper-styles/paper-styles.html'
+  ].map(function (file) {
+    return config.buildComponents + file;
+  });
+  ```
 
-5. Now, we can use the `<paper-toolbar>` element in our code.
+1. Now, we can use the `<paper-toolbar>` element in our code.
 
 **Note: for custom components, we just need to include them in `polymerAssetsToInject`. They are all automically copied.**
 * * *
