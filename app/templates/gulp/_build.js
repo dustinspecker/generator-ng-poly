@@ -224,7 +224,7 @@ module.exports = function (gulp, $, config) {
     } else {
       return gulp.src(config.buildDir + 'index.html')
         .pipe($.wiredep.stream({<% if (polymer || framework === 'uibootstrap') { %>
-          exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/polymer/, /webcomponents/<% } %><% if (polymer || framework === 'uibootstrap') { %>],<% } %>
+          exclude: [<% } %><% if (framework === 'uibootstrap') { %>/bootstrap[.]js/<% } %><% if (polymer && framework === 'uibootstrap') { %>, <% } %><% if (polymer) { %>/webcomponents/<% } %><% if (polymer || framework === 'uibootstrap') { %>],<% } %>
           ignorePath: '../../' + bowerDir.replace(/\\/g, '/'),
           fileTypes: {
             html: {
@@ -254,10 +254,20 @@ module.exports = function (gulp, $, config) {
       , jadeFilter = $.filter('**/*.jade')
       , lessFilter = $.filter('**/*.less')
       , scssFilter = $.filter('**/*.scss')
-      , stylFilter = $.filter('**/*.styl');
+      , stylFilter = $.filter('**/*.styl')
+      , polymerBowerAssetsToCopy;
+
+    // List all Bower component assets that should be copied to the build
+    // directory. The Bower directory is automatically prepended via the
+    // map function.
+    polymerBowerAssetsToCopy = [
+      'polymer/polymer*.html'
+    ].map(function (file) {
+      return bowerDir + file;
+    });
 
     return gulp.src(config.appComponents)
-      .pipe($.addSrc(bowerDir + 'polymer/{layout,polymer}.{html,js}', {base: bowerDir}))
+      .pipe($.addSrc(polymerBowerAssetsToCopy, {base: bowerDir}))
       .pipe($.sourcemaps.init())
       .pipe(es6Filter)
       .pipe($.babel())
@@ -290,6 +300,29 @@ module.exports = function (gulp, $, config) {
       .pipe(gulp.dest(config.buildComponents));
   });<% } %>
 
+  // inject components
+  gulp.task('componentsInject', ['components'], function () {
+    // List all Polymer and custom copmonents that should be injected
+    // into index.html. The are injected in the order listed and the
+    // components directory is automatically prepended via the
+    // map function.
+    var polymerAssetsToInject = [
+      'polymer/polymer.html'
+    ].map(function (file) {
+      return config.buildComponents + file;
+    });
+
+    return gulp.src(config.buildDir + 'index.html')
+      .pipe($.inject(gulp.src(polymerAssetsToInject), {
+          starttag: '<!-- inject:html -->',
+          endtag: '<!-- endinject -->',
+          addRootSlash: false,
+          ignorePath: config.buildDir
+        })
+      )
+      .pipe(gulp.dest(config.buildDir));
+  });
+
   // copy Bower fonts and images into build directory
   gulp.task('bowerAssets', ['clean'], function () {
     var assetFilter = $.filter('**/*.{eot,otf,svg,ttf,woff,gif,jpg,jpeg,png}');
@@ -315,7 +348,7 @@ module.exports = function (gulp, $, config) {
       .pipe(gulp.dest(config.buildImages));
   });
 
-  gulp.task('copyTemplates', [<% if (polymer) { %>'components'<% } else { %>'bowerInject'<% } %>], function () {
+  gulp.task('copyTemplates', [<% if (polymer) { %>'componentsInject'<% } else { %>'bowerInject'<% } %>], function () {
     // always copy templates to testBuild directory
     var stream = $.streamqueue({objectMode: true});
 

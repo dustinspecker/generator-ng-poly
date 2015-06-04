@@ -2,9 +2,9 @@
 (() => {
   'use strict';
 
-  let element = new Polymer('<%= hyphenName %>', {
-    name: '<%= hyphenName %>',
-    domReady: () => {
+  let element = new Polymer({
+    is: '<%= hyphenName %>',
+    ready: () => {
       console.log('<%= hyphenName %>');
     }
   });
