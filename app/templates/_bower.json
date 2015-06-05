@@ -15,7 +15,7 @@
     "angular-strap": "~2.1.0"<% } %><% if (bower.indexOf('touch') > -1) { %>,
     "angular-touch": "~<%= ngversion %>"<% } %><% if (!ngRoute) { %>,
     "angular-ui-router": "~0.2.10"<% } %><% if (framework === 'material') { %>,
-    "angular-material": "~0.8.0"<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>,
+    "angular-material": "~0.9.0"<% } %><% if (framework === 'angularstrap' || framework === 'uibootstrap') { %>,
     "bootstrap": "~3.2.0"<% } %><% if (bower.indexOf('fontawesome') > -1) { %>,
     "font-awesome": "~4.2.0"<% } %><% if (framework === 'foundation') { %>,
     "foundation": "~5.4.0"<% } %><% if (bower.indexOf('lodash') > -1) { %>,
