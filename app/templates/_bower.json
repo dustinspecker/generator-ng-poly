@@ -19,7 +19,7 @@
     "bootstrap": "~3.2.0"<% } %><% if (bower.indexOf('fontawesome') > -1) { %>,
     "font-awesome": "~4.2.0"<% } %><% if (framework === 'foundation') { %>,
     "foundation": "~5.4.0"<% } %><% if (bower.indexOf('lodash') > -1) { %>,
-    "lodash": "~2.4.1"<% } %><% if (polymer) { %>,
+    "lodash": "~3.9.0"<% } %><% if (polymer) { %>,
     "polymer": "Polymer/polymer#^1.0.0"<% } %><% if (bower.indexOf('restangular') > -1) { %>,
     "restangular": "~1.4.0"<% } %>
   },
