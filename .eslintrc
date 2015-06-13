@@ -1,6 +1,31 @@
 {
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "binaryLiterals": false,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": true,
+    "globalReturn": false,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralDuplicateProperties": false,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "octalLiterals": false,
+    "regexUFlag": true,
+    "regexYFlrag": true,
+    "restParams": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateString": true,
+    "unicodeCodePointEscape": true
+  },
   "env": {
-    "node": true
+    "node": true,
+    "es6": true
   },
   "rules": {
     "block-scoped-var": [2, true],

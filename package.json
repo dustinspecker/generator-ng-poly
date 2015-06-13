@@ -60,9 +60,10 @@
   },
   "devDependencies": {
     "a": "^0.4.6",
+    "babel": "^5.5.7",
     "coveralls": "^2.11.1",
     "eslint-path-formatter": "^0.1.1",
-    "gulp": "^3.8.10",
+    "gulp": "^3.9.0",
     "gulp-eslint": "^0.13.0",
     "gulp-istanbul": "^0.10.0",
     "gulp-jscs": "^1.4.0",
