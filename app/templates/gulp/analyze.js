@@ -1,11 +1,11 @@
 'use strict';
 
 module.exports = function (gulp, $, config) {
-  // lint CoffeeScript and jshint and jscs JavaScript
-  gulp.task('lint', function () {
+  // lint source code
+  gulp.task('lint', function () {<% if ((appScript === 'coffee' || appScript === 'js' || testScript === 'coffee' || testScript === 'js') && (appScript !== testScript)) { %>
     var coffeeFilter = $.filter('**/*.coffee')
       , jsFilter = $.filter('**/*.js');
-
+<% } %>
     return gulp.src([
       config.appScriptFiles,
       config.e2eFiles,
@@ -20,20 +20,20 @@ module.exports = function (gulp, $, config) {
         })(err);
 
         this.emit('end');
-      }}))
-      .pipe(coffeeFilter)
+      }}))<% if (appScript === 'coffee' || testScript === 'coffee') { %><% if (appScript !== testScript) { %>
+      .pipe(coffeeFilter)<% } %>
       .pipe($.coffeelint())
       .pipe($.coffeelint.reporter())
-      .pipe($.coffeelint.reporter('fail'))
-      .pipe(coffeeFilter.restore())
-      .pipe(jsFilter)
+      .pipe($.coffeelint.reporter('fail'))<% if (appScript !== testScript) { %>
+      .pipe(coffeeFilter.restore())<% } %><% } %><% if (appScript === 'js' || testScript === 'js') { %><% if (appScript !== testScript) { %>
+      .pipe(jsFilter)<% } %>
       .pipe($.eslint())
       .pipe($.eslint.formatEach('./node_modules/eslint-path-formatter'))
       .pipe($.eslint.failOnError())
       .pipe($.jshint())
       .pipe($.jshint.reporter('jshint-stylish'))
       .pipe($.jshint.reporter('fail'))
-      .pipe($.jscs());
+      .pipe($.jscs());<% } %>
   });
 
   // run plato anaylysis on JavaScript (ES5) files

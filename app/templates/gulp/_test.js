@@ -13,27 +13,14 @@ module.exports = function (gulp, $, config) {
   });
 
   gulp.task('buildTests', ['lint', 'clean:test'], function () {
-    var typescriptFilter = $.filter('**/*.ts')
-      , coffeeFilter = $.filter('**/*.coffee')
-      , es6Filter = $.filter('**/*.es6')
-      , jsFilter = $.filter('**/*.js');
-
-    return gulp.src([config.unitTestFiles])
-      .pipe(es6Filter)
+    return gulp.src([config.unitTestFiles])<% if (testScript === 'es6') { %>
       .pipe($.babel())
       .pipe($.rename(function (filePath) {
         filePath.extname = '.js';
-      }))
-      .pipe(es6Filter.restore())
-      .pipe(typescriptFilter)
-      .pipe($.typescript(config.tsProject))
-      .pipe(typescriptFilter.restore())
-      .pipe(coffeeFilter)
-      .pipe($.coffee())
-      .pipe(coffeeFilter.restore())
-      .pipe(jsFilter)
-      .pipe(gulp.dest(config.buildUnitTestsDir))
-      .pipe(jsFilter.restore());
+      }))<% } else if (testScript === 'ts') { %>
+      .pipe($.typescript(config.tsProject))<% } else if (testScript === 'coffee') { %>
+      .pipe($.coffee())<% } %>
+      .pipe(gulp.dest(config.buildUnitTestsDir));
   });
 
   // inject scripts in karma.config.js
@@ -74,27 +61,13 @@ module.exports = function (gulp, $, config) {
   });
 
   gulp.task('build:e2eTest', function () {
-    var typescriptFilter = $.filter('**/*.ts')
-      , coffeeFilter = $.filter('**/*.coffee')
-      , es6Filter = $.filter('**/*.es6')
-      , jsFilter = $.filter('**/*.js');
-
-    return gulp.src([config.e2eFiles])
-      .pipe(es6Filter)
+    return gulp.src([config.e2eFiles])<% if (testScript === 'es6') { %>
       .pipe($.babel())
       .pipe($.rename(function (filePath) {
         filePath.extname = '.js';
-      }))
-      .pipe(es6Filter.restore())
-      .pipe(typescriptFilter)
-      .pipe($.typescript(config.tsProject))
-      .pipe(typescriptFilter.restore())
-      .pipe(coffeeFilter)
-      .pipe($.coffee())
-      .pipe(coffeeFilter.restore())
-      .pipe(jsFilter)
-      .pipe(gulp.dest(config.buildE2eTestsDir))
-      .pipe(jsFilter.restore());
+      }))<% } else if (testScript === 'coffee') { %>
+      .pipe($.coffee())<% } %>
+      .pipe(gulp.dest(config.buildE2eTestsDir));
   });
 
   // run e2e tests - SERVER MUST BE RUNNING FIRST

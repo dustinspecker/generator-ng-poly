@@ -16,28 +16,17 @@ module.exports = function (gulp, $, config) {
 
   // compile markup files and copy into build directory
   gulp.task('markup', ['clean'], function () {
-    var hamlFilter = $.filter('**/*.haml')
-      , jadeFilter = $.filter('**/*.jade');
-
     return gulp.src([
       config.appMarkupFiles<% if (polymer) { %>,
       '!' + config.appComponents<% } %>
-    ])
-      .pipe(hamlFilter)
-      .pipe($.haml())
-      .pipe(hamlFilter.restore())
-      .pipe(jadeFilter)
-      .pipe($.jade())
-      .pipe(jadeFilter.restore())
+    ])<% if (markup === 'haml') { %>
+      .pipe($.haml())<% } else if (markup === 'jade') { %>
+      .pipe($.jade())<% } %>
       .pipe(gulp.dest(config.buildDir));
   });
 
   // compile styles and copy into build directory
   gulp.task('styles', ['clean'], function () {
-    var lessFilter = $.filter('**/*.less')
-      , scssFilter = $.filter('**/*.scss')
-      , stylusFilter = $.filter('**/*.styl');
-
     return gulp.src([
       config.appStyleFiles<% if (polymer) { %>,
       '!' + config.appComponents<% } %>
@@ -51,18 +40,12 @@ module.exports = function (gulp, $, config) {
         })(err);
 
         this.emit('end');
-      }}))
-      .pipe(lessFilter)
-      .pipe($.less())
-      .pipe(lessFilter.restore())
-      .pipe(scssFilter)
-      .pipe($.sass())
-      .pipe(scssFilter.restore())
-      .pipe(stylusFilter)
+      }}))<% if (style === 'less') { %>
+      .pipe($.less())<% } else if (style === 'scss') { %>
+      .pipe($.sass())<% } else if (style === 'styl') { %>
       .pipe($.stylus({
         use: $.nib()
-      }))
-      .pipe(stylusFilter.restore())
+      }))<% } %>
       .pipe($.autoprefixer())
       .pipe($.if(isProd, $.cssRebaseUrls()))
       .pipe($.if(isProd, $.modifyCssUrls({
@@ -93,11 +76,11 @@ module.exports = function (gulp, $, config) {
 
   // compile scripts and copy into build directory
   gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
-    var typescriptFilter = $.filter('**/*.ts')
-      , coffeeFilter = $.filter('**/*.coffee')
-      , es6Filter = $.filter('**/*.es6')
-      , htmlFilter = $.filter('**/*.html')
-      , jsFilter = $.filter('**/*.js');
+    var <% if (appScript === 'coffee') { %>coffeeFilter = $.filter('**/*.coffee')
+      , <% } %><% if (appScript === 'es6') { %>es6Filter = $.filter('**/*.es6')
+      , <% } %>htmlFilter = $.filter('**/*.html')
+      , jsFilter = $.filter('**/*.js')<% if (appScript === 'ts') { %>
+      , tsFilter = $.filter('**/*.ts')<% } %>;
 
     return gulp.src([
       config.appScriptFiles,
@@ -106,19 +89,19 @@ module.exports = function (gulp, $, config) {
       '!**/*_test.*',
       '!**/index.html'
     ])
-      .pipe($.sourcemaps.init())
+      .pipe($.sourcemaps.init())<% if (appScript === 'es6') { %>
       .pipe(es6Filter)
       .pipe($.babel())
       .pipe($.rename(function (filePath) {
         filePath.extname = '.js';
       }))
-      .pipe(es6Filter.restore())
-      .pipe(typescriptFilter)
+      .pipe(es6Filter.restore())<% } else if (appScript === 'ts') { %>
+      .pipe(tsFilter)
       .pipe($.typescript(config.tsProject))
-      .pipe(typescriptFilter.restore())
+      .pipe(tsFilter.restore())<% } else if (appScript === 'coffee') { %>
       .pipe(coffeeFilter)
       .pipe($.coffee())
-      .pipe(coffeeFilter.restore())
+      .pipe(coffeeFilter.restore())<% } %>
       .pipe($.if(isProd, htmlFilter))
       .pipe($.if(isProd, $.ngHtml2js({
         // lower camel case all app names
@@ -247,15 +230,7 @@ module.exports = function (gulp, $, config) {
 
   // compile components and copy into build directory
   gulp.task('components', ['bowerInject'], function () {
-    var typeScriptFilter = $.filter('**/*.ts')
-      , coffeeFilter = $.filter('**/*.coffee')
-      , es6Filter = $.filter('**/*.es6')
-      , hamlFilter = $.filter('**/*.haml')
-      , jadeFilter = $.filter('**/*.jade')
-      , lessFilter = $.filter('**/*.less')
-      , scssFilter = $.filter('**/*.scss')
-      , stylFilter = $.filter('**/*.styl')
-      , polymerBowerAssetsToCopy;
+    var polymerBowerAssetsToCopy;
 
     // List all Bower component assets that should be copied to the build
     // directory. The Bower directory is automatically prepended via the
@@ -268,37 +243,23 @@ module.exports = function (gulp, $, config) {
 
     return gulp.src(config.appComponents)
       .pipe($.addSrc(polymerBowerAssetsToCopy, {base: bowerDir}))
-      .pipe($.sourcemaps.init())
-      .pipe(es6Filter)
+      .pipe($.sourcemaps.init())<% if (appScript === 'es6') { %>
       .pipe($.babel())
       .pipe($.rename(function (filePath) {
         filePath.extname = '.js';
-      }))
-      .pipe(es6Filter.restore())
-      .pipe(typeScriptFilter)
-      .pipe($.typescript())
-      .pipe(typeScriptFilter.restore())
-      .pipe(coffeeFilter)
-      .pipe($.coffee())
-      .pipe(coffeeFilter.restore())
-      .pipe(hamlFilter)
-      .pipe($.haml())
-      .pipe(hamlFilter.restore())
-      .pipe(jadeFilter)
-      .pipe($.jade())
-      .pipe(jadeFilter.restore())
-      .pipe(lessFilter)
-      .pipe($.less())
-      .pipe(lessFilter.restore())
-      .pipe(scssFilter)
-      .pipe($.sass())
-      .pipe(scssFilter.restore())
-      .pipe(stylFilter)
-      .pipe($.stylus())
-      .pipe(stylFilter.restore())
+      }))<% } else if (appScript === 'ts') { %>
+      .pipe($.typescript(config.tsProject))<% } else if (appScript === 'coffee') { %>
+      .pipe($.coffee())<% } %><% if (markup === 'haml') { %>
+      .pipe($.haml())<% } else if (markup === 'jade') { %>
+      .pipe($.jade())<% } %><% if (style === 'less') { %>
+      .pipe($.less())<% } else if (style === 'scss') { %>
+      .pipe($.sass())<% } else if (style === 'styl') { %>
+      .pipe($.stylus({
+        use: $.nib()
+      }))<% } %>
       .pipe($.sourcemaps.write('.'))
       .pipe(gulp.dest(config.buildComponents));
-  });<% } %>
+  });
 
   // inject components
   gulp.task('componentsInject', ['components'], function () {
@@ -321,7 +282,7 @@ module.exports = function (gulp, $, config) {
         })
       )
       .pipe(gulp.dest(config.buildDir));
-  });
+  });<% } %>
 
   // copy Bower fonts and images into build directory
   gulp.task('bowerAssets', ['clean'], function () {

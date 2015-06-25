@@ -15,8 +15,8 @@ $ = require('gulp-load-plugins')({
   'gulp-*',
   'karma',
   'main-bower-files',
-  'multi-glob',
-  'nib',
+  'multi-glob'<% if (style === 'styl') { %>,
+  'nib'<% } %>,
   'plato',
   'run-sequence',
   'streamqueue',
@@ -32,9 +32,9 @@ _.merge(config, buildConfig);
 <% } %>config.appFiles = path.join(config.appDir, '**/*');
 config.appFontFiles = path.join(config.appDir, 'fonts/**/*');
 config.appImageFiles = path.join(config.appDir, 'images/**/*');
-config.appMarkupFiles = path.join(config.appDir, '**/*.{haml,html,jade}');
-config.appScriptFiles = path.join(config.appDir, '**/*.{coffee,es6,js,ts}');
-config.appStyleFiles = path.join(config.appDir, '**/*.{css,less,scss,styl}');
+config.appMarkupFiles = path.join(config.appDir, '**/*.<%= markup %>');
+config.appScriptFiles = path.join(config.appDir, '**/*.<%= appScript %>');
+config.appStyleFiles = path.join(config.appDir, '**/*.<%= style %>');
 
 config.buildDirectiveTemplateFiles = path.join(config.buildDir, '**/*directive.tpl.html');
 config.buildJsFiles = path.join(config.buildJs, '**/*.js');
@@ -46,13 +46,13 @@ config.buildTestDirectiveTemplatesDir = path.join(config.buildTestDir, 'template
 config.buildUnitTestsDir = path.join(config.buildTestDir, config.unitTestDir);
 config.buildUnitTestFiles = path.join(config.buildUnitTestsDir, '**/*_test.js');
 
-config.e2eFiles = path.join('e2e', '**/*.{coffee,es6,js,ts}');
-config.unitTestFiles = path.join(config.unitTestDir, '**/*_test.{coffee,es6,js,ts}');
+config.e2eFiles = path.join('e2e', '**/*.<% if (testScript === 'ts') { %>js<% } else { %><%= testScript %><% } %>');
+config.unitTestFiles = path.join(config.unitTestDir, '**/*_test.<%= testScript %>');<% if (appScript === 'ts' || testScript === 'ts') { %>
 
 config.tsProject = $.typescript.createProject({
   declarationFiles: true,
   noExternalResolve: false
-});
+});<% } %>
 
 for (key in gulpFiles) {
   gulpFiles[key](gulp, $, config);
