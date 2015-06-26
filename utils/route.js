@@ -234,7 +234,7 @@ exports.addRoute = function addRoute(fileContents, state, config) {
     , analysis
     , newState;
 
-  lines = fileContents.split(endOfLine);
+  lines = fileContents.split(/\r?\n/);
   analysis = analyzeLines(lines, config);
 
   // if file needs parameter, add it
