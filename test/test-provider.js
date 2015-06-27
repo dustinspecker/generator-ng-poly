@@ -7,7 +7,7 @@ var assert = require('yeoman-generator').assert
 describe('Provider generator', function () {
   before(function (done) {
     helpers
-      .run(join(__dirname, '../app'))
+      .run(join(__dirname, '../generator/app'))
       .withPrompts({
         appName: 'temp-provider',
         markup: 'html',
@@ -19,10 +19,10 @@ describe('Provider generator', function () {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../module'),
-        join(__dirname, '../route'),
-        join(__dirname, '../controller'),
-        join(__dirname, '../view')
+        join(__dirname, '../generator/module'),
+        join(__dirname, '../generator/route'),
+        join(__dirname, '../generator/controller'),
+        join(__dirname, '../generator/view')
       ])
       .on('end', done);
   });
@@ -30,7 +30,7 @@ describe('Provider generator', function () {
   describe('with JS app and JS test with module-type', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../provider'), {
+        .run(join(__dirname, '../generator/provider'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -52,7 +52,7 @@ describe('Provider generator', function () {
   describe('with Coffee app and Coffee test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../provider'), {
+        .run(join(__dirname, '../generator/provider'), {
           tmpdir: false
         })
         .withArguments(['test1'])
@@ -76,7 +76,7 @@ describe('Provider generator', function () {
   describe('with TypeScript app and TypeScript test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../provider'), {
+        .run(join(__dirname, '../generator/provider'), {
           tmpdir: false
         })
         .withArguments(['test2'])

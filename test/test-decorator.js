@@ -7,7 +7,7 @@ var assert = require('yeoman-generator').assert
 describe('Decorator generator', function () {
   before(function (done) {
     helpers
-      .run(join(__dirname, '../app'))
+      .run(join(__dirname, '../generator/app'))
       .withPrompts({
         appName: 'temp-decorator',
         markup: 'html',
@@ -19,10 +19,10 @@ describe('Decorator generator', function () {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../module'),
-        join(__dirname, '../route'),
-        join(__dirname, '../controller'),
-        join(__dirname, '../view')
+        join(__dirname, '../generator/module'),
+        join(__dirname, '../generator/route'),
+        join(__dirname, '../generator/controller'),
+        join(__dirname, '../generator/view')
       ])
       .on('end', done);
   });
@@ -30,7 +30,7 @@ describe('Decorator generator', function () {
   describe('with JS app and test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../decorator'), {
+        .run(join(__dirname, '../generator/decorator'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -51,7 +51,7 @@ describe('Decorator generator', function () {
   describe('with Coffee app and test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../decorator'), {
+        .run(join(__dirname, '../generator/decorator'), {
           tmpdir: false
         })
         .withArguments(['$urlRouterProvider'])
@@ -75,7 +75,7 @@ describe('Decorator generator', function () {
   describe('with ES2105 app and test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../decorator'), {
+        .run(join(__dirname, '../generator/decorator'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -98,7 +98,7 @@ describe('Decorator generator', function () {
   describe('with TypeScript app and test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../decorator'), {
+        .run(join(__dirname, '../generator/decorator'), {
           tmpdir: false
         })
         .withArguments(['test'])

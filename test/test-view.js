@@ -7,7 +7,7 @@ var assert = require('yeoman-generator').assert
 describe('View generator', function () {
   before(function (done) {
     helpers
-      .run(join(__dirname, '../app'))
+      .run(join(__dirname, '../generator/app'))
       .withPrompts({
         appName: 'temp-view',
         markup: 'html',
@@ -19,10 +19,10 @@ describe('View generator', function () {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../module'),
-        join(__dirname, '../route'),
-        join(__dirname, '../controller'),
-        join(__dirname, '../view')
+        join(__dirname, '../generator/module'),
+        join(__dirname, '../generator/route'),
+        join(__dirname, '../generator/controller'),
+        join(__dirname, '../generator/view')
       ])
       .on('end', done);
   });
@@ -30,7 +30,7 @@ describe('View generator', function () {
   describe('with HTML markup and LESS style with module-type', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../view'), {
+        .run(join(__dirname, '../generator/view'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -56,7 +56,7 @@ describe('View generator', function () {
   describe('with HAML markup and CSS style', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../view'), {
+        .run(join(__dirname, '../generator/view'), {
           tmpdir: false
         })
         .withArguments(['test1'])
@@ -83,7 +83,7 @@ describe('View generator', function () {
   describe('with Jade markup and SCSS style', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../view'), {
+        .run(join(__dirname, '../generator/view'), {
           tmpdir: false
         })
         .withArguments(['test2'])
@@ -110,7 +110,7 @@ describe('View generator', function () {
   describe('with Jade markup and Stylus style', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../view'), {
+        .run(join(__dirname, '../generator/view'), {
           tmpdir: false
         })
         .withArguments(['test3'])

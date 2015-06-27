@@ -1,7 +1,7 @@
 /*global describe, it */
 'use strict';
 var assert = require('assert')
-  , nameUtils = require('../utils/name');
+  , nameUtils = require('../generator/utils/name');
 
 describe('Name Utils', function () {
   describe('lower camel', function () {

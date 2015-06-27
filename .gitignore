@@ -1,4 +1,4 @@
 coverage/
+generator/
 node_modules/
-test/*temp*/
 .idea

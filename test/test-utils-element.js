@@ -1,7 +1,7 @@
 /*global describe, it */
 'use strict';
 var assert = require('assert')
-  , elementUtils = require('../utils/element');
+  , elementUtils = require('../generator/utils/element');
 
 describe('Element Utils', function () {
   describe('checkElementName', function () {

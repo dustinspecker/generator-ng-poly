@@ -49,7 +49,7 @@ describe('App generator', function () {
 
     before(function (done) {
       helpers
-        .run(join(__dirname, '../app'))
+        .run(join(__dirname, '../generator/app'))
         .withOptions({
           'skip-install': false
         })
@@ -71,10 +71,10 @@ describe('App generator', function () {
           bower: []
         })
         .withGenerators([
-          join(__dirname, '../module'),
-          join(__dirname, '../route'),
-          join(__dirname, '../controller'),
-          join(__dirname, '../view')
+          join(__dirname, '../generator/module'),
+          join(__dirname, '../generator/route'),
+          join(__dirname, '../generator/controller'),
+          join(__dirname, '../generator/view')
         ])
         .on('ready', function (generator) {
           gen = generator;
@@ -304,7 +304,7 @@ describe('App generator', function () {
 
     before(function (done) {
       helpers
-        .run(join(__dirname, '../app'))
+        .run(join(__dirname, '../generator/app'))
         .withOptions({
           'skip-install': false
         })
@@ -322,10 +322,10 @@ describe('App generator', function () {
           bower: []
         })
         .withGenerators([
-          join(__dirname, '../module'),
-          join(__dirname, '../route'),
-          join(__dirname, '../controller'),
-          join(__dirname, '../view')
+          join(__dirname, '../generator/module'),
+          join(__dirname, '../generator/route'),
+          join(__dirname, '../generator/controller'),
+          join(__dirname, '../generator/view')
         ])
         .on('ready', function (generator) {
           gen = generator;
@@ -538,7 +538,7 @@ describe('App generator', function () {
   describe('with HAML markup, LESS style, Coffee app, and Coffee test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../app'))
+        .run(join(__dirname, '../generator/app'))
         .withPrompts({
           appName: 'temp-app',
           appDir: 'app',
@@ -551,10 +551,10 @@ describe('App generator', function () {
           bower: []
         })
         .withGenerators([
-          join(__dirname, '../module'),
-          join(__dirname, '../route'),
-          join(__dirname, '../controller'),
-          join(__dirname, '../view')
+          join(__dirname, '../generator/module'),
+          join(__dirname, '../generator/route'),
+          join(__dirname, '../generator/controller'),
+          join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
@@ -742,7 +742,7 @@ describe('App generator', function () {
   describe('with Jade markup, Stylus style, ES6 app, and ES6 test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../app'))
+        .run(join(__dirname, '../generator/app'))
         .withPrompts({
           appName: 'temp-app',
           markup: 'jade',
@@ -754,10 +754,10 @@ describe('App generator', function () {
           bower: []
         })
         .withGenerators([
-          join(__dirname, '../module'),
-          join(__dirname, '../route'),
-          join(__dirname, '../controller'),
-          join(__dirname, '../view')
+          join(__dirname, '../generator/module'),
+          join(__dirname, '../generator/route'),
+          join(__dirname, '../generator/controller'),
+          join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
@@ -952,7 +952,7 @@ describe('App generator', function () {
   describe('with HTML markup, SCSS style, JS app, and JS test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../app'))
+        .run(join(__dirname, '../generator/app'))
         .withOptions({
           'skip-controller': true
         })
@@ -968,10 +968,10 @@ describe('App generator', function () {
           bower: []
         })
         .withGenerators([
-          join(__dirname, '../module'),
-          join(__dirname, '../route'),
-          join(__dirname, '../controller'),
-          join(__dirname, '../view')
+          join(__dirname, '../generator/module'),
+          join(__dirname, '../generator/route'),
+          join(__dirname, '../generator/controller'),
+          join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
