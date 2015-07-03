@@ -3,7 +3,7 @@
 var assert = require('assert')
   , fs = require('fs')
   , path = require('path')
-  , routeUtils = require('../utils/route')
+  , routeUtils = require('../generator/utils/route')
 
   , newState = {
     name: 'test',

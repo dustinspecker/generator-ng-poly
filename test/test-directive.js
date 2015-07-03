@@ -7,7 +7,7 @@ var assert = require('yeoman-generator').assert
 describe('Directive generator', function () {
   before(function (done) {
     helpers
-      .run(join(__dirname, '../app'))
+      .run(join(__dirname, '../generator/app'))
       .withPrompts({
         appName: 'temp-directive',
         markup: 'html',
@@ -19,10 +19,10 @@ describe('Directive generator', function () {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../module'),
-        join(__dirname, '../route'),
-        join(__dirname, '../controller'),
-        join(__dirname, '../view')
+        join(__dirname, '../generator/module'),
+        join(__dirname, '../generator/route'),
+        join(__dirname, '../generator/controller'),
+        join(__dirname, '../generator/view')
       ])
       .on('end', done);
   });
@@ -30,7 +30,7 @@ describe('Directive generator', function () {
   describe('with HTML markup, JS app, and JS test with module-type', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../directive'), {
+        .run(join(__dirname, '../generator/directive'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -53,7 +53,7 @@ describe('Directive generator', function () {
   describe('with Jade markup, Coffee app, and Coffee test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../directive'), {
+        .run(join(__dirname, '../generator/directive'), {
           tmpdir: false
         })
         .withArguments(['test1'])
@@ -78,7 +78,7 @@ describe('Directive generator', function () {
   describe('with Jade markup, TypeScript app, and TypeScript test using module-type', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../directive'), {
+        .run(join(__dirname, '../generator/directive'), {
           tmpdir: false
         })
         .withArguments(['test3'])
@@ -104,7 +104,7 @@ describe('Directive generator', function () {
   describe('with HAML markup, ES6 app, and ES6 test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../directive'), {
+        .run(join(__dirname, '../generator/directive'), {
           tmpdir: false
         })
         .withArguments(['test2'])

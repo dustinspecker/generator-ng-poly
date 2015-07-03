@@ -4,7 +4,7 @@ var a = require('a')
   , assert = require('assert')
   , proxyquire = require('proxyquire')
   , sinon = require('sinon')
-  , utils = require('../utils/module');
+  , utils = require('../generator/utils/module');
 
 describe('Module Utils', function () {
   describe('extractModuleNames', function () {
@@ -16,7 +16,7 @@ describe('Module Utils', function () {
           }
         }
         // proxy utils
-        , utilsProxy = proxyquire('../utils/module', {path: pathStub})
+        , utilsProxy = proxyquire('../generator/utils/module', {path: pathStub})
 
         // mock response
         , expectRequire = a.expectRequire;
@@ -52,7 +52,7 @@ describe('Module Utils', function () {
           return 'app/home';
         }
       };
-      utilsProxy = proxyquire('../utils/module', {path: pathStub});
+      utilsProxy = proxyquire('../generator/utils/module', {path: pathStub});
 
       utilsProxy.getAppDir = function getAppDir() {
         return 'app';
@@ -67,7 +67,7 @@ describe('Module Utils', function () {
       var fsStub = {
         existsSync: sinon.stub().returns(true)
       };
-      utilsProxy = proxyquire('../utils/module', {fs: fsStub, path: pathStub});
+      utilsProxy = proxyquire('../generator/utils/module', {fs: fsStub, path: pathStub});
       utilsProxy.getAppDir = function getAppDir() {
         return 'app';
       };

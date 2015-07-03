@@ -7,7 +7,7 @@ var assert = require('yeoman-generator').assert
 describe('Route generator', function () {
   before(function (done) {
     helpers
-      .run(join(__dirname, '../app'))
+      .run(join(__dirname, '../generator/app'))
       .withPrompts({
         appName: 'temp-route',
         markup: 'html',
@@ -19,10 +19,10 @@ describe('Route generator', function () {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../module'),
-        join(__dirname, '../route'),
-        join(__dirname, '../controller'),
-        join(__dirname, '../view')
+        join(__dirname, '../generator/module'),
+        join(__dirname, '../generator/route'),
+        join(__dirname, '../generator/controller'),
+        join(__dirname, '../generator/view')
       ])
       .on('end', done);
   });
@@ -30,7 +30,7 @@ describe('Route generator', function () {
   describe('with HTML markup, Less style, JS app, JS test, and skipController', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../route'), {
+        .run(join(__dirname, '../generator/route'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -61,7 +61,7 @@ describe('Route generator', function () {
   describe('with Jade markup, CSS style, Coffee app, and Coffee test with module-type', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../route'), {
+        .run(join(__dirname, '../generator/route'), {
           tmpdir: false
         })
         .withArguments(['test1'])
@@ -91,7 +91,7 @@ describe('Route generator', function () {
   describe('with HAML markup, SCSS style, JS app, and JS test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../route'), {
+        .run(join(__dirname, '../generator/route'), {
           tmpdir: false
         })
         .withArguments(['test.child'])
@@ -118,7 +118,7 @@ describe('Route generator', function () {
   describe('with HTML markup, Stylus style, JS app, and JS test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../route'), {
+        .run(join(__dirname, '../generator/route'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -144,7 +144,7 @@ describe('Route generator', function () {
   describe('with Jade markup, CSS style, TypeScript app, and TypeScript test', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../route'), {
+        .run(join(__dirname, '../generator/route'), {
           tmpdir: false
         })
         .withArguments(['test2'])

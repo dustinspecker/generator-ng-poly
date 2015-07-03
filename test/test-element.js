@@ -7,7 +7,7 @@ var assert = require('yeoman-generator').assert
 describe('Element generator', function () {
   before(function (done) {
     helpers
-      .run(join(__dirname, '../app'))
+      .run(join(__dirname, '../generator/app'))
       .withPrompts({
         appName: 'temp-element',
         markup: 'html',
@@ -19,10 +19,10 @@ describe('Element generator', function () {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../module'),
-        join(__dirname, '../route'),
-        join(__dirname, '../controller'),
-        join(__dirname, '../view')
+        join(__dirname, '../generator/module'),
+        join(__dirname, '../generator/route'),
+        join(__dirname, '../generator/controller'),
+        join(__dirname, '../generator/view')
       ])
       .on('end', done);
   });
@@ -30,7 +30,7 @@ describe('Element generator', function () {
   describe('with HTML markup, JS app, and LESS style', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../element'), {
+        .run(join(__dirname, '../generator/element'), {
           tmpdir: false
         })
         .withArguments(['test-element'])
@@ -49,7 +49,7 @@ describe('Element generator', function () {
   describe('with Jade markup, Coffee app, and CSS style', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../element'), {
+        .run(join(__dirname, '../generator/element'), {
           tmpdir: false
         })
         .withArguments(['test1-element'])
@@ -73,7 +73,7 @@ describe('Element generator', function () {
   describe('with HAML markup, ES6 app, and SCSS style', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../element'), {
+        .run(join(__dirname, '../generator/element'), {
           tmpdir: false
         })
         .withArguments(['test2-element'])
@@ -97,7 +97,7 @@ describe('Element generator', function () {
   describe('with HTML markup, JS app, and Stylus style', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../element'), {
+        .run(join(__dirname, '../generator/element'), {
           tmpdir: false
         })
         .withArguments(['test3-element'])
@@ -119,7 +119,7 @@ describe('Element generator', function () {
   describe('with Jade markup, TypeScript app, and CSS style', function () {
     before(function (done) {
       helpers
-        .run(join(__dirname, '../element'), {
+        .run(join(__dirname, '../generator/element'), {
           tmpdir: false
         })
         .withArguments(['test4-element'])

@@ -10,7 +10,7 @@ describe('Module generator', function () {
   // stub installDependencies for code coverage
   before(function (done) {
     helpers
-      .run(path.join(__dirname, '../app'))
+      .run(path.join(__dirname, '../generator/app'))
       .withPrompts({
         appName: 'temp-module',
         markup: 'html',
@@ -22,10 +22,10 @@ describe('Module generator', function () {
         bower: []
       })
       .withGenerators([
-        path.join(__dirname, '../module'),
-        path.join(__dirname, '../route'),
-        path.join(__dirname, '../controller'),
-        path.join(__dirname, '../view')
+        path.join(__dirname, '../generator/module'),
+        path.join(__dirname, '../generator/route'),
+        path.join(__dirname, '../generator/controller'),
+        path.join(__dirname, '../generator/view')
       ])
       .on('end', done);
   });
@@ -33,7 +33,7 @@ describe('Module generator', function () {
   describe('adding a new empty module', function () {
     before(function (done) {
       helpers
-        .run(path.join(__dirname, '../module'), {
+        .run(path.join(__dirname, '../generator/module'), {
           tmpdir: false
         })
         .withArguments(['testGroup'])
@@ -41,9 +41,9 @@ describe('Module generator', function () {
           empty: true
         })
         .withGenerators([
-          path.join(__dirname, '../route'),
-          path.join(__dirname, '../controller'),
-          path.join(__dirname, '../view')
+          path.join(__dirname, '../generator/route'),
+          path.join(__dirname, '../generator/controller'),
+          path.join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
@@ -63,7 +63,7 @@ describe('Module generator', function () {
   describe('adding a new CoffeeScript module', function () {
     before(function (done) {
       helpers
-        .run(path.join(__dirname, '../module'), {
+        .run(path.join(__dirname, '../generator/module'), {
           tmpdir: false
         })
         .withArguments(['test-coffee/'])
@@ -71,9 +71,9 @@ describe('Module generator', function () {
           'app-script': 'coffee'
         })
         .withGenerators([
-          path.join(__dirname, '../route'),
-          path.join(__dirname, '../controller'),
-          path.join(__dirname, '../view')
+          path.join(__dirname, '../generator/route'),
+          path.join(__dirname, '../generator/controller'),
+          path.join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
@@ -101,7 +101,7 @@ describe('Module generator', function () {
   describe('adding a new ES2105 module', function () {
     before(function (done) {
       helpers
-        .run(path.join(__dirname, '../module'), {
+        .run(path.join(__dirname, '../generator/module'), {
           tmpdir: false
         })
         .withArguments(['test-es6/'])
@@ -109,9 +109,9 @@ describe('Module generator', function () {
           'app-script': 'es6'
         })
         .withGenerators([
-          path.join(__dirname, '../route'),
-          path.join(__dirname, '../controller'),
-          path.join(__dirname, '../view')
+          path.join(__dirname, '../generator/route'),
+          path.join(__dirname, '../generator/controller'),
+          path.join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
@@ -140,14 +140,14 @@ describe('Module generator', function () {
   describe('adding a new JS module', function () {
     before(function (done) {
       helpers
-        .run(path.join(__dirname, '../module'), {
+        .run(path.join(__dirname, '../generator/module'), {
           tmpdir: false
         })
         .withArguments(['test-js/'])
         .withGenerators([
-          path.join(__dirname, '../route'),
-          path.join(__dirname, '../controller'),
-          path.join(__dirname, '../view')
+          path.join(__dirname, '../generator/route'),
+          path.join(__dirname, '../generator/controller'),
+          path.join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
@@ -175,7 +175,7 @@ describe('Module generator', function () {
   describe('adding a new TS module', function () {
     before(function (done) {
       helpers
-        .run(path.join(__dirname, '../module'), {
+        .run(path.join(__dirname, '../generator/module'), {
           tmpdir: false
         })
         .withArguments(['test-ts/'])
@@ -183,9 +183,9 @@ describe('Module generator', function () {
           'app-script': 'ts'
         })
         .withGenerators([
-          path.join(__dirname, '../route'),
-          path.join(__dirname, '../controller'),
-          path.join(__dirname, '../view')
+          path.join(__dirname, '../generator/route'),
+          path.join(__dirname, '../generator/controller'),
+          path.join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
@@ -213,7 +213,7 @@ describe('Module generator', function () {
   describe('adding a deep level camelCase module', function () {
     before(function (done) {
       helpers
-        .run(path.join(__dirname, '../module'), {
+        .run(path.join(__dirname, '../generator/module'), {
           tmpdir: false
         })
         .withArguments(['home/myDoor'])
@@ -221,9 +221,9 @@ describe('Module generator', function () {
           'app-script': 'coffee'
         })
         .withGenerators([
-          path.join(__dirname, '../route'),
-          path.join(__dirname, '../controller'),
-          path.join(__dirname, '../view')
+          path.join(__dirname, '../generator/route'),
+          path.join(__dirname, '../generator/controller'),
+          path.join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
@@ -231,14 +231,14 @@ describe('Module generator', function () {
     describe('adding a deeper level module', function () {
       before(function (done) {
         helpers
-          .run(path.join(__dirname, '../module'), {
+          .run(path.join(__dirname, '../generator/module'), {
             tmpdir: false
           })
           .withArguments(['home/myDoor/handle'])
           .withGenerators([
-            path.join(__dirname, '../route'),
-            path.join(__dirname, '../controller'),
-            path.join(__dirname, '../view')
+            path.join(__dirname, '../generator/route'),
+            path.join(__dirname, '../generator/controller'),
+            path.join(__dirname, '../generator/view')
           ])
           .on('end', done);
       });
@@ -264,14 +264,14 @@ describe('Module generator', function () {
   describe('adding a deep level hyphenated module', function () {
     before(function (done) {
       helpers
-      .run(path.join(__dirname, '../module'), {
+      .run(path.join(__dirname, '../generator/module'), {
         tmpdir: false
       })
       .withArguments(['home/my-module'])
       .withGenerators([
-        path.join(__dirname, '../route'),
-        path.join(__dirname, '../controller'),
-        path.join(__dirname, '../view')
+        path.join(__dirname, '../generator/route'),
+        path.join(__dirname, '../generator/controller'),
+        path.join(__dirname, '../generator/view')
       ])
       .on('end', done);
     });
@@ -292,7 +292,7 @@ describe('Module generator', function () {
   describe('adding a deep level Typescript module', function () {
     before(function (done) {
       helpers
-        .run(path.join(__dirname, '../module'), {
+        .run(path.join(__dirname, '../generator/module'), {
           tmpdir: false
         })
         .withArguments(['home/myHouse'])
@@ -300,9 +300,9 @@ describe('Module generator', function () {
           'app-script': 'ts'
         })
         .withGenerators([
-          path.join(__dirname, '../route'),
-          path.join(__dirname, '../controller'),
-          path.join(__dirname, '../view')
+          path.join(__dirname, '../generator/route'),
+          path.join(__dirname, '../generator/controller'),
+          path.join(__dirname, '../generator/view')
         ])
         .on('end', done);
     });
@@ -318,7 +318,7 @@ describe('Module generator', function () {
     describe('adding a deeper level module', function () {
       before(function (done) {
         helpers
-        .run(path.join(__dirname, '../module'), {
+        .run(path.join(__dirname, '../generator/module'), {
           tmpdir: false
         })
         .withArguments(['home/myHouse/handle'])
@@ -326,9 +326,9 @@ describe('Module generator', function () {
           'app-script': 'ts'
         })
         .withGenerators([
-          path.join(__dirname, '../route'),
-          path.join(__dirname, '../controller'),
-          path.join(__dirname, '../view')
+          path.join(__dirname, '../generator/route'),
+          path.join(__dirname, '../generator/controller'),
+          path.join(__dirname, '../generator/view')
         ])
           .on('end', done);
       });
