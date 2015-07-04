@@ -68,6 +68,7 @@ describe('App generator', function () {
           controllerAs: false,
           testScript: 'js',
           style: 'css',
+          polymer: true,
           bower: []
         })
         .withGenerators([
@@ -181,6 +182,24 @@ describe('App generator', function () {
         assert.fileContent('gulp/build.js', markup);
         assert.fileContent('gulp/build.js', scripts);
         assert.fileContent('gulp/build.js', styles);
+      });
+
+      it('should have a components task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
+      });
+
+      it('should not have filters in components task', function () {
+        assert.noFileContent('gulp/build.js', 'markupFilter');
+        assert.noFileContent('gulp/build.js', 'scriptFilter');
+        assert.noFileContent('gulp/build.js', 'styleFilter');
+      });
+
+      it('should have componentsInject task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
+      });
+
+      it('should have copmonentsInject as dependency task for copyTemplates task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'componentsInject\'], function () {');
       });
     });
 
@@ -433,6 +452,36 @@ describe('App generator', function () {
         assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
       });
 
+      it('should use filters in components task', function () {
+        var expectedMarkup, expectedScript, expectedStyle;
+
+        expectedMarkup = [
+          '      .pipe(markupFilter)',
+          '      .pipe($.haml())',
+          '      .pipe(markupFilter.restore())'
+        ].join(eol);
+
+        expectedScript = [
+          '      .pipe(scriptFilter)',
+          '      .pipe($.typescript(config.tsProject))',
+          '      .pipe(scriptFilter.restore())'
+        ].join(eol);
+
+        expectedStyle = [
+          '      .pipe(styleFilter)',
+          '      .pipe($.less())',
+          '      .pipe(styleFilter.restore())'
+        ].join(eol);
+
+        assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.haml\')');
+        assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.ts\')');
+        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.less\')');
+
+        assert.fileContent('gulp/build.js', expectedMarkup);
+        assert.fileContent('gulp/build.js', expectedScript);
+        assert.fileContent('gulp/build.js', expectedStyle);
+      });
+
       it('should have componentsInject task', function () {
         assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
       });
@@ -548,6 +597,7 @@ describe('App generator', function () {
           testScript: 'coffee',
           unitTestDir: 'app',
           style: 'less',
+          polymer: true,
           bower: []
         })
         .withGenerators([
@@ -642,6 +692,48 @@ describe('App generator', function () {
         assert.fileContent('gulp/build.js', markup);
         assert.fileContent('gulp/build.js', scripts);
         assert.fileContent('gulp/build.js', styles);
+      });
+
+      it('should have a components task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
+      });
+
+      it('should use filters in components task', function () {
+        var expectedMarkup, expectedScript, expectedStyle;
+
+        expectedMarkup = [
+          '      .pipe(markupFilter)',
+          '      .pipe($.haml())',
+          '      .pipe(markupFilter.restore())'
+        ].join(eol);
+
+        expectedScript = [
+          '      .pipe(scriptFilter)',
+          '      .pipe($.coffee())',
+          '      .pipe(scriptFilter.restore())'
+        ].join(eol);
+
+        expectedStyle = [
+          '      .pipe(styleFilter)',
+          '      .pipe($.less())',
+          '      .pipe(styleFilter.restore())'
+        ].join(eol);
+
+        assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.haml\')');
+        assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.coffee\')');
+        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.less\')');
+
+        assert.fileContent('gulp/build.js', expectedMarkup);
+        assert.fileContent('gulp/build.js', expectedScript);
+        assert.fileContent('gulp/build.js', expectedStyle);
+      });
+
+      it('should have componentsInject task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
+      });
+
+      it('should have copmonentsInject as dependency task for copyTemplates task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'componentsInject\'], function () {');
       });
     });
 
@@ -751,6 +843,7 @@ describe('App generator', function () {
           testScript: 'es6',
           unitTestDir: 'app',
           style: 'styl',
+          polymer: true,
           bower: []
         })
         .withGenerators([
@@ -846,6 +939,53 @@ describe('App generator', function () {
         assert.fileContent('gulp/build.js', markup);
         assert.fileContent('gulp/build.js', scripts);
         assert.fileContent('gulp/build.js', styles);
+      });
+
+      it('should have a components task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
+      });
+
+      it('should use filters in components task', function () {
+        var expectedMarkup, expectedScript, expectedStyle;
+
+        expectedMarkup = [
+          '      .pipe(markupFilter)',
+          '      .pipe($.jade())',
+          '      .pipe(markupFilter.restore())'
+        ].join(eol);
+
+        expectedScript = [
+          '      .pipe(scriptFilter)',
+          '      .pipe($.babel())',
+          '      .pipe($.rename(function (filePath) {',
+          '        filePath.extname = \'.js\';',
+          '      }))',
+          '      .pipe(scriptFilter.restore())'
+        ].join(eol);
+
+        expectedStyle = [
+          '      .pipe(styleFilter)',
+          '      .pipe($.stylus({',
+          '        use: $.nib()',
+          '      }))',
+          '      .pipe(styleFilter.restore())'
+        ].join(eol);
+
+        assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.jade\')');
+        assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.es6\')');
+        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.styl\')');
+
+        assert.fileContent('gulp/build.js', expectedMarkup);
+        assert.fileContent('gulp/build.js', expectedScript);
+        assert.fileContent('gulp/build.js', expectedStyle);
+      });
+
+      it('should have componentsInject task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
+      });
+
+      it('should have copmonentsInject as dependency task for copyTemplates task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'componentsInject\'], function () {');
       });
     });
 
@@ -965,6 +1105,7 @@ describe('App generator', function () {
           testScript: 'js',
           unitTestDir: 'app',
           style: 'scss',
+          polymer: true,
           bower: []
         })
         .withGenerators([
@@ -1058,16 +1199,32 @@ describe('App generator', function () {
         assert.fileContent('gulp/build.js', styles);
       });
 
-      it('should not have a components task', function () {
-        assert.noFileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
+      it('should have a components task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
       });
 
-      it('should not have componentsInject task', function () {
-        assert.noFileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
+      it('should use filters in components task', function () {
+        var expectedStyle;
+
+        expectedStyle = [
+          '      .pipe(styleFilter)',
+          '      .pipe($.sass())',
+          '      .pipe(styleFilter.restore())'
+        ].join(eol);
+
+        assert.noFileContent('gulp/build.js', 'markupFilter');
+        assert.noFileContent('gulp/build.js', 'scriptFilter');
+        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.scss\')');
+
+        assert.fileContent('gulp/build.js', expectedStyle);
       });
 
-      it('should have bowerInject as dependency task for copyTemplates task', function () {
-        assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'bowerInject\'], function () {');
+      it('should have componentsInject task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
+      });
+
+      it('should have copmonentsInject as dependency task for copyTemplates task', function () {
+        assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'componentsInject\'], function () {');
       });
     });
 
