@@ -1,11 +1,11 @@
 /*global describe, before, it */
 'use strict';
-var assert = require('yeoman-generator').assert
-  , eol = require('os').EOL
-  , helpers = require('yeoman-generator').test
-  , join = require('path').join
-  , sinon = require('sinon')
-  , coffeeDeps, es2015Deps, jadeDeps, hamlDeps, lessDeps, scssDeps, stylusDeps, typescriptDeps;
+import {assert, test as helpers} from 'yeoman-generator';
+import {EOL} from 'os';
+import {join} from 'path';
+import sinon from 'sinon';
+
+let coffeeDeps, es2015Deps, jadeDeps, hamlDeps, lessDeps, scssDeps, stylusDeps, typescriptDeps;
 
 coffeeDeps = [
   '"coffee-script":',
@@ -42,12 +42,12 @@ typescriptDeps = [
   '"gulp-typescript":'
 ];
 
-describe('App generator', function () {
-  describe('with HTML markup, CSS style, JS app, and JS test with module-type', function () {
+describe('App generator', () => {
+  describe('with HTML markup, CSS style, JS app, and JS test with module-type', () => {
     // used to test if methods have been called
-    var gen;
+    let gen;
 
-    before(function (done) {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/app'))
         .withOptions({
@@ -77,18 +77,18 @@ describe('App generator', function () {
           join(__dirname, '../generator/controller'),
           join(__dirname, '../generator/view')
         ])
-        .on('ready', function (generator) {
+        .on('ready', (generator) => {
           gen = generator;
           generator.installDependencies = sinon.spy();
         })
         .on('end', done);
     });
 
-    it('should call installDependencies once', function () {
+    it('should call installDependencies once', () => {
       assert(gen.installDependencies.calledOnce);
     });
 
-    it('should create files in temp-app-diff directory', function () {
+    it('should create files in temp-app-diff directory', () => {
       // temp-app-diff folder is dropped since app generator modifies destination root
       // which affects helpers.inDir()
       assert.file([
@@ -126,202 +126,202 @@ describe('App generator', function () {
       ]);
     });
 
-    it('should not create tsd.json', function () {
+    it('should not create tsd.json', () => {
       assert.noFile([
         'tsd.json'
       ]);
     });
 
-    describe('gulp/analyze.js', function () {
-      it('should have JS linting', function () {
+    describe('gulp/analyze.js', () => {
+      it('should have JS linting', () => {
         assert.fileContent('gulp/analyze.js', '$.eslint()');
         assert.fileContent('gulp/analyze.js', '$.jshint()');
         assert.fileContent('gulp/analyze.js', '$.jscs()');
       });
 
-      it('should not have filters', function () {
+      it('should not have filters', () => {
         assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
       });
 
-      it('should not have CS linting', function () {
+      it('should not have CS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.coffeelint()');
       });
     });
 
-    describe('gulp/build.js', function () {
-      it('should not have coffeeFilter', function () {
+    describe('gulp/build.js', () => {
+      it('should not have coffeeFilter', () => {
         assert.noFileContent('gulp/build.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
       });
 
-      it('should not have es6Filter', function () {
+      it('should not have es6Filter', () => {
         assert.noFileContent('gulp/build.js', 'es6Filter = $.filter(\'**/*.es6\')');
       });
 
-      it('should not have tsFilter', function () {
+      it('should not have tsFilter', () => {
         assert.noFileContent('gulp/build.js', ', tsFilter = $.filter(\'**/*.ts\')');
       });
 
-      it('should not use compilers', function () {
-        var markup, scripts, styles;
+      it('should not use compilers', () => {
+        let markup, scripts, styles;
 
         markup = [
           '    ])',
           '      .pipe(gulp.dest(config.buildDir));'
-        ].join(eol);
+        ].join(EOL);
 
         scripts = [
           '      .pipe($.sourcemaps.init())',
           '      .pipe($.if(isProd, htmlFilter))'
-        ].join(eol);
+        ].join(EOL);
 
         styles = [
           '      }}))',
           '      .pipe($.autoprefixer())'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/build.js', markup);
         assert.fileContent('gulp/build.js', scripts);
         assert.fileContent('gulp/build.js', styles);
       });
 
-      it('should have a components task', function () {
+      it('should have a components task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
       });
 
-      it('should not have filters in components task', function () {
+      it('should not have filters in components task', () => {
         assert.noFileContent('gulp/build.js', 'markupFilter');
         assert.noFileContent('gulp/build.js', 'scriptFilter');
         assert.noFileContent('gulp/build.js', 'styleFilter');
       });
 
-      it('should have componentsInject task', function () {
+      it('should have componentsInject task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
       });
 
-      it('should have copmonentsInject as dependency task for copyTemplates task', function () {
+      it('should have copmonentsInject as dependency task for copyTemplates task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'componentsInject\'], function () {');
       });
     });
 
-    describe('gulp/test.js', function () {
-      it('should not use compilers', function () {
-        var buildTests, buildE2ETests;
+    describe('gulp/test.js', () => {
+      it('should not use compilers', () => {
+        let buildTests, buildE2ETests;
 
         buildTests = [
           '    return gulp.src([config.unitTestFiles])',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
           '      .pipe(gulp.dest(config.buildE2eTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/test.js', buildTests);
         assert.fileContent('gulp/test.js', buildE2ETests);
       });
     });
 
-    describe('build.config.js', function () {
-      it('should use \'front/\' for appDir in build.config.js', function () {
+    describe('build.config.js', () => {
+      it('should use \'front/\' for appDir in build.config.js', () => {
         assert.fileContent('build.config.js', 'appDir: \'front/\'');
       });
 
-      it('should use \'front/\' for unitTestDir in build.config.js', function () {
+      it('should use \'front/\' for unitTestDir in build.config.js', () => {
         assert.fileContent('build.config.js', 'unitTestDir: \'front/\'');
       });
 
-      it('should use 127.0.0.1 for host in build.config.js', function () {
+      it('should use 127.0.0.1 for host in build.config.js', () => {
         assert.fileContent('build.config.js', 'host: \'127.0.0.1\'');
       });
 
-      it('should use 8000 for port in build.config.js', function () {
+      it('should use 8000 for port in build.config.js', () => {
         assert.fileContent('build.config.js', 'port: 8000');
       });
     });
 
-    it('should create home/views/home.tpl.html templateUrl in front/home/home-routes.js', function () {
+    it('should create home/views/home.tpl.html templateUrl in front/home/home-routes.js', () => {
       assert.fileContent('front/home/home-routes.js', 'templateUrl: \'home/views/home.tpl.html\',');
     });
   });
 
-  describe('Gulpfile.js', function () {
-    it('should include correct config', function () {
+  describe('Gulpfile.js', () => {
+    it('should include correct config', () => {
       [
         'config.appMarkupFiles = path.join(config.appDir, \'**/*.html\');',
         'config.appScriptFiles = path.join(config.appDir, \'**/*.js\');',
         'config.appStyleFiles = path.join(config.appDir, \'**/*.css\');',
         'config.e2eFiles = path.join(\'e2e\', \'**/*.js\');',
         'config.unitTestFiles = path.join(config.unitTestDir, \'**/*_test.js\');'
-      ].forEach(function (config) {
+      ].forEach((config) => {
         assert.fileContent('Gulpfile.js', config);
       });
     });
 
-    it('should not load nib', function () {
+    it('should not load nib', () => {
       assert.noFileContent('Gulpfile.js', '\'nib\',');
     });
 
-    it('should not include TypeScript project', function () {
+    it('should not include TypeScript project', () => {
       assert.noFileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
     });
   });
 
-  describe('package.json', function () {
-    it('should not include coffee-script dependencies', function () {
-      coffeeDeps.forEach(function (dep) {
+  describe('package.json', () => {
+    it('should not include coffee-script dependencies', () => {
+      coffeeDeps.forEach((dep) => {
         assert.noFileContent('package.json', dep);
       });
     });
 
-    it('should not include typescript dependencies', function () {
-      typescriptDeps.forEach(function (dep) {
+    it('should not include typescript dependencies', () => {
+      typescriptDeps.forEach((dep) => {
         assert.noFileContent('package.json', dep);
       });
     });
 
-    it('should not include ES2015 dependencies', function () {
-      es2015Deps.forEach(function (dep) {
+    it('should not include ES2015 dependencies', () => {
+      es2015Deps.forEach((dep) => {
         assert.noFileContent('package.json', dep);
       });
     });
 
-    it('should not include Jade dependencies', function () {
-      jadeDeps.forEach(function (dep) {
+    it('should not include Jade dependencies', () => {
+      jadeDeps.forEach((dep) => {
         assert.noFileContent('package.json', dep);
       });
     });
 
-    it('should not include HAML dependencies', function () {
-      hamlDeps.forEach(function (dep) {
+    it('should not include HAML dependencies', () => {
+      hamlDeps.forEach((dep) => {
         assert.noFileContent('package.json', dep);
       });
     });
 
-    it('should not include Less dependencies', function () {
-      lessDeps.forEach(function (dep) {
+    it('should not include Less dependencies', () => {
+      lessDeps.forEach((dep) => {
         assert.noFileContent('package.json', dep);
       });
     });
 
-    it('should not inclue SCSS dependencies', function () {
-      scssDeps.forEach(function (dep) {
+    it('should not inclue SCSS dependencies', () => {
+      scssDeps.forEach((dep) => {
         assert.noFileContent('package.json', dep);
       });
     });
 
-    it('should not include Stylus dependencies', function () {
-      stylusDeps.forEach(function (dep) {
+    it('should not include Stylus dependencies', () => {
+      stylusDeps.forEach((dep) => {
         assert.noFileContent('package.json', dep);
       });
     });
   });
 
-  describe('with HAML markup, LESS style, TypeScript app, and TypeScript test', function () {
+  describe('with HAML markup, LESS style, TypeScript app, and TypeScript test', () => {
     // used to test if methods have been called
-    var gen;
+    let gen;
 
-    before(function (done) {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/app'))
         .withOptions({
@@ -346,7 +346,7 @@ describe('App generator', function () {
           join(__dirname, '../generator/controller'),
           join(__dirname, '../generator/view')
         ])
-        .on('ready', function (generator) {
+        .on('ready', (generator) => {
           gen = generator;
           generator.installDependencies = sinon.spy();
           generator.spawnCommand = sinon.spy();
@@ -354,16 +354,16 @@ describe('App generator', function () {
         .on('end', done);
     });
 
-    it('should call installDependencies once', function () {
+    it('should call installDependencies once', () => {
       assert(gen.installDependencies.calledOnce);
     });
 
-    it('should call spawnCommand once to install typings', function () {
+    it('should call spawnCommand once to install typings', () => {
       assert(gen.spawnCommand.calledOnce);
       assert(gen.spawnCommand.calledWith('tsd', ['reinstall', '--save']));
     });
 
-    it('should create files', function () {
+    it('should create files', () => {
       assert.file([
         'app/fonts',
         'app/home/home-module.ts',
@@ -399,35 +399,35 @@ describe('App generator', function () {
       ]);
     });
 
-    it('should create home/home.tpl.html templateUrl in app/home/home-routes.ts', function () {
+    it('should create home/home.tpl.html templateUrl in app/home/home-routes.ts', () => {
       assert.fileContent('app/home/home-routes.ts', 'templateUrl: \'home/home.tpl.html\',');
     });
 
-    describe('gulp/analyze.js', function () {
-      it('should not have JS linting', function () {
+    describe('gulp/analyze.js', () => {
+      it('should not have JS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.eslint()');
         assert.noFileContent('gulp/analyze.js', '$.jshint()');
         assert.noFileContent('gulp/analyze.js', '$.jscs()');
       });
 
-      it('should not have filters', function () {
+      it('should not have filters', () => {
         assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
       });
 
-      it('should not have CS linting', function () {
+      it('should not have CS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.coffeelint()');
       });
     });
 
-    describe('gulp/build.js', function () {
-      it('should use compilers', function () {
-        var markup, scripts, styles;
+    describe('gulp/build.js', () => {
+      it('should use compilers', () => {
+        let markup, scripts, styles;
 
         markup = [
           '    ])',
           '      .pipe($.haml())',
           '      .pipe(gulp.dest(config.buildDir));'
-        ].join(eol);
+        ].join(EOL);
 
         scripts = [
           '      .pipe($.sourcemaps.init())',
@@ -435,43 +435,43 @@ describe('App generator', function () {
           '      .pipe($.typescript(config.tsProject))',
           '      .pipe(tsFilter.restore())',
           '      .pipe($.if(isProd, htmlFilter))'
-        ].join(eol);
+        ].join(EOL);
 
         styles = [
           '      }}))',
           '      .pipe($.less())',
           '      .pipe($.autoprefixer())'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/build.js', markup);
         assert.fileContent('gulp/build.js', scripts);
         assert.fileContent('gulp/build.js', styles);
       });
 
-      it('should have a components task', function () {
+      it('should have a components task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
       });
 
-      it('should use filters in components task', function () {
-        var expectedMarkup, expectedScript, expectedStyle;
+      it('should use filters in components task', () => {
+        let expectedMarkup, expectedScript, expectedStyle;
 
         expectedMarkup = [
           '      .pipe(markupFilter)',
           '      .pipe($.haml())',
           '      .pipe(markupFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         expectedScript = [
           '      .pipe(scriptFilter)',
           '      .pipe($.typescript(config.tsProject))',
           '      .pipe(scriptFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.less())',
           '      .pipe(styleFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.haml\')');
         assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.ts\')');
@@ -482,110 +482,110 @@ describe('App generator', function () {
         assert.fileContent('gulp/build.js', expectedStyle);
       });
 
-      it('should have componentsInject task', function () {
+      it('should have componentsInject task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
       });
 
-      it('should have copmonentsInject as dependency task for copyTemplates task', function () {
+      it('should have copmonentsInject as dependency task for copyTemplates task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'componentsInject\'], function () {');
       });
     });
 
-    describe('gulp/test.js', function () {
-      it('should use compiler for unit and not for e2e', function () {
-        var buildTests, buildE2ETests;
+    describe('gulp/test.js', () => {
+      it('should use compiler for unit and not for e2e', () => {
+        let buildTests, buildE2ETests;
 
         buildTests = [
           '    return gulp.src([config.unitTestFiles])',
           '      .pipe($.typescript(config.tsProject))',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
           '      .pipe(gulp.dest(config.buildE2eTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/test.js', buildTests);
         assert.fileContent('gulp/test.js', buildE2ETests);
       });
     });
 
-    describe('Gulpfile.js', function () {
-      it('should include correct config', function () {
+    describe('Gulpfile.js', () => {
+      it('should include correct config', () => {
         [
           'config.appMarkupFiles = path.join(config.appDir, \'**/*.haml\');',
           'config.appScriptFiles = path.join(config.appDir, \'**/*.ts\');',
           'config.appStyleFiles = path.join(config.appDir, \'**/*.less\');',
           'config.e2eFiles = path.join(\'e2e\', \'**/*.js\');',
           'config.unitTestFiles = path.join(config.unitTestDir, \'**/*_test.ts\');'
-        ].forEach(function (config) {
+        ].forEach((config) => {
           assert.fileContent('Gulpfile.js', config);
         });
       });
 
-      it('should not load nib', function () {
+      it('should not load nib', () => {
         assert.noFileContent('Gulpfile.js', '\'nib\',');
       });
 
-      it('should include TypeScript project', function () {
+      it('should include TypeScript project', () => {
         assert.fileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
       });
     });
 
-    describe('package.json', function () {
-      it('should not include coffee-script dependencies', function () {
-        coffeeDeps.forEach(function (dep) {
+    describe('package.json', () => {
+      it('should not include coffee-script dependencies', () => {
+        coffeeDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should include typescript dependencies', function () {
-        typescriptDeps.forEach(function (dep) {
+      it('should include typescript dependencies', () => {
+        typescriptDeps.forEach((dep) => {
           assert.fileContent('package.json', dep);
         });
       });
 
-      it('should not include ES2015 dependencies', function () {
-        es2015Deps.forEach(function (dep) {
+      it('should not include ES2015 dependencies', () => {
+        es2015Deps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include Jade dependencies', function () {
-        jadeDeps.forEach(function (dep) {
+      it('should not include Jade dependencies', () => {
+        jadeDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should include HAML dependencies', function () {
-        hamlDeps.forEach(function (dep) {
+      it('should include HAML dependencies', () => {
+        hamlDeps.forEach((dep) => {
           assert.fileContent('package.json', dep);
         });
       });
 
-      it('should include Less dependencies', function () {
-        lessDeps.forEach(function (dep) {
+      it('should include Less dependencies', () => {
+        lessDeps.forEach((dep) => {
           assert.fileContent('package.json', dep);
         });
       });
 
-      it('should not inclue SCSS dependencies', function () {
-        scssDeps.forEach(function (dep) {
+      it('should not inclue SCSS dependencies', () => {
+        scssDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include Stylus dependencies', function () {
-        stylusDeps.forEach(function (dep) {
+      it('should not include Stylus dependencies', () => {
+        stylusDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
     });
   });
 
-  describe('with HAML markup, LESS style, Coffee app, and Coffee test', function () {
-    before(function (done) {
+  describe('with HAML markup, LESS style, Coffee app, and Coffee test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/app'))
         .withPrompts({
@@ -609,7 +609,7 @@ describe('App generator', function () {
         .on('end', done);
     });
 
-    it('should create files', function () {
+    it('should create files', () => {
       assert.file([
         'app/fonts',
         'app/home/home-module.coffee',
@@ -649,31 +649,31 @@ describe('App generator', function () {
       ]);
     });
 
-    describe('gulp/analyze.js', function () {
-      it('should not have JS linting', function () {
+    describe('gulp/analyze.js', () => {
+      it('should not have JS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.eslint()');
         assert.noFileContent('gulp/analyze.js', '$.jshint()');
         assert.noFileContent('gulp/analyze.js', '$.jscs()');
       });
 
-      it('should not have filters', function () {
+      it('should not have filters', () => {
         assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
       });
 
-      it('should have CS linting', function () {
+      it('should have CS linting', () => {
         assert.fileContent('gulp/analyze.js', '$.coffeelint()');
       });
     });
 
-    describe('gulp/build.js', function () {
-      it('should use compilers', function () {
-        var markup, scripts, styles;
+    describe('gulp/build.js', () => {
+      it('should use compilers', () => {
+        let markup, scripts, styles;
 
         markup = [
           '    ])',
           '      .pipe($.haml())',
           '      .pipe(gulp.dest(config.buildDir));'
-        ].join(eol);
+        ].join(EOL);
 
         scripts = [
           '      .pipe($.sourcemaps.init())',
@@ -681,43 +681,43 @@ describe('App generator', function () {
           '      .pipe($.coffee())',
           '      .pipe(coffeeFilter.restore())',
           '      .pipe($.if(isProd, htmlFilter))'
-        ].join(eol);
+        ].join(EOL);
 
         styles = [
           '      }}))',
           '      .pipe($.less())',
           '      .pipe($.autoprefixer())'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/build.js', markup);
         assert.fileContent('gulp/build.js', scripts);
         assert.fileContent('gulp/build.js', styles);
       });
 
-      it('should have a components task', function () {
+      it('should have a components task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
       });
 
-      it('should use filters in components task', function () {
-        var expectedMarkup, expectedScript, expectedStyle;
+      it('should use filters in components task', () => {
+        let expectedMarkup, expectedScript, expectedStyle;
 
         expectedMarkup = [
           '      .pipe(markupFilter)',
           '      .pipe($.haml())',
           '      .pipe(markupFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         expectedScript = [
           '      .pipe(scriptFilter)',
           '      .pipe($.coffee())',
           '      .pipe(scriptFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.less())',
           '      .pipe(styleFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.haml\')');
         assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.coffee\')');
@@ -728,111 +728,111 @@ describe('App generator', function () {
         assert.fileContent('gulp/build.js', expectedStyle);
       });
 
-      it('should have componentsInject task', function () {
+      it('should have componentsInject task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
       });
 
-      it('should have copmonentsInject as dependency task for copyTemplates task', function () {
+      it('should have copmonentsInject as dependency task for copyTemplates task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'componentsInject\'], function () {');
       });
     });
 
-    describe('gulp/test.js', function () {
-      it('should use compilers', function () {
-        var buildTests, buildE2ETests;
+    describe('gulp/test.js', () => {
+      it('should use compilers', () => {
+        let buildTests, buildE2ETests;
 
         buildTests = [
           '    return gulp.src([config.unitTestFiles])',
           '      .pipe($.coffee())',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
           '      .pipe($.coffee())',
           '      .pipe(gulp.dest(config.buildE2eTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/test.js', buildTests);
         assert.fileContent('gulp/test.js', buildE2ETests);
       });
     });
 
-    describe('Gulpfile.js', function () {
-      it('should include correct config', function () {
+    describe('Gulpfile.js', () => {
+      it('should include correct config', () => {
         [
           'config.appMarkupFiles = path.join(config.appDir, \'**/*.haml\');',
           'config.appScriptFiles = path.join(config.appDir, \'**/*.coffee\');',
           'config.appStyleFiles = path.join(config.appDir, \'**/*.less\');',
           'config.e2eFiles = path.join(\'e2e\', \'**/*.coffee\');',
           'config.unitTestFiles = path.join(config.unitTestDir, \'**/*_test.coffee\');'
-        ].forEach(function (config) {
+        ].forEach((config) => {
           assert.fileContent('Gulpfile.js', config);
         });
 
-        it('should not load nib', function () {
+        it('should not load nib', () => {
           assert.noFileContent('Gulpfile.js', '\'nib\',');
         });
       });
 
-      it('should not include TypeScript project', function () {
+      it('should not include TypeScript project', () => {
         assert.noFileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
       });
     });
 
-    describe('package.json', function () {
-      it('should include coffee-script dependencies', function () {
-        coffeeDeps.forEach(function (dep) {
+    describe('package.json', () => {
+      it('should include coffee-script dependencies', () => {
+        coffeeDeps.forEach((dep) => {
           assert.fileContent('package.json', dep);
         });
       });
 
-      it('should not include typescript dependencies', function () {
-        typescriptDeps.forEach(function (dep) {
+      it('should not include typescript dependencies', () => {
+        typescriptDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include ES2015 dependencies', function () {
-        es2015Deps.forEach(function (dep) {
+      it('should not include ES2015 dependencies', () => {
+        es2015Deps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include Jade dependencies', function () {
-        jadeDeps.forEach(function (dep) {
+      it('should not include Jade dependencies', () => {
+        jadeDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should include HAML dependencies', function () {
-        hamlDeps.forEach(function (dep) {
+      it('should include HAML dependencies', () => {
+        hamlDeps.forEach((dep) => {
           assert.fileContent('package.json', dep);
         });
       });
 
-      it('should include Less dependencies', function () {
-        lessDeps.forEach(function (dep) {
+      it('should include Less dependencies', () => {
+        lessDeps.forEach((dep) => {
           assert.fileContent('package.json', dep);
         });
       });
 
-      it('should not inclue SCSS dependencies', function () {
-        scssDeps.forEach(function (dep) {
+      it('should not inclue SCSS dependencies', () => {
+        scssDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include Stylus dependencies', function () {
-        stylusDeps.forEach(function (dep) {
+      it('should not include Stylus dependencies', () => {
+        stylusDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
     });
   });
 
-  describe('with Jade markup, Stylus style, ES6 app, and ES6 test', function () {
-    before(function (done) {
+  describe('with Jade markup, Stylus style, ES6 app, and ES6 test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/app'))
         .withPrompts({
@@ -855,7 +855,7 @@ describe('App generator', function () {
         .on('end', done);
     });
 
-    it('should create files', function () {
+    it('should create files', () => {
       assert.file([
         'app/fonts',
         'app/home/home-module.es6',
@@ -891,31 +891,31 @@ describe('App generator', function () {
       ]);
     });
 
-    describe('gulp/analyze.js', function () {
-      it('should not have JS linting', function () {
+    describe('gulp/analyze.js', () => {
+      it('should not have JS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.eslint()');
         assert.noFileContent('gulp/analyze.js', '$.jshint()');
         assert.noFileContent('gulp/analyze.js', '$.jscs()');
       });
 
-      it('should not have filters', function () {
+      it('should not have filters', () => {
         assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
       });
 
-      it('should not have CS linting', function () {
+      it('should not have CS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.coffeelint()');
       });
     });
 
-    describe('gulp/build.js', function () {
-      it('should use compilers', function () {
-        var markup, scripts, styles;
+    describe('gulp/build.js', () => {
+      it('should use compilers', () => {
+        let markup, scripts, styles;
 
         markup = [
           '    ])',
           '      .pipe($.jade())',
           '      .pipe(gulp.dest(config.buildDir));'
-        ].join(eol);
+        ].join(EOL);
 
         scripts = [
           '      .pipe($.sourcemaps.init())',
@@ -926,7 +926,7 @@ describe('App generator', function () {
           '      }))',
           '      .pipe(es6Filter.restore())',
           '      .pipe($.if(isProd, htmlFilter))'
-        ].join(eol);
+        ].join(EOL);
 
         styles = [
           '      }}))',
@@ -934,25 +934,25 @@ describe('App generator', function () {
           '        use: $.nib()',
           '      }))',
           '      .pipe($.autoprefixer())'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/build.js', markup);
         assert.fileContent('gulp/build.js', scripts);
         assert.fileContent('gulp/build.js', styles);
       });
 
-      it('should have a components task', function () {
+      it('should have a components task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
       });
 
-      it('should use filters in components task', function () {
-        var expectedMarkup, expectedScript, expectedStyle;
+      it('should use filters in components task', () => {
+        let expectedMarkup, expectedScript, expectedStyle;
 
         expectedMarkup = [
           '      .pipe(markupFilter)',
           '      .pipe($.jade())',
           '      .pipe(markupFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         expectedScript = [
           '      .pipe(scriptFilter)',
@@ -961,7 +961,7 @@ describe('App generator', function () {
           '        filePath.extname = \'.js\';',
           '      }))',
           '      .pipe(scriptFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         expectedStyle = [
           '      .pipe(styleFilter)',
@@ -969,7 +969,7 @@ describe('App generator', function () {
           '        use: $.nib()',
           '      }))',
           '      .pipe(styleFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.jade\')');
         assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.es6\')');
@@ -980,18 +980,18 @@ describe('App generator', function () {
         assert.fileContent('gulp/build.js', expectedStyle);
       });
 
-      it('should have componentsInject task', function () {
+      it('should have componentsInject task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
       });
 
-      it('should have copmonentsInject as dependency task for copyTemplates task', function () {
+      it('should have copmonentsInject as dependency task for copyTemplates task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'componentsInject\'], function () {');
       });
     });
 
-    describe('gulp/test.js', function () {
-      it('should use compilers', function () {
-        var buildTests, buildE2ETests;
+    describe('gulp/test.js', () => {
+      it('should use compilers', () => {
+        let buildTests, buildE2ETests;
 
         buildTests = [
           '    return gulp.src([config.unitTestFiles])',
@@ -1000,7 +1000,7 @@ describe('App generator', function () {
           '        filePath.extname = \'.js\';',
           '      }))',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
@@ -1009,79 +1009,79 @@ describe('App generator', function () {
           '        filePath.extname = \'.js\';',
           '      }))',
           '      .pipe(gulp.dest(config.buildE2eTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/test.js', buildTests);
         assert.fileContent('gulp/test.js', buildE2ETests);
       });
     });
 
-    describe('Gulpfile.js', function () {
-      it('should include correct config', function () {
+    describe('Gulpfile.js', () => {
+      it('should include correct config', () => {
         [
           'config.appMarkupFiles = path.join(config.appDir, \'**/*.jade\');',
           'config.appScriptFiles = path.join(config.appDir, \'**/*.es6\');',
           'config.appStyleFiles = path.join(config.appDir, \'**/*.styl\');',
           'config.e2eFiles = path.join(\'e2e\', \'**/*.es6\');',
           'config.unitTestFiles = path.join(config.unitTestDir, \'**/*_test.es6\');'
-        ].forEach(function (config) {
+        ].forEach((config) => {
           assert.fileContent('Gulpfile.js', config);
         });
       });
 
-      it('should load nib', function () {
+      it('should load nib', () => {
         assert.fileContent('Gulpfile.js', '\'nib\',');
       });
 
-      it('should not include TypeScript project', function () {
+      it('should not include TypeScript project', () => {
         assert.noFileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
       });
     });
 
-    describe('package.json', function () {
-      it('should not include coffee-script dependencies', function () {
-        coffeeDeps.forEach(function (dep) {
+    describe('package.json', () => {
+      it('should not include coffee-script dependencies', () => {
+        coffeeDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
 
-        it('should not include typescript dependencies', function () {
-          typescriptDeps.forEach(function (dep) {
+        it('should not include typescript dependencies', () => {
+          typescriptDeps.forEach((dep) => {
             assert.noFileContent('package.json', dep);
           });
         });
 
-        it('should not include ES2015 dependencies', function () {
-          es2015Deps.forEach(function (dep) {
+        it('should not include ES2015 dependencies', () => {
+          es2015Deps.forEach((dep) => {
             assert.noFileContent('package.json', dep);
           });
         });
 
-        it('should include Jade dependencies', function () {
-          jadeDeps.forEach(function (dep) {
+        it('should include Jade dependencies', () => {
+          jadeDeps.forEach((dep) => {
             assert.fileContent('package.json', dep);
           });
         });
 
-        it('should not include HAML dependencies', function () {
-          hamlDeps.forEach(function (dep) {
+        it('should not include HAML dependencies', () => {
+          hamlDeps.forEach((dep) => {
             assert.noFileContent('package.json', dep);
           });
         });
 
-        it('should not include Less dependencies', function () {
-          lessDeps.forEach(function (dep) {
+        it('should not include Less dependencies', () => {
+          lessDeps.forEach((dep) => {
             assert.noFileContent('package.json', dep);
           });
         });
 
-        it('should not inclue SCSS dependencies', function () {
-          scssDeps.forEach(function (dep) {
+        it('should not inclue SCSS dependencies', () => {
+          scssDeps.forEach((dep) => {
             assert.noFileContent('package.json', dep);
           });
         });
 
-        it('should include Stylus dependencies', function () {
-          stylusDeps.forEach(function (dep) {
+        it('should include Stylus dependencies', () => {
+          stylusDeps.forEach((dep) => {
             assert.fileContent('package.json', dep);
           });
         });
@@ -1089,8 +1089,8 @@ describe('App generator', function () {
     });
   });
 
-  describe('with HTML markup, SCSS style, JS app, and JS test', function () {
-    before(function (done) {
+  describe('with HTML markup, SCSS style, JS app, and JS test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/app'))
         .withOptions({
@@ -1117,7 +1117,7 @@ describe('App generator', function () {
         .on('end', done);
     });
 
-    it('should create files', function () {
+    it('should create files', () => {
       assert.file([
         'app/fonts',
         'app/home/home-module.js',
@@ -1151,66 +1151,66 @@ describe('App generator', function () {
       ]);
     });
 
-    it('should not create controllers', function () {
+    it('should not create controllers', () => {
       assert.noFile([
         'app/home-controller.js',
         'app/home-controller_test.js'
       ]);
     });
 
-    describe('gulp/analyze.js', function () {
-      it('should have JS linting', function () {
+    describe('gulp/analyze.js', () => {
+      it('should have JS linting', () => {
         assert.fileContent('gulp/analyze.js', '$.eslint()');
         assert.fileContent('gulp/analyze.js', '$.jshint()');
         assert.fileContent('gulp/analyze.js', '$.jscs()');
       });
 
-      it('should not have filters', function () {
+      it('should not have filters', () => {
         assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
       });
 
-      it('should not have CS linting', function () {
+      it('should not have CS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.coffeelint()');
       });
     });
 
-    describe('gulp/build.js', function () {
-      it('should use compilers', function () {
-        var markup, scripts, styles;
+    describe('gulp/build.js', () => {
+      it('should use compilers', () => {
+        let markup, scripts, styles;
 
         markup = [
           '    ])',
           '      .pipe(gulp.dest(config.buildDir));'
-        ].join(eol);
+        ].join(EOL);
 
         scripts = [
           '      .pipe($.sourcemaps.init())',
           '      .pipe($.if(isProd, htmlFilter))'
-        ].join(eol);
+        ].join(EOL);
 
         styles = [
           '      }}))',
           '      .pipe($.sass())',
           '      .pipe($.autoprefixer())'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/build.js', markup);
         assert.fileContent('gulp/build.js', scripts);
         assert.fileContent('gulp/build.js', styles);
       });
 
-      it('should have a components task', function () {
+      it('should have a components task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'components\', [\'bowerInject\'], function () {');
       });
 
-      it('should use filters in components task', function () {
-        var expectedStyle;
+      it('should use filters in components task', () => {
+        let expectedStyle;
 
         expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.sass())',
           '      .pipe(styleFilter.restore())'
-        ].join(eol);
+        ].join(EOL);
 
         assert.noFileContent('gulp/build.js', 'markupFilter');
         assert.noFileContent('gulp/build.js', 'scriptFilter');
@@ -1219,101 +1219,101 @@ describe('App generator', function () {
         assert.fileContent('gulp/build.js', expectedStyle);
       });
 
-      it('should have componentsInject task', function () {
+      it('should have componentsInject task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'componentsInject\', [\'components\'], function () {');
       });
 
-      it('should have copmonentsInject as dependency task for copyTemplates task', function () {
+      it('should have copmonentsInject as dependency task for copyTemplates task', () => {
         assert.fileContent('gulp/build.js', 'gulp.task(\'copyTemplates\', [\'componentsInject\'], function () {');
       });
     });
 
-    describe('gulp/test.js', function () {
-      it('should not use compilers', function () {
-        var buildTests, buildE2ETests;
+    describe('gulp/test.js', () => {
+      it('should not use compilers', () => {
+        let buildTests, buildE2ETests;
 
         buildTests = [
           '    return gulp.src([config.unitTestFiles])',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
           '      .pipe(gulp.dest(config.buildE2eTestsDir));'
-        ].join(eol);
+        ].join(EOL);
 
         assert.fileContent('gulp/test.js', buildTests);
         assert.fileContent('gulp/test.js', buildE2ETests);
       });
     });
 
-    describe('Gulpfile.js', function () {
-      it('should include correct config', function () {
+    describe('Gulpfile.js', () => {
+      it('should include correct config', () => {
         [
           'config.appMarkupFiles = path.join(config.appDir, \'**/*.html\');',
           'config.appScriptFiles = path.join(config.appDir, \'**/*.js\');',
           'config.appStyleFiles = path.join(config.appDir, \'**/*.scss\');',
           'config.e2eFiles = path.join(\'e2e\', \'**/*.js\');',
           'config.unitTestFiles = path.join(config.unitTestDir, \'**/*_test.js\');'
-        ].forEach(function (config) {
+        ].forEach((config) => {
           assert.fileContent('Gulpfile.js', config);
         });
       });
 
-      it('should not load nib', function () {
+      it('should not load nib', () => {
         assert.noFileContent('Gulpfile.js', '\'nib\',');
       });
 
-      it('should not include TypeScript project', function () {
+      it('should not include TypeScript project', () => {
         assert.noFileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
       });
     });
 
-    describe('package.json', function () {
-      it('should not include coffee-script dependencies', function () {
-        coffeeDeps.forEach(function (dep) {
+    describe('package.json', () => {
+      it('should not include coffee-script dependencies', () => {
+        coffeeDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include typescript dependencies', function () {
-        typescriptDeps.forEach(function (dep) {
+      it('should not include typescript dependencies', () => {
+        typescriptDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include ES2015 dependencies', function () {
-        es2015Deps.forEach(function (dep) {
+      it('should not include ES2015 dependencies', () => {
+        es2015Deps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include Jade dependencies', function () {
-        jadeDeps.forEach(function (dep) {
+      it('should not include Jade dependencies', () => {
+        jadeDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include HAML dependencies', function () {
-        hamlDeps.forEach(function (dep) {
+      it('should not include HAML dependencies', () => {
+        hamlDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should not include Less dependencies', function () {
-        lessDeps.forEach(function (dep) {
+      it('should not include Less dependencies', () => {
+        lessDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });
 
-      it('should inclue SCSS dependencies', function () {
-        scssDeps.forEach(function (dep) {
+      it('should inclue SCSS dependencies', () => {
+        scssDeps.forEach((dep) => {
           assert.fileContent('package.json', dep);
         });
       });
 
-      it('should not include Stylus dependencies', function () {
-        stylusDeps.forEach(function (dep) {
+      it('should not include Stylus dependencies', () => {
+        stylusDeps.forEach((dep) => {
           assert.noFileContent('package.json', dep);
         });
       });

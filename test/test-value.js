@@ -1,11 +1,10 @@
 /*global describe, before, it */
 'use strict';
-var assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test
-  , join = require('path').join;
+import {assert, test as helpers} from 'yeoman-generator';
+import {join} from 'path';
 
-describe('Value generator', function () {
-  before(function (done) {
+describe('Value generator', () => {
+  before((done) => {
     helpers
       .run(join(__dirname, '../generator/app'))
       .withPrompts({
@@ -27,8 +26,8 @@ describe('Value generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and JS test with module-type', function () {
-    before(function (done) {
+  describe('with JS app and JS test with module-type', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/value'), {
           tmpdir: false
@@ -41,7 +40,7 @@ describe('Value generator', function () {
         .on('end', done);
     });
 
-    it('should create value files', function () {
+    it('should create value files', () => {
       assert.file([
         'app/home/values/test-value.js',
         'app/home/values/test-value_test.js'
@@ -49,8 +48,8 @@ describe('Value generator', function () {
     });
   });
 
-  describe('with Coffee app and Coffee test', function () {
-    before(function (done) {
+  describe('with Coffee app and Coffee test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/value'), {
           tmpdir: false
@@ -65,7 +64,7 @@ describe('Value generator', function () {
         .on('end', done);
     });
 
-    it('should create value files', function () {
+    it('should create value files', () => {
       assert.file([
         'app/home/test1-value.coffee',
         'app/home/test1-value_test.coffee'
@@ -73,8 +72,8 @@ describe('Value generator', function () {
     });
   });
 
-  describe('with TypeScript app and TypeScript test', function () {
-    before(function (done) {
+  describe('with TypeScript app and TypeScript test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/value'), {
           tmpdir: false
@@ -89,7 +88,7 @@ describe('Value generator', function () {
         .on('end', done);
     });
 
-    it('should create value files', function () {
+    it('should create value files', () => {
       assert.file([
         'app/home/test2-value.ts',
         'app/home/test2-value_test.ts'
@@ -97,8 +96,8 @@ describe('Value generator', function () {
     });
   });
 
-  describe('with ES6 app and ES6 test', function () {
-    before(function (done) {
+  describe('with ES6 app and ES6 test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/value'), {
           tmpdir: false
@@ -113,7 +112,7 @@ describe('Value generator', function () {
         .on('end', done);
     });
 
-    it('should create value files', function () {
+    it('should create value files', () => {
       assert.file([
         'app/home/test2-value.es6',
         'app/home/test2-value_test.es6'

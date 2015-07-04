@@ -1,11 +1,10 @@
 /*global describe, before, it */
 'use strict';
-var assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test
-  , join = require('path').join;
+import {assert, test as helpers} from 'yeoman-generator';
+import {join} from 'path';
 
-describe('View generator', function () {
-  before(function (done) {
+describe('View generator', () => {
+  before((done) => {
     helpers
       .run(join(__dirname, '../generator/app'))
       .withPrompts({
@@ -27,8 +26,8 @@ describe('View generator', function () {
       .on('end', done);
   });
 
-  describe('with HTML markup and LESS style with module-type', function () {
-    before(function (done) {
+  describe('with HTML markup and LESS style with module-type', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/view'), {
           tmpdir: false
@@ -41,20 +40,20 @@ describe('View generator', function () {
         .on('end', done);
     });
 
-    it('should create view files', function () {
+    it('should create view files', () => {
       assert.file([
         'app/home/views/test.tpl.html',
         'app/home/views/test.less'
       ]);
     });
 
-    it('should have correct template contents', function () {
+    it('should have correct template contents', () => {
       assert.fileContent('app/home/views/test.tpl.html', /<h2>test<\/h2>[^$]*<p>{{test.ctrlName}}<\/p>/);
     });
   });
 
-  describe('with HAML markup and CSS style', function () {
-    before(function (done) {
+  describe('with HAML markup and CSS style', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/view'), {
           tmpdir: false
@@ -68,20 +67,20 @@ describe('View generator', function () {
         .on('end', done);
     });
 
-    it('should create view files', function () {
+    it('should create view files', () => {
       assert.file([
         'app/home/test1.tpl.haml',
         'app/home/test1.css'
       ]);
     });
 
-    it('should have correct template contents', function () {
+    it('should have correct template contents', () => {
       assert.fileContent('app/home/test1.tpl.haml', /%h2 test1[^$]*%p {{test1.ctrlName}}/);
     });
   });
 
-  describe('with Jade markup and SCSS style', function () {
-    before(function (done) {
+  describe('with Jade markup and SCSS style', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/view'), {
           tmpdir: false
@@ -95,20 +94,20 @@ describe('View generator', function () {
         .on('end', done);
     });
 
-    it('should create view files', function () {
+    it('should create view files', () => {
       assert.file([
         'app/home/test2.tpl.jade',
         'app/home/test2.scss'
       ]);
     });
 
-    it('should have correct template contents', function () {
+    it('should have correct template contents', () => {
       assert.fileContent('app/home/test2.tpl.jade', /h2 test2[^$]*p {{test2.ctrlName}}/);
     });
   });
 
-  describe('with Jade markup and Stylus style', function () {
-    before(function (done) {
+  describe('with Jade markup and Stylus style', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/view'), {
           tmpdir: false
@@ -122,7 +121,7 @@ describe('View generator', function () {
         .on('end', done);
     });
 
-    it('should create view files', function () {
+    it('should create view files', () => {
       assert.file([
         'app/home/test3.tpl.jade',
         'app/home/test3.styl'

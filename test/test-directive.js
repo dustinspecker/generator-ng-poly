@@ -1,11 +1,10 @@
 /*global describe, before, it */
 'use strict';
-var assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test
-  , join = require('path').join;
+import {assert, test as helpers} from 'yeoman-generator';
+import {join} from 'path';
 
-describe('Directive generator', function () {
-  before(function (done) {
+describe('Directive generator', () => {
+  before((done) => {
     helpers
       .run(join(__dirname, '../generator/app'))
       .withPrompts({
@@ -27,8 +26,8 @@ describe('Directive generator', function () {
       .on('end', done);
   });
 
-  describe('with HTML markup, JS app, and JS test with module-type', function () {
-    before(function (done) {
+  describe('with HTML markup, JS app, and JS test with module-type', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/directive'), {
           tmpdir: false
@@ -41,7 +40,7 @@ describe('Directive generator', function () {
         .on('end', done);
     });
 
-    it('should create directive files', function () {
+    it('should create directive files', () => {
       assert.file([
         'app/home/directives/test-directive.js',
         'app/home/directives/test-directive.tpl.html',
@@ -50,8 +49,8 @@ describe('Directive generator', function () {
     });
   });
 
-  describe('with Jade markup, Coffee app, and Coffee test', function () {
-    before(function (done) {
+  describe('with Jade markup, Coffee app, and Coffee test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/directive'), {
           tmpdir: false
@@ -66,7 +65,7 @@ describe('Directive generator', function () {
         .on('end', done);
     });
 
-    it('should create directive files', function () {
+    it('should create directive files', () => {
       assert.file([
         'app/home/test1-directive.coffee',
         'app/home/test1-directive.tpl.jade',
@@ -75,8 +74,8 @@ describe('Directive generator', function () {
     });
   });
 
-  describe('with Jade markup, TypeScript app, and TypeScript test using module-type', function () {
-    before(function (done) {
+  describe('with Jade markup, TypeScript app, and TypeScript test using module-type', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/directive'), {
           tmpdir: false
@@ -92,7 +91,7 @@ describe('Directive generator', function () {
         .on('end', done);
     });
 
-    it('should create directive files', function () {
+    it('should create directive files', () => {
       assert.file([
         'app/home/directives/test3-directive.ts',
         'app/home/directives/test3-directive.tpl.jade',
@@ -101,8 +100,8 @@ describe('Directive generator', function () {
     });
   });
 
-  describe('with HAML markup, ES6 app, and ES6 test', function () {
-    before(function (done) {
+  describe('with HAML markup, ES6 app, and ES6 test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/directive'), {
           tmpdir: false
@@ -117,7 +116,7 @@ describe('Directive generator', function () {
         .on('end', done);
     });
 
-    it('should create directive files', function () {
+    it('should create directive files', () => {
       assert.file([
         'app/home/test2-directive.es6',
         'app/home/test2-directive.tpl.haml',

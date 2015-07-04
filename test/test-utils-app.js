@@ -1,23 +1,20 @@
 /*global describe, it */
 'use strict';
-var a = require('a')
-  , assert = require('assert')
-  , proxyquire = require('proxyquire');
+import assert from 'assert';
+import {expectRequire} from 'a';
+import proxyquire from 'proxyquire';
 
-describe('App Utils', function () {
-  describe('getAppDir', function () {
-    it('should return app dir', function () {
+describe('App Utils', () => {
+  describe('getAppDir', () => {
+    it('should return app dir', () => {
       // mock out path to avoid needing to use file system to find package.json
-      var pathStub = {
-          join: function () {
+      const pathStub = {
+          join() {
             return 'build.config.js';
           }
         }
         // proxy utils
-        , utilsProxy = proxyquire('../generator/utils/app', {path: pathStub})
-
-        // mock response
-        , expectRequire = a.expectRequire;
+        , utilsProxy = proxyquire('../generator/utils/app', {path: pathStub});
 
       expectRequire('build.config.js').return({appDir: 'app'});
 

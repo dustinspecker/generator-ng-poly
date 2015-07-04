@@ -1,11 +1,10 @@
 /*global describe, before, it*/
 'use strict';
-var assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test
-  , join = require('path').join;
+import {assert, test as helpers} from 'yeoman-generator';
+import {join} from 'path';
 
-describe('Decorator generator', function () {
-  before(function (done) {
+describe('Decorator generator', () => {
+  before((done) => {
     helpers
       .run(join(__dirname, '../generator/app'))
       .withPrompts({
@@ -27,8 +26,8 @@ describe('Decorator generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and test', function () {
-    before(function (done) {
+  describe('with JS app and test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/decorator'), {
           tmpdir: false
@@ -40,7 +39,7 @@ describe('Decorator generator', function () {
         .on('end', done);
     });
 
-    it('should create decorator files', function () {
+    it('should create decorator files', () => {
       assert.file([
         'app/home/test-decorator.js',
         'app/home/test-decorator_test.js'
@@ -48,8 +47,8 @@ describe('Decorator generator', function () {
     });
   });
 
-  describe('with Coffee app and test', function () {
-    before(function (done) {
+  describe('with Coffee app and test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/decorator'), {
           tmpdir: false
@@ -64,7 +63,7 @@ describe('Decorator generator', function () {
         .on('end', done);
     });
 
-    it('should create decorator files with stripped $', function () {
+    it('should create decorator files with stripped $', () => {
       assert.file([
         'app/home/decorators/url-router-provider-decorator.coffee',
         'app/home/decorators/url-router-provider-decorator_test.coffee'
@@ -72,8 +71,8 @@ describe('Decorator generator', function () {
     });
   });
 
-  describe('with ES2105 app and test', function () {
-    before(function (done) {
+  describe('with ES2105 app and test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/decorator'), {
           tmpdir: false
@@ -87,7 +86,7 @@ describe('Decorator generator', function () {
         .on('end', done);
     });
 
-    it('should create decorator files', function () {
+    it('should create decorator files', () => {
       assert.file([
         'app/home/test-decorator.es6',
         'app/home/test-decorator_test.es6'
@@ -95,8 +94,8 @@ describe('Decorator generator', function () {
     });
   });
 
-  describe('with TypeScript app and test', function () {
-    before(function (done) {
+  describe('with TypeScript app and test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/decorator'), {
           tmpdir: false
@@ -110,7 +109,7 @@ describe('Decorator generator', function () {
         .on('end', done);
     });
 
-    it('should create decorator files', function () {
+    it('should create decorator files', () => {
       assert.file([
         'app/home/test-decorator.ts',
         'app/home/test-decorator_test.ts'

@@ -1,11 +1,10 @@
 /*global describe, before, it */
 'use strict';
-var assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test
-  , join = require('path').join;
+import {assert, test as helpers} from 'yeoman-generator';
+import {join} from 'path';
 
-describe('Provider generator', function () {
-  before(function (done) {
+describe('Provider generator', () => {
+  before((done) => {
     helpers
       .run(join(__dirname, '../generator/app'))
       .withPrompts({
@@ -27,8 +26,8 @@ describe('Provider generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and JS test with module-type', function () {
-    before(function (done) {
+  describe('with JS app and JS test with module-type', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/provider'), {
           tmpdir: false
@@ -41,7 +40,7 @@ describe('Provider generator', function () {
         .on('end', done);
     });
 
-    it('should create provider files', function () {
+    it('should create provider files', () => {
       assert.file([
         'app/home/providers/test-provider.js',
         'app/home/providers/test-provider_test.js'
@@ -49,8 +48,8 @@ describe('Provider generator', function () {
     });
   });
 
-  describe('with Coffee app and Coffee test', function () {
-    before(function (done) {
+  describe('with Coffee app and Coffee test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/provider'), {
           tmpdir: false
@@ -65,7 +64,7 @@ describe('Provider generator', function () {
         .on('end', done);
     });
 
-    it('should create provider files', function () {
+    it('should create provider files', () => {
       assert.file([
         'app/home/test1-provider.coffee',
         'app/home/test1-provider_test.coffee'
@@ -73,8 +72,8 @@ describe('Provider generator', function () {
     });
   });
 
-  describe('with TypeScript app and TypeScript test', function () {
-    before(function (done) {
+  describe('with TypeScript app and TypeScript test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/provider'), {
           tmpdir: false
@@ -89,7 +88,7 @@ describe('Provider generator', function () {
         .on('end', done);
     });
 
-    it('should create provider files', function () {
+    it('should create provider files', () => {
       assert.file([
         'app/home/test2-provider.ts',
         'app/home/test2-provider_test.ts'

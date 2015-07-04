@@ -1,25 +1,22 @@
 /*global describe, beforeEach, it */
 'use strict';
-var a = require('a')
-  , assert = require('assert')
-  , proxyquire = require('proxyquire')
-  , sinon = require('sinon')
-  , utils = require('../generator/utils/module');
+import assert from 'assert';
+import {expectRequire} from 'a';
+import proxyquire from 'proxyquire';
+import sinon from 'sinon';
+import utils from '../generator/utils/module';
 
-describe('Module Utils', function () {
-  describe('extractModuleNames', function () {
-    it('should return app name when using app', function () {
+describe('Module Utils', () => {
+  describe('extractModuleNames', () => {
+    it('should return app name when using app', () => {
       // mock out path to avoid needing to use file system to find package.json
-      var pathStub = {
-          join: function () {
+      const pathStub = {
+          join() {
             return 'package.json';
           }
         }
         // proxy utils
-        , utilsProxy = proxyquire('../generator/utils/module', {path: pathStub})
-
-        // mock response
-        , expectRequire = a.expectRequire;
+        , utilsProxy = proxyquire('../generator/utils/module', {path: pathStub});
 
       expectRequire('package.json').return({name: 'test'});
 
@@ -31,24 +28,24 @@ describe('Module Utils', function () {
       assert(JSON.stringify(utilsProxy.extractModuleNames('app')) === JSON.stringify(['test', null]));
     });
 
-    it('should extract modules with slashes in path', function () {
+    it('should extract modules with slashes in path', () => {
       assert(JSON.stringify(utils.extractModuleNames('test/parent/child')) === JSON.stringify(['child', 'parent']));
     });
 
-    it('should return module without slashes in path', function () {
+    it('should return module without slashes in path', () => {
       assert(JSON.stringify(utils.extractModuleNames('test')) === JSON.stringify(['test', null]));
     });
   });
 
-  describe('moduleExists', function () {
-    var pathStub, utilsProxy;
+  describe('moduleExists', () => {
+    let pathStub, utilsProxy;
 
-    beforeEach(function () {
+    beforeEach(() => {
       pathStub = {
-        dirname: function () {
+        dirname() {
           return '.yo-rc.json';
         },
-        join: function () {
+        join() {
           return 'app/home';
         }
       };
@@ -59,12 +56,12 @@ describe('Module Utils', function () {
       };
     });
 
-    it('should return true when module is appDir', function () {
+    it('should return true when module is appDir', () => {
       assert(utilsProxy.moduleExists('app') === true);
     });
 
-    it('should call fs.exstsSync', function () {
-      var fsStub = {
+    it('should call fs.exstsSync', () => {
+      const fsStub = {
         existsSync: sinon.stub().returns(true)
       };
       utilsProxy = proxyquire('../generator/utils/module', {fs: fsStub, path: pathStub});

@@ -1,11 +1,10 @@
 /*global describe, before, it */
 'use strict';
-var assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test
-  , join = require('path').join;
+import {assert, test as helpers} from 'yeoman-generator';
+import {join} from 'path';
 
-describe('Controller generator', function () {
-  before(function (done) {
+describe('Controller generator', () => {
+  before((done) => {
     helpers
       .run(join(__dirname, '../generator/app'))
       .withPrompts({
@@ -28,8 +27,8 @@ describe('Controller generator', function () {
       .on('end', done);
   });
 
-  describe('with JS app and JS test with module-type', function () {
-    before(function (done) {
+  describe('with JS app and JS test with module-type', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/controller'), {
           tmpdir: false
@@ -42,7 +41,7 @@ describe('Controller generator', function () {
         .on('end', done);
     });
 
-    it('should create controller files', function () {
+    it('should create controller files', () => {
       assert.file([
         'app/home/controllers/test-controller.js',
         'app/home/controllers/test-controller_test.js'
@@ -50,8 +49,8 @@ describe('Controller generator', function () {
     });
   });
 
-  describe('with Coffee app and Coffee test', function () {
-    before(function (done) {
+  describe('with Coffee app and Coffee test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/controller'), {
           tmpdir: false
@@ -65,7 +64,7 @@ describe('Controller generator', function () {
         .on('end', done);
     });
 
-    it('should create controller files', function () {
+    it('should create controller files', () => {
       assert.file([
         'app/home/test1-controller.coffee',
         'app/home/test1-controller_test.coffee'
@@ -73,8 +72,8 @@ describe('Controller generator', function () {
     });
   });
 
-  describe('with Coffee app and Coffee test', function () {
-    before(function (done) {
+  describe('with Coffee app and Coffee test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/controller'), {
           tmpdir: false
@@ -88,7 +87,7 @@ describe('Controller generator', function () {
         .on('end', done);
     });
 
-    it('should create controller files', function () {
+    it('should create controller files', () => {
       assert.file([
         'app/home/test1-controller.coffee',
         'app/home/test1-controller_test.coffee'
@@ -96,8 +95,8 @@ describe('Controller generator', function () {
     });
   });
 
-  describe('with TypeScript app, and TypeScript test', function () {
-    before(function (done) {
+  describe('with TypeScript app, and TypeScript test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/controller'), {
           tmpdir: false
@@ -111,7 +110,7 @@ describe('Controller generator', function () {
         .on('end', done);
     });
 
-    it('should create controller files', function () {
+    it('should create controller files', () => {
       assert.file([
         'app/home/test1-controller.ts',
         'app/home/test1-controller_test.ts'
@@ -119,8 +118,8 @@ describe('Controller generator', function () {
     });
   });
 
-  describe('with ES6 app, and ES6 test', function () {
-    before(function (done) {
+  describe('with ES6 app, and ES6 test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/controller'), {
           tmpdir: false
@@ -134,7 +133,7 @@ describe('Controller generator', function () {
         .on('end', done);
     });
 
-    it('should create controller files', function () {
+    it('should create controller files', () => {
       assert.file([
         'app/home/test1-controller.es6',
         'app/home/test1-controller_test.es6'

@@ -1,11 +1,10 @@
 /*global describe, before, it */
 'use strict';
-var assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test
-  , join = require('path').join;
+import {assert, test as helpers} from 'yeoman-generator';
+import {join} from 'path';
 
-describe('Route generator', function () {
-  before(function (done) {
+describe('Route generator', () => {
+  before((done) => {
     helpers
       .run(join(__dirname, '../generator/app'))
       .withPrompts({
@@ -27,8 +26,8 @@ describe('Route generator', function () {
       .on('end', done);
   });
 
-  describe('with HTML markup, Less style, JS app, JS test, and skipController', function () {
-    before(function (done) {
+  describe('with HTML markup, Less style, JS app, JS test, and skipController', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/route'), {
           tmpdir: false
@@ -41,7 +40,7 @@ describe('Route generator', function () {
         .on('end', done);
     });
 
-    it('should create route files', function () {
+    it('should create route files', () => {
       assert.file([
         'app/home/test.tpl.html',
         'app/home/test.less',
@@ -50,7 +49,7 @@ describe('Route generator', function () {
       ]);
     });
 
-    it('should not create controller files', function () {
+    it('should not create controller files', () => {
       assert.noFile([
         'app/home/test-controller.js',
         'app/home/test-controller_test.js'
@@ -58,8 +57,8 @@ describe('Route generator', function () {
     });
   });
 
-  describe('with Jade markup, CSS style, Coffee app, and Coffee test with module-type', function () {
-    before(function (done) {
+  describe('with Jade markup, CSS style, Coffee app, and Coffee test with module-type', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/route'), {
           tmpdir: false
@@ -76,7 +75,7 @@ describe('Route generator', function () {
         .on('end', done);
     });
 
-    it('should create route files', function () {
+    it('should create route files', () => {
       assert.file([
         'app/home/controllers/test1-controller.coffee',
         'app/home/controllers/test1-controller_test.coffee',
@@ -88,8 +87,8 @@ describe('Route generator', function () {
     });
   });
 
-  describe('with HAML markup, SCSS style, JS app, and JS test', function () {
-    before(function (done) {
+  describe('with HAML markup, SCSS style, JS app, and JS test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/route'), {
           tmpdir: false
@@ -103,7 +102,7 @@ describe('Route generator', function () {
         .on('end', done);
     });
 
-    it('should create route files', function () {
+    it('should create route files', () => {
       assert.file([
         'app/home/test-child-controller.js',
         'app/home/test-child-controller_test.js',
@@ -115,8 +114,8 @@ describe('Route generator', function () {
     });
   });
 
-  describe('with HTML markup, Stylus style, JS app, and JS test', function () {
-    before(function (done) {
+  describe('with HTML markup, Stylus style, JS app, and JS test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/route'), {
           tmpdir: false
@@ -129,7 +128,7 @@ describe('Route generator', function () {
         .on('end', done);
     });
 
-    it('should create route files', function () {
+    it('should create route files', () => {
       assert.file([
         'app/test-controller.js',
         'app/test-controller_test.js',
@@ -141,8 +140,8 @@ describe('Route generator', function () {
     });
   });
 
-  describe('with Jade markup, CSS style, TypeScript app, and TypeScript test', function () {
-    before(function (done) {
+  describe('with Jade markup, CSS style, TypeScript app, and TypeScript test', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/route'), {
           tmpdir: false
@@ -158,7 +157,7 @@ describe('Route generator', function () {
         .on('end', done);
     });
 
-    it('should create route files', function () {
+    it('should create route files', () => {
       assert.file([
         'app/home/test2-controller.ts',
         'app/home/test2-controller_test.ts',

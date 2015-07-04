@@ -1,11 +1,10 @@
 /*global describe, before, it */
 'use strict';
-var assert = require('yeoman-generator').assert
-  , helpers = require('yeoman-generator').test
-  , join = require('path').join;
+import {assert, test as helpers} from 'yeoman-generator';
+import {join} from 'path';
 
-describe('Element generator', function () {
-  before(function (done) {
+describe('Element generator', () => {
+  before((done) => {
     helpers
       .run(join(__dirname, '../generator/app'))
       .withPrompts({
@@ -27,8 +26,8 @@ describe('Element generator', function () {
       .on('end', done);
   });
 
-  describe('with HTML markup, JS app, and LESS style', function () {
-    before(function (done) {
+  describe('with HTML markup, JS app, and LESS style', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/element'), {
           tmpdir: false
@@ -37,7 +36,7 @@ describe('Element generator', function () {
         .on('end', done);
     });
 
-    it('should create element files', function () {
+    it('should create element files', () => {
       assert.file([
         'app/components/test-element/test-element.js',
         'app/components/test-element/test-element.html',
@@ -46,8 +45,8 @@ describe('Element generator', function () {
     });
   });
 
-  describe('with Jade markup, Coffee app, and CSS style', function () {
-    before(function (done) {
+  describe('with Jade markup, Coffee app, and CSS style', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/element'), {
           tmpdir: false
@@ -61,7 +60,7 @@ describe('Element generator', function () {
         .on('end', done);
     });
 
-    it('should create element files', function () {
+    it('should create element files', () => {
       assert.file([
         'app/components/test1-element/test1-element.coffee',
         'app/components/test1-element/test1-element.jade',
@@ -70,8 +69,8 @@ describe('Element generator', function () {
     });
   });
 
-  describe('with HAML markup, ES6 app, and SCSS style', function () {
-    before(function (done) {
+  describe('with HAML markup, ES6 app, and SCSS style', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/element'), {
           tmpdir: false
@@ -85,7 +84,7 @@ describe('Element generator', function () {
         .on('end', done);
     });
 
-    it('should create element files', function () {
+    it('should create element files', () => {
       assert.file([
         'app/components/test2-element/test2-element.es6',
         'app/components/test2-element/test2-element.haml',
@@ -94,8 +93,8 @@ describe('Element generator', function () {
     });
   });
 
-  describe('with HTML markup, JS app, and Stylus style', function () {
-    before(function (done) {
+  describe('with HTML markup, JS app, and Stylus style', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/element'), {
           tmpdir: false
@@ -107,7 +106,7 @@ describe('Element generator', function () {
         .on('end', done);
     });
 
-    it('should create element files', function () {
+    it('should create element files', () => {
       assert.file([
         'app/components/test3-element/test3-element.js',
         'app/components/test3-element/test3-element.html',
@@ -116,8 +115,8 @@ describe('Element generator', function () {
     });
   });
 
-  describe('with Jade markup, TypeScript app, and CSS style', function () {
-    before(function (done) {
+  describe('with Jade markup, TypeScript app, and CSS style', () => {
+    before((done) => {
       helpers
         .run(join(__dirname, '../generator/element'), {
           tmpdir: false
@@ -131,7 +130,7 @@ describe('Element generator', function () {
         .on('end', done);
     });
 
-    it('should create element files', function () {
+    it('should create element files', () => {
       assert.file([
         'app/components/test4-element/test4-element.js',
         'app/components/test4-element/test4-element.jade',
