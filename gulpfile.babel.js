@@ -10,7 +10,7 @@ import jshint from 'gulp-jshint';
 import mocha from 'gulp-mocha';
 
 const configFiles = 'gulpfile.babel.js'
-  , destDir = 'generator/'
+  , destDir = 'generators/'
   , srcFiles = 'lib/*/*.js'
   , testFiles = 'test/*.js';
 

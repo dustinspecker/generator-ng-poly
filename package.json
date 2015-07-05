@@ -3,7 +3,7 @@
   "version": "0.10.2",
   "description": "Yeoman generator for modular AngularJS apps with Gulp and optional Polymer support",
   "license": "MIT",
-  "main": "generator/app/index.js",
+  "main": "generators/app/index.js",
   "repository": "dustinspecker/generator-ng-poly",
   "author": {
     "name": "Dustin Specker",
@@ -19,7 +19,7 @@
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "files": [
-    "generator"
+    "generators"
   ],
   "keywords": [
     "yeoman-generator",

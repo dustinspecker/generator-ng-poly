@@ -6,7 +6,7 @@ import {join} from 'path';
 describe('Filter generator', () => {
   before((done) => {
     helpers
-      .run(join(__dirname, '../generator/app'))
+      .run(join(__dirname, '../generators/app'))
       .withPrompts({
         appName: 'temp-filter',
         markup: 'html',
@@ -18,10 +18,10 @@ describe('Filter generator', () => {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../generator/module'),
-        join(__dirname, '../generator/route'),
-        join(__dirname, '../generator/controller'),
-        join(__dirname, '../generator/view')
+        join(__dirname, '../generators/module'),
+        join(__dirname, '../generators/route'),
+        join(__dirname, '../generators/controller'),
+        join(__dirname, '../generators/view')
       ])
       .on('end', done);
   });
@@ -29,7 +29,7 @@ describe('Filter generator', () => {
   describe('with JS app and JS test with module-type', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/filter'), {
+        .run(join(__dirname, '../generators/filter'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -51,7 +51,7 @@ describe('Filter generator', () => {
   describe('with Coffee app and Coffee test', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/filter'), {
+        .run(join(__dirname, '../generators/filter'), {
           tmpdir: false
         })
         .withArguments(['test1'])
@@ -74,7 +74,7 @@ describe('Filter generator', () => {
 
   describe('with TypeScript app and TypeScript test', () => {
     before((done) => {
-      helpers.run(join(__dirname, '../generator/filter'), {
+      helpers.run(join(__dirname, '../generators/filter'), {
         tmpdir: false
       })
         .withArguments(['test2'])
@@ -97,7 +97,7 @@ describe('Filter generator', () => {
 
   describe('with ES6 app and ES6 test', () => {
     before((done) => {
-      helpers.run(join(__dirname, '../generator/filter'), {
+      helpers.run(join(__dirname, '../generators/filter'), {
         tmpdir: false
       })
         .withArguments(['test2'])

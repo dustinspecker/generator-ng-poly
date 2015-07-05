@@ -1,7 +1,7 @@
 /*global describe, it */
 'use strict';
 import assert from 'assert';
-import elementUtils from '../generator/utils/element';
+import elementUtils from '../generators/utils/element';
 
 describe('Element Utils', () => {
   describe('checkElementName', () => {

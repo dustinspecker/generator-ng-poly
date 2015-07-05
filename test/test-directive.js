@@ -6,7 +6,7 @@ import {join} from 'path';
 describe('Directive generator', () => {
   before((done) => {
     helpers
-      .run(join(__dirname, '../generator/app'))
+      .run(join(__dirname, '../generators/app'))
       .withPrompts({
         appName: 'temp-directive',
         markup: 'html',
@@ -18,10 +18,10 @@ describe('Directive generator', () => {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../generator/module'),
-        join(__dirname, '../generator/route'),
-        join(__dirname, '../generator/controller'),
-        join(__dirname, '../generator/view')
+        join(__dirname, '../generators/module'),
+        join(__dirname, '../generators/route'),
+        join(__dirname, '../generators/controller'),
+        join(__dirname, '../generators/view')
       ])
       .on('end', done);
   });
@@ -29,7 +29,7 @@ describe('Directive generator', () => {
   describe('with HTML markup, JS app, and JS test with module-type', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/directive'), {
+        .run(join(__dirname, '../generators/directive'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -52,7 +52,7 @@ describe('Directive generator', () => {
   describe('with Jade markup, Coffee app, and Coffee test', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/directive'), {
+        .run(join(__dirname, '../generators/directive'), {
           tmpdir: false
         })
         .withArguments(['test1'])
@@ -77,7 +77,7 @@ describe('Directive generator', () => {
   describe('with Jade markup, TypeScript app, and TypeScript test using module-type', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/directive'), {
+        .run(join(__dirname, '../generators/directive'), {
           tmpdir: false
         })
         .withArguments(['test3'])
@@ -103,7 +103,7 @@ describe('Directive generator', () => {
   describe('with HAML markup, ES6 app, and ES6 test', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/directive'), {
+        .run(join(__dirname, '../generators/directive'), {
           tmpdir: false
         })
         .withArguments(['test2'])

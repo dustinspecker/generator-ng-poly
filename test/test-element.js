@@ -6,7 +6,7 @@ import {join} from 'path';
 describe('Element generator', () => {
   before((done) => {
     helpers
-      .run(join(__dirname, '../generator/app'))
+      .run(join(__dirname, '../generators/app'))
       .withPrompts({
         appName: 'temp-element',
         markup: 'html',
@@ -18,10 +18,10 @@ describe('Element generator', () => {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../generator/module'),
-        join(__dirname, '../generator/route'),
-        join(__dirname, '../generator/controller'),
-        join(__dirname, '../generator/view')
+        join(__dirname, '../generators/module'),
+        join(__dirname, '../generators/route'),
+        join(__dirname, '../generators/controller'),
+        join(__dirname, '../generators/view')
       ])
       .on('end', done);
   });
@@ -29,7 +29,7 @@ describe('Element generator', () => {
   describe('with HTML markup, JS app, and LESS style', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/element'), {
+        .run(join(__dirname, '../generators/element'), {
           tmpdir: false
         })
         .withArguments(['test-element'])
@@ -48,7 +48,7 @@ describe('Element generator', () => {
   describe('with Jade markup, Coffee app, and CSS style', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/element'), {
+        .run(join(__dirname, '../generators/element'), {
           tmpdir: false
         })
         .withArguments(['test1-element'])
@@ -72,7 +72,7 @@ describe('Element generator', () => {
   describe('with HAML markup, ES6 app, and SCSS style', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/element'), {
+        .run(join(__dirname, '../generators/element'), {
           tmpdir: false
         })
         .withArguments(['test2-element'])
@@ -96,7 +96,7 @@ describe('Element generator', () => {
   describe('with HTML markup, JS app, and Stylus style', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/element'), {
+        .run(join(__dirname, '../generators/element'), {
           tmpdir: false
         })
         .withArguments(['test3-element'])
@@ -118,7 +118,7 @@ describe('Element generator', () => {
   describe('with Jade markup, TypeScript app, and CSS style', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/element'), {
+        .run(join(__dirname, '../generators/element'), {
           tmpdir: false
         })
         .withArguments(['test4-element'])

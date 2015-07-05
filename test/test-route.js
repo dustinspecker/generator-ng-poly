@@ -6,7 +6,7 @@ import {join} from 'path';
 describe('Route generator', () => {
   before((done) => {
     helpers
-      .run(join(__dirname, '../generator/app'))
+      .run(join(__dirname, '../generators/app'))
       .withPrompts({
         appName: 'temp-route',
         markup: 'html',
@@ -18,10 +18,10 @@ describe('Route generator', () => {
         bower: []
       })
       .withGenerators([
-        join(__dirname, '../generator/module'),
-        join(__dirname, '../generator/route'),
-        join(__dirname, '../generator/controller'),
-        join(__dirname, '../generator/view')
+        join(__dirname, '../generators/module'),
+        join(__dirname, '../generators/route'),
+        join(__dirname, '../generators/controller'),
+        join(__dirname, '../generators/view')
       ])
       .on('end', done);
   });
@@ -29,7 +29,7 @@ describe('Route generator', () => {
   describe('with HTML markup, Less style, JS app, JS test, and skipController', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/route'), {
+        .run(join(__dirname, '../generators/route'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -60,7 +60,7 @@ describe('Route generator', () => {
   describe('with Jade markup, CSS style, Coffee app, and Coffee test with module-type', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/route'), {
+        .run(join(__dirname, '../generators/route'), {
           tmpdir: false
         })
         .withArguments(['test1'])
@@ -90,7 +90,7 @@ describe('Route generator', () => {
   describe('with HAML markup, SCSS style, JS app, and JS test', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/route'), {
+        .run(join(__dirname, '../generators/route'), {
           tmpdir: false
         })
         .withArguments(['test.child'])
@@ -117,7 +117,7 @@ describe('Route generator', () => {
   describe('with HTML markup, Stylus style, JS app, and JS test', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/route'), {
+        .run(join(__dirname, '../generators/route'), {
           tmpdir: false
         })
         .withArguments(['test'])
@@ -143,7 +143,7 @@ describe('Route generator', () => {
   describe('with Jade markup, CSS style, TypeScript app, and TypeScript test', () => {
     before((done) => {
       helpers
-        .run(join(__dirname, '../generator/route'), {
+        .run(join(__dirname, '../generators/route'), {
           tmpdir: false
         })
         .withArguments(['test2'])

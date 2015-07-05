@@ -14,7 +14,7 @@ describe('App Utils', () => {
           }
         }
         // proxy utils
-        , utilsProxy = proxyquire('../generator/utils/app', {path: pathStub});
+        , utilsProxy = proxyquire('../generators/utils/app', {path: pathStub});
 
       expectRequire('build.config.js').return({appDir: 'app'});
 

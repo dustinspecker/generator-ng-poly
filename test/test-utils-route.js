@@ -3,7 +3,7 @@
 import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
-import routeUtils from '../generator/utils/route';
+import routeUtils from '../generators/utils/route';
 
 let newState = {
   name: 'test',

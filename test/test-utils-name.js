@@ -1,7 +1,7 @@
 /*global describe, it */
 'use strict';
 import assert from 'assert';
-import nameUtils from '../generator/utils/name';
+import nameUtils from '../generators/utils/name';
 
 describe('Name Utils', () => {
   describe('lower camel', () => {

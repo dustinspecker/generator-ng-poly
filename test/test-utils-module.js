@@ -4,7 +4,7 @@ import assert from 'assert';
 import {expectRequire} from 'a';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
-import utils from '../generator/utils/module';
+import utils from '../generators/utils/module';
 
 describe('Module Utils', () => {
   describe('extractModuleNames', () => {
@@ -16,7 +16,7 @@ describe('Module Utils', () => {
           }
         }
         // proxy utils
-        , utilsProxy = proxyquire('../generator/utils/module', {path: pathStub});
+        , utilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
 
       expectRequire('package.json').return({name: 'test'});
 
@@ -49,7 +49,7 @@ describe('Module Utils', () => {
           return 'app/home';
         }
       };
-      utilsProxy = proxyquire('../generator/utils/module', {path: pathStub});
+      utilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
 
       utilsProxy.getAppDir = function getAppDir() {
         return 'app';
@@ -64,7 +64,7 @@ describe('Module Utils', () => {
       const fsStub = {
         existsSync: sinon.stub().returns(true)
       };
-      utilsProxy = proxyquire('../generator/utils/module', {fs: fsStub, path: pathStub});
+      utilsProxy = proxyquire('../generators/utils/module', {fs: fsStub, path: pathStub});
       utilsProxy.getAppDir = function getAppDir() {
         return 'app';
       };
