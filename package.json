@@ -33,6 +33,7 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "class-extend": "^0.1.1",
+    "count-spaces": "^1.0.1",
     "findup-sync": "^0.2.0",
     "lodash": "^3.0.0",
     "mkdirp": "^0.5.0",
