@@ -49,6 +49,7 @@
   "devDependencies": {
     "a": "^0.4.6",
     "babel": "^5.5.7",
+    "chai": "^3.2.0",
     "coveralls": "^2.11.1",
     "del": "^1.2.0",
     "eslint-path-formatter": "^0.1.1",
