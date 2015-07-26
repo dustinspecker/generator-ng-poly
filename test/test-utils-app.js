@@ -1,13 +1,13 @@
 /*global describe, it */
 'use strict';
-import assert from 'assert';
+import {expect} from 'chai';
 import {expectRequire} from 'a';
 import proxyquire from 'proxyquire';
 
 describe('App Utils', () => {
   describe('getAppDir', () => {
     it('should return app dir', () => {
-      // mock out path to avoid needing to use file system to find package.json
+      // mock out path to avoid needing to use file system to find build.config.json
       const pathStub = {
           join() {
             return 'build.config.js';
@@ -18,7 +18,7 @@ describe('App Utils', () => {
 
       expectRequire('build.config.js').return({appDir: 'app'});
 
-      assert(utilsProxy.getAppDir('test') === 'app');
+      expect(utilsProxy.getAppDir('test')).to.eql('app');
     });
   });
 });
