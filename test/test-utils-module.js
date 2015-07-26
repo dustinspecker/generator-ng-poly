@@ -1,4 +1,4 @@
-/*global describe, beforeEach, it, xit */
+/*global describe, beforeEach, it*/
 'use strict';
 import assert from 'assert';
 import {expect} from 'chai';
@@ -105,12 +105,12 @@ describe('Module Utils', () => {
 
     it('should filter non-script files', () => {
       const files = [
-          'test/a.html',
-          'test1/b.css',
-          'test2/c.js',
-          'test3/d.coffee',
-          'test4/e.es6',
-          'test5/f.ts'
+          'test/test-module.html',
+          'test1/test1-module.css',
+          'test2/test2-module.js',
+          'test3/test3-module.coffee',
+          'test4/test4-module.es6',
+          'test5/test5-module.ts'
         ]
         , expectedModules = [
           {name: 'test2', value: 'test2'},
@@ -121,11 +121,11 @@ describe('Module Utils', () => {
       expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
 
-    it('should remove the filenames and only return the directories', () => {
+    it('should check for x-module name only on child directory', () => {
       const files = [
-          'test/test.js',
-          'abc/bar.js',
-          'nested/nest/nest.js'
+          'test/test-module.js',
+          'abc/abc-module.js',
+          'nested/nest/nest-module.js'
         ]
         , expectedModules = [
           {name: 'test', value: 'test'},
@@ -137,9 +137,9 @@ describe('Module Utils', () => {
 
     it('should remove duplicate directores', () => {
       const files = [
-          'test1/test.js',
-          'test1/test1.js',
-          'test2/test.js'
+          'test1/test1-modulde.js',
+          'test1/test1-module.ts',
+          'test2/test2-module.js'
         ]
         , expectedModules = [
           {name: 'test1', value: 'test1'},
@@ -148,82 +148,31 @@ describe('Module Utils', () => {
       expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
 
-    it('should ignore components directory if opts.polymer is true', () => {
+    it('should only list directories that have a `directory`-module.{coffee,es6,js,ts} file', () => {
       const files = [
-          'test1/test.js',
-          'test2/test.js',
-          'components/test2.js'
+          'coffee-test/coffee-test-module.coffee',
+          'es6-test/es6-test-module.es6',
+          'js-test/js-test-module.js',
+          'ts-test/ts-test-module.js',
+          'components/gold-element/gold-element.js'
         ]
         , expectedModules = [
-          {name: 'test1', value: 'test1'},
-          {name: 'test2', value: 'test2'}
-        ];
-      expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
-    });
-
-    xit('should not ignore components directory if opts.polymer is false', () => {
-      const files = [
-          'test1/test.js',
-          'test2/test.js',
-          'components/test2.js'
-        ]
-        , expectedModules = [
-          {name: 'test1', value: 'test1'},
-          {name: 'test2', value: 'test2'},
-          {name: 'components', value: 'components'}
-        ];
-      expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
-    });
-
-    it('should ignore Angular type directories if module-type structure', () => {
-      const files = [
-          'constants/test.js',
-          'controllers/test.js',
-          'decorators/test.js',
-          'directives/test.js',
-          'factories/test.js',
-          'filters/test.js',
-          'services/test.js',
-          'providers/test.js',
-          'values/test.js',
-          'views/test.js'
-        ]
-        , expectedModules = [];
-      expect(utilsProxy.moduleFilter(files, {type: true})).to.eql(expectedModules);
-    });
-
-    it('should not ignore Angular type directories if module-only structure', () => {
-      const files = [
-          'constants/test.js',
-          'controllers/test.js',
-          'decorators/test.js',
-          'directives/test.js',
-          'factories/test.js',
-          'filters/test.js',
-          'providers/test.js',
-          'services/test.js',
-          'values/test.js',
-          'views/test.js'
-        ]
-        , expectedModules = [
-          {name: 'constants', value: 'constants'},
-          {name: 'controllers', value: 'controllers'},
-          {name: 'decorators', value: 'decorators'},
-          {name: 'directives', value: 'directives'},
-          {name: 'factories', value: 'factories'},
-          {name: 'filters', value: 'filters'},
-          {name: 'providers', value: 'providers'},
-          {name: 'services', value: 'services'},
-          {name: 'values', value: 'values'},
-          {name: 'views', value: 'views'}
+          {name: 'coffee-test', value: 'coffee-test'},
+          {name: 'es6-test', value: 'es6-test'},
+          {name: 'js-test', value: 'js-test'},
+          {name: 'ts-test', value: 'ts-test'}
         ];
       expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
 
     it('should strip Windows app path in value', () => {
-      const files = ['app\\test\\test1.js']
+      const files = ['app\\test\\test-module.js']
         , expectedModules = [{name: 'app\\test', value: 'test'}]
         , pathStub = {
+            sep: '\\',
+            basename() {
+              return 'test-module.js';
+            },
             dirname() {
               return 'app\\test';
             }
@@ -237,9 +186,13 @@ describe('Module Utils', () => {
     });
 
     it('should strip Unix app path in value', () => {
-      const files = ['app/test/test1.js']
+      const files = ['app/test/test-module.js']
         , expectedModules = [{name: 'app/test', value: 'test'}]
         , pathStub = {
+            sep: '/',
+            basename() {
+              return 'test-module';
+            },
             dirname() {
               return 'app/test';
             }
