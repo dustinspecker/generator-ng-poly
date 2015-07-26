@@ -1,4 +1,6 @@
-# generator-ng-poly [![NPM version](https://badge.fury.io/js/generator-ng-poly.svg)](http://badge.fury.io/js/generator-ng-poly) [![Build Status](https://travis-ci.org/dustinspecker/generator-ng-poly.svg?branch=master)](https://travis-ci.org/dustinspecker/generator-ng-poly) [![Coverage Status](https://img.shields.io/coveralls/dustinspecker/generator-ng-poly.svg)](https://coveralls.io/r/dustinspecker/generator-ng-poly?branch=master)
+# generator-ng-poly
+[![NPM version](https://badge.fury.io/js/generator-ng-poly.svg)](http://badge.fury.io/js/generator-ng-poly) [![Build Status](https://travis-ci.org/dustinspecker/generator-ng-poly.svg?branch=master)](https://travis-ci.org/dustinspecker/generator-ng-poly) [![Coverage Status](https://img.shields.io/coveralls/dustinspecker/generator-ng-poly.svg)](https://coveralls.io/r/dustinspecker/generator-ng-poly?branch=master)
+
 [![Code Climate](https://codeclimate.com/github/dustinspecker/generator-ng-poly/badges/gpa.svg)](https://codeclimate.com/github/dustinspecker/generator-ng-poly) [![Dependencies](https://david-dm.org/dustinspecker/generator-ng-poly.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=dependencies&view=table) [![DevDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/dev-status.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=devDependencies&view=table)
 
 > [Yeoman](http://yeoman.io) generator for modular AngularJS apps with Gulp and optional Polymer support
