@@ -158,7 +158,7 @@ describe('Module Utils', () => {
           {name: 'test1', value: 'test1'},
           {name: 'test2', value: 'test2'}
         ];
-      expect(utilsProxy.moduleFilter(files, {polymer: true})).to.eql(expectedModules);
+      expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
 
     xit('should not ignore components directory if opts.polymer is false', () => {
@@ -189,10 +189,10 @@ describe('Module Utils', () => {
           'views/test.js'
         ]
         , expectedModules = [];
-      expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
+      expect(utilsProxy.moduleFilter(files, {type: true})).to.eql(expectedModules);
     });
 
-    xit('should not ignore Angular type directories if module-only structure', () => {
+    it('should not ignore Angular type directories if module-only structure', () => {
       const files = [
           'constants/test.js',
           'controllers/test.js',
