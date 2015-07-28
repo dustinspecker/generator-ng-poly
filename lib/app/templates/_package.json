@@ -50,7 +50,7 @@
     "gulp-sourcemaps": "^1.5.1"<% if (style === 'styl') { %>,
     "gulp-stylus": "^2.0.0"<% } %>,
     "gulp-tslint": "^2.0.0"<% if (appScript === 'ts' || testScript === 'ts') { %>,
-    "gulp-typescript": "2.6.0"<% } %>,
+    "gulp-typescript": "2.8.0"<% } %>,
     "gulp-uglify": "^1.0.0",
     "jshint-stylish": "^1.0.0",
     "karma": "^0.12.16"<% if (testFramework === 'mocha') { %>,

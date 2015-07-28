@@ -263,7 +263,7 @@ describe('App generator', () => {
     });
 
     it('should not include TypeScript project', () => {
-      assert.noFileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
+      assert.noFileContent('Gulpfile.js', 'config.tsSourceProject = $.typescript.createProject({');
     });
   });
 
@@ -432,7 +432,7 @@ describe('App generator', () => {
         scripts = [
           '      .pipe($.sourcemaps.init())',
           '      .pipe(tsFilter)',
-          '      .pipe($.typescript(config.tsProject))',
+          '      .pipe($.typescript(config.tsSourceProject))',
           '      .pipe(tsFilter.restore())',
           '      .pipe($.if(isProd, htmlFilter))'
         ].join(EOL);
@@ -463,7 +463,7 @@ describe('App generator', () => {
 
         expectedScript = [
           '      .pipe(scriptFilter)',
-          '      .pipe($.typescript(config.tsProject))',
+          '      .pipe($.typescript(config.tsSourceProject))',
           '      .pipe(scriptFilter.restore())'
         ].join(EOL);
 
@@ -497,7 +497,7 @@ describe('App generator', () => {
 
         buildTests = [
           '    return gulp.src([config.unitTestFiles])',
-          '      .pipe($.typescript(config.tsProject))',
+          '      .pipe($.typescript(config.tsTestProject))',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
         ].join(EOL);
 
@@ -529,7 +529,7 @@ describe('App generator', () => {
       });
 
       it('should include TypeScript project', () => {
-        assert.fileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
+        assert.fileContent('Gulpfile.js', 'config.tsSourceProject = $.typescript.createProject({');
       });
     });
 
@@ -776,7 +776,7 @@ describe('App generator', () => {
       });
 
       it('should not include TypeScript project', () => {
-        assert.noFileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
+        assert.noFileContent('Gulpfile.js', 'config.tsSourceProject = $.typescript.createProject({');
       });
     });
 
@@ -1034,7 +1034,7 @@ describe('App generator', () => {
       });
 
       it('should not include TypeScript project', () => {
-        assert.noFileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
+        assert.noFileContent('Gulpfile.js', 'config.tsSourceProject = $.typescript.createProject({');
       });
     });
 
@@ -1265,7 +1265,7 @@ describe('App generator', () => {
       });
 
       it('should not include TypeScript project', () => {
-        assert.noFileContent('Gulpfile.js', 'config.tsProject = $.typescript.createProject({');
+        assert.noFileContent('Gulpfile.js', 'config.tsSourceProject = $.typescript.createProject({');
       });
     });
 
