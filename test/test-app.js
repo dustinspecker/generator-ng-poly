@@ -140,7 +140,7 @@ describe('App generator', () => {
       });
 
       it('should not have filters', () => {
-        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
+        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
       });
 
       it('should not have CS linting', () => {
@@ -150,15 +150,15 @@ describe('App generator', () => {
 
     describe('gulp/build.js', () => {
       it('should not have coffeeFilter', () => {
-        assert.noFileContent('gulp/build.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
+        assert.noFileContent('gulp/build.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
       });
 
       it('should not have es6Filter', () => {
-        assert.noFileContent('gulp/build.js', 'es6Filter = $.filter(\'**/*.es6\')');
+        assert.noFileContent('gulp/build.js', 'es6Filter = $.filter(\'**/*.es6\', {restore: true})');
       });
 
       it('should not have tsFilter', () => {
-        assert.noFileContent('gulp/build.js', ', tsFilter = $.filter(\'**/*.ts\')');
+        assert.noFileContent('gulp/build.js', ', tsFilter = $.filter(\'**/*.ts\', {restore: true})');
       });
 
       it('should not use compilers', () => {
@@ -411,7 +411,7 @@ describe('App generator', () => {
       });
 
       it('should not have filters', () => {
-        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
+        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
       });
 
       it('should not have CS linting', () => {
@@ -433,7 +433,7 @@ describe('App generator', () => {
           '      .pipe($.sourcemaps.init())',
           '      .pipe(tsFilter)',
           '      .pipe($.typescript(config.tsSourceProject))',
-          '      .pipe(tsFilter.restore())',
+          '      .pipe(tsFilter.restore)',
           '      .pipe($.if(isProd, htmlFilter))'
         ].join(EOL);
 
@@ -458,24 +458,24 @@ describe('App generator', () => {
         expectedMarkup = [
           '      .pipe(markupFilter)',
           '      .pipe($.haml())',
-          '      .pipe(markupFilter.restore())'
+          '      .pipe(markupFilter.restore)'
         ].join(EOL);
 
         expectedScript = [
           '      .pipe(scriptFilter)',
           '      .pipe($.typescript(config.tsSourceProject))',
-          '      .pipe(scriptFilter.restore())'
+          '      .pipe(scriptFilter.restore)'
         ].join(EOL);
 
         expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.less())',
-          '      .pipe(styleFilter.restore())'
+          '      .pipe(styleFilter.restore)'
         ].join(EOL);
 
-        assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.haml\')');
-        assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.ts\')');
-        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.less\')');
+        assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.haml\', {restore: true})');
+        assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.ts\', {restore: true})');
+        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.less\', {restore: true})');
 
         assert.fileContent('gulp/build.js', expectedMarkup);
         assert.fileContent('gulp/build.js', expectedScript);
@@ -657,7 +657,7 @@ describe('App generator', () => {
       });
 
       it('should not have filters', () => {
-        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
+        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
       });
 
       it('should have CS linting', () => {
@@ -679,7 +679,7 @@ describe('App generator', () => {
           '      .pipe($.sourcemaps.init())',
           '      .pipe(coffeeFilter)',
           '      .pipe($.coffee())',
-          '      .pipe(coffeeFilter.restore())',
+          '      .pipe(coffeeFilter.restore)',
           '      .pipe($.if(isProd, htmlFilter))'
         ].join(EOL);
 
@@ -704,24 +704,24 @@ describe('App generator', () => {
         expectedMarkup = [
           '      .pipe(markupFilter)',
           '      .pipe($.haml())',
-          '      .pipe(markupFilter.restore())'
+          '      .pipe(markupFilter.restore)'
         ].join(EOL);
 
         expectedScript = [
           '      .pipe(scriptFilter)',
           '      .pipe($.coffee())',
-          '      .pipe(scriptFilter.restore())'
+          '      .pipe(scriptFilter.restore)'
         ].join(EOL);
 
         expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.less())',
-          '      .pipe(styleFilter.restore())'
+          '      .pipe(styleFilter.restore)'
         ].join(EOL);
 
-        assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.haml\')');
-        assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.coffee\')');
-        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.less\')');
+        assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.haml\', {restore: true})');
+        assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.coffee\', {restore: true})');
+        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.less\', {restore: true})');
 
         assert.fileContent('gulp/build.js', expectedMarkup);
         assert.fileContent('gulp/build.js', expectedScript);
@@ -899,7 +899,7 @@ describe('App generator', () => {
       });
 
       it('should not have filters', () => {
-        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
+        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
       });
 
       it('should not have CS linting', () => {
@@ -924,7 +924,7 @@ describe('App generator', () => {
           '      .pipe($.rename(function (filePath) {',
           '        filePath.extname = \'.js\';',
           '      }))',
-          '      .pipe(es6Filter.restore())',
+          '      .pipe(es6Filter.restore)',
           '      .pipe($.if(isProd, htmlFilter))'
         ].join(EOL);
 
@@ -951,7 +951,7 @@ describe('App generator', () => {
         expectedMarkup = [
           '      .pipe(markupFilter)',
           '      .pipe($.jade())',
-          '      .pipe(markupFilter.restore())'
+          '      .pipe(markupFilter.restore)'
         ].join(EOL);
 
         expectedScript = [
@@ -960,7 +960,7 @@ describe('App generator', () => {
           '      .pipe($.rename(function (filePath) {',
           '        filePath.extname = \'.js\';',
           '      }))',
-          '      .pipe(scriptFilter.restore())'
+          '      .pipe(scriptFilter.restore)'
         ].join(EOL);
 
         expectedStyle = [
@@ -968,12 +968,12 @@ describe('App generator', () => {
           '      .pipe($.stylus({',
           '        use: $.nib()',
           '      }))',
-          '      .pipe(styleFilter.restore())'
+          '      .pipe(styleFilter.restore)'
         ].join(EOL);
 
-        assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.jade\')');
-        assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.es6\')');
-        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.styl\')');
+        assert.fileContent('gulp/build.js', 'markupFilter = $.filter(\'**/*.jade\', {restore: true})');
+        assert.fileContent('gulp/build.js', 'scriptFilter = $.filter(\'**/*.es6\', {restore: true})');
+        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.styl\', {restore: true})');
 
         assert.fileContent('gulp/build.js', expectedMarkup);
         assert.fileContent('gulp/build.js', expectedScript);
@@ -1166,7 +1166,7 @@ describe('App generator', () => {
       });
 
       it('should not have filters', () => {
-        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\')');
+        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
       });
 
       it('should not have CS linting', () => {
@@ -1209,12 +1209,12 @@ describe('App generator', () => {
         expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.sass())',
-          '      .pipe(styleFilter.restore())'
+          '      .pipe(styleFilter.restore)'
         ].join(EOL);
 
         assert.noFileContent('gulp/build.js', 'markupFilter');
         assert.noFileContent('gulp/build.js', 'scriptFilter');
-        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.scss\')');
+        assert.fileContent('gulp/build.js', 'styleFilter = $.filter(\'**/*.scss\', {restore: true})');
 
         assert.fileContent('gulp/build.js', expectedStyle);
       });
