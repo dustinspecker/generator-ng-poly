@@ -53,7 +53,7 @@
     "gulp-typescript": "2.8.0"<% } %>,
     "gulp-uglify": "^1.0.0",
     "jshint-stylish": "^1.0.0",
-    "karma": "^0.12.16"<% if (testFramework === 'mocha') { %>,
+    "karma": "^0.13.3"<% if (testFramework === 'mocha') { %>,
     "karma-chai": "^0.1.0"<% } %>,
     "karma-coverage": "^0.3.1",
     "karma-failed-reporter": "^0.0.3"<% if (testFramework === 'jasmine') { %>,
