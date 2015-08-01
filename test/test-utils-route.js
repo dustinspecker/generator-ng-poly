@@ -1,4 +1,4 @@
-/*global describe, beforeEach, after, it */
+/* global describe, beforeEach, after, it */
 'use strict';
 import assert from 'assert';
 import fs from 'fs';

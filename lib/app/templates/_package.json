@@ -25,7 +25,7 @@
     "gulp-concat": "^2.3.4",
     "gulp-css-rebase-urls": "0.0.5",
     "gulp-cssmin": "^0.1.6",
-    "gulp-eslint": "^0.15.0",
+    "gulp-eslint": "^1.0.0",
     "gulp-filter": "^3.0.0"<% if (markup === 'haml') { %>,
     "gulp-haml": "^0.1.0"<% } %>,
     "gulp-htmlmin": "^1.0.0",

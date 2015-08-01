@@ -1,4 +1,4 @@
-/*global describe, it */
+/* global describe, it */
 'use strict';
 import {expect} from 'chai';
 import {expectRequire} from 'a';

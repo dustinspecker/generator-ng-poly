@@ -1,4 +1,4 @@
-/*global describe, before, it */
+/* global describe, before, it */
 'use strict';
 import {assert, test as helpers} from 'yeoman-generator';
 import path from 'path';

@@ -1,4 +1,4 @@
-/*global describe, it */
+/* global describe, it */
 'use strict';
 import assert from 'assert';
 import nameUtils from '../generators/utils/name';

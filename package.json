@@ -56,7 +56,7 @@
     "eslint-path-formatter": "^0.1.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
-    "gulp-eslint": "^0.15.0",
+    "gulp-eslint": "^1.0.0",
     "gulp-istanbul": "^0.10.0",
     "gulp-jscs": "^2.0.0",
     "gulp-jshint": "^1.9.0",
