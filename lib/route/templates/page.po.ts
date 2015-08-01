@@ -1,6 +1,6 @@
 ///<reference path='<%= referencePath %>/references.d.ts' />
 
-/*global element, by*/
+/* global element, by */
 'use strict';
 
 function <%= upperCamel %>Page() {

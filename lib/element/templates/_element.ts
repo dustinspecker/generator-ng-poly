@@ -1,5 +1,5 @@
 ///<reference path='<%= referencePath %>' />
-/*global Polymer*/
+/* global Polymer */
 module UpperCamel {
   'use strict';
 

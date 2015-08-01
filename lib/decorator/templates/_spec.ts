@@ -1,6 +1,6 @@
 ///<reference path='<%= referencePath %>' />
 
-/*global describe, beforeEach, it, expect, inject, module*/
+/* global describe, beforeEach, it, expect, inject, module */
 'use strict';
 
 describe('<%= name %>', function () {

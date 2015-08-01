@@ -1,5 +1,5 @@
 ///<reference path='<%= referencePath %>/references.d.ts' />
-/*global describe, beforeEach, it, browser<% if (e2eTestFramework === 'jasmine') { %>, expect<% } %> */
+/* global describe, beforeEach, it, browser<% if (e2eTestFramework === 'jasmine') { %>, expect<% } %> */
 'use strict';
 
 var <% if (e2eTestFramework === 'mocha') { %>chai = require('chai')

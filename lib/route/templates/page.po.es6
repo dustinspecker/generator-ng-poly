@@ -1,4 +1,4 @@
-/*global element, by*/
+/* global element, by */
 'use strict';
 
 class <%= upperCamel %>Page {

@@ -1,4 +1,4 @@
-/*global describe, beforeEach, it, browser<% if (e2eTestFramework === 'jasmine') { %>, expect<% } %> */
+/* global describe, beforeEach, it, browser<% if (e2eTestFramework === 'jasmine') { %>, expect<% } %> */
 'use strict';
 
 import <%= upperCamel %>Page from './<%= hyphenName %>.po';<% if (e2eTestFramework === 'mocha') { %>
