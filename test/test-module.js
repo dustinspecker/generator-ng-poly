@@ -7,7 +7,7 @@ describe('Module generator', () => {
   // generate default app
   // appName different than directory for code coverage
   // stub installDependencies for code coverage
-  before((done) => {
+  before(done => {
     helpers
       .run(path.join(__dirname, '../generators/app'))
       .withPrompts({
@@ -30,7 +30,7 @@ describe('Module generator', () => {
   });
 
   describe('adding a new empty module', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(path.join(__dirname, '../generators/module'), {
           tmpdir: false
@@ -60,7 +60,7 @@ describe('Module generator', () => {
   });
 
   describe('adding a new CoffeeScript module', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(path.join(__dirname, '../generators/module'), {
           tmpdir: false
@@ -98,7 +98,7 @@ describe('Module generator', () => {
   });
 
   describe('adding a new ES2105 module', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(path.join(__dirname, '../generators/module'), {
           tmpdir: false
@@ -137,7 +137,7 @@ describe('Module generator', () => {
 
   // trailing slash to test trailing slash removal
   describe('adding a new JS module', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(path.join(__dirname, '../generators/module'), {
           tmpdir: false
@@ -172,7 +172,7 @@ describe('Module generator', () => {
   });
 
   describe('adding a new TS module', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(path.join(__dirname, '../generators/module'), {
           tmpdir: false
@@ -210,7 +210,7 @@ describe('Module generator', () => {
   });
 
   describe('adding a deep level camelCase module', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(path.join(__dirname, '../generators/module'), {
           tmpdir: false
@@ -228,7 +228,7 @@ describe('Module generator', () => {
     });
 
     describe('adding a deeper level module', () => {
-      before((done) => {
+      before(done => {
         helpers
           .run(path.join(__dirname, '../generators/module'), {
             tmpdir: false
@@ -261,7 +261,7 @@ describe('Module generator', () => {
   });
 
   describe('adding a deep level hyphenated module', () => {
-    before((done) => {
+    before(done => {
       helpers
       .run(path.join(__dirname, '../generators/module'), {
         tmpdir: false
@@ -289,7 +289,7 @@ describe('Module generator', () => {
   });
 
   describe('adding a deep level Typescript module', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(path.join(__dirname, '../generators/module'), {
           tmpdir: false
@@ -315,7 +315,7 @@ describe('Module generator', () => {
     });
 
     describe('adding a deeper level module', () => {
-      before((done) => {
+      before(done => {
         helpers
         .run(path.join(__dirname, '../generators/module'), {
           tmpdir: false

@@ -5,7 +5,7 @@ import {join} from 'path';
 
 describe('Route generator', () => {
   describe('with HTML markup, Less style, JS app, JS test, and skipController', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withPrompts({
@@ -56,7 +56,7 @@ describe('Route generator', () => {
   });
 
   describe('with Jade markup, CSS style, Coffee app, and Coffee test with module-type', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withPrompts({
@@ -106,7 +106,7 @@ describe('Route generator', () => {
   });
 
   describe('with HAML markup, SCSS style, ES6 app, and ES6 test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withPrompts({
@@ -153,7 +153,7 @@ describe('Route generator', () => {
   });
 
   describe('with HTML markup, Stylus style, JS app, and JS test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withPrompts({
@@ -199,7 +199,7 @@ describe('Route generator', () => {
   });
 
   describe('with Jade markup, CSS style, TypeScript app, and TypeScript test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withPrompts({

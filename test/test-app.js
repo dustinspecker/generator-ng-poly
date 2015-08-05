@@ -77,7 +77,7 @@ describe('App generator', () => {
           join(__dirname, '../generators/controller'),
           join(__dirname, '../generators/view')
         ])
-        .on('ready', (generator) => {
+        .on('ready', generator => {
           gen = generator;
           generator.installDependencies = sinon.spy();
         })
@@ -321,7 +321,7 @@ describe('App generator', () => {
     // used to test if methods have been called
     let gen;
 
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withOptions({
@@ -346,7 +346,7 @@ describe('App generator', () => {
           join(__dirname, '../generators/controller'),
           join(__dirname, '../generators/view')
         ])
-        .on('ready', (generator) => {
+        .on('ready', generator => {
           gen = generator;
           generator.installDependencies = sinon.spy();
           generator.spawnCommand = sinon.spy();
@@ -585,7 +585,7 @@ describe('App generator', () => {
   });
 
   describe('with HAML markup, LESS style, Coffee app, and Coffee test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withPrompts({
@@ -832,7 +832,7 @@ describe('App generator', () => {
   });
 
   describe('with Jade markup, Stylus style, ES6 app, and ES6 test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withPrompts({
@@ -1090,7 +1090,7 @@ describe('App generator', () => {
   });
 
   describe('with HTML markup, SCSS style, JS app, and JS test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withOptions({

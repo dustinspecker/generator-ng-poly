@@ -4,7 +4,7 @@ import {assert, test as helpers} from 'yeoman-generator';
 import {join} from 'path';
 
 describe('Decorator generator', () => {
-  before((done) => {
+  before(done => {
     helpers
       .run(join(__dirname, '../generators/app'))
       .withPrompts({
@@ -27,7 +27,7 @@ describe('Decorator generator', () => {
   });
 
   describe('with JS app and test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/decorator'), {
           tmpdir: false
@@ -48,7 +48,7 @@ describe('Decorator generator', () => {
   });
 
   describe('with Coffee app and test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/decorator'), {
           tmpdir: false
@@ -72,7 +72,7 @@ describe('Decorator generator', () => {
   });
 
   describe('with ES2105 app and test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/decorator'), {
           tmpdir: false
@@ -95,7 +95,7 @@ describe('Decorator generator', () => {
   });
 
   describe('with TypeScript app and test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/decorator'), {
           tmpdir: false

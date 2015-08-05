@@ -4,7 +4,7 @@ import {assert, test as helpers} from 'yeoman-generator';
 import {join} from 'path';
 
 describe('Element generator', () => {
-  before((done) => {
+  before(done => {
     helpers
       .run(join(__dirname, '../generators/app'))
       .withPrompts({
@@ -27,7 +27,7 @@ describe('Element generator', () => {
   });
 
   describe('with HTML markup, JS app, and LESS style', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/element'), {
           tmpdir: false
@@ -46,7 +46,7 @@ describe('Element generator', () => {
   });
 
   describe('with Jade markup, Coffee app, and CSS style', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/element'), {
           tmpdir: false
@@ -70,7 +70,7 @@ describe('Element generator', () => {
   });
 
   describe('with HAML markup, ES6 app, and SCSS style', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/element'), {
           tmpdir: false
@@ -94,7 +94,7 @@ describe('Element generator', () => {
   });
 
   describe('with HTML markup, JS app, and Stylus style', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/element'), {
           tmpdir: false
@@ -116,7 +116,7 @@ describe('Element generator', () => {
   });
 
   describe('with Jade markup, TypeScript app, and CSS style', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/element'), {
           tmpdir: false

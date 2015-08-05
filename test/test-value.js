@@ -4,7 +4,7 @@ import {assert, test as helpers} from 'yeoman-generator';
 import {join} from 'path';
 
 describe('Value generator', () => {
-  before((done) => {
+  before(done => {
     helpers
       .run(join(__dirname, '../generators/app'))
       .withPrompts({
@@ -27,7 +27,7 @@ describe('Value generator', () => {
   });
 
   describe('with JS app and JS test with module-type', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/value'), {
           tmpdir: false
@@ -49,7 +49,7 @@ describe('Value generator', () => {
   });
 
   describe('with Coffee app and Coffee test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/value'), {
           tmpdir: false
@@ -73,7 +73,7 @@ describe('Value generator', () => {
   });
 
   describe('with TypeScript app and TypeScript test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/value'), {
           tmpdir: false
@@ -97,7 +97,7 @@ describe('Value generator', () => {
   });
 
   describe('with ES6 app and ES6 test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/value'), {
           tmpdir: false

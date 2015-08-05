@@ -4,7 +4,7 @@ import {assert, test as helpers} from 'yeoman-generator';
 import {join} from 'path';
 
 describe('Constant generator', () => {
-  before((done) => {
+  before(done => {
     helpers
       .run(join(__dirname, '../generators/app'))
       .withPrompts({
@@ -27,7 +27,7 @@ describe('Constant generator', () => {
   });
 
   describe('with JS app and JS test with module-type', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/constant'), {
           tmpdir: false
@@ -51,7 +51,7 @@ describe('Constant generator', () => {
   });
 
   describe('with TypeScript app and TypeScript test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/constant'), {
           tmpdir: false
@@ -76,7 +76,7 @@ describe('Constant generator', () => {
   });
 
   describe('with Coffee app and Coffee test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/constant'), {
           tmpdir: false
@@ -101,7 +101,7 @@ describe('Constant generator', () => {
   });
 
   describe('with ES6 app and ES6 test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/constant'), {
           tmpdir: false

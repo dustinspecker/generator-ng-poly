@@ -4,7 +4,7 @@ import {assert, test as helpers} from 'yeoman-generator';
 import {join} from 'path';
 
 describe('View generator', () => {
-  before((done) => {
+  before(done => {
     helpers
       .run(join(__dirname, '../generators/app'))
       .withPrompts({
@@ -27,7 +27,7 @@ describe('View generator', () => {
   });
 
   describe('with HTML markup and LESS style with module-type', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/view'), {
           tmpdir: false
@@ -53,7 +53,7 @@ describe('View generator', () => {
   });
 
   describe('with HAML markup and CSS style', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/view'), {
           tmpdir: false
@@ -80,7 +80,7 @@ describe('View generator', () => {
   });
 
   describe('with Jade markup and SCSS style', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/view'), {
           tmpdir: false
@@ -107,7 +107,7 @@ describe('View generator', () => {
   });
 
   describe('with Jade markup and Stylus style', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/view'), {
           tmpdir: false

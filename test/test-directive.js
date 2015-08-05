@@ -4,7 +4,7 @@ import {assert, test as helpers} from 'yeoman-generator';
 import {join} from 'path';
 
 describe('Directive generator', () => {
-  before((done) => {
+  before(done => {
     helpers
       .run(join(__dirname, '../generators/app'))
       .withPrompts({
@@ -27,7 +27,7 @@ describe('Directive generator', () => {
   });
 
   describe('with HTML markup, JS app, and JS test with module-type', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/directive'), {
           tmpdir: false
@@ -50,7 +50,7 @@ describe('Directive generator', () => {
   });
 
   describe('with Jade markup, Coffee app, and Coffee test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/directive'), {
           tmpdir: false
@@ -75,7 +75,7 @@ describe('Directive generator', () => {
   });
 
   describe('with Jade markup, TypeScript app, and TypeScript test using module-type', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/directive'), {
           tmpdir: false
@@ -101,7 +101,7 @@ describe('Directive generator', () => {
   });
 
   describe('with HAML markup, ES6 app, and ES6 test', () => {
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/directive'), {
           tmpdir: false
