@@ -34,8 +34,8 @@
         $scope.<%= lowerCamel %>.name = '<%= lowerCamel %>';<% } %>
       },
       link(scope, element, attrs) {
-        /*jshint unused:false */
-        /*eslint "no-unused-vars": [2, {"args": "none"}]*/
+        /* jshint unused:false */
+        /* eslint "no-unused-vars": [2, {"args": "none"}] */
       }
     };
   }
