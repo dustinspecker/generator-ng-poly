@@ -47,7 +47,7 @@ describe('App generator', () => {
     // used to test if methods have been called
     let gen;
 
-    before((done) => {
+    before(done => {
       helpers
         .run(join(__dirname, '../generators/app'))
         .withOptions({
@@ -132,6 +132,12 @@ describe('App generator', () => {
       ]);
     });
 
+    describe('.eslintrc', () => {
+      it('should extend dustinspecker', () => {
+        assert.fileContent('.eslintrc', '"dustinspecker"');
+      });
+    });
+
     describe('gulp/analyze.js', () => {
       it('should have JS linting', () => {
         assert.fileContent('gulp/analyze.js', '$.eslint()');
@@ -139,8 +145,13 @@ describe('App generator', () => {
         assert.fileContent('gulp/analyze.js', '$.jscs()');
       });
 
-      it('should not have filters', () => {
-        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
+      it('should JS have filters', () => {
+        assert.fileContent('gulp/analyze.js', 'var jsFilter = $.filter(\'**/*.js\', {restore: true});');
+      });
+
+      it('should not have unrequired filters', () => {
+        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true});');
+        assert.noFileContent('gulp/analyze.js', 'es6Filter = $.filter(\'**/*.es6\', {restore: true});');
       });
 
       it('should not have CS linting', () => {
@@ -403,6 +414,12 @@ describe('App generator', () => {
       assert.fileContent('app/home/home-routes.ts', 'templateUrl: \'home/home.tpl.html\',');
     });
 
+    describe('.eslintrc', () => {
+      it('should extend dustinspecker', () => {
+        assert.fileContent('.eslintrc', '"dustinspecker"');
+      });
+    });
+
     describe('gulp/analyze.js', () => {
       it('should not have JS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.eslint()');
@@ -412,6 +429,8 @@ describe('App generator', () => {
 
       it('should not have filters', () => {
         assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
+        assert.noFileContent('gulp/analyze.js', 'es6Filter = $.filter(\'**/*.es6\', {restore: true})');
+        assert.noFileContent('gulp/analyze.js', 'jsFilter = $.filter(\'**/*.js\', {restore: true})');
       });
 
       it('should not have CS linting', () => {
@@ -649,6 +668,12 @@ describe('App generator', () => {
       ]);
     });
 
+    describe('.eslintrc', () => {
+      it('should extend dustinspecker', () => {
+        assert.fileContent('.eslintrc', '"dustinspecker"');
+      });
+    });
+
     describe('gulp/analyze.js', () => {
       it('should not have JS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.eslint()');
@@ -656,8 +681,13 @@ describe('App generator', () => {
         assert.noFileContent('gulp/analyze.js', '$.jscs()');
       });
 
-      it('should not have filters', () => {
-        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
+      it('should have CS filter', () => {
+        assert.fileContent('gulp/analyze.js', 'var coffeeFilter = $.filter(\'**/*.coffee\', {restore: true});');
+      });
+
+      it('should not have unrequired filters', () => {
+        assert.noFileContent('gulp/analyze.js', 'es6Filter = $.filter(\'**/*.es6\', {restore: true})');
+        assert.noFileContent('gulp/analyze.js', 'jsFilter = $.filter(\'**/*.js\', {restore: true})');
       });
 
       it('should have CS linting', () => {
@@ -891,15 +921,26 @@ describe('App generator', () => {
       ]);
     });
 
+    describe('.eslintrc', () => {
+      it('should extend dustinspecker', () => {
+        assert.fileContent('.eslintrc', '"dustinspecker/esnext"');
+      });
+    });
+
     describe('gulp/analyze.js', () => {
-      it('should not have JS linting', () => {
-        assert.noFileContent('gulp/analyze.js', '$.eslint()');
-        assert.noFileContent('gulp/analyze.js', '$.jshint()');
-        assert.noFileContent('gulp/analyze.js', '$.jscs()');
+      it('should have JS linting', () => {
+        assert.fileContent('gulp/analyze.js', '$.eslint()');
+        assert.fileContent('gulp/analyze.js', '$.jshint()');
+        assert.fileContent('gulp/analyze.js', '$.jscs({');
       });
 
-      it('should not have filters', () => {
-        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
+      it('should have es6 filters', () => {
+        assert.fileContent('gulp/analyze.js', 'var es6Filter = $.filter(\'**/*.es6\', {restore: true});');
+      });
+
+      it('should not have unrequired filters', () => {
+        assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/.coffee\', {restore: true})');
+        assert.noFileContent('gulp/analyze.js', 'jsFilter = $.filter(\'**/*.js\', {restore: true})');
       });
 
       it('should not have CS linting', () => {
@@ -1149,6 +1190,12 @@ describe('App generator', () => {
         'protractor.config.js',
         'README.md'
       ]);
+    });
+
+    describe('.eslintrc', () => {
+      it('should extend dustinspecker', () => {
+        assert.fileContent('.eslintrc', '"dustinspecker"');
+      });
     });
 
     it('should not create controllers', () => {

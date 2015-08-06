@@ -1,7 +1,7 @@
 {
   "extends": [
     "angular",
-    "dustinspecker"
+    "dustinspecker<% if (appScript === 'es6' || testScript === 'es6') { %>/esnext<% } %>"
   ],
   "rules": {
     "angular/ng_controller_name": [2, "/[A-Z].*Ctrl$/"],
