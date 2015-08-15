@@ -83,7 +83,7 @@ Languages and Features supported:
     - Angular Material (1.3.* or higher only)
       - Doesn't scaffold navbar, yet
     - Bootstrap with AngularStrap
-    - Bootstrap with UI Bootstrap (1.2.* only)
+    - Bootstrap with UI Bootstrap
     - Foundation with Angular Foundation
   * Polymer
     - Core, Paper

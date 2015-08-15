@@ -69,7 +69,8 @@ describe('App generator', () => {
           testScript: 'js',
           style: 'css',
           polymer: true,
-          bower: []
+          bower: [],
+          framework: 'uibootstrap'
         })
         .withGenerators([
           join(__dirname, '../generators/module'),
@@ -135,6 +136,12 @@ describe('App generator', () => {
     describe('.eslintrc', () => {
       it('should extend dustinspecker', () => {
         assert.fileContent('.eslintrc', '"dustinspecker"');
+      });
+    });
+
+    describe('bower.json', () => {
+      it('should have UI Bootstrap version 0.12.1', () => {
+        assert.fileContent('bower.json', '"angular-bootstrap": "~0.12.1"');
       });
     });
 
@@ -347,6 +354,7 @@ describe('App generator', () => {
           testScript: 'ts',
           unitTestDir: 'app',
           style: 'less',
+          ngversion: '1.4.*',
           framework: 'uibootstrap',
           polymer: true,
           bower: []
@@ -417,6 +425,12 @@ describe('App generator', () => {
     describe('.eslintrc', () => {
       it('should extend dustinspecker', () => {
         assert.fileContent('.eslintrc', '"dustinspecker"');
+      });
+    });
+
+    describe('bower.json', () => {
+      it('should have UI Bootstrap version 0.13.3', () => {
+        assert.fileContent('bower.json', '"angular-bootstrap": "~0.13.3"');
       });
     });
 
