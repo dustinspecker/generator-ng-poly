@@ -265,8 +265,7 @@ describe('App generator', () => {
 
   describe('Gulpfile.js', () => {
     it('should include correct config', () => {
-      [
-        'config.appMarkupFiles = path.join(config.appDir, \'**/*.html\');',
+      ['config.appMarkupFiles = path.join(config.appDir, \'**/*.html\');',
         'config.appScriptFiles = path.join(config.appDir, \'**/*.js\');',
         'config.appStyleFiles = path.join(config.appDir, \'**/*.css\');',
         'config.e2eFiles = path.join(\'e2e\', \'**/*.js\');',
@@ -546,8 +545,7 @@ describe('App generator', () => {
 
     describe('Gulpfile.js', () => {
       it('should include correct config', () => {
-        [
-          'config.appMarkupFiles = path.join(config.appDir, \'**/*.haml\');',
+        ['config.appMarkupFiles = path.join(config.appDir, \'**/*.haml\');',
           'config.appScriptFiles = path.join(config.appDir, \'**/*.ts\');',
           'config.appStyleFiles = path.join(config.appDir, \'**/*.less\');',
           'config.e2eFiles = path.join(\'e2e\', \'**/*.js\');',
@@ -804,8 +802,7 @@ describe('App generator', () => {
 
     describe('Gulpfile.js', () => {
       it('should include correct config', () => {
-        [
-          'config.appMarkupFiles = path.join(config.appDir, \'**/*.haml\');',
+        ['config.appMarkupFiles = path.join(config.appDir, \'**/*.haml\');',
           'config.appScriptFiles = path.join(config.appDir, \'**/*.coffee\');',
           'config.appStyleFiles = path.join(config.appDir, \'**/*.less\');',
           'config.e2eFiles = path.join(\'e2e\', \'**/*.coffee\');',
@@ -1073,8 +1070,7 @@ describe('App generator', () => {
 
     describe('Gulpfile.js', () => {
       it('should include correct config', () => {
-        [
-          'config.appMarkupFiles = path.join(config.appDir, \'**/*.jade\');',
+        ['config.appMarkupFiles = path.join(config.appDir, \'**/*.jade\');',
           'config.appScriptFiles = path.join(config.appDir, \'**/*.es6\');',
           'config.appStyleFiles = path.join(config.appDir, \'**/*.styl\');',
           'config.e2eFiles = path.join(\'e2e\', \'**/*.es6\');',
@@ -1310,8 +1306,7 @@ describe('App generator', () => {
 
     describe('Gulpfile.js', () => {
       it('should include correct config', () => {
-        [
-          'config.appMarkupFiles = path.join(config.appDir, \'**/*.html\');',
+        ['config.appMarkupFiles = path.join(config.appDir, \'**/*.html\');',
           'config.appScriptFiles = path.join(config.appDir, \'**/*.js\');',
           'config.appStyleFiles = path.join(config.appDir, \'**/*.scss\');',
           'config.e2eFiles = path.join(\'e2e\', \'**/*.js\');',

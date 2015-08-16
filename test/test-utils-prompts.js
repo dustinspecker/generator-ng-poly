@@ -5,7 +5,9 @@ import promptsUtils from '../generators/utils/prompts';
 
 describe('Prompt Utils', () => {
   describe('getUIFrameworks', () => {
-    const frameworksForAllVersions = [
+    let frameworksForAllVersions;
+
+    frameworksForAllVersions = [
       {
         name: 'none',
         value: 'none'

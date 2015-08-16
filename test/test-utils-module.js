@@ -12,11 +12,13 @@ describe('Module Utils', () => {
 
     beforeEach(() => {
       // mock out path to avoid needing to use file system to find package.json
-      const pathStub = {
-          join() {
-            return 'package.json';
-          }
-        };
+      let pathStub;
+
+      pathStub = {
+        join() {
+          return 'package.json';
+        }
+      };
 
       // proxy utils
       utilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
@@ -86,11 +88,13 @@ describe('Module Utils', () => {
 
     beforeEach(() => {
       // mock out path to avoid needing to use file system to find package.json
-      const pathStub = {
-          join() {
-            return 'package.json';
-          }
-        };
+      let pathStub;
+
+      pathStub = {
+        join() {
+          return 'package.json';
+        }
+      };
 
       // proxy utils
       utilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
@@ -104,104 +108,128 @@ describe('Module Utils', () => {
     });
 
     it('should filter non-script files', () => {
-      const files = [
-          'test/test-module.html',
-          'test1/test1-module.css',
-          'test2/test2-module.js',
-          'test3/test3-module.coffee',
-          'test4/test4-module.es6',
-          'test5/test5-module.ts'
-        ]
-        , expectedModules = [
-          {name: 'test2', value: 'test2'},
-          {name: 'test3', value: 'test3'},
-          {name: 'test4', value: 'test4'},
-          {name: 'test5', value: 'test5'}
-        ];
+      let expectedModules, files;
+
+      files = [
+        'test/test-module.html',
+        'test1/test1-module.css',
+        'test2/test2-module.js',
+        'test3/test3-module.coffee',
+        'test4/test4-module.es6',
+        'test5/test5-module.ts'
+      ];
+
+      expectedModules = [
+        {name: 'test2', value: 'test2'},
+        {name: 'test3', value: 'test3'},
+        {name: 'test4', value: 'test4'},
+        {name: 'test5', value: 'test5'}
+      ];
+
       expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
 
     it('should check for x-module name only on child directory', () => {
-      const files = [
-          'test/test-module.js',
-          'abc/abc-module.js',
-          'nested/nest/nest-module.js'
-        ]
-        , expectedModules = [
-          {name: 'test', value: 'test'},
-          {name: 'abc', value: 'abc'},
-          {name: 'nested/nest', value: 'nested/nest'}
-        ];
+      let expectedModules, files;
+
+      files = [
+        'test/test-module.js',
+        'abc/abc-module.js',
+        'nested/nest/nest-module.js'
+      ];
+
+      expectedModules = [
+        {name: 'test', value: 'test'},
+        {name: 'abc', value: 'abc'},
+        {name: 'nested/nest', value: 'nested/nest'}
+      ];
+
       expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
 
     it('should remove duplicate directores', () => {
-      const files = [
-          'test1/test1-modulde.js',
-          'test1/test1-module.ts',
-          'test2/test2-module.js'
-        ]
-        , expectedModules = [
-          {name: 'test1', value: 'test1'},
-          {name: 'test2', value: 'test2'}
-        ];
+      let expectedModules, files;
+
+      files = [
+        'test1/test1-modulde.js',
+        'test1/test1-module.ts',
+        'test2/test2-module.js'
+      ];
+
+      expectedModules = [
+        {name: 'test1', value: 'test1'},
+        {name: 'test2', value: 'test2'}
+      ];
+
       expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
 
     it('should only list directories that have a `directory`-module.{coffee,es6,js,ts} file', () => {
-      const files = [
-          'coffee-test/coffee-test-module.coffee',
-          'es6-test/es6-test-module.es6',
-          'js-test/js-test-module.js',
-          'ts-test/ts-test-module.js',
-          'components/gold-element/gold-element.js'
-        ]
-        , expectedModules = [
-          {name: 'coffee-test', value: 'coffee-test'},
-          {name: 'es6-test', value: 'es6-test'},
-          {name: 'js-test', value: 'js-test'},
-          {name: 'ts-test', value: 'ts-test'}
-        ];
+      let expectedModules, files;
+
+      files = [
+        'coffee-test/coffee-test-module.coffee',
+        'es6-test/es6-test-module.es6',
+        'js-test/js-test-module.js',
+        'ts-test/ts-test-module.js',
+        'components/gold-element/gold-element.js'
+      ];
+
+      expectedModules = [
+        {name: 'coffee-test', value: 'coffee-test'},
+        {name: 'es6-test', value: 'es6-test'},
+        {name: 'js-test', value: 'js-test'},
+        {name: 'ts-test', value: 'ts-test'}
+      ];
+
       expect(utilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
 
     it('should strip Windows app path in value', () => {
       const files = ['app\\test\\test-module.js']
-        , expectedModules = [{name: 'app\\test', value: 'test'}]
-        , pathStub = {
-            sep: '\\',
-            basename() {
-              return 'test-module.js';
-            },
-            dirname() {
-              return 'app\\test';
-            }
-          };
+        , expectedModules = [{name: 'app\\test', value: 'test'}];
 
-      let windowsUtilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
+      let pathStub, windowsUtilsProxy;
+
+      pathStub = {
+        sep: '\\',
+        basename() {
+          return 'test-module.js';
+        },
+        dirname() {
+          return 'app\\test';
+        }
+      };
+
+      windowsUtilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
       windowsUtilsProxy.getAppDir = () => {
         return 'app';
       };
+
       expect(windowsUtilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
 
     it('should strip Unix app path in value', () => {
       const files = ['app/test/test-module.js']
-        , expectedModules = [{name: 'app/test', value: 'test'}]
-        , pathStub = {
-            sep: '/',
-            basename() {
-              return 'test-module';
-            },
-            dirname() {
-              return 'app/test';
-            }
-          };
+        , expectedModules = [{name: 'app/test', value: 'test'}];
 
-      let windowsUtilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
+      let pathStub, windowsUtilsProxy;
+
+      pathStub = {
+        sep: '/',
+        basename() {
+          return 'test-module';
+        },
+        dirname() {
+          return 'app/test';
+        }
+      };
+
+      windowsUtilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
       windowsUtilsProxy.getAppDir = () => {
         return 'app';
       };
+
       expect(windowsUtilsProxy.moduleFilter(files)).to.eql(expectedModules);
     });
   });
