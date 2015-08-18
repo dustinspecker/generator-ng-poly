@@ -4,6 +4,29 @@ import {expect} from 'chai';
 import promptsUtils from '../generators/utils/prompts';
 
 describe('Prompt Utils', () => {
+  describe('getAngularVersions', () => {
+    it('should return supported Angular versions', () => {
+      let expectedVersions;
+
+      expectedVersions = [
+        {
+          name: '1.4.*',
+          value: '1.4.*'
+        },
+        {
+          name: '1.3.*',
+          value: '1.3.*'
+        },
+        {
+          name: '1.2.*',
+          value: '1.2.*'
+        }
+      ];
+
+      expect(promptsUtils.getAngularVersions()).to.eql(expectedVersions);
+    });
+  });
+
   describe('getBowerComponents', () => {
     let bowerComponentsForAllVersions;
 
