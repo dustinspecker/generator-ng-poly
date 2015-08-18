@@ -5,7 +5,7 @@ describe('<%= lowerCamel %>', () => {
   let scope
     , element;
 
-  beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>', '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html'));
+  beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'<% if (directiveTemplateUrl) { %>, '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html'<% } %>));
 
   beforeEach(inject(($compile, $rootScope) => {
     scope = $rootScope.$new();

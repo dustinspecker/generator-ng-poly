@@ -24,8 +24,9 @@
   function <%= lowerCamel %>() {
     return {
       restrict: 'EA',
-      scope: {},
-      templateUrl: '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html',
+      scope: {}<% if (directiveTemplateUrl) { %>,
+      templateUrl: '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html'<% } else { %>,
+      template: '<div>{{<%= lowerCamel %>.name}}</div>'<% } %>,
       replace: false,<% if (controllerAs) { %>
       controllerAs: '<%= lowerCamel %>',<% } %>
       controller(<% if (!controllerAs) { %>$scope<% } %>) {
