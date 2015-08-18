@@ -152,6 +152,33 @@ describe('Prompt Utils', () => {
     });
   });
 
+  describe('getStyleLanguages', () => {
+    it('should return supported style languages', () => {
+      let expectedStyleLanguages;
+
+      expectedStyleLanguages = [
+        {
+          name: 'CSS',
+          value: 'css'
+        },
+        {
+          name: 'LESS',
+          value: 'less'
+        },
+        {
+          name: 'SCSS',
+          value: 'scss'
+        },
+        {
+          name: 'Stylus',
+          value: 'styl'
+        }
+      ];
+
+      expect(promptsUtils.getStyleLanguages()).to.eql(expectedStyleLanguages);
+    });
+  });
+
   describe('getTestFrameworks', () => {
     it('should return supported testing frameworks', () => {
       let expectedTestFrameworks;
