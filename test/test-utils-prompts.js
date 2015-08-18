@@ -125,6 +125,36 @@ describe('Prompt Utils', () => {
     });
   });
 
+  describe('getModuleStructures', () => {
+    it('should return supported module structures', () => {
+      let expectedModuleStructures;
+
+      expectedModuleStructures = [
+        {
+          name: ['app/',
+                '├── module1/',
+                '│   ├── module2/',
+                '│   ├── module1-module.js',
+                '│   └── module1-controller.js',
+                '└── app.js'].join('\n'),
+          value: 'module-only'
+        },
+        {
+          name: ['app/',
+                '├── module1/',
+                '│   ├── controllers/',
+                '│   │   └── module1-controller.js',
+                '│   ├── module2/',
+                '│   └── module1-module.js',
+                '└── app.js'].join('\n'),
+          value: 'module-type'
+        }
+      ];
+
+      expect(promptsUtils.getModuleStructures()).to.eql(expectedModuleStructures);
+    });
+  });
+
   describe('getScriptLanguages', () => {
     it('should return supported script languages', () => {
       let expectedScriptLanguages;
