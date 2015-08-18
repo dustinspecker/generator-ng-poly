@@ -152,6 +152,25 @@ describe('Prompt Utils', () => {
     });
   });
 
+  describe('getTestFrameworks', () => {
+    it('should return supported testing frameworks', () => {
+      let expectedTestFrameworks;
+
+      expectedTestFrameworks = [
+        {
+          name: 'Jasmine',
+          value: 'jasmine'
+        },
+        {
+          name: 'Mocha with Chai',
+          value: 'mocha'
+        }
+      ];
+
+      expect(promptsUtils.getTestFrameworks()).to.eql(expectedTestFrameworks);
+    });
+  });
+
   describe('getUIFrameworks', () => {
     let frameworksForAllVersions;
 
