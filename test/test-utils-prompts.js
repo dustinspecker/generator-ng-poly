@@ -125,6 +125,33 @@ describe('Prompt Utils', () => {
     });
   });
 
+  describe('getScriptLanguages', () => {
+    it('should return supported script languages', () => {
+      let expectedScriptLanguages;
+
+      expectedScriptLanguages = [
+        {
+          name: 'CoffeeScript',
+          value: 'coffee'
+        },
+        {
+          name: 'EcmaScript2015 (ES6) using Babel',
+          value: 'es6'
+        },
+        {
+          name: 'JavaScript (ES5)',
+          value: 'js'
+        },
+        {
+          name: 'TypeScript',
+          value: 'ts'
+        }
+      ];
+
+      expect(promptsUtils.getScriptLanguages()).to.eql(expectedScriptLanguages);
+    });
+  });
+
   describe('getUIFrameworks', () => {
     let frameworksForAllVersions;
 
