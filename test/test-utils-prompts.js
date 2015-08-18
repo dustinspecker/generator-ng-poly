@@ -102,6 +102,29 @@ describe('Prompt Utils', () => {
     });
   });
 
+  describe('getMarkupLanguages', () => {
+    it('should return supported markup languages', () => {
+      let expectedMarkupLanguages;
+
+      expectedMarkupLanguages = [
+        {
+          name: 'HAML',
+          value: 'haml'
+        },
+        {
+          name: 'HTML',
+          value: 'html'
+        },
+        {
+          name: 'Jade',
+          value: 'jade'
+        }
+      ];
+
+      expect(promptsUtils.getMarkupLanguages()).to.eql(expectedMarkupLanguages);
+    });
+  });
+
   describe('getUIFrameworks', () => {
     let frameworksForAllVersions;
 
