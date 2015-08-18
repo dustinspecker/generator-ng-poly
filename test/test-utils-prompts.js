@@ -4,44 +4,44 @@ import {expect} from 'chai';
 import promptsUtils from '../generators/utils/prompts';
 
 describe('Prompt Utils', () => {
-  let bowerComponentsForAllVersions;
-
-  bowerComponentsForAllVersions = [
-    {
-      name: 'Angular Animate',
-      value: 'animate'
-    },
-    {
-      name: 'Angular Cookies',
-      value: 'cookies'
-    },
-    {
-      name: 'Angular Resource',
-      value: 'resource'
-    },
-    {
-      name: 'Angular Sanitize',
-      value: 'sanitize'
-    },
-    {
-      name: 'Angular Touch',
-      value: 'touch'
-    },
-    {
-      name: 'Font Awesome',
-      value: 'fontawesome'
-    },
-    {
-      name: 'Lo-Dash',
-      value: 'lodash'
-    },
-    {
-      name: 'Restangular (installs Lo-Dash)',
-      value: 'restangular'
-    }
-  ];
-
   describe('getBowerComponents', () => {
+    let bowerComponentsForAllVersions;
+
+    bowerComponentsForAllVersions = [
+      {
+        name: 'Angular Animate',
+        value: 'animate'
+      },
+      {
+        name: 'Angular Cookies',
+        value: 'cookies'
+      },
+      {
+        name: 'Angular Resource',
+        value: 'resource'
+      },
+      {
+        name: 'Angular Sanitize',
+        value: 'sanitize'
+      },
+      {
+        name: 'Angular Touch',
+        value: 'touch'
+      },
+      {
+        name: 'Font Awesome',
+        value: 'fontawesome'
+      },
+      {
+        name: 'Lo-Dash',
+        value: 'lodash'
+      },
+      {
+        name: 'Restangular (installs Lo-Dash)',
+        value: 'restangular'
+      }
+    ];
+
     it('should return components avilable for any Angular version', () => {
       expect(promptsUtils.getBowerComponents()).to.eql(bowerComponentsForAllVersions);
     });
