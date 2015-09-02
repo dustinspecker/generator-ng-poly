@@ -52,7 +52,7 @@
     "babel": "^5.5.7",
     "chai": "^3.2.0",
     "coveralls": "^2.11.1",
-    "del": "^1.2.0",
+    "del": "^2.0.0",
     "eslint-config-dustinspecker": "^0.1.0",
     "eslint-path-formatter": "^0.1.1",
     "gulp": "^3.9.0",

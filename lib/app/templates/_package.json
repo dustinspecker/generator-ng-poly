@@ -10,7 +10,7 @@
     "chai": "^2.1.1",
     "chai-as-promised": "^4.1.1"<% } %><% if (appScript === 'coffee' || testScript === 'coffee') { %>,
     "coffee-script": "^1.7.1"<% } %>,
-    "del": "^1.1.1",
+    "del": "^2.0.0",
     "eslint-config-angular": "^0.2.0",
     "eslint-config-dustinspecker": "^0.1.0",
     "eslint-path-formatter": "^0.1.1",
