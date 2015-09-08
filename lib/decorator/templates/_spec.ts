@@ -6,7 +6,7 @@
 describe('<%= name %>', function () {
   var decorator;
 
-  beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
+  beforeEach(angular.mock.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
   beforeEach(inject(function (<%= name %>) {
     decorator = <%= name %>;

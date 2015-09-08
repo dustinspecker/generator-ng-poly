@@ -7,7 +7,7 @@ describe('<%= lowerCamel %>', function () {
   var scope
     , element;
 
-  beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'<% if (directiveTemplateUrl) { %>, '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html'<% } %>));
+  beforeEach(angular.mock.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'<% if (directiveTemplateUrl) { %>, '<%= templateUrl %>/<%= hyphenName %>-directive.tpl.html'<% } %>));
 
   beforeEach(inject(function ($compile, $rootScope) {
     scope = $rootScope.$new();
