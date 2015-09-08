@@ -6,7 +6,7 @@
 describe('<%= upperCamel %>', function () {
   var service;
 
-  beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
+  beforeEach(angular.mock.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
   beforeEach(inject(function (<%= upperCamel %>) {
     service = <%= upperCamel %>;

@@ -124,7 +124,7 @@ describe('Directive generator', () => {
 
       it('should inject template module in spec', () => {
         assert.fileContent('app/home/directives/test3-with-url-directive_test.ts',
-          `beforeEach(module('home', 'home/directives/test3-with-url-directive.tpl.html'));`);
+          `beforeEach(angular.mock.module('home', 'home/directives/test3-with-url-directive.tpl.html'));`);
       });
     });
 
@@ -296,7 +296,7 @@ describe('Directive generator', () => {
 
       it('should not inject template module', () => {
         assert.fileContent('app/home/directives/test3-with-inline-directive_test.ts',
-          `beforeEach(module('home'));`);
+          `beforeEach(angular.mock.module('home'));`);
       });
     });
 

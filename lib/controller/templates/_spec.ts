@@ -6,7 +6,7 @@
 describe('<%= ctrlName %>', function () {
   <% if (controllerAs) { %>var ctrl;<% } else { %>var scope;<% } %>
 
-  beforeEach(module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
+  beforeEach(angular.mock.module('<% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>'));
 
   beforeEach(inject(function ($rootScope, $controller) {
     <% if (controllerAs) { %>ctrl = $controller('<%= ctrlName %>');<% } else { %>scope = $rootScope.$new();
