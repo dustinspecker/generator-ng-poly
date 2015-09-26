@@ -34,7 +34,7 @@
     "chalk": "^1.0.0",
     "class-extend": "^0.1.1",
     "count-spaces": "^1.0.1",
-    "findup-sync": "^0.2.0",
+    "find-up": "^1.0.0",
     "func-has-param": "^1.1.1",
     "indent-string": "^2.0.0",
     "lodash": "^3.0.0",
