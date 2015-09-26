@@ -81,12 +81,17 @@ describe('App generator', () => {
         .on('ready', generator => {
           gen = generator;
           generator.installDependencies = sinon.spy();
+          generator.log = sinon.spy();
         })
         .on('end', done);
     });
 
     it('should call installDependencies once', () => {
       assert(gen.installDependencies.calledOnce);
+    });
+
+    it('should log welcome message', () => {
+      assert(gen.log.args[0][0].indexOf('Welcome to ngPoly!') > -1);
     });
 
     it('should create files in temp-app-diff directory', () => {
