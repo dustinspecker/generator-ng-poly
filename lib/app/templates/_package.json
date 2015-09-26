@@ -35,7 +35,7 @@
     "gulp-imagemin": "^2.0.0",
     "gulp-inject": "^1.5.0"<% if (markup === 'jade') { %>,
     "gulp-jade": "^1.0.0"<% } %>,
-    "gulp-jscs": "^2.0.0",
+    "gulp-jscs": "^3.0.0",
     "gulp-jshint": "^1.8.4"<% if (style === 'less') { %>,
     "gulp-less": "^3.0.1"<% } %>,
     "gulp-load-plugins": "^0.10.0",

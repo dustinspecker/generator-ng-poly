@@ -48,7 +48,7 @@
     "yosay": "^1.0.0"
   },
   "devDependencies": {
-    "a": "^0.5.0",
+    "a": "^1.0.1",
     "babel": "^5.5.7",
     "chai": "^3.2.0",
     "coveralls": "^2.11.1",
@@ -59,7 +59,7 @@
     "gulp-babel": "^5.1.0",
     "gulp-eslint": "^1.0.0",
     "gulp-istanbul": "^0.10.0",
-    "gulp-jscs": "^2.0.0",
+    "gulp-jscs": "^3.0.0",
     "gulp-jshint": "^1.9.0",
     "gulp-mocha": "^2.0.0",
     "proxyquire": "^1.0.1",
