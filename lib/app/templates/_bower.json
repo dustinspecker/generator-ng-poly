@@ -25,10 +25,14 @@
   },
   "devDependencies": {
     "angular-mocks": "~<%= ngversion %>"
-  }<% if (framework === 'foundation') { %>,
-  "overrides": {
+  }<% if (framework !== 'none' && framework !== 'material') { %>,
+  "overrides": {<% if (framework !== 'foundation') { %>
+    "angular": {
+      "dependencies": {
+        "jquery": "*"
+      }<% } else { %>
     "modernizr": {
-      "main": "modernizr.js"
+      "main": "modernizr.js"<% } %>
     }
   }<% } %>
 }

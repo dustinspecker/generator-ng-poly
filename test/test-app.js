@@ -148,6 +148,21 @@ describe('App generator', () => {
       it('should have UI Bootstrap version 0.12.1', () => {
         assert.fileContent('bower.json', '"angular-bootstrap": "~0.12.1"');
       });
+
+      it('should override Angular dependencies with jQuery', () => {
+        const expectedOverride = [
+          '  },',
+          '  "overrides": {',
+          '    "angular": {',
+          '      "dependencies": {',
+          '        "jquery": "*"',
+          '      }',
+          '    }',
+          '  }'
+        ].join(EOL);
+
+        assert.fileContent('bower.json', expectedOverride);
+      });
     });
 
     describe('gulp/analyze.js', () => {
@@ -633,6 +648,7 @@ describe('App generator', () => {
           testScript: 'coffee',
           unitTestDir: 'app',
           style: 'less',
+          framework: 'angularstrap',
           polymer: true,
           bower: []
         })
@@ -688,6 +704,27 @@ describe('App generator', () => {
     describe('.eslintrc', () => {
       it('should extend dustinspecker', () => {
         assert.fileContent('.eslintrc', '"dustinspecker"');
+      });
+    });
+
+    describe('bower.json', () => {
+      it('should have AngularStrap', () => {
+        assert.fileContent('bower.json', '"angular-strap":');
+      });
+
+      it('should override Angular dependencies with jQuery', () => {
+        const expectedOverride = [
+          '  },',
+          '  "overrides": {',
+          '    "angular": {',
+          '      "dependencies": {',
+          '        "jquery": "*"',
+          '      }',
+          '    }',
+          '  }'
+        ].join(EOL);
+
+        assert.fileContent('bower.json', expectedOverride);
       });
     });
 
@@ -889,6 +926,7 @@ describe('App generator', () => {
           testScript: 'es6',
           unitTestDir: 'app',
           style: 'styl',
+          framework: 'foundation',
           polymer: true,
           bower: []
         })
@@ -940,6 +978,25 @@ describe('App generator', () => {
     describe('.eslintrc', () => {
       it('should extend dustinspecker', () => {
         assert.fileContent('.eslintrc', '"dustinspecker/esnext"');
+      });
+    });
+
+    describe('bower.json', () => {
+      it('should have angular-foundation', () => {
+        assert.fileContent('bower.json', '"angular-foundation":');
+      });
+
+      it('should override modernizr main', () => {
+        const expectedOverride = [
+          '  },',
+          '  "overrides": {',
+          '    "modernizr": {',
+          '      "main": "modernizr.js"',
+          '    }',
+          '  }'
+        ].join(EOL);
+
+        assert.fileContent('bower.json', expectedOverride);
       });
     });
 
@@ -1162,6 +1219,7 @@ describe('App generator', () => {
           unitTestDir: 'app',
           style: 'scss',
           polymer: true,
+          framework: 'none',
           bower: []
         })
         .withGenerators([
@@ -1210,6 +1268,12 @@ describe('App generator', () => {
     describe('.eslintrc', () => {
       it('should extend dustinspecker', () => {
         assert.fileContent('.eslintrc', '"dustinspecker"');
+      });
+    });
+
+    describe('bower.json', () => {
+      it('should not have any overrides', () => {
+        assert.noFileContent('bower.json', 'override');
       });
     });
 
