@@ -17,14 +17,16 @@ describe('Module Utils', () => {
       findUpStub = {
         sync(path) {
           if (path === '.yo-rc.json') {
-            return 'app/root/';
+            return 'app/root/.yo-rc.json';
           }
         }
       };
 
       pathStub = {
-        join() {
-          return 'root/package.json';
+        join(appRoot, pkgPath) {
+          if (appRoot === 'app/root' && pkgPath === 'package.json') {
+            return 'app/root/package.json';
+          }
         }
       };
 
@@ -34,7 +36,7 @@ describe('Module Utils', () => {
         path: pathStub
       });
 
-      expectRequire('root/package.json').return({name: 'test'});
+      expectRequire('app/root/package.json').return({name: 'test'});
 
       // mock function to prevent looking for build.config.js
       utilsProxy.getAppDir = function getAppDir() {
