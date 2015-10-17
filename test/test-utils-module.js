@@ -12,18 +12,29 @@ describe('Module Utils', () => {
 
     beforeEach(() => {
       // mock out path to avoid needing to use file system to find package.json
-      let pathStub;
+      let findUpStub, pathStub;
+
+      findUpStub = {
+        sync(path) {
+          if (path === '.yo-rc.json') {
+            return 'app/root/';
+          }
+        }
+      };
 
       pathStub = {
         join() {
-          return 'package.json';
+          return 'root/package.json';
         }
       };
 
       // proxy utils
-      utilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
+      utilsProxy = proxyquire('../generators/utils/module', {
+        'find-up': findUpStub,
+        path: pathStub
+      });
 
-      expectRequire('package.json').return({name: 'test'});
+      expectRequire('root/package.json').return({name: 'test'});
 
       // mock function to prevent looking for build.config.js
       utilsProxy.getAppDir = function getAppDir() {
