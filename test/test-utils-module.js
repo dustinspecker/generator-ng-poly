@@ -7,49 +7,25 @@ import sinon from 'sinon';
 
 describe('Module Utils', () => {
   describe('extractModuleNames', () => {
-    let utilsProxy;
+    let appUtilsStub, utilsProxy;
 
     beforeEach(() => {
-      // mock out path to avoid needing to use file system to find package.json
-      let appUtilsStub, findUpStub, pathStub;
-
       appUtilsStub = {
-        getFileFromRoot() {
-          return {name: 'test'};
+        getAppDir() {
+          return 'app';
         },
-        getYoPath() {
-          return 'app/root';
-        }
-      };
-
-      findUpStub = {
-        sync(yoPath) {
-          if (yoPath === '.yo-rc.json') {
-            return 'app/root/.yo-rc.json';
-          }
-        }
-      };
-
-      pathStub = {
-        join(appRoot, pkgPath) {
-          if (appRoot === 'app/root' && pkgPath === 'package.json') {
-            return 'app/root/package.json';
-          }
-        }
+        getFileFromRoot: sinon.stub().returns({name: 'test'})
       };
 
       // proxy utils
       utilsProxy = proxyquire('../generators/utils/module', {
-        './app': appUtilsStub,
-        'find-up': findUpStub,
-        path: pathStub
+        './app': appUtilsStub
       });
-
-      expectRequire('app/root/package.json').return({name: 'test'});
     });
 
     it('should return app name when using app', () => {
       expect(utilsProxy.extractModuleNames('app')).to.eql(['test', null]);
+      expect(appUtilsStub.getFileFromRoot.calledWith('package.json')).to.eql(true);
     });
 
     it('should extract modules with slashes in path', () => {
