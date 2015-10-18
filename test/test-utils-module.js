@@ -3,10 +3,33 @@
 import assert from 'assert';
 import {expect} from 'chai';
 import {expectRequire} from 'a';
+import path from 'path';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 
 describe('Module Utils', () => {
+  describe('getYoPath', () => {
+    it('should return dirname of yopath', () => {
+      let findUpStub, pathStub, utilsProxy;
+
+      findUpStub = {
+        sync: sinon.stub().returns('app/root/.yo-rc.json')
+      };
+
+      pathStub = path;
+      sinon.spy(pathStub, 'dirname');
+
+      utilsProxy = proxyquire('../generators/utils/module', {
+        'find-up': findUpStub,
+        path: pathStub
+      });
+
+      expect(utilsProxy.getYoPath()).to.eql('app/root');
+      expect(findUpStub.sync.calledWith('.yo-rc.json')).to.eql(true);
+      expect(pathStub.dirname.calledWith('app/root/.yo-rc.json')).to.eql(true);
+    });
+  });
+
   describe('extractModuleNames', () => {
     let utilsProxy;
 
@@ -15,8 +38,8 @@ describe('Module Utils', () => {
       let findUpStub, pathStub;
 
       findUpStub = {
-        sync(path) {
-          if (path === '.yo-rc.json') {
+        sync(yoPath) {
+          if (yoPath === '.yo-rc.json') {
             return 'app/root/.yo-rc.json';
           }
         }
