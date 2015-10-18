@@ -1,96 +1,96 @@
 /* global describe, it */
 'use strict';
-import assert from 'assert';
+import {expect} from 'chai';
 import nameUtils from '../generators/utils/name';
 
 describe('Name Utils', () => {
   describe('ctrl name', () => {
     it('should transform name with hyphens', () => {
-      assert(nameUtils.ctrlName('test-name') === 'TestNameCtrl');
+      expect(nameUtils.ctrlName('test-name')).to.eql('TestNameCtrl');
     });
 
     it('should transform upper camel name', () => {
-      assert(nameUtils.ctrlName('TestName') === 'TestNameCtrl');
+      expect(nameUtils.ctrlName('TestName')).to.eql('TestNameCtrl');
     });
 
     it('should transform underscore', () => {
-      assert(nameUtils.ctrlName('test_name') === 'TestNameCtrl');
+      expect(nameUtils.ctrlName('test_name')).to.eql('TestNameCtrl');
     });
 
     it('should transform mixed', () => {
-      assert(nameUtils.ctrlName('Test_name-fancy') === 'TestNameFancyCtrl');
+      expect(nameUtils.ctrlName('Test_name-fancy')).to.eql('TestNameFancyCtrl');
     });
   });
 
   describe('humanize name', () => {
     it('should transform name with hyphens', () => {
-      assert(nameUtils.humanName('test-name') === 'Test name');
+      expect(nameUtils.humanName('test-name')).to.eql('Test name');
     });
 
     it('should transform upper camel name', () => {
-      assert(nameUtils.humanName('TestName') === 'Test name');
+      expect(nameUtils.humanName('TestName')).to.eql('Test name');
     });
 
     it('should transform underscore', () => {
-      assert(nameUtils.humanName('test_name') === 'Test name');
+      expect(nameUtils.humanName('test_name')).to.eql('Test name');
     });
 
     it('should transform mixed', () => {
-      assert(nameUtils.humanName('Test_name-fancy') === 'Test name fancy');
+      expect(nameUtils.humanName('Test_name-fancy')).to.eql('Test name fancy');
     });
   });
 
   describe('hyphen name', () => {
     it('should transform name with hyphens', () => {
-      assert(nameUtils.hyphenName('test-name') === 'test-name');
+      expect(nameUtils.hyphenName('test-name')).to.eql('test-name');
     });
 
     it('should transform upper camel name', () => {
-      assert(nameUtils.hyphenName('TestName') === 'test-name');
+      expect(nameUtils.hyphenName('TestName')).to.eql('test-name');
     });
 
     it('should transform underscore', () => {
-      assert(nameUtils.hyphenName('test_name') === 'test-name');
+      expect(nameUtils.hyphenName('test_name')).to.eql('test-name');
     });
 
     it('should transform mixed', () => {
-      assert(nameUtils.hyphenName('Test_name-fancy') === 'test-name-fancy');
+      expect(nameUtils.hyphenName('Test_name-fancy')).to.eql('test-name-fancy');
     });
   });
 
   describe('lower camel', () => {
     it('should transform name with hyphens', () => {
-      assert(nameUtils.lowerCamel('test-name') === 'testName');
+      expect(nameUtils.lowerCamel('test-name')).to.eql('testName');
     });
 
     it('should transform upper camel name', () => {
-      assert(nameUtils.lowerCamel('TestName') === 'testName');
+      expect(nameUtils.lowerCamel('TestName')).to.eql('testName');
     });
 
     it('should transform underscore', () => {
-      assert(nameUtils.lowerCamel('test_name') === 'testName');
+      expect(nameUtils.lowerCamel('test_name')).to.eql('testName');
     });
 
     it('should transform mixed', () => {
-      assert(nameUtils.lowerCamel('Test_name-fancy') === 'testNameFancy');
+      expect(nameUtils.lowerCamel('Test_name-fancy')).to.eql('testNameFancy');
     });
   });
 
   describe('upper camel', () => {
     it('should transform name with hyphens', () => {
-      assert(nameUtils.upperCamel('test-name') === 'TestName');
+      expect(nameUtils.upperCamel('test-name')).to.eql('TestName');
     });
 
     it('should transform upper camel name', () => {
-      assert(nameUtils.upperCamel('TestName') === 'TestName');
+      expect(nameUtils.upperCamel('TestName')).to.eql('TestName');
     });
 
     it('should transform underscore', () => {
-      assert(nameUtils.upperCamel('test_name') === 'TestName');
+      expect(nameUtils.upperCamel('test_name')).to.eql('TestName');
     });
 
     it('should transform mixed', () => {
-      assert(nameUtils.upperCamel('Test_name-fancy') === 'TestNameFancy');
+      expect(nameUtils.upperCamel('Test_name-fancy')).to.eql('TestNameFancy');
     });
   });
 });
