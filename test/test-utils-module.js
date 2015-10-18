@@ -63,41 +63,36 @@ describe('Module Utils', () => {
   });
 
   describe('moduleExists', () => {
-    let pathStub, utilsProxy;
+    let appUtilsStub, fsStub, utilsProxy;
 
     beforeEach(() => {
-      pathStub = {
-        dirname() {
-          return '.yo-rc.json';
-        },
-        join() {
-          return 'app/home';
-        }
+      appUtilsStub = {
+        getYoPath: sinon.stub().returns('legit-project'),
+        getAppDir: sinon.stub().returns('bro')
       };
-      utilsProxy = proxyquire('../generators/utils/module', {path: pathStub});
 
-      utilsProxy.getAppDir = function getAppDir() {
-        return 'app';
+      fsStub = {
+        existsSync: sinon.stub().returns('yes')
+      };
+
+      utilsProxy = proxyquire('../generators/utils/module', {
+        './app': appUtilsStub,
+        fs: fsStub
+      });
+
+      utilsProxy.normalizeModulePath = function () {
+        return 'yep';
       };
     });
 
     it('should return true when module is appDir', () => {
-      assert(utilsProxy.moduleExists('app') === true);
+      assert(utilsProxy.moduleExists('bro') === true);
+      assert(appUtilsStub.getAppDir.calledOnce);
     });
 
-    it('should call fs.exstsSync', () => {
-      const fsStub = {
-        existsSync: sinon.stub().returns(true)
-      };
-      utilsProxy = proxyquire('../generators/utils/module', {fs: fsStub, path: pathStub});
-      utilsProxy.getAppDir = function getAppDir() {
-        return 'app';
-      };
-      utilsProxy.normalizeModulePath = function normalizeModulePath() {
-        return 'app/home';
-      };
-      utilsProxy.moduleExists('app/home');
-      assert(fsStub.existsSync.callCount === 1);
+    it('should call fs.existsSync', () => {
+      assert(utilsProxy.moduleExists('dude') === 'yes');
+      assert(fsStub.existsSync.calledWith('legit-project/bro/yep'));
     });
   });
 
