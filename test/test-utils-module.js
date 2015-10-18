@@ -53,6 +53,7 @@ describe('Module Utils', () => {
     });
 
     it('should extract modules with slashes in path', () => {
+      expect(utilsProxy.extractModuleNames('test\\parent\\child')).to.eql(['child', 'parent']);
       expect(utilsProxy.extractModuleNames('test/parent/child')).to.eql(['child', 'parent']);
     });
 
