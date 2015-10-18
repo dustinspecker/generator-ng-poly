@@ -60,11 +60,6 @@ describe('Module Utils', () => {
       });
 
       expectRequire('app/root/package.json').return({name: 'test'});
-
-      // mock function to prevent looking for build.config.js
-      utilsProxy.getAppDir = function getAppDir() {
-        return 'app';
-      };
     });
 
     it('should return app name when using app', () => {
