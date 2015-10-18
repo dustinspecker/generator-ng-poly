@@ -26,16 +26,6 @@ describe('App Utils', () => {
     path.join.restore();
   });
 
-  describe('getAppName', () => {
-    it('should return app name', () => {
-      expectRequire('awesome-project/package.json').return({name: 'awesomeProject'});
-
-      expect(utilsProxy.getAppName()).to.eql('awesomeProject');
-      expect(moduleUtilsStub.getYoPath.calledOnce).to.eql(true);
-      expect(path.join.calledWith('awesome-project', 'package.json')).to.eql(true);
-    });
-  });
-
   describe('getAppDir', () => {
     it('should return app dir', () => {
       expectRequire('awesome-project/build.config.js').return({appDir: 'app'});
@@ -43,6 +33,16 @@ describe('App Utils', () => {
       expect(utilsProxy.getAppDir()).to.eql('app');
       expect(moduleUtilsStub.getYoPath.calledOnce).to.eql(true);
       expect(path.join.calledWith('awesome-project', 'build.config.js')).to.eql(true);
+    });
+  });
+
+  describe('getAppName', () => {
+    it('should return app name', () => {
+      expectRequire('awesome-project/package.json').return({name: 'awesomeProject'});
+
+      expect(utilsProxy.getAppName()).to.eql('awesomeProject');
+      expect(moduleUtilsStub.getYoPath.calledOnce).to.eql(true);
+      expect(path.join.calledWith('awesome-project', 'package.json')).to.eql(true);
     });
   });
 
