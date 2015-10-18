@@ -58,7 +58,7 @@ describe('Module Utils', () => {
     });
 
     it('should return module without slashes in path', () => {
-      expect(utilsProxy.extractModuleNames('test')).to.eql(['test', null]);
+      expect(utilsProxy.extractModuleNames('dog')).to.eql(['dog', null]);
     });
   });
 
