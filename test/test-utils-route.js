@@ -1,6 +1,6 @@
 /* global describe, beforeEach, after, it */
 'use strict';
-import assert from 'assert';
+import {expect} from 'chai';
 import fs from 'fs';
 import path from 'path';
 import routeUtils from '../generators/utils/route';
@@ -36,8 +36,8 @@ describe('Route Utils', () => {
       });
 
       it('should add child state', () => {
-        assert(/.state 'test.test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state 'test.test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -55,18 +55,18 @@ describe('Route Utils', () => {
       });
 
       it('should add new state without controllerAs', () => {
-        assert(/.state 'test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state 'test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add new state with controllerAs', () => {
         config.controllerAs = true;
-        assert(/.state 'test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {8}controllerAs: 'test'[\n\r]/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state 'test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {8}controllerAs: 'test'[\n\r]/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should only have 1 $stateProvider param', () => {
-        assert(routeUtils.addRoute(fileContents, newState, config).match(/\(.*\$stateProvider.*\)/).length === 1);
+        expect(routeUtils.addRoute(fileContents, newState, config).match(/\(.*\$stateProvider.*\)/).length).to.eql(1);
       });
     });
 
@@ -84,8 +84,8 @@ describe('Route Utils', () => {
       });
 
       it('should add state without controller', () => {
-        assert(/.state 'test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state 'test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -104,13 +104,13 @@ describe('Route Utils', () => {
         });
 
         it('should add $stateProvider as param', () => {
-          assert(/config \(\$stateProvider\) ->/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/config \(\$stateProvider\) ->/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
 
         it('should add state', () => {
-          assert(/\$stateProvider[\n\r]* {6}.state 'test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/\$stateProvider[\n\r]* {6}.state 'test',[\n\r]* {8}url: '\/test'[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
       });
     });
@@ -129,15 +129,15 @@ describe('Route Utils', () => {
       it('should add param to empty config ()', () => {
         const filePath = path.join(__dirname, 'fixtures', 'app-no-state-empty-config.coffee')
           , fileContents = fs.readFileSync(filePath, 'utf8');
-        assert(/config \(\$stateProvider\) ->/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/config \(\$stateProvider\) ->/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add param to existing config', () => {
         const filePath = path.join(__dirname, 'fixtures', 'app-no-state-existing-config.coffee')
           , fileContents = fs.readFileSync(filePath, 'utf8');
-        assert(/config \([^$]*, \$stateProvider\) ->/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/config \([^$]*, \$stateProvider\) ->/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
   });
@@ -157,18 +157,18 @@ describe('Route Utils', () => {
       });
 
       it('should add new when without controllerAs', () => {
-        assert(/.when '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.when '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add new when with controllerAs', () => {
         config.controllerAs = true;
-        assert(/.when '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {8}controllerAs: 'test'[\n\r]/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.when '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {8}controllerAs: 'test'[\n\r]/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should only have 1 $routeProvider param', () => {
-        assert(routeUtils.addRoute(fileContents, newState, config).match(/\(.*\$routeProvider.*\)/).length === 1);
+        expect(routeUtils.addRoute(fileContents, newState, config).match(/\(.*\$routeProvider.*\)/).length).to.eql(1);
       });
     });
 
@@ -187,14 +187,14 @@ describe('Route Utils', () => {
         });
 
         it('should add $routeProvider as param', () => {
-          assert(/.config \(\$routeProvider\) ->/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/.config \(\$routeProvider\) ->/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
 
         it('should add when with controllerAs', () => {
           config.controllerAs = true;
-          assert(/\$routeProvider[\n\r]* {6}.when '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {8}controllerAs: 'test'[\n\r]/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/\$routeProvider[\n\r]* {6}.when '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {8}controllerAs: 'test'[\n\r]/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
       });
     });
@@ -220,8 +220,8 @@ describe('Route Utils', () => {
       });
 
       it('should add child state', () => {
-        assert(/\}\)[\n\r]* {6}.state\('test.test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/\}\)[\n\r]* {6}.state\('test.test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -239,18 +239,18 @@ describe('Route Utils', () => {
       });
 
       it('should add new state without controllerAs', () => {
-        assert(/\}\)[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/\}\)[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add new state with controllerAs', () => {
         config.controllerAs = true;
-        assert(/\}\)[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl',[\n\r]* {8}controllerAs: 'test'[\n\r]* {6}\}\);/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/\}\)[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl',[\n\r]* {8}controllerAs: 'test'[\n\r]* {6}\}\);/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should only have 1 $stateProvider param', () => {
-        assert(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$stateProvider.*\)/).length === 1);
+        expect(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$stateProvider.*\)/).length).to.eql(1);
       });
     });
 
@@ -268,8 +268,8 @@ describe('Route Utils', () => {
       });
 
       it('should add state without contorller', () => {
-        assert(/\}\)[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {6}\}\);/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/\}\)[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r]* {6}\}\);/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -288,13 +288,13 @@ describe('Route Utils', () => {
         });
 
         it('should add $stateProvider as param', () => {
-          assert(/config\(.*, \$stateProvider.*\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/config\(.*, \$stateProvider.*\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
 
         it('should add state', () => {
-          assert(/\$stateProvider[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/\$stateProvider[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
       });
     });
@@ -315,18 +315,18 @@ describe('Route Utils', () => {
       });
 
       it('should add new when without controllerAs', () => {
-        assert(/\}\)[\n\r]* {6}.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/\}\)[\n\r]* {6}.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add new when with controllerAs', () => {
         config.controllerAs = true;
-        assert(/\}\)[\n\r]* {6}.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl',[\n\r]* {8}controllerAs: 'test'[\n\r]* {6}\}\);/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/\}\)[\n\r]* {6}.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl',[\n\r]* {8}controllerAs: 'test'[\n\r]* {6}\}\);/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should only have 1 $routeProvider param', () => {
-        assert(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$routeProvider.*\)/).length === 1);
+        expect(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$routeProvider.*\)/).length).to.eql(1);
       });
     });
 
@@ -344,8 +344,8 @@ describe('Route Utils', () => {
       });
 
       it('should add route without controller', () => {
-        assert(/.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -364,13 +364,13 @@ describe('Route Utils', () => {
         });
 
         it('should add $routeProvider as param', () => {
-          assert(/config\(.*, \$routeProvider.*\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/config\(.*, \$routeProvider.*\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
 
         it('should add when', () => {
-          assert(/\$routeProvider[\n\r]* {6}.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/\$routeProvider[\n\r]* {6}.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
       });
     });
@@ -396,8 +396,8 @@ describe('Route Utils', () => {
       });
 
       it('should add child state', () => {
-        assert(/\}\)[\n\r]* {6}.state\('test.test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/\}\)[\n\r]* {6}.state\('test.test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[\n\r]* {6}\}\);/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -415,18 +415,18 @@ describe('Route Utils', () => {
       });
 
       it('should add new state without controllerAs', () => {
-        assert(/.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add new state with controllerAs', () => {
         config.controllerAs = true;
-        assert(/.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl',[\n\r]* {8}controllerAs: 'test'[^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl',[\n\r]* {8}controllerAs: 'test'[^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should only have 1 $stateProvider param', () => {
-        assert(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$stateProvider.*\)/).length === 1);
+        expect(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$stateProvider.*\)/).length).to.eql(1);
       });
     });
 
@@ -444,8 +444,8 @@ describe('Route Utils', () => {
       });
 
       it('should add state without contorller', () => {
-        assert(/.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -464,13 +464,13 @@ describe('Route Utils', () => {
         });
 
         it('should add $stateProvider as param', () => {
-          assert(/config\(.*, \$stateProvider.*\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/config\(.*, \$stateProvider.*\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
 
         it('should add state', () => {
-          assert(/\$stateProvider[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/\$stateProvider[\n\r]* {6}.state\('test', {[\n\r]* {8}url: '\/test',[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
       });
     });
@@ -491,18 +491,18 @@ describe('Route Utils', () => {
       });
 
       it('should add new when without controllerAs', () => {
-        assert(/.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add new when with controllerAs', () => {
         config.controllerAs = true;
-        assert(/.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl',[\n\r]* {8}controllerAs: 'test'[^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl',[\n\r]* {8}controllerAs: 'test'[^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should only have 1 $routeProvider param', () => {
-        assert(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$routeProvider.*\)/).length === 1);
+        expect(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$routeProvider.*\)/).length).to.eql(1);
       });
     });
 
@@ -520,8 +520,8 @@ describe('Route Utils', () => {
       });
 
       it('should add route without controller', () => {
-        assert(/.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -540,13 +540,13 @@ describe('Route Utils', () => {
         });
 
         it('should add $routeProvider as param', () => {
-          assert(/config\(.*, \$routeProvider.*\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/config\(.*, \$routeProvider.*\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
 
         it('should add when', () => {
-          assert(/\$routeProvider[\n\r]* {6}.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/\$routeProvider[\n\r]* {6}.when\('\/test', {[\n\r]* {8}templateUrl: 'home\/test.tpl.html',[\n\r]* {8}controller: 'TestCtrl'[^$]*}\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
       });
     });
@@ -567,18 +567,18 @@ describe('Route Utils', () => {
       });
 
       it('should add new state without controllerAs', () => {
-        assert(/.state\('test', {[\n\r]* {6}url: '\/test',[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl'[^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state\('test', {[\n\r]* {6}url: '\/test',[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl'[^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add new state with controllerAs', () => {
         config.controllerAs = true;
-        assert(/.state\('test', {[\n\r]* {6}url: '\/test',[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl',[\n\r]* {6}controllerAs: 'test'[^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state\('test', {[\n\r]* {6}url: '\/test',[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl',[\n\r]* {6}controllerAs: 'test'[^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should only have 1 $stateProvider param', () => {
-        assert(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$stateProvider: ng.ui.IStateProvider.*\)/).length === 1);
+        expect(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$stateProvider: ng.ui.IStateProvider.*\)/).length).to.eql(1);
       });
     });
 
@@ -596,8 +596,8 @@ describe('Route Utils', () => {
       });
 
       it('should add state without controller', () => {
-        assert(/.state\('test', {[\n\r]* {6}url: '\/test',[\n\r]* {6}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.state\('test', {[\n\r]* {6}url: '\/test',[\n\r]* {6}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -616,13 +616,13 @@ describe('Route Utils', () => {
         });
 
         it('should add $stateProvider as param', () => {
-          assert(/config\(.*, \$stateProvider: ng.ui.IStateProvider.*\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/config\(.*, \$stateProvider: ng.ui.IStateProvider.*\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
 
         it('should add state', () => {
-          assert(/\$stateProvider[\n\r]* {4}.state\('test', {[\n\r]* {6}url: '\/test',[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl'[^$]*}\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/\$stateProvider[\n\r]* {4}.state\('test', {[\n\r]* {6}url: '\/test',[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl'[^$]*}\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
       });
     });
@@ -644,18 +644,18 @@ describe('Route Utils', () => {
       });
 
       it('should add new when without controllerAs', () => {
-        assert(/.when\('\/test', {[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl'[^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.when\('\/test', {[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl'[^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add new when with controllerAs', () => {
         config.controllerAs = true;
-        assert(/.when\('\/test', {[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl',[\n\r]* {6}controllerAs: 'test'[^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.when\('\/test', {[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl',[\n\r]* {6}controllerAs: 'test'[^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should only have 1 $routeProvider param', () => {
-        assert(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$routeProvider.*\)/).length === 1);
+        expect(routeUtils.addRoute(fileContents, newState, config).match(/function.*\(.*\$routeProvider.*\)/).length).to.eql(1);
       });
     });
 
@@ -674,8 +674,8 @@ describe('Route Utils', () => {
       });
 
       it('should add route without controller', () => {
-        assert(/.when\('\/test', {[\n\r]* {6}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
-          .test(routeUtils.addRoute(fileContents, newState, config)));
+        expect(/.when\('\/test', {[\n\r]* {6}templateUrl: 'home\/test.tpl.html'[\n\r][^$]*}\)/
+          .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
     });
 
@@ -694,13 +694,13 @@ describe('Route Utils', () => {
         });
 
         it('should add $routeProvider as param', () => {
-          assert(/config\(.*, \$routeProvider.*\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/config\(.*, \$routeProvider.*\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
 
         it('should add when', () => {
-          assert(/\$routeProvider[\n\r]* {4}.when\('\/test', {[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl'[^$]*}\)/
-            .test(routeUtils.addRoute(fileContents, newState, config)));
+          expect(/\$routeProvider[\n\r]* {4}.when\('\/test', {[\n\r]* {6}templateUrl: 'home\/test.tpl.html',[\n\r]* {6}controller: 'TestCtrl'[^$]*}\)/
+            .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
         });
       });
     });
