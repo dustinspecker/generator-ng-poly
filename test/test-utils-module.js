@@ -1,6 +1,5 @@
 /* global describe, beforeEach, it */
 'use strict';
-import assert from 'assert';
 import {expect} from 'chai';
 import {expectRequire} from 'a';
 import proxyquire from 'proxyquire';
@@ -50,15 +49,15 @@ describe('Module Utils', () => {
     });
 
     it('should return app name when using app', () => {
-      assert(JSON.stringify(utilsProxy.extractModuleNames('app')) === JSON.stringify(['test', null]));
+      expect(utilsProxy.extractModuleNames('app')).to.eql(['test', null]);
     });
 
     it('should extract modules with slashes in path', () => {
-      assert(JSON.stringify(utilsProxy.extractModuleNames('test/parent/child')) === JSON.stringify(['child', 'parent']));
+      expect(utilsProxy.extractModuleNames('test/parent/child')).to.eql(['child', 'parent']);
     });
 
     it('should return module without slashes in path', () => {
-      assert(JSON.stringify(utilsProxy.extractModuleNames('test')) === JSON.stringify(['test', null]));
+      expect(utilsProxy.extractModuleNames('test')).to.eql(['test', null]);
     });
   });
 
@@ -86,13 +85,13 @@ describe('Module Utils', () => {
     });
 
     it('should return true when module is appDir', () => {
-      assert(utilsProxy.moduleExists('bro') === true);
-      assert(appUtilsStub.getAppDir.calledOnce);
+      expect(utilsProxy.moduleExists('bro')).to.eql(true);
+      expect(appUtilsStub.getAppDir.calledOnce).to.eql(true);
     });
 
     it('should call fs.existsSync', () => {
-      assert(utilsProxy.moduleExists('dude') === 'yes');
-      assert(fsStub.existsSync.calledWith('legit-project/bro/yep'));
+      expect(utilsProxy.moduleExists('dude')).to.eql('yes');
+      expect(fsStub.existsSync.calledWith('legit-project/bro/yep')).to.eql(true);
     });
   });
 
