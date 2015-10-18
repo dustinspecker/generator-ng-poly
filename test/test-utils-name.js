@@ -4,39 +4,21 @@ import assert from 'assert';
 import nameUtils from '../generators/utils/name';
 
 describe('Name Utils', () => {
-  describe('lower camel', () => {
+  describe('ctrl name', () => {
     it('should transform name with hyphens', () => {
-      assert(nameUtils.lowerCamel('test-name') === 'testName');
+      assert(nameUtils.ctrlName('test-name') === 'TestNameCtrl');
     });
 
     it('should transform upper camel name', () => {
-      assert(nameUtils.lowerCamel('TestName') === 'testName');
+      assert(nameUtils.ctrlName('TestName') === 'TestNameCtrl');
     });
 
     it('should transform underscore', () => {
-      assert(nameUtils.lowerCamel('test_name') === 'testName');
+      assert(nameUtils.ctrlName('test_name') === 'TestNameCtrl');
     });
 
     it('should transform mixed', () => {
-      assert(nameUtils.lowerCamel('Test_name-fancy') === 'testNameFancy');
-    });
-  });
-
-  describe('upper camel', () => {
-    it('should transform name with hyphens', () => {
-      assert(nameUtils.upperCamel('test-name') === 'TestName');
-    });
-
-    it('should transform upper camel name', () => {
-      assert(nameUtils.upperCamel('TestName') === 'TestName');
-    });
-
-    it('should transform underscore', () => {
-      assert(nameUtils.upperCamel('test_name') === 'TestName');
-    });
-
-    it('should transform mixed', () => {
-      assert(nameUtils.upperCamel('Test_name-fancy') === 'TestNameFancy');
+      assert(nameUtils.ctrlName('Test_name-fancy') === 'TestNameFancyCtrl');
     });
   });
 
@@ -76,21 +58,39 @@ describe('Name Utils', () => {
     });
   });
 
-  describe('ctrl name', () => {
+  describe('lower camel', () => {
     it('should transform name with hyphens', () => {
-      assert(nameUtils.ctrlName('test-name') === 'TestNameCtrl');
+      assert(nameUtils.lowerCamel('test-name') === 'testName');
     });
 
     it('should transform upper camel name', () => {
-      assert(nameUtils.ctrlName('TestName') === 'TestNameCtrl');
+      assert(nameUtils.lowerCamel('TestName') === 'testName');
     });
 
     it('should transform underscore', () => {
-      assert(nameUtils.ctrlName('test_name') === 'TestNameCtrl');
+      assert(nameUtils.lowerCamel('test_name') === 'testName');
     });
 
     it('should transform mixed', () => {
-      assert(nameUtils.ctrlName('Test_name-fancy') === 'TestNameFancyCtrl');
+      assert(nameUtils.lowerCamel('Test_name-fancy') === 'testNameFancy');
+    });
+  });
+
+  describe('upper camel', () => {
+    it('should transform name with hyphens', () => {
+      assert(nameUtils.upperCamel('test-name') === 'TestName');
+    });
+
+    it('should transform upper camel name', () => {
+      assert(nameUtils.upperCamel('TestName') === 'TestName');
+    });
+
+    it('should transform underscore', () => {
+      assert(nameUtils.upperCamel('test_name') === 'TestName');
+    });
+
+    it('should transform mixed', () => {
+      assert(nameUtils.upperCamel('Test_name-fancy') === 'TestNameFancy');
     });
   });
 });
