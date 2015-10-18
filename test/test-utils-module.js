@@ -15,6 +15,9 @@ describe('Module Utils', () => {
       let appUtilsStub, findUpStub, pathStub;
 
       appUtilsStub = {
+        getFileFromRoot() {
+          return {name: 'test'};
+        },
         getYoPath() {
           return 'app/root';
         }
