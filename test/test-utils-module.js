@@ -72,6 +72,41 @@ describe('Module Utils', () => {
     });
   });
 
+  describe('normalizeModulePath', () => {
+    let utilsProxy;
+
+    beforeEach(() => {
+      let appUtilsStub, pathStub;
+
+      appUtilsStub = {
+        getAppDir() {
+          return 'app';
+        }
+      };
+
+      pathStub = {
+        sep: '.'
+      };
+
+      utilsProxy = proxyquire('../generators/utils/module', {
+        './app': appUtilsStub,
+        path: pathStub
+      });
+    });
+
+    it('should return empty string if module path is app path', () => {
+      expect(utilsProxy.normalizeModulePath('app')).to.eql('');
+    });
+
+    it('should replace \\ and / with path.sep', () => {
+      expect(utilsProxy.normalizeModulePath('awesome\\cake/icing')).to.eql('awesome.cake.icing');
+    });
+
+    it('should replace camelCased and CamelCase paths with hyphen-case', () => {
+      expect(utilsProxy.normalizeModulePath('awesomeCake/IsThe/best-cake')).to.eql('awesome-cake.is-the.best-cake');
+    });
+  });
+
   describe('moduleFilter', () => {
     let utilsProxy;
 
