@@ -1,4 +1,4 @@
-/* global describe, beforeEach, afterEach, it */
+/* global describe, beforeEach, it */
 'use strict';
 import {expect} from 'chai';
 import {expectRequire} from 'a';
@@ -18,12 +18,6 @@ describe('App Utils', () => {
     utilsProxy = proxyquire('../generators/utils/app', {
       './module': moduleUtilsStub
     });
-
-    sinon.spy(path, 'join');
-  });
-
-  afterEach(() => {
-    path.join.restore();
   });
 
   describe('getAppDir', () => {
@@ -31,8 +25,6 @@ describe('App Utils', () => {
       expectRequire('awesome-project/build.config.js').return({appDir: 'app'});
 
       expect(utilsProxy.getAppDir()).to.eql('app');
-      expect(moduleUtilsStub.getYoPath.calledOnce).to.eql(true);
-      expect(path.join.calledWith('awesome-project', 'build.config.js')).to.eql(true);
     });
   });
 
@@ -41,8 +33,20 @@ describe('App Utils', () => {
       expectRequire('awesome-project/package.json').return({name: 'awesomeProject'});
 
       expect(utilsProxy.getAppName()).to.eql('awesomeProject');
+    });
+  });
+
+  describe('getFileFromRoot', () => {
+    it('should return file JS/JSON', () => {
+      sinon.spy(path, 'join');
+
+      expectRequire('awesome-project/file.js').return('file-contents');
+
+      expect(utilsProxy.getFileFromRoot('file.js')).to.eql('file-contents');
       expect(moduleUtilsStub.getYoPath.calledOnce).to.eql(true);
-      expect(path.join.calledWith('awesome-project', 'package.json')).to.eql(true);
+      expect(path.join.calledWith('awesome-project', 'file.js')).to.eql(true);
+
+      path.join.restore();
     });
   });
 
@@ -51,8 +55,6 @@ describe('App Utils', () => {
       expectRequire('awesome-project/build.config.js').return({unitTestDir: 'test'});
 
       expect(utilsProxy.getUnitTestDir()).to.eql('test');
-      expect(moduleUtilsStub.getYoPath.calledOnce).to.eql(true);
-      expect(path.join.calledWith('awesome-project', 'build.config.js')).to.eql(true);
     });
   });
 });
