@@ -38,40 +38,6 @@ describe('Module Utils', () => {
     });
   });
 
-  describe('moduleExists', () => {
-    let appUtilsStub, fsStub, utilsProxy;
-
-    beforeEach(() => {
-      appUtilsStub = {
-        getYoPath: sinon.stub().returns('legit-project'),
-        getAppDir: sinon.stub().returns('bro')
-      };
-
-      fsStub = {
-        existsSync: sinon.stub().returns('yes')
-      };
-
-      utilsProxy = proxyquire('../generators/utils/module', {
-        './app': appUtilsStub,
-        fs: fsStub
-      });
-
-      utilsProxy.normalizeModulePath = function () {
-        return 'yep';
-      };
-    });
-
-    it('should return true when module is appDir', () => {
-      expect(utilsProxy.moduleExists('bro')).to.eql(true);
-      expect(appUtilsStub.getAppDir.calledOnce).to.eql(true);
-    });
-
-    it('should call fs.existsSync', () => {
-      expect(utilsProxy.moduleExists('dude')).to.eql('yes');
-      expect(fsStub.existsSync.calledWith('legit-project/bro/yep')).to.eql(true);
-    });
-  });
-
   describe('moduleFilter', () => {
     let utilsProxy;
 
