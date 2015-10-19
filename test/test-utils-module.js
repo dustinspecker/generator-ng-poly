@@ -38,6 +38,31 @@ describe('Module Utils', () => {
     });
   });
 
+  describe('findModuleFile', () => {
+    it('should return correct module file', () => {
+      let fsStub, utilsProxy;
+
+      fsStub = {
+        existsSync: sinon.stub()
+      };
+
+      fsStub.existsSync.withArgs('app-module.coffee').returns(false);
+      fsStub.existsSync.withArgs('app-module.es6').returns(false);
+      fsStub.existsSync.withArgs('app-module.js').returns(false);
+      fsStub.existsSync.withArgs('app-module.ts').returns(true);
+
+      utilsProxy = proxyquire('../generators/utils/module', {
+        fs: fsStub
+      });
+
+      expect(utilsProxy.findModuleFile('app')).to.eql('app-module.ts');
+      expect(fsStub.existsSync.withArgs('app-module.coffee').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-module.es6').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-module.js').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-module.ts').calledOnce).to.eql(true);
+    });
+  });
+
   describe('moduleFilter', () => {
     let utilsProxy;
 
