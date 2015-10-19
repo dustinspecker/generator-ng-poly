@@ -63,6 +63,31 @@ describe('Module Utils', () => {
     });
   });
 
+  describe('findRouteFile', () => {
+    it('should return correct route file', () => {
+      let fsStub, utilsProxy;
+
+      fsStub = {
+        existsSync: sinon.stub()
+      };
+
+      fsStub.existsSync.withArgs('app-routes.coffee').returns(false);
+      fsStub.existsSync.withArgs('app-routes.es6').returns(false);
+      fsStub.existsSync.withArgs('app-routes.js').returns(false);
+      fsStub.existsSync.withArgs('app-routes.ts').returns(true);
+
+      utilsProxy = proxyquire('../generators/utils/module', {
+        fs: fsStub
+      });
+
+      expect(utilsProxy.findRoutesFile('app')).to.eql('app-routes.ts');
+      expect(fsStub.existsSync.withArgs('app-routes.coffee').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-routes.es6').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-routes.js').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-routes.ts').calledOnce).to.eql(true);
+    });
+  });
+
   describe('moduleFilter', () => {
     let utilsProxy;
 
