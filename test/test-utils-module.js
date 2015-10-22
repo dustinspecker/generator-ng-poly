@@ -23,33 +23,32 @@ describe('Module Utils', () => {
       });
     });
 
-    it('should return app name when using app', () => {
-      return utilsProxy.extractModuleNames('app').then(modules => {
-        expect(modules).to.eql(['test', null]);
-        expect(appUtilsStub.getFileFromRoot.calledWith('package.json')).to.eql(true);
-      });
+    it('should return app name when using app', async () => {
+      let modules = await utilsProxy.extractModuleNames('app');
+
+      expect(modules).to.eql(['test', null]);
+      expect(appUtilsStub.getFileFromRoot.calledWith('package.json')).to.eql(true);
     });
 
-    it('should extract modules with slashes in path', () => {
-      return utilsProxy.extractModuleNames('test\\parent\\child')
-        .then(modules => {
-          expect(modules).to.eql(['child', 'parent']);
-          return utilsProxy.extractModuleNames('test/parent/child');
-        }).then(modules => {
-          expect(modules).to.eql(['child', 'parent']);
-        });
+    it('should extract modules with slashes in path', async () => {
+      let modules = await utilsProxy.extractModuleNames('test\\parent\\child');
+
+      expect(modules).to.eql(['child', 'parent']);
+
+      modules = await utilsProxy.extractModuleNames('test/parent/child');
+      expect(modules).to.eql(['child', 'parent']);
     });
 
-    it('should return module without slashes in path', () => {
-      return utilsProxy.extractModuleNames('dog').then(modules => {
-        expect(modules).to.eql(['dog', null]);
-      });
+    it('should return module without slashes in path', async () => {
+      let modules = await utilsProxy.extractModuleNames('dog');
+
+      expect(modules).to.eql(['dog', null]);
     });
   });
 
   describe('findModuleFile', () => {
-    it('should return correct module file', () => {
-      let fsStub, utilsProxy;
+    it('should return correct module file', async () => {
+      let fsStub, moduleFile, utilsProxy;
 
       fsStub = {
         existsSync: sinon.stub()
@@ -64,19 +63,19 @@ describe('Module Utils', () => {
         fs: fsStub
       });
 
-      return utilsProxy.findModuleFile('app').then(moduleFile => {
-        expect(moduleFile).to.eql('app-module.ts');
-        expect(fsStub.existsSync.withArgs('app-module.coffee').calledOnce).to.eql(true);
-        expect(fsStub.existsSync.withArgs('app-module.es6').calledOnce).to.eql(true);
-        expect(fsStub.existsSync.withArgs('app-module.js').calledOnce).to.eql(true);
-        expect(fsStub.existsSync.withArgs('app-module.ts').calledOnce).to.eql(true);
-      });
+      moduleFile = await utilsProxy.findModuleFile('app');
+
+      expect(moduleFile).to.eql('app-module.ts');
+      expect(fsStub.existsSync.withArgs('app-module.coffee').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-module.es6').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-module.js').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-module.ts').calledOnce).to.eql(true);
     });
   });
 
   describe('findRouteFile', () => {
-    it('should return correct route file', () => {
-      let fsStub, utilsProxy;
+    it('should return correct route file', async () => {
+      let fsStub, routesFile, utilsProxy;
 
       fsStub = {
         existsSync: sinon.stub()
@@ -91,13 +90,13 @@ describe('Module Utils', () => {
         fs: fsStub
       });
 
-      return utilsProxy.findRoutesFile('app').then(routesFile => {
-        expect(routesFile).to.eql('app-routes.ts');
-        expect(fsStub.existsSync.withArgs('app-routes.coffee').calledOnce).to.eql(true);
-        expect(fsStub.existsSync.withArgs('app-routes.es6').calledOnce).to.eql(true);
-        expect(fsStub.existsSync.withArgs('app-routes.js').calledOnce).to.eql(true);
-        expect(fsStub.existsSync.withArgs('app-routes.ts').calledOnce).to.eql(true);
-      });
+      routesFile = await utilsProxy.findRoutesFile('app');
+
+      expect(routesFile).to.eql('app-routes.ts');
+      expect(fsStub.existsSync.withArgs('app-routes.coffee').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-routes.es6').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-routes.js').calledOnce).to.eql(true);
+      expect(fsStub.existsSync.withArgs('app-routes.ts').calledOnce).to.eql(true);
     });
   });
 
@@ -128,8 +127,8 @@ describe('Module Utils', () => {
       expectRequire('package.json').return({name: 'test'});
     });
 
-    it('should filter non-script files', () => {
-      let expectedModules, files;
+    it('should filter non-script files', async () => {
+      let expectedModules, files, modules;
 
       files = [
         'test/test-module.html',
@@ -147,13 +146,13 @@ describe('Module Utils', () => {
         {name: 'test5', value: 'test5'}
       ];
 
-      return utilsProxy.moduleFilter(files).then(modules => {
-        expect(modules).to.eql(expectedModules);
-      });
+      modules = await utilsProxy.moduleFilter(files);
+
+      expect(modules).to.eql(expectedModules);
     });
 
-    it('should check for x-module name only on child directory', () => {
-      let expectedModules, files;
+    it('should check for x-module name only on child directory', async () => {
+      let expectedModules, files, modules;
 
       files = [
         'test/test-module.js',
@@ -167,13 +166,13 @@ describe('Module Utils', () => {
         {name: 'nested/nest', value: 'nested/nest'}
       ];
 
-      return utilsProxy.moduleFilter(files).then(modules => {
-        expect(modules).to.eql(expectedModules);
-      });
+      modules = await utilsProxy.moduleFilter(files);
+
+      expect(modules).to.eql(expectedModules);
     });
 
-    it('should remove duplicate directores', () => {
-      let expectedModules, files;
+    it('should remove duplicate directores', async () => {
+      let expectedModules, files, modules;
 
       files = [
         'test1/test1-modulde.js',
@@ -186,13 +185,13 @@ describe('Module Utils', () => {
         {name: 'test2', value: 'test2'}
       ];
 
-      return utilsProxy.moduleFilter(files).then(modules => {
-        expect(modules).to.eql(expectedModules);
-      });
+      modules = await utilsProxy.moduleFilter(files);
+
+      expect(modules).to.eql(expectedModules);
     });
 
-    it('should only list directories that have a `directory`-module.{coffee,es6,js,ts} file', () => {
-      let expectedModules, files;
+    it('should only list directories that have a `directory`-module.{coffee,es6,js,ts} file', async () => {
+      let expectedModules, files, modules;
 
       files = [
         'coffee-test/coffee-test-module.coffee',
@@ -209,16 +208,16 @@ describe('Module Utils', () => {
         {name: 'ts-test', value: 'ts-test'}
       ];
 
-      return utilsProxy.moduleFilter(files).then(modules => {
-        expect(modules).to.eql(expectedModules);
-      });
+      modules = await utilsProxy.moduleFilter(files);
+
+      expect(modules).to.eql(expectedModules);
     });
 
-    it('should strip Windows app path in value', () => {
+    it('should strip Windows app path in value', async () => {
       const files = ['app\\test\\test-module.js']
         , expectedModules = [{name: 'app\\test', value: 'test'}];
 
-      let appUtilsStub, pathStub, windowsUtilsProxy;
+      let appUtilsStub, modules, pathStub, windowsUtilsProxy;
 
       appUtilsStub = {
         getAppDir() {
@@ -241,16 +240,16 @@ describe('Module Utils', () => {
         path: pathStub
       });
 
-      return windowsUtilsProxy.moduleFilter(files).then(modules => {
-        expect(modules).to.eql(expectedModules);
-      });
+      modules = await windowsUtilsProxy.moduleFilter(files);
+
+      expect(modules).to.eql(expectedModules);
     });
 
-    it('should strip Unix app path in value', () => {
+    it('should strip Unix app path in value', async () => {
       const files = ['app/test/test-module.js']
         , expectedModules = [{name: 'app/test', value: 'test'}];
 
-      let appUtilsStub, pathStub, unixUtilsProxy;
+      let appUtilsStub, pathStub, modules, unixUtilsProxy;
 
       appUtilsStub = {
         getAppDir() {
@@ -273,9 +272,9 @@ describe('Module Utils', () => {
         path: pathStub
       });
 
-      return unixUtilsProxy.moduleFilter(files).then(modules => {
-        expect(modules).to.eql(expectedModules);
-      });
+      modules = await unixUtilsProxy.moduleFilter(files);
+
+      expect(modules).to.eql(expectedModules);
     });
   });
 
@@ -301,22 +300,22 @@ describe('Module Utils', () => {
       });
     });
 
-    it('should return empty string if module path is app path', () => {
-      return utilsProxy.normalizeModulePath('app').then(normalizeModulePath => {
-        expect(normalizeModulePath).to.eql('');
-      });
+    it('should return empty string if module path is app path', async () => {
+      let normalizeModulePath = await utilsProxy.normalizeModulePath('app');
+
+      expect(normalizeModulePath).to.eql('');
     });
 
-    it('should replace \\ and / with path.sep', () => {
-      return utilsProxy.normalizeModulePath('awesome\\cake/icing').then(normalizeModulePath => {
-        expect(normalizeModulePath).to.eql('awesome.cake.icing');
-      });
+    it('should replace \\ and / with path.sep', async () => {
+      let normalizeModulePath = await utilsProxy.normalizeModulePath('awesome\\cake/icing');
+
+      expect(normalizeModulePath).to.eql('awesome.cake.icing');
     });
 
-    it('should replace camelCased and CamelCase paths with hyphen-case', () => {
-      return utilsProxy.normalizeModulePath('awesomeCake/IsThe/best-cake').then(normalizeModulePath => {
-        expect(normalizeModulePath).to.eql('awesome-cake.is-the.best-cake');
-      });
+    it('should replace camelCased and CamelCase paths with hyphen-case', async () => {
+      let normalizeModulePath = await utilsProxy.normalizeModulePath('awesomeCake/IsThe/best-cake');
+
+      expect(normalizeModulePath).to.eql('awesome-cake.is-the.best-cake');
     });
   });
 });

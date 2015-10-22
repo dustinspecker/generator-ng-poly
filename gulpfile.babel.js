@@ -6,7 +6,6 @@ import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import istanbul from 'gulp-istanbul';
 import jscs from 'gulp-jscs';
-import jshint from 'gulp-jshint';
 import mocha from 'gulp-mocha';
 
 const configFiles = 'gulpfile.babel.js'
@@ -23,10 +22,7 @@ gulp.task('lint', () => {
     .pipe(eslint.failOnError())
     .pipe(jscs({
       esnext: true
-    }))
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(jshint.reporter('fail'));
+    }));
 });
 
 gulp.task('compile', ['clean', 'lint'], () => {
