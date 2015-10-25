@@ -29,7 +29,8 @@ gulp.task('compile', ['clean', 'lint'], () => {
   return gulp.src(srcFiles, {base: './lib'})
     .pipe(babel({
       auxiliaryCommentBefore: 'istanbul ignore next',
-      modules: 'common'
+      modules: 'common',
+      optional: ['runtime']
     }))
     .pipe(gulp.dest(destDir));
 });
