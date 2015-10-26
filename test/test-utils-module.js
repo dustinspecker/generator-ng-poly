@@ -47,11 +47,10 @@ describe('Module Utils', () => {
   });
 
   describe('findModuleFile', () => {
-    it('should return correct module file', async () => {
-      let moduleFile, pathExistsStub, utilsProxy;
+    let pathExistsStub = sinon.stub()
+      , utilsProxy;
 
-      pathExistsStub = sinon.stub();
-
+    beforeEach(() => {
       pathExistsStub.withArgs('app-module.coffee').returns(Promise.resolve(false));
       pathExistsStub.withArgs('app-module.es6').returns(Promise.resolve(false));
       pathExistsStub.withArgs('app-module.js').returns(Promise.resolve(false));
@@ -60,8 +59,10 @@ describe('Module Utils', () => {
       utilsProxy = proxyquire('../generators/utils/module', {
         'path-exists': pathExistsStub
       });
+    });
 
-      moduleFile = await utilsProxy.findModuleFile('app');
+    it('should return correct module file', async () => {
+      const moduleFile = await utilsProxy.findModuleFile('app');
 
       expect(moduleFile).to.eql('app-module.ts');
       expect(pathExistsStub.withArgs('app-module.coffee').calledOnce).to.eql(true);
@@ -71,21 +72,12 @@ describe('Module Utils', () => {
     });
 
     it('should print deprecation warning for older file names', async () => {
-      let moduleFile, pathExistsStub, utilsProxy;
+      let moduleFile;
 
-      pathExistsStub = sinon.stub();
-
-      pathExistsStub.withArgs('app-module.coffee').returns(Promise.resolve(false));
-      pathExistsStub.withArgs('app-module.es6').returns(Promise.resolve(false));
-      pathExistsStub.withArgs('app-module.js').returns(Promise.resolve(false));
       pathExistsStub.withArgs('app-module.ts').returns(Promise.resolve(false));
       pathExistsStub.withArgs('app.coffee').returns(Promise.resolve(true));
 
       sinon.spy(console, 'log');
-
-      utilsProxy = proxyquire('../generators/utils/module', {
-        'path-exists': pathExistsStub
-      });
 
       moduleFile = await utilsProxy.findModuleFile('app');
 
@@ -97,11 +89,10 @@ describe('Module Utils', () => {
   });
 
   describe('findRouteFile', () => {
-    it('should return correct route file', async () => {
-      let pathExistsStub, routesFile, utilsProxy;
+    let pathExistsStub = sinon.stub()
+      , utilsProxy;
 
-      pathExistsStub = sinon.stub();
-
+    beforeEach(() => {
       pathExistsStub.withArgs('app-routes.coffee').returns(Promise.resolve(false));
       pathExistsStub.withArgs('app-routes.es6').returns(Promise.resolve(false));
       pathExistsStub.withArgs('app-routes.js').returns(Promise.resolve(false));
@@ -110,8 +101,10 @@ describe('Module Utils', () => {
       utilsProxy = proxyquire('../generators/utils/module', {
         'path-exists': pathExistsStub
       });
+    });
 
-      routesFile = await utilsProxy.findRoutesFile('app');
+    it('should return correct route file', async () => {
+      const routesFile = await utilsProxy.findRoutesFile('app');
 
       expect(routesFile).to.eql('app-routes.ts');
       expect(pathExistsStub.withArgs('app-routes.coffee').calledOnce).to.eql(true);
@@ -121,21 +114,12 @@ describe('Module Utils', () => {
     });
 
     it('should print deprecation warning for older file names', async () => {
-      let pathExistsStub, routesFile, utilsProxy;
+      let routesFile;
 
-      pathExistsStub = sinon.stub();
-
-      pathExistsStub.withArgs('app-routes.coffee').returns(Promise.resolve(false));
-      pathExistsStub.withArgs('app-routes.es6').returns(Promise.resolve(false));
-      pathExistsStub.withArgs('app-routes.js').returns(Promise.resolve(false));
       pathExistsStub.withArgs('app-routes.ts').returns(Promise.resolve(false));
       pathExistsStub.withArgs('app-module.coffee').returns(Promise.resolve(true));
 
       sinon.spy(console, 'log');
-
-      utilsProxy = proxyquire('../generators/utils/module', {
-        'path-exists': pathExistsStub
-      });
 
       routesFile = await utilsProxy.findRoutesFile('app');
 
