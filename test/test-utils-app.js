@@ -6,15 +6,27 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 
 describe('App Utils', () => {
-  let findUpStub, utilsProxy;
+  let fsStub, findUpStub, moduleUtilsStub, utilsProxy;
 
   beforeEach(() => {
     findUpStub = {
       sync: sinon.stub().returns('awesome-project/.yo-rc.json')
     };
 
+    fsStub = {
+      readFile(fileName, cb) {
+        cb(null, 'angular.module(\'awesomeName\', [])');
+      }
+    };
+
+    moduleUtilsStub = {
+      findModuleFile: sinon.stub().returns(Promise.resolve('app-module.js'))
+    };
+
     utilsProxy = proxyquire('../generators/utils/app', {
-      'find-up': findUpStub
+      './module': moduleUtilsStub,
+      'find-up': findUpStub,
+      fs: fsStub
     });
   });
 
@@ -33,10 +45,9 @@ describe('App Utils', () => {
     it('should return app name', async () => {
       let appName;
 
-      expectRequire('awesome-project/package.json').return({name: 'awesomeProject'});
-
+      expectRequire('awesome-project/build.config.js').return({appDir: 'app'});
       appName = await utilsProxy.getAppName();
-      expect(appName).to.eql('awesomeProject');
+      expect(appName).to.eql('awesomeName');
     });
   });
 
