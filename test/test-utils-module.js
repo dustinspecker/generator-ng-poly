@@ -71,6 +71,33 @@ describe('Module Utils', () => {
       expect(fsStub.existsSync.withArgs('app-module.js').calledOnce).to.eql(true);
       expect(fsStub.existsSync.withArgs('app-module.ts').calledOnce).to.eql(true);
     });
+
+    it('should print deprecation warning for older file names', async () => {
+      let fsStub, moduleFile, utilsProxy;
+
+      fsStub = {
+        existsSync: sinon.stub()
+      };
+
+      fsStub.existsSync.withArgs('app-module.coffee').returns(false);
+      fsStub.existsSync.withArgs('app-module.es6').returns(false);
+      fsStub.existsSync.withArgs('app-module.js').returns(false);
+      fsStub.existsSync.withArgs('app-module.ts').returns(false);
+      fsStub.existsSync.withArgs('app.coffee').returns(true);
+
+      sinon.spy(console, 'log');
+
+      utilsProxy = proxyquire('../generators/utils/module', {
+        fs: fsStub
+      });
+
+      moduleFile = await utilsProxy.findModuleFile('app');
+
+      expect(moduleFile).to.eql('app.coffee');
+      expect(console.log.calledOnce).to.eql(true);
+
+      console.log.restore();
+    });
   });
 
   describe('findRouteFile', () => {
@@ -97,6 +124,33 @@ describe('Module Utils', () => {
       expect(fsStub.existsSync.withArgs('app-routes.es6').calledOnce).to.eql(true);
       expect(fsStub.existsSync.withArgs('app-routes.js').calledOnce).to.eql(true);
       expect(fsStub.existsSync.withArgs('app-routes.ts').calledOnce).to.eql(true);
+    });
+
+    it('should print deprecation warning for older file names', async () => {
+      let fsStub, routesFile, utilsProxy;
+
+      fsStub = {
+        existsSync: sinon.stub()
+      };
+
+      fsStub.existsSync.withArgs('app-routes.coffee').returns(false);
+      fsStub.existsSync.withArgs('app-routes.es6').returns(false);
+      fsStub.existsSync.withArgs('app-routes.js').returns(false);
+      fsStub.existsSync.withArgs('app-routes.ts').returns(false);
+      fsStub.existsSync.withArgs('app-module.coffee').returns(true);
+
+      sinon.spy(console, 'log');
+
+      utilsProxy = proxyquire('../generators/utils/module', {
+        fs: fsStub
+      });
+
+      routesFile = await utilsProxy.findRoutesFile('app');
+
+      expect(routesFile).to.eql('app-module.coffee');
+      expect(console.log.calledOnce).to.eql(true);
+
+      console.log.restore();
     });
   });
 
