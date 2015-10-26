@@ -9,9 +9,7 @@ describe('App Utils', () => {
   let fsStub, findUpStub, moduleUtilsStub, utilsProxy;
 
   beforeEach(() => {
-    findUpStub = {
-      sync: sinon.stub().returns('awesome-project/.yo-rc.json')
-    };
+    findUpStub = sinon.stub().returns(Promise.resolve('awesome-project/.yo-rc.json'));
 
     fsStub = {
       readFile(fileName, cb) {
@@ -78,7 +76,7 @@ describe('App Utils', () => {
       let yoPath = await utilsProxy.getYoPath();
 
       expect(yoPath).to.eql('awesome-project');
-      expect(findUpStub.sync.calledWith('.yo-rc.json')).to.eql(true);
+      expect(findUpStub.calledWith('.yo-rc.json')).to.eql(true);
     });
   });
 });
