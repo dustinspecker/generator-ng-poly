@@ -48,47 +48,43 @@ describe('Module Utils', () => {
 
   describe('findModuleFile', () => {
     it('should return correct module file', async () => {
-      let fsStub, moduleFile, utilsProxy;
+      let moduleFile, pathExistsStub, utilsProxy;
 
-      fsStub = {
-        existsSync: sinon.stub()
-      };
+      pathExistsStub = sinon.stub();
 
-      fsStub.existsSync.withArgs('app-module.coffee').returns(false);
-      fsStub.existsSync.withArgs('app-module.es6').returns(false);
-      fsStub.existsSync.withArgs('app-module.js').returns(false);
-      fsStub.existsSync.withArgs('app-module.ts').returns(true);
+      pathExistsStub.withArgs('app-module.coffee').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-module.es6').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-module.js').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-module.ts').returns(Promise.resolve(true));
 
       utilsProxy = proxyquire('../generators/utils/module', {
-        fs: fsStub
+        'path-exists': pathExistsStub
       });
 
       moduleFile = await utilsProxy.findModuleFile('app');
 
       expect(moduleFile).to.eql('app-module.ts');
-      expect(fsStub.existsSync.withArgs('app-module.coffee').calledOnce).to.eql(true);
-      expect(fsStub.existsSync.withArgs('app-module.es6').calledOnce).to.eql(true);
-      expect(fsStub.existsSync.withArgs('app-module.js').calledOnce).to.eql(true);
-      expect(fsStub.existsSync.withArgs('app-module.ts').calledOnce).to.eql(true);
+      expect(pathExistsStub.withArgs('app-module.coffee').calledOnce).to.eql(true);
+      expect(pathExistsStub.withArgs('app-module.es6').calledOnce).to.eql(true);
+      expect(pathExistsStub.withArgs('app-module.js').calledOnce).to.eql(true);
+      expect(pathExistsStub.withArgs('app-module.ts').calledOnce).to.eql(true);
     });
 
     it('should print deprecation warning for older file names', async () => {
-      let fsStub, moduleFile, utilsProxy;
+      let moduleFile, pathExistsStub, utilsProxy;
 
-      fsStub = {
-        existsSync: sinon.stub()
-      };
+      pathExistsStub = sinon.stub();
 
-      fsStub.existsSync.withArgs('app-module.coffee').returns(false);
-      fsStub.existsSync.withArgs('app-module.es6').returns(false);
-      fsStub.existsSync.withArgs('app-module.js').returns(false);
-      fsStub.existsSync.withArgs('app-module.ts').returns(false);
-      fsStub.existsSync.withArgs('app.coffee').returns(true);
+      pathExistsStub.withArgs('app-module.coffee').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-module.es6').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-module.js').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-module.ts').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app.coffee').returns(Promise.resolve(true));
 
       sinon.spy(console, 'log');
 
       utilsProxy = proxyquire('../generators/utils/module', {
-        fs: fsStub
+        'path-exists': pathExistsStub
       });
 
       moduleFile = await utilsProxy.findModuleFile('app');
@@ -102,47 +98,43 @@ describe('Module Utils', () => {
 
   describe('findRouteFile', () => {
     it('should return correct route file', async () => {
-      let fsStub, routesFile, utilsProxy;
+      let pathExistsStub, routesFile, utilsProxy;
 
-      fsStub = {
-        existsSync: sinon.stub()
-      };
+      pathExistsStub = sinon.stub();
 
-      fsStub.existsSync.withArgs('app-routes.coffee').returns(false);
-      fsStub.existsSync.withArgs('app-routes.es6').returns(false);
-      fsStub.existsSync.withArgs('app-routes.js').returns(false);
-      fsStub.existsSync.withArgs('app-routes.ts').returns(true);
+      pathExistsStub.withArgs('app-routes.coffee').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-routes.es6').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-routes.js').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-routes.ts').returns(Promise.resolve(true));
 
       utilsProxy = proxyquire('../generators/utils/module', {
-        fs: fsStub
+        'path-exists': pathExistsStub
       });
 
       routesFile = await utilsProxy.findRoutesFile('app');
 
       expect(routesFile).to.eql('app-routes.ts');
-      expect(fsStub.existsSync.withArgs('app-routes.coffee').calledOnce).to.eql(true);
-      expect(fsStub.existsSync.withArgs('app-routes.es6').calledOnce).to.eql(true);
-      expect(fsStub.existsSync.withArgs('app-routes.js').calledOnce).to.eql(true);
-      expect(fsStub.existsSync.withArgs('app-routes.ts').calledOnce).to.eql(true);
+      expect(pathExistsStub.withArgs('app-routes.coffee').calledOnce).to.eql(true);
+      expect(pathExistsStub.withArgs('app-routes.es6').calledOnce).to.eql(true);
+      expect(pathExistsStub.withArgs('app-routes.js').calledOnce).to.eql(true);
+      expect(pathExistsStub.withArgs('app-routes.ts').calledOnce).to.eql(true);
     });
 
     it('should print deprecation warning for older file names', async () => {
-      let fsStub, routesFile, utilsProxy;
+      let pathExistsStub, routesFile, utilsProxy;
 
-      fsStub = {
-        existsSync: sinon.stub()
-      };
+      pathExistsStub = sinon.stub();
 
-      fsStub.existsSync.withArgs('app-routes.coffee').returns(false);
-      fsStub.existsSync.withArgs('app-routes.es6').returns(false);
-      fsStub.existsSync.withArgs('app-routes.js').returns(false);
-      fsStub.existsSync.withArgs('app-routes.ts').returns(false);
-      fsStub.existsSync.withArgs('app-module.coffee').returns(true);
+      pathExistsStub.withArgs('app-routes.coffee').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-routes.es6').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-routes.js').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-routes.ts').returns(Promise.resolve(false));
+      pathExistsStub.withArgs('app-module.coffee').returns(Promise.resolve(true));
 
       sinon.spy(console, 'log');
 
       utilsProxy = proxyquire('../generators/utils/module', {
-        fs: fsStub
+        'path-exists': pathExistsStub
       });
 
       routesFile = await utilsProxy.findRoutesFile('app');
