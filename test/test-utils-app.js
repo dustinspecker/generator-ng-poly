@@ -6,10 +6,12 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 
 describe('App Utils', () => {
-  let fsStub, findUpStub, moduleUtilsStub, utilsProxy;
+  let fsStub, getYoRcPathStub, moduleUtilsStub, utilsProxy;
 
   beforeEach(() => {
-    findUpStub = sinon.stub().returns(Promise.resolve('awesome-project/.yo-rc.json'));
+    getYoRcPathStub = {
+      dir: sinon.stub().returns(Promise.resolve('awesome-project'))
+    };
 
     fsStub = {
       readFile(fileName, cb) {
@@ -23,7 +25,7 @@ describe('App Utils', () => {
 
     utilsProxy = proxyquire('../generators/utils/app', {
       './module': moduleUtilsStub,
-      'find-up': findUpStub,
+      'get-yo-rc-path': getYoRcPathStub,
       fs: fsStub
     });
   });
@@ -68,15 +70,6 @@ describe('App Utils', () => {
 
       testDir = await utilsProxy.getUnitTestDir();
       expect(testDir).to.eql('test');
-    });
-  });
-
-  describe('getYoPath', () => {
-    it('should return dirname of yopath', async () => {
-      let yoPath = await utilsProxy.getYoPath();
-
-      expect(yoPath).to.eql('awesome-project');
-      expect(findUpStub.calledWith('.yo-rc.json')).to.eql(true);
     });
   });
 });
