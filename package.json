@@ -65,7 +65,7 @@
     "gulp-babel": "^5.1.0",
     "gulp-eslint": "^1.0.0",
     "gulp-istanbul": "^0.10.0",
-    "gulp-jscs": "^3.0.0",
+    "gulp-jscs": "^3.0.2",
     "gulp-mocha": "^2.0.0",
     "proxyquire": "^1.0.1",
     "sinon": "^1.10.3"
