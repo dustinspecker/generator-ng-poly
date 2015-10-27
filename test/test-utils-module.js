@@ -62,7 +62,7 @@ describe('Module Utils', () => {
     });
 
     it('should return correct module file', async () => {
-      const moduleFile = await utilsProxy.findModuleFile('app');
+      let moduleFile = await utilsProxy.findModuleFile('app');
 
       expect(moduleFile).to.eql('app-module.ts');
       expect(pathExistsStub.withArgs('app-module.coffee').calledOnce).to.eql(true);
@@ -104,7 +104,7 @@ describe('Module Utils', () => {
     });
 
     it('should return correct route file', async () => {
-      const routesFile = await utilsProxy.findRoutesFile('app');
+      let routesFile = await utilsProxy.findRoutesFile('app');
 
       expect(routesFile).to.eql('app-routes.ts');
       expect(pathExistsStub.withArgs('app-routes.coffee').calledOnce).to.eql(true);
@@ -244,10 +244,9 @@ describe('Module Utils', () => {
     });
 
     it('should strip Windows app path in value', async () => {
-      const files = ['app\\test\\test-module.js']
-        , expectedModules = [{name: 'app\\test', value: 'test'}];
-
-      let appUtilsStub, modules, pathStub, windowsUtilsProxy;
+      let files = ['app\\test\\test-module.js']
+        , expectedModules = [{name: 'app\\test', value: 'test'}]
+        , appUtilsStub, modules, pathStub, windowsUtilsProxy;
 
       appUtilsStub = {
         getAppDir() {
@@ -276,10 +275,9 @@ describe('Module Utils', () => {
     });
 
     it('should strip Unix app path in value', async () => {
-      const files = ['app/test/test-module.js']
-        , expectedModules = [{name: 'app/test', value: 'test'}];
-
-      let appUtilsStub, pathStub, modules, unixUtilsProxy;
+      let files = ['app/test/test-module.js']
+        , expectedModules = [{name: 'app/test', value: 'test'}]
+        , appUtilsStub, pathStub, modules, unixUtilsProxy;
 
       appUtilsStub = {
         getAppDir() {

@@ -127,14 +127,14 @@ describe('Route Utils', () => {
       });
 
       it('should add param to empty config ()', () => {
-        const filePath = path.join(__dirname, 'fixtures', 'app-no-state-empty-config.coffee')
+        let filePath = path.join(__dirname, 'fixtures', 'app-no-state-empty-config.coffee')
           , fileContents = fs.readFileSync(filePath, 'utf8');
         expect(/config \(\$stateProvider\) ->/
           .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add param to existing config', () => {
-        const filePath = path.join(__dirname, 'fixtures', 'app-no-state-existing-config.coffee')
+        let filePath = path.join(__dirname, 'fixtures', 'app-no-state-existing-config.coffee')
           , fileContents = fs.readFileSync(filePath, 'utf8');
         expect(/config \([^$]*, \$stateProvider\) ->/
           .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);

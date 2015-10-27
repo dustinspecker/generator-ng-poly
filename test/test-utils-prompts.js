@@ -87,14 +87,14 @@ describe('Prompt Utils', () => {
       });
 
       it('should return Angular Aria and Messages for 1.3.*', () => {
-        const bowerComponentsFor13 = promptsUtils.getBowerComponents('1.3.*');
+        let bowerComponentsFor13 = promptsUtils.getBowerComponents('1.3.*');
         expect(bowerComponentsFor13[1]).to.eql(angularAria);
         expect(bowerComponentsFor13[3]).to.eql(angularMessages);
         expect(bowerComponentsFor13.length).to.eql(10);
       });
 
       it('should return Angular Aria and Messages for 1.4.*', () => {
-        const bowerComponentsFor14 = promptsUtils.getBowerComponents('1.4.*');
+        let bowerComponentsFor14 = promptsUtils.getBowerComponents('1.4.*');
         expect(bowerComponentsFor14[1]).to.eql(angularAria);
         expect(bowerComponentsFor14[3]).to.eql(angularMessages);
         expect(bowerComponentsFor14.length).to.eql(10);
@@ -255,7 +255,7 @@ describe('Prompt Utils', () => {
     });
 
     describe('Angular Material', () => {
-      const angularMaterial = {
+      let angularMaterial = {
         name: 'Angular Material',
         value: 'material'
       };
@@ -265,13 +265,13 @@ describe('Prompt Utils', () => {
       });
 
       it('should also return Angular Material for version 1.3.*', () => {
-        const frameworksFor13 = promptsUtils.getUIFrameworks('1.3.*');
+        let frameworksFor13 = promptsUtils.getUIFrameworks('1.3.*');
         expect(frameworksFor13[1]).to.eql(angularMaterial);
         expect(frameworksFor13.length).to.eql(5);
       });
 
       it('should also return Angular Material for version 1.4.*', () => {
-        const frameworksFor14 = promptsUtils.getUIFrameworks('1.4.*');
+        let frameworksFor14 = promptsUtils.getUIFrameworks('1.4.*');
         expect(frameworksFor14[1]).to.eql(angularMaterial);
         expect(frameworksFor14.length).to.eql(5);
       });

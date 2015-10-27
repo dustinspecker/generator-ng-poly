@@ -150,7 +150,7 @@ describe('App generator', () => {
       });
 
       it('should override Angular dependencies with jQuery', () => {
-        const expectedOverride = [
+        let expectedOverride = [
           '  },',
           '  "overrides": {',
           '    "angular": {',
@@ -713,7 +713,7 @@ describe('App generator', () => {
       });
 
       it('should override Angular dependencies with jQuery', () => {
-        const expectedOverride = [
+        let expectedOverride = [
           '  },',
           '  "overrides": {',
           '    "angular": {',
@@ -987,7 +987,7 @@ describe('App generator', () => {
       });
 
       it('should override modernizr main', () => {
-        const expectedOverride = [
+        let expectedOverride = [
           '  },',
           '  "overrides": {',
           '    "modernizr": {',
