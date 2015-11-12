@@ -31,7 +31,7 @@
     "polymer"
   ],
   "dependencies": {
-    "babel-runtime": "^5.8.29",
+    "babel-runtime": "^6.1.18",
     "chalk": "^1.0.0",
     "class-extend": "^0.1.1",
     "count-spaces": "^1.0.1",
