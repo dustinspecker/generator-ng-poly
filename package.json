@@ -33,7 +33,6 @@
   "dependencies": {
     "babel-runtime": "^5.8.29",
     "chalk": "^1.0.0",
-    "class-extend": "^0.1.1",
     "count-spaces": "^1.0.1",
     "find-up": "^1.0.0",
     "func-has-param": "^1.1.1",
