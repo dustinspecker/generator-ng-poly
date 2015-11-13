@@ -63,6 +63,7 @@
     "eslint": "^1.7.3",
     "eslint-config-dustinspecker": "^0.1.0",
     "eslint-path-formatter": "^0.1.1",
+    "eslint-plugin-new-with-error": "^1.1.0",
     "eslint-plugin-no-use-extend-native": "^0.3.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
