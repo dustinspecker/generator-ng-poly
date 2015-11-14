@@ -1,0 +1,7 @@
+{
+  "plugins": [
+    "syntax-async-functions",
+    "transform-regenerator"
+  ],
+  "presets": ["babel-preset-es2015"]
+}

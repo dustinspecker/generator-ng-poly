@@ -130,6 +130,46 @@ describe('Module Utils', () => {
     });
   });
 
+  describe('getAppName', () => {
+    let appUtilsStub, fsStub, getYoRcPathStub, utilsProxy;
+
+    beforeEach(() => {
+      appUtilsStub = {
+        getAppDir() {
+          return Promise.resolve('app');
+        },
+        getFileFromRoot: sinon.stub().returns(Promise.resolve({name: 'test'}))
+      };
+
+      fsStub = {
+        readFile(fileName, cb) {
+          cb(null, 'angular.module(\'awesomeName\', [])');
+        }
+      };
+
+      getYoRcPathStub = {
+        dir: sinon.stub().returns(Promise.resolve('awesome-project'))
+      };
+
+      // proxy utils
+      utilsProxy = proxyquire('../generators/utils/module', {
+        './app': appUtilsStub,
+        fs: fsStub,
+        'get-yo-rc-path': getYoRcPathStub
+      });
+
+      utilsProxy.findModuleFile = sinon.stub().returns(Promise.resolve('app-module.js'));
+    });
+
+    it('should return app name', async () => {
+      let appName;
+
+      expectRequire('awesome-project/build.config.js').return({appDir: 'app'});
+      appName = await utilsProxy.getAppName();
+      expect(appName).to.eql('awesomeName');
+    });
+  });
+
   describe('moduleFilter', () => {
     let utilsProxy;
 
