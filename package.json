@@ -59,7 +59,7 @@
     "babel-eslint": "^4.1.3",
     "chai": "^3.2.0",
     "coveralls": "^2.11.1",
-    "del": "^2.0.0",
+    "del": "^2.1.0",
     "eslint": "^1.7.3",
     "eslint-config-dustinspecker": "^0.1.0",
     "eslint-path-formatter": "^0.1.1",
