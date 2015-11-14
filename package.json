@@ -44,7 +44,7 @@
     "newline-regex": "^0.2.0",
     "ng-add-dep": "^0.3.0",
     "ng-mod-get-names": "^1.0.0",
-    "path-exists": "^2.0.0",
+    "path-exists": "^2.1.0",
     "pify": "^2.2.0",
     "recursive-readdir": "^1.2.1",
     "remove-trailing-slash": "^0.1.0",
