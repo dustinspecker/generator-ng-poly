@@ -64,7 +64,7 @@
     "coveralls": "^2.11.1",
     "del": "^2.0.0",
     "eslint": "^1.7.3",
-    "eslint-config-dustinspecker": "^0.1.0",
+    "eslint-config-dustinspecker": "^0.2.5",
     "eslint-path-formatter": "^0.1.1",
     "eslint-plugin-new-with-error": "^1.1.0",
     "eslint-plugin-no-use-extend-native": "^0.3.1",
