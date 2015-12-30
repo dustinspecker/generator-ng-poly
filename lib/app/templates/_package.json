@@ -48,7 +48,7 @@
     "gulp-protractor": "^1.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-rev": "^5.1.0"<% if (style === 'scss') { %>,
-    "gulp-sass": "^1.0.0"<% } %>,
+    "gulp-sass": "^2.0.4"<% } %>,
     "gulp-sourcemaps": "^1.5.1"<% if (style === 'styl') { %>,
     "gulp-stylus": "^2.0.0"<% } %>,
     "gulp-tslint": "^3.1.2"<% if (appScript === 'ts' || testScript === 'ts') { %>,
