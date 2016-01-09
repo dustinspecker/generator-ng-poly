@@ -1,7 +1,8 @@
 /* global describe, before, it */
 'use strict';
-import {assert, test as helpers} from 'yeoman-generator';
+import assert from 'yeoman-assert';
 import {join} from 'path';
+import helpers from 'yeoman-test';
 
 describe('Route generator', () => {
   describe('with HTML markup, Less style, JS app, JS test, and skipController', () => {

@@ -1,7 +1,8 @@
 /* global describe, before, it */
 'use strict';
-import {assert, test as helpers} from 'yeoman-generator';
+import assert from 'yeoman-assert';
 import path from 'path';
+import helpers from 'yeoman-test';
 
 describe('Module generator', () => {
   // generate default app

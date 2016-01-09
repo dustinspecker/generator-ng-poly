@@ -1,8 +1,9 @@
 /* global describe, before, it */
 'use strict';
-import {assert, test as helpers} from 'yeoman-generator';
+import assert from 'yeoman-assert';
 import {EOL} from 'os';
 import {join} from 'path';
+import helpers from 'yeoman-test';
 import sinon from 'sinon';
 
 let coffeeDeps, es2015Deps, jadeDeps, hamlDeps, lessDeps, scssDeps, stylusDeps, typescriptDeps;
