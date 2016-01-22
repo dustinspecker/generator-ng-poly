@@ -7,3 +7,7 @@ node_js:
 before_install:
 - npm install -g gulp
 after_success: npm run-script coveralls
+matrix:
+  allow_failures:
+    - node_js: '0.12'
+    - node_js: '0.10'
