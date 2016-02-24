@@ -48,7 +48,7 @@
     "pify": "^2.2.0",
     "recursive-readdir": "^1.2.1",
     "remove-trailing-slash": "^0.1.0",
-    "underscore.string": "^3.0.1",
+    "underscore.string": "^3.3.4",
     "update-notifier": "^0.6.0",
     "yeoman-generator": "^0.22.4",
     "yosay": "^1.0.0"
