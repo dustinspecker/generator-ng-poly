@@ -52,6 +52,7 @@
     "gulp-sourcemaps": "^1.5.1"<% if (style === 'styl') { %>,
     "gulp-stylus": "^2.0.0"<% } %>,
     "gulp-tslint": "^3.1.2"<% if (appScript === 'ts' || testScript === 'ts') { %>,
+    "gulp-tslint-stylish": "^1.1.1",
     "gulp-typescript": "2.8.0"<% } %>,
     "gulp-uglify": "^1.0.0",
     "jshint-stylish": "^2.0.1",

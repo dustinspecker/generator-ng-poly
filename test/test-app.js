@@ -40,7 +40,8 @@ stylusDeps = [
 ];
 
 typescriptDeps = [
-  '"gulp-typescript":'
+  '"gulp-typescript":',
+  '"gulp-tslint-stylish":'
 ];
 
 describe('App generator', () => {
@@ -139,6 +140,12 @@ describe('App generator', () => {
       ]);
     });
 
+    it('should not create tslint.json', () => {
+      assert.noFile([
+        'tslint.json'
+      ]);
+    });
+
     describe('.eslintrc', () => {
       it('should extend dustinspecker', () => {
         assert.fileContent('.eslintrc', '"dustinspecker"');
@@ -184,6 +191,10 @@ describe('App generator', () => {
 
       it('should not have CS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.coffeelint()');
+      });
+
+      it('should not have TS linting', () => {
+        assert.noFileContent('gulp/analyze.js', '$.tslint()');
       });
     });
 
@@ -429,6 +440,7 @@ describe('App generator', () => {
         '.yo-rc.json',
         'bower.json',
         'tsd.json',
+        'tslint.json',
         'build.config.js',
         'Gulpfile.js',
         'karma.config.js',
@@ -455,10 +467,18 @@ describe('App generator', () => {
     });
 
     describe('gulp/analyze.js', () => {
+      it('should have TS linting', () => {
+        assert.fileContent('gulp/analyze.js', '$.tslint()');
+      });
+
       it('should not have JS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.eslint()');
         assert.noFileContent('gulp/analyze.js', '$.jshint()');
         assert.noFileContent('gulp/analyze.js', '$.jscs()');
+      });
+
+      it('should have TS filter', () => {
+        assert.fileContent('gulp/analyze.js', 'tsFilter = $.filter(\'**/*.ts\', {restore: true})');
       });
 
       it('should not have filters', () => {
@@ -736,6 +756,10 @@ describe('App generator', () => {
         assert.noFileContent('gulp/analyze.js', '$.jscs()');
       });
 
+      it('should not have TS linting', () => {
+        assert.noFileContent('gulp/analyze.js', '$.tslint()');
+      });
+
       it('should have CS filter', () => {
         assert.fileContent('gulp/analyze.js', 'var coffeeFilter = $.filter(\'**/*.coffee\', {restore: true});');
       });
@@ -743,6 +767,7 @@ describe('App generator', () => {
       it('should not have unrequired filters', () => {
         assert.noFileContent('gulp/analyze.js', 'es6Filter = $.filter(\'**/*.es6\', {restore: true})');
         assert.noFileContent('gulp/analyze.js', 'jsFilter = $.filter(\'**/*.js\', {restore: true})');
+        assert.noFileContent('gulp/analyze.js', 'tsFilter = $.filter(\'**/*.ts\', {restore: true})');
       });
 
       it('should have CS linting', () => {
@@ -1014,11 +1039,16 @@ describe('App generator', () => {
 
       it('should not have unrequired filters', () => {
         assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/.coffee\', {restore: true})');
+        assert.noFileContent('gulp/analyze.js', 'tsFilter = $.filter(\'**/.ts\', {restore: true})');
         assert.noFileContent('gulp/analyze.js', 'jsFilter = $.filter(\'**/*.js\', {restore: true})');
       });
 
       it('should not have CS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.coffeelint()');
+      });
+
+      it('should not have TS linting', () => {
+        assert.noFileContent('gulp/analyze.js', '$.tslint()');
       });
     });
 
@@ -1294,10 +1324,15 @@ describe('App generator', () => {
 
       it('should not have filters', () => {
         assert.noFileContent('gulp/analyze.js', 'coffeeFilter = $.filter(\'**/*.coffee\', {restore: true})');
+        assert.noFileContent('gulp/analyze.js', 'tsFilter = $.filter(\'**/*.ts\', {restore: true})');
       });
 
       it('should not have CS linting', () => {
         assert.noFileContent('gulp/analyze.js', '$.coffeelint()');
+      });
+
+      it('should not have TS linting', () => {
+        assert.noFileContent('gulp/analyze.js', '$.tslint()');
       });
     });
 

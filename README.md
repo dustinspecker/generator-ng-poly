@@ -217,7 +217,8 @@ root/
 ├── package.json
 ├── protractor.config.js
 ├── README.md
-└── tsd.json*
+├── tsd.json*
+└── tslint.json*
 ```
 
 A **module-type** structure produces:
@@ -264,7 +265,8 @@ root/
 ├── package.json
 ├── protractor.config.js
 ├── README.md
-└── tsd.json*
+├── tsd.json*
+└── tslint.json*
 ```
 \* Only TypeScript projects will have this.
 ### Constant
@@ -1384,7 +1386,7 @@ Available tasks:
  - Runs Protractor to perform e2eTest (**app needs to be running via `gulp default`**)
 - `gulp webdriverUpdate` downloads Selenium and webdrivers for e2e testing
 - `gulp analyze`
- - Analyzes source and test code with CoffeeLint, ESLint, JSHint, and JSCS
+ - Analyzes source and test code with CoffeeLint, TSLint, ESLint, JSHint, and JSCS
  - Uses Plato to inspect source and test for complexity and maintainability
 
 * * *
