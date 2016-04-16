@@ -7,6 +7,8 @@
 [![Dependencies](https://david-dm.org/dustinspecker/generator-ng-poly.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=dependencies&view=table)
 [![DevDependencies](https://david-dm.org/dustinspecker/generator-ng-poly/dev-status.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=devDependencies&view=table)
 
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 > [Yeoman](http://yeoman.io) generator for modular AngularJS apps with Gulp and optional Polymer support
 
 *Inspired by [John Papa](https://github.com/johnpapa)'s [Angular Style Guide](https://github.com/johnpapa/angular-styleguide) and [Todd Motto](https://github.com/toddmotto)'s [AngularJS styleguide](https://github.com/toddmotto/angularjs-styleguide).*
