@@ -28,4 +28,4 @@ $ npm test
 - Link your fork (`npm link`)
 - Develop
 - Verify tests pass (`npm test`)
-- Push changes and make a pull request into the **develop** branch
+- Push changes and make a pull request into the **master** branch
