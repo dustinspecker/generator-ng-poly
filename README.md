@@ -2,6 +2,7 @@
 [![NPM version](https://badge.fury.io/js/generator-ng-poly.svg)](http://badge.fury.io/js/generator-ng-poly)
 [![Build Status](https://travis-ci.org/dustinspecker/generator-ng-poly.svg?branch=master)](https://travis-ci.org/dustinspecker/generator-ng-poly)
 [![Coverage Status](https://img.shields.io/coveralls/dustinspecker/generator-ng-poly.svg)](https://coveralls.io/r/dustinspecker/generator-ng-poly?branch=master)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors)
 
 [![Code Climate](https://codeclimate.com/github/dustinspecker/generator-ng-poly/badges/gpa.svg)](https://codeclimate.com/github/dustinspecker/generator-ng-poly)
 [![Dependencies](https://david-dm.org/dustinspecker/generator-ng-poly.svg)](https://david-dm.org/dustinspecker/generator-ng-poly/#info=dependencies&view=table)
@@ -1436,6 +1437,18 @@ For this, we're going to install and setup `paper-toolbar`.
 
 **Note: for custom components, we just need to include them in `polymerAssetsToInject`. They are all automically copied.**
 * * *
+
+## Contributors
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+| [![Dustin Specker](https://avatars.githubusercontent.com/u/2449282?v=3&s=100)<br /><sub>Dustin Specker</sub>](http://dustinspecker.com)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=dustinspecker) [📖](https://github.com/dustinspecker/generator-ng-poly/commits?author=dustinspecker) [⚠️](https://github.com/dustinspecker/generator-ng-poly/commits?author=dustinspecker) | [![Binh Nguyen](https://avatars.githubusercontent.com/u/211327?v=3&s=100)<br /><sub>Binh Nguyen</sub>](https://github.com/ngbinh)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=ngbinh) [📖](https://github.com/dustinspecker/generator-ng-poly/commits?author=ngbinh) [⚠️](https://github.com/dustinspecker/generator-ng-poly/commits?author=ngbinh) | [![Roman C. Podolski](https://avatars.githubusercontent.com/u/2411585?v=3&s=100)<br /><sub>Roman C. Podolski</sub>](https://github.com/RomanCPodolski)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=RomanCPodolski) | [![David Brown](https://avatars.githubusercontent.com/u/1423875?v=3&s=100)<br /><sub>David Brown</sub>](http://bit.ly/lndbgh)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=TheOneTheOnlyDavidBrown) [📖](https://github.com/dustinspecker/generator-ng-poly/commits?author=TheOneTheOnlyDavidBrown) | [![David Steinkopff](https://avatars.githubusercontent.com/u/656302?v=3&s=100)<br /><sub>David Steinkopff</sub>](https://github.com/zeitiger)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=zeitiger) | [![Frode Egeland](https://avatars.githubusercontent.com/u/1281379?v=3&s=100)<br /><sub>Frode Egeland</sub>](http://www.onsentipster.com)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=egeland) [⚠️](https://github.com/dustinspecker/generator-ng-poly/commits?author=egeland) | [![Scott Busche](https://avatars.githubusercontent.com/u/857700?v=3&s=100)<br /><sub>Scott Busche</sub>](https://github.com/busches)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=busches) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| [![Rafael Zeffa](https://avatars.githubusercontent.com/u/4741812?v=3&s=100)<br /><sub>Rafael Zeffa</sub>](http://rafaelhz.github.io)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=rafaelhz) [⚠️](https://github.com/dustinspecker/generator-ng-poly/commits?author=rafaelhz) | [![PatrickJS](https://avatars.githubusercontent.com/u/1016365?v=3&s=100)<br /><sub>PatrickJS</sub>](http://angularclass.com)<br />[📖](https://github.com/dustinspecker/generator-ng-poly/commits?author=gdi2290) | [![Tiago de Assis Gonçalves](https://avatars.githubusercontent.com/u/55122?v=3&s=100)<br /><sub>Tiago de Assis Gonçalves</sub>](http://br.linkedin.com/in/tiagoassisgoncalves)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=legiao) | [![Ruslan Stelmachenko](https://avatars.githubusercontent.com/u/1576014?v=3&s=100)<br /><sub>Ruslan Stelmachenko</sub>](https://github.com/xak2000)<br />[💻](https://github.com/dustinspecker/generator-ng-poly/commits?author=xak2000) |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.
+Contributions of any kind welcome!
 
 ### License
 

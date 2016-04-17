@@ -1,0 +1,117 @@
+{
+  "projectName": "generator-ng-poly",
+  "projectOwner": "dustinspecker",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "dustinspecker",
+      "name": "Dustin Specker",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2449282?v=3",
+      "profile": "http://dustinspecker.com",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
+    },
+    {
+      "login": "ngbinh",
+      "name": "Binh Nguyen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/211327?v=3",
+      "profile": "https://github.com/ngbinh",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
+    },
+    {
+      "login": "RomanCPodolski",
+      "name": "Roman C. Podolski",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2411585?v=3",
+      "profile": "https://github.com/RomanCPodolski",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "TheOneTheOnlyDavidBrown",
+      "name": "David Brown",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1423875?v=3",
+      "profile": "http://bit.ly/lndbgh",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "zeitiger",
+      "name": "David Steinkopff",
+      "avatar_url": "https://avatars.githubusercontent.com/u/656302?v=3",
+      "profile": "https://github.com/zeitiger",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "egeland",
+      "name": "Frode Egeland",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1281379?v=3",
+      "profile": "http://www.onsentipster.com",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "busches",
+      "name": "Scott Busche",
+      "avatar_url": "https://avatars.githubusercontent.com/u/857700?v=3",
+      "profile": "https://github.com/busches",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rafaelhz",
+      "name": "Rafael Zeffa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4741812?v=3",
+      "profile": "http://rafaelhz.github.io",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "gdi2290",
+      "name": "PatrickJS",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1016365?v=3",
+      "profile": "http://angularclass.com",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "legiao",
+      "name": "Tiago de Assis Gonçalves",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55122?v=3",
+      "profile": "http://br.linkedin.com/in/tiagoassisgoncalves",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "xak2000",
+      "name": "Ruslan Stelmachenko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1576014?v=3",
+      "profile": "https://github.com/xak2000",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
+}
