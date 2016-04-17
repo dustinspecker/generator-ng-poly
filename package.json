@@ -17,7 +17,6 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "prepublish": "npm test",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "gulp test",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
