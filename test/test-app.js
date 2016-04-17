@@ -461,8 +461,8 @@ describe('App generator', () => {
     });
 
     describe('bower.json', () => {
-      it('should have UI Bootstrap version 0.13.3', () => {
-        assert.fileContent('bower.json', '"angular-bootstrap": "~0.13.3"');
+      it('should have UI Bootstrap version ^1.3.2', () => {
+        assert.fileContent('bower.json', '"angular-bootstrap": "^1.3.2"');
       });
     });
 
