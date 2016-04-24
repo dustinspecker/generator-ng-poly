@@ -19,7 +19,7 @@ gulp.task('lint', () => {
   return gulp.src([configFiles, srcFiles, testFiles])
     .pipe(eslint())
     .pipe(eslint.formatEach('./node_modules/eslint-path-formatter'))
-    .pipe(eslint.failOnError())
+    .pipe(eslint.failAfterError())
     .pipe(jscs())
     .pipe(jscs.reporter())
     .pipe(jscs.reporter('fail'));
