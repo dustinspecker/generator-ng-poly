@@ -10,7 +10,6 @@
     'no-param-reassign': 0,
     'no-useless-escape': 0,
     operator: 0,
-    'operator-linebreak': 0,
     'prefer-const': 0,
     'prefer-template': 0,
     semi: [2, 'always']
