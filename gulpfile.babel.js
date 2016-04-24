@@ -15,26 +15,26 @@ const configFiles = 'gulpfile.babel.js'
 
 gulp.task('clean', () => del(destDir));
 
-gulp.task('lint', () => {
-  return gulp.src([configFiles, srcFiles, testFiles])
+gulp.task('lint', () =>
+  gulp.src([configFiles, srcFiles, testFiles])
     .pipe(eslint())
     .pipe(eslint.format('node_modules/eslint-formatter-pretty'))
     .pipe(eslint.failAfterError())
     .pipe(jscs())
     .pipe(jscs.reporter())
-    .pipe(jscs.reporter('fail'));
-});
+    .pipe(jscs.reporter('fail'))
+);
 
-gulp.task('compile', ['clean', 'lint'], () => {
-  return gulp.src(srcFiles, {base: './lib'})
+gulp.task('compile', ['clean', 'lint'], () =>
+  gulp.src(srcFiles, {base: './lib'})
     .pipe(babel())
-    .pipe(gulp.dest(destDir));
-});
+    .pipe(gulp.dest(destDir))
+);
 
-gulp.task('copy:templates', ['clean'], () => {
-  return gulp.src(['lib/*/templates/**/*', 'lib/*/templates/.*'])
-    .pipe(gulp.dest(destDir));
-});
+gulp.task('copy:templates', ['clean'], () =>
+  gulp.src(['lib/*/templates/**/*', 'lib/*/templates/.*'])
+    .pipe(gulp.dest(destDir))
+);
 
 gulp.task('build', ['compile', 'copy:templates']);
 
