@@ -6,40 +6,38 @@ import {join} from 'path';
 import helpers from 'yeoman-test';
 import sinon from 'sinon';
 
-let coffeeDeps, es2015Deps, jadeDeps, hamlDeps, lessDeps, scssDeps, stylusDeps, typescriptDeps;
-
-coffeeDeps = [
+const coffeeDeps = [
   '"coffee-script":',
   '"gulp-coffee":',
   '"gulp-coffeelint":'
 ];
 
-es2015Deps = [
+const es2015Deps = [
   '"gulp-babel":'
 ];
 
-jadeDeps = [
+const jadeDeps = [
   '"gulp-jade":'
 ];
 
-hamlDeps = [
+const hamlDeps = [
   '"gulp-haml":'
 ];
 
-lessDeps = [
+const lessDeps = [
   '"gulp-less":'
 ];
 
-scssDeps = [
+const scssDeps = [
   '"gulp-sass":'
 ];
 
-stylusDeps = [
+const stylusDeps = [
   '"gulp-stylus":',
   '"nib":'
 ];
 
-typescriptDeps = [
+const typescriptDeps = [
   '"gulp-typescript":',
   '"gulp-tslint-stylish":'
 ];
@@ -158,7 +156,7 @@ describe('App generator', () => {
       });
 
       it('should override Angular dependencies with jQuery', () => {
-        let expectedOverride = [
+        const expectedOverride = [
           '  },',
           '  "overrides": {',
           '    "angular": {',
@@ -212,19 +210,17 @@ describe('App generator', () => {
       });
 
       it('should not use compilers', () => {
-        let markup, scripts, styles;
-
-        markup = [
+        const markup = [
           '    ])',
           '      .pipe(gulp.dest(config.buildDir));'
         ].join(EOL);
 
-        scripts = [
+        const scripts = [
           '      .pipe($.sourcemaps.init())',
           '      .pipe($.if(isProd, htmlFilter))'
         ].join(EOL);
 
-        styles = [
+        const styles = [
           '      }}))',
           '      .pipe($.autoprefixer())'
         ].join(EOL);
@@ -255,14 +251,12 @@ describe('App generator', () => {
 
     describe('gulp/test.js', () => {
       it('should not use compilers', () => {
-        let buildTests, buildE2ETests;
-
-        buildTests = [
+        const buildTests = [
           '    return gulp.src([config.unitTestFiles])',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
         ].join(EOL);
 
-        buildE2ETests = [
+        const buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
           '      .pipe(gulp.dest(config.buildE2eTestsDir));'
         ].join(EOL);
@@ -494,15 +488,13 @@ describe('App generator', () => {
 
     describe('gulp/build.js', () => {
       it('should use compilers', () => {
-        let markup, scripts, styles;
-
-        markup = [
+        const markup = [
           '    ])',
           '      .pipe($.haml())',
           '      .pipe(gulp.dest(config.buildDir));'
         ].join(EOL);
 
-        scripts = [
+        const scripts = [
           '      .pipe($.sourcemaps.init())',
           '      .pipe(tsFilter)',
           '      .pipe($.typescript(config.tsSourceProject))',
@@ -510,7 +502,7 @@ describe('App generator', () => {
           '      .pipe($.if(isProd, htmlFilter))'
         ].join(EOL);
 
-        styles = [
+        const styles = [
           '      }}))',
           '      .pipe($.less())',
           '      .pipe($.autoprefixer())'
@@ -526,21 +518,19 @@ describe('App generator', () => {
       });
 
       it('should use filters in components task', () => {
-        let expectedMarkup, expectedScript, expectedStyle;
-
-        expectedMarkup = [
+        const expectedMarkup = [
           '      .pipe(markupFilter)',
           '      .pipe($.haml())',
           '      .pipe(markupFilter.restore)'
         ].join(EOL);
 
-        expectedScript = [
+        const expectedScript = [
           '      .pipe(scriptFilter)',
           '      .pipe($.typescript(config.tsSourceProject))',
           '      .pipe(scriptFilter.restore)'
         ].join(EOL);
 
-        expectedStyle = [
+        const expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.less())',
           '      .pipe(styleFilter.restore)'
@@ -566,15 +556,13 @@ describe('App generator', () => {
 
     describe('gulp/test.js', () => {
       it('should use compiler for unit and not for e2e', () => {
-        let buildTests, buildE2ETests;
-
-        buildTests = [
+        const buildTests = [
           '    return gulp.src([config.unitTestFiles])',
           '      .pipe($.typescript(config.tsTestProject))',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
         ].join(EOL);
 
-        buildE2ETests = [
+        const buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
           '      .pipe(gulp.dest(config.buildE2eTestsDir));'
         ].join(EOL);
@@ -734,7 +722,7 @@ describe('App generator', () => {
       });
 
       it('should override Angular dependencies with jQuery', () => {
-        let expectedOverride = [
+        const expectedOverride = [
           '  },',
           '  "overrides": {',
           '    "angular": {',
@@ -777,15 +765,13 @@ describe('App generator', () => {
 
     describe('gulp/build.js', () => {
       it('should use compilers', () => {
-        let markup, scripts, styles;
-
-        markup = [
+        const markup = [
           '    ])',
           '      .pipe($.haml())',
           '      .pipe(gulp.dest(config.buildDir));'
         ].join(EOL);
 
-        scripts = [
+        const scripts = [
           '      .pipe($.sourcemaps.init())',
           '      .pipe(coffeeFilter)',
           '      .pipe($.coffee())',
@@ -793,7 +779,7 @@ describe('App generator', () => {
           '      .pipe($.if(isProd, htmlFilter))'
         ].join(EOL);
 
-        styles = [
+        const styles = [
           '      }}))',
           '      .pipe($.less())',
           '      .pipe($.autoprefixer())'
@@ -809,21 +795,19 @@ describe('App generator', () => {
       });
 
       it('should use filters in components task', () => {
-        let expectedMarkup, expectedScript, expectedStyle;
-
-        expectedMarkup = [
+        const expectedMarkup = [
           '      .pipe(markupFilter)',
           '      .pipe($.haml())',
           '      .pipe(markupFilter.restore)'
         ].join(EOL);
 
-        expectedScript = [
+        const expectedScript = [
           '      .pipe(scriptFilter)',
           '      .pipe($.coffee())',
           '      .pipe(scriptFilter.restore)'
         ].join(EOL);
 
-        expectedStyle = [
+        const expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.less())',
           '      .pipe(styleFilter.restore)'
@@ -849,15 +833,13 @@ describe('App generator', () => {
 
     describe('gulp/test.js', () => {
       it('should use compilers', () => {
-        let buildTests, buildE2ETests;
-
-        buildTests = [
+        const buildTests = [
           '    return gulp.src([config.unitTestFiles])',
           '      .pipe($.coffee())',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
         ].join(EOL);
 
-        buildE2ETests = [
+        const buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
           '      .pipe($.coffee())',
           '      .pipe(gulp.dest(config.buildE2eTestsDir));'
@@ -1013,7 +995,7 @@ describe('App generator', () => {
       });
 
       it('should override modernizr main', () => {
-        let expectedOverride = [
+        const expectedOverride = [
           '  },',
           '  "overrides": {',
           '    "modernizr": {',
@@ -1054,15 +1036,13 @@ describe('App generator', () => {
 
     describe('gulp/build.js', () => {
       it('should use compilers', () => {
-        let markup, scripts, styles;
-
-        markup = [
+        const markup = [
           '    ])',
           '      .pipe($.jade())',
           '      .pipe(gulp.dest(config.buildDir));'
         ].join(EOL);
 
-        scripts = [
+        const scripts = [
           '      .pipe($.sourcemaps.init())',
           '      .pipe(es6Filter)',
           '      .pipe($.babel())',
@@ -1073,7 +1053,7 @@ describe('App generator', () => {
           '      .pipe($.if(isProd, htmlFilter))'
         ].join(EOL);
 
-        styles = [
+        const styles = [
           '      }}))',
           '      .pipe($.stylus({',
           '        use: $.nib()',
@@ -1091,15 +1071,13 @@ describe('App generator', () => {
       });
 
       it('should use filters in components task', () => {
-        let expectedMarkup, expectedScript, expectedStyle;
-
-        expectedMarkup = [
+        const expectedMarkup = [
           '      .pipe(markupFilter)',
           '      .pipe($.jade())',
           '      .pipe(markupFilter.restore)'
         ].join(EOL);
 
-        expectedScript = [
+        const expectedScript = [
           '      .pipe(scriptFilter)',
           '      .pipe($.babel())',
           '      .pipe($.rename(function (filePath) {',
@@ -1108,7 +1086,7 @@ describe('App generator', () => {
           '      .pipe(scriptFilter.restore)'
         ].join(EOL);
 
-        expectedStyle = [
+        const expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.stylus({',
           '        use: $.nib()',
@@ -1136,9 +1114,7 @@ describe('App generator', () => {
 
     describe('gulp/test.js', () => {
       it('should use compilers', () => {
-        let buildTests, buildE2ETests;
-
-        buildTests = [
+        const buildTests = [
           '    return gulp.src([config.unitTestFiles])',
           '      .pipe($.babel())',
           '      .pipe($.rename(function (filePath) {',
@@ -1147,7 +1123,7 @@ describe('App generator', () => {
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
         ].join(EOL);
 
-        buildE2ETests = [
+        const buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
           '      .pipe($.babel())',
           '      .pipe($.rename(function (filePath) {',
@@ -1338,19 +1314,17 @@ describe('App generator', () => {
 
     describe('gulp/build.js', () => {
       it('should use compilers', () => {
-        let markup, scripts, styles;
-
-        markup = [
+        const markup = [
           '    ])',
           '      .pipe(gulp.dest(config.buildDir));'
         ].join(EOL);
 
-        scripts = [
+        const scripts = [
           '      .pipe($.sourcemaps.init())',
           '      .pipe($.if(isProd, htmlFilter))'
         ].join(EOL);
 
-        styles = [
+        const styles = [
           '      }}))',
           '      .pipe($.sass())',
           '      .pipe($.autoprefixer())'
@@ -1366,9 +1340,7 @@ describe('App generator', () => {
       });
 
       it('should use filters in components task', () => {
-        let expectedStyle;
-
-        expectedStyle = [
+        const expectedStyle = [
           '      .pipe(styleFilter)',
           '      .pipe($.sass())',
           '      .pipe(styleFilter.restore)'
@@ -1392,14 +1364,12 @@ describe('App generator', () => {
 
     describe('gulp/test.js', () => {
       it('should not use compilers', () => {
-        let buildTests, buildE2ETests;
-
-        buildTests = [
+        const buildTests = [
           '    return gulp.src([config.unitTestFiles])',
           '      .pipe(gulp.dest(config.buildUnitTestsDir));'
         ].join(EOL);
 
-        buildE2ETests = [
+        const buildE2ETests = [
           '    return gulp.src([config.e2eFiles])',
           '      .pipe(gulp.dest(config.buildE2eTestsDir));'
         ].join(EOL);

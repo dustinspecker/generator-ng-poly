@@ -8,7 +8,6 @@
     'max-len': [2, 220],
     'newline-per-chained-call': 0,
     'no-param-reassign': 0,
-    'prefer-const': 0,
     'prefer-template': 0,
     semi: [2, 'always']
   }

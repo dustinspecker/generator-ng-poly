@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import routeUtils from '../generators/utils/route';
 
-let newState = {
+const newState = {
   name: 'test',
   module: 'home',
   url: '/test',
@@ -127,14 +127,14 @@ describe('Route Utils', () => {
       });
 
       it('should add param to empty config ()', () => {
-        let filePath = path.join(__dirname, 'fixtures', 'app-no-state-empty-config.coffee')
+        const filePath = path.join(__dirname, 'fixtures', 'app-no-state-empty-config.coffee')
           , fileContents = fs.readFileSync(filePath, 'utf8');
         expect(/config \(\$stateProvider\) ->/
           .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);
       });
 
       it('should add param to existing config', () => {
-        let filePath = path.join(__dirname, 'fixtures', 'app-no-state-existing-config.coffee')
+        const filePath = path.join(__dirname, 'fixtures', 'app-no-state-existing-config.coffee')
           , fileContents = fs.readFileSync(filePath, 'utf8');
         expect(/config \([^$]*, \$stateProvider\) ->/
           .test(routeUtils.addRoute(fileContents, newState, config))).to.eql(true);

@@ -6,9 +6,7 @@ import promptsUtils from '../generators/utils/prompts';
 describe('Prompt Utils', () => {
   describe('getAngularVersions', () => {
     it('should return supported Angular versions', () => {
-      let expectedVersions;
-
-      expectedVersions = [
+      const expectedVersions = [
         {
           name: '1.4.*',
           value: '1.4.*'
@@ -28,9 +26,7 @@ describe('Prompt Utils', () => {
   });
 
   describe('getBowerComponents', () => {
-    let bowerComponentsForAllVersions;
-
-    bowerComponentsForAllVersions = [
+    const bowerComponentsForAllVersions = [
       {
         name: 'Angular Animate',
         value: 'animate'
@@ -70,14 +66,12 @@ describe('Prompt Utils', () => {
     });
 
     describe('Angular ^1.3.* copmonents', () => {
-      let angularAria, angularMessages;
-
-      angularAria = {
+      const angularAria = {
         name: 'Angular Aria',
         value: 'aria'
       };
 
-      angularMessages = {
+      const angularMessages = {
         name: 'Angular Messages',
         value: 'messages'
       };
@@ -87,14 +81,14 @@ describe('Prompt Utils', () => {
       });
 
       it('should return Angular Aria and Messages for 1.3.*', () => {
-        let bowerComponentsFor13 = promptsUtils.getBowerComponents('1.3.*');
+        const bowerComponentsFor13 = promptsUtils.getBowerComponents('1.3.*');
         expect(bowerComponentsFor13[1]).to.eql(angularAria);
         expect(bowerComponentsFor13[3]).to.eql(angularMessages);
         expect(bowerComponentsFor13.length).to.eql(10);
       });
 
       it('should return Angular Aria and Messages for 1.4.*', () => {
-        let bowerComponentsFor14 = promptsUtils.getBowerComponents('1.4.*');
+        const bowerComponentsFor14 = promptsUtils.getBowerComponents('1.4.*');
         expect(bowerComponentsFor14[1]).to.eql(angularAria);
         expect(bowerComponentsFor14[3]).to.eql(angularMessages);
         expect(bowerComponentsFor14.length).to.eql(10);
@@ -104,9 +98,7 @@ describe('Prompt Utils', () => {
 
   describe('getMarkupLanguages', () => {
     it('should return supported markup languages', () => {
-      let expectedMarkupLanguages;
-
-      expectedMarkupLanguages = [
+      const expectedMarkupLanguages = [
         {
           name: 'HAML',
           value: 'haml'
@@ -127,9 +119,7 @@ describe('Prompt Utils', () => {
 
   describe('getModuleStructures', () => {
     it('should return supported module structures', () => {
-      let expectedModuleStructures;
-
-      expectedModuleStructures = [
+      const expectedModuleStructures = [
         {
           name: ['app/',
                 '├── module1/',
@@ -157,9 +147,7 @@ describe('Prompt Utils', () => {
 
   describe('getScriptLanguages', () => {
     it('should return supported script languages', () => {
-      let expectedScriptLanguages;
-
-      expectedScriptLanguages = [
+      const expectedScriptLanguages = [
         {
           name: 'CoffeeScript',
           value: 'coffee'
@@ -184,9 +172,7 @@ describe('Prompt Utils', () => {
 
   describe('getStyleLanguages', () => {
     it('should return supported style languages', () => {
-      let expectedStyleLanguages;
-
-      expectedStyleLanguages = [
+      const expectedStyleLanguages = [
         {
           name: 'CSS',
           value: 'css'
@@ -211,9 +197,7 @@ describe('Prompt Utils', () => {
 
   describe('getTestFrameworks', () => {
     it('should return supported testing frameworks', () => {
-      let expectedTestFrameworks;
-
-      expectedTestFrameworks = [
+      const expectedTestFrameworks = [
         {
           name: 'Jasmine',
           value: 'jasmine'
@@ -229,9 +213,7 @@ describe('Prompt Utils', () => {
   });
 
   describe('getUIFrameworks', () => {
-    let frameworksForAllVersions;
-
-    frameworksForAllVersions = [
+    const frameworksForAllVersions = [
       {
         name: 'none',
         value: 'none'
@@ -255,7 +237,7 @@ describe('Prompt Utils', () => {
     });
 
     describe('Angular Material', () => {
-      let angularMaterial = {
+      const angularMaterial = {
         name: 'Angular Material',
         value: 'material'
       };
@@ -265,13 +247,13 @@ describe('Prompt Utils', () => {
       });
 
       it('should also return Angular Material for version 1.3.*', () => {
-        let frameworksFor13 = promptsUtils.getUIFrameworks('1.3.*');
+        const frameworksFor13 = promptsUtils.getUIFrameworks('1.3.*');
         expect(frameworksFor13[1]).to.eql(angularMaterial);
         expect(frameworksFor13.length).to.eql(5);
       });
 
       it('should also return Angular Material for version 1.4.*', () => {
-        let frameworksFor14 = promptsUtils.getUIFrameworks('1.4.*');
+        const frameworksFor14 = promptsUtils.getUIFrameworks('1.4.*');
         expect(frameworksFor14[1]).to.eql(angularMaterial);
         expect(frameworksFor14.length).to.eql(5);
       });
