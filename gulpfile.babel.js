@@ -18,7 +18,7 @@ gulp.task('clean', () => del(destDir));
 gulp.task('lint', () => {
   return gulp.src([configFiles, srcFiles, testFiles])
     .pipe(eslint())
-    .pipe(eslint.formatEach('./node_modules/eslint-path-formatter'))
+    .pipe(eslint.format('node_modules/eslint-formatter-pretty'))
     .pipe(eslint.failAfterError())
     .pipe(jscs())
     .pipe(jscs.reporter())

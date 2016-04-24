@@ -69,7 +69,7 @@
     "del": "^2.0.0",
     "eslint": "^2.5.1",
     "eslint-config-dustinspecker": "^0.1.0",
-    "eslint-path-formatter": "^0.1.1",
+    "eslint-formatter-pretty": "^0.2.0",
     "eslint-plugin-new-with-error": "^1.1.0",
     "eslint-plugin-no-use-extend-native": "^0.3.1",
     "gulp": "^3.9.0",
