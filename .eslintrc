@@ -12,7 +12,6 @@
     operator: 0,
     'operator-linebreak': 0,
     'prefer-reflect': 0,
-    'prefer-rest-params': 0,
     'prefer-const': 0,
     'prefer-template': 0,
     semi: [2, 'always']
