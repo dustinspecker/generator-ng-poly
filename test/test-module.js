@@ -90,11 +90,11 @@ describe('Module generator', () => {
     });
 
     it('should add comma to ui.router in app/app-module.js', () => {
-      assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
+      assert.fileContent('app/app-module.js', / {4}'ui.router',/);
     });
 
     it('should add testCoffee to app/app-module.js deps', () => {
-      assert.fileContent('app/app-module.js', / {4}\'testCoffee\'/);
+      assert.fileContent('app/app-module.js', / {4}'testCoffee'/);
     });
   });
 
@@ -128,11 +128,11 @@ describe('Module generator', () => {
     });
 
     it('should add comma to ui.router in app/app-module.js', () => {
-      assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
+      assert.fileContent('app/app-module.js', / {4}'ui.router',/);
     });
 
     it('should add testEs6 to app/app-module.js deps', () => {
-      assert.fileContent('app/app-module.js', / {4}\'testEs6\'/);
+      assert.fileContent('app/app-module.js', / {4}'testEs6'/);
     });
   });
 
@@ -164,11 +164,11 @@ describe('Module generator', () => {
     });
 
     it('should add comma to ui.router in app/app-module.js', () => {
-      assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
+      assert.fileContent('app/app-module.js', / {4}'ui.router',/);
     });
 
     it('should add testJs to app/app-module.js deps', () => {
-      assert.fileContent('app/app-module.js', / {4}\'testJs\'/);
+      assert.fileContent('app/app-module.js', / {4}'testJs'/);
     });
   });
 
@@ -202,11 +202,11 @@ describe('Module generator', () => {
     });
 
     it('should add comma to ui.router in app/app-module.js', () => {
-      assert.fileContent('app/app-module.js', / {4}\'ui.router\',/);
+      assert.fileContent('app/app-module.js', / {4}'ui.router',/);
     });
 
     it('should add testTs to app/app-module.js deps', () => {
-      assert.fileContent('app/app-module.js', / {4}\'testTs\'/);
+      assert.fileContent('app/app-module.js', / {4}'testTs'/);
     });
   });
 
@@ -244,20 +244,20 @@ describe('Module generator', () => {
       });
 
       it('should add door.handle to app/home/my-door-module.coffee', () => {
-        assert.fileContent('app/home/my-door/my-door-module.coffee', / {4}\'myDoor.handle\'/);
+        assert.fileContent('app/home/my-door/my-door-module.coffee', / {4}'myDoor.handle'/);
       });
 
       it('should name module in app/home/my-door/my-door-module.coffee home.myDoor', () => {
-        assert.fileContent('app/home/my-door/my-door-module.coffee', /angular[^$]*.module[^$]*\'home.myDoor\'/);
+        assert.fileContent('app/home/my-door/my-door-module.coffee', /angular[^$]*.module[^$]*'home.myDoor'/);
       });
     });
 
     it('should add comma to ui.router in app/home/home-module.js deps', () => {
-      assert.fileContent('app/home/home-module.js', / {4}\'ui.router\',/);
+      assert.fileContent('app/home/home-module.js', / {4}'ui.router',/);
     });
 
     it('should add home.door to app/home/home-module.js deps', () => {
-      assert.fileContent('app/home/home-module.js', / {4}\'home.myDoor\'/);
+      assert.fileContent('app/home/home-module.js', / {4}'home.myDoor'/);
     });
   });
 
@@ -277,15 +277,15 @@ describe('Module generator', () => {
     });
 
     it('should create home.myModule in app/home/my-module/my-module-module.js', () => {
-      assert.fileContent('app/home/my-module/my-module-module.js', /angular[^$]*.module[^$]*\'home.myModule\'/);
+      assert.fileContent('app/home/my-module/my-module-module.js', /angular[^$]*.module[^$]*'home.myModule'/);
     });
 
     it('should add home.myModule in app/home/home-module.js', () => {
-      assert.fileContent('app/home/home-module.js', / {4}\'home.myModule\'/);
+      assert.fileContent('app/home/home-module.js', / {4}'home.myModule'/);
     });
 
     it('should add myModule state to app/home/my-module/my-module-routes.js', () => {
-      assert.fileContent('app/home/my-module/my-module-routes.js', /[.]state\(\'myModule\', /);
+      assert.fileContent('app/home/my-module/my-module-routes.js', /[.]state\('myModule', /);
     });
   });
 
@@ -308,11 +308,11 @@ describe('Module generator', () => {
     });
 
     it('should add comma to ui.router in app/home/home-module.js deps', () => {
-      assert.fileContent('app/home/home-module.js', / {4}\'ui.router\',/);
+      assert.fileContent('app/home/home-module.js', / {4}'ui.router',/);
     });
 
     it('should add home.myHouse to app/home/home-module.js deps', () => {
-      assert.fileContent('app/home/home-module.js', / {4}\'home.myHouse\'/);
+      assert.fileContent('app/home/home-module.js', / {4}'home.myHouse'/);
     });
 
     describe('adding a deeper level module', () => {
@@ -334,11 +334,11 @@ describe('Module generator', () => {
       });
 
       it('should add myHouse.handle to app/home/my-house-module.ts', () => {
-        assert.fileContent('app/home/my-house/my-house-module.ts', / {4}\'myHouse.handle\'/);
+        assert.fileContent('app/home/my-house/my-house-module.ts', / {4}'myHouse.handle'/);
       });
 
       it('should name module in app/home/my-house/my-house-module.ts home.myHouse', () => {
-        assert.fileContent('app/home/my-house/my-house-module.ts', /angular[^$]*.module[^$]*\'home.myHouse\'/);
+        assert.fileContent('app/home/my-house/my-house-module.ts', /angular[^$]*.module[^$]*'home.myHouse'/);
       });
     });
   });
