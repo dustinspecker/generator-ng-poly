@@ -4,7 +4,6 @@
   rules: {
     'arrow-parens': 0,
     complexity: 0,
-    'func-style': 0,
     'max-len': [2, 220],
     'newline-per-chained-call': 0,
     'no-param-reassign': 0,
