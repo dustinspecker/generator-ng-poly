@@ -2,6 +2,7 @@
 'use strict';
 import {expect} from 'chai';
 import {expectRequire} from 'a';
+import {join} from 'path';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 
@@ -225,15 +226,15 @@ describe('Module Utils', () => {
       let expectedModules, files, modules;
 
       files = [
-        'test/test-module.js',
-        'abc/abc-module.js',
-        'nested/nest/nest-module.js'
+        join('test', 'test-module.js'),
+        join('abc', 'abc-module.js'),
+        join('nested', 'nest', 'nest-module.js')
       ];
 
       expectedModules = [
         {name: 'test', value: 'test'},
         {name: 'abc', value: 'abc'},
-        {name: 'nested/nest', value: 'nested/nest'}
+        {name: join('nested', 'nest'), value: join('nested', 'nest')}
       ];
 
       modules = await utilsProxy.moduleFilter(files);
