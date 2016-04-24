@@ -56,7 +56,7 @@ describe('Directive generator', () => {
 
       it('should inject template module in spec', () => {
         assert.fileContent('app/home/directives/test-with-url-directive_test.js',
-          `beforeEach(module('home', 'home/directives/test-with-url-directive.tpl.html'));`);
+          'beforeEach(module(\'home\', \'home/directives/test-with-url-directive.tpl.html\'));');
       });
     });
 
@@ -90,7 +90,7 @@ describe('Directive generator', () => {
 
       it('should inject template module in spec', () => {
         assert.fileContent('app/home/test1-with-url-directive_test.coffee',
-          `beforeEach module('home', 'home/test1-with-url-directive.tpl.html')`);
+          'beforeEach module(\'home\', \'home/test1-with-url-directive.tpl.html\')');
       });
     });
 
@@ -125,7 +125,7 @@ describe('Directive generator', () => {
 
       it('should inject template module in spec', () => {
         assert.fileContent('app/home/directives/test3-with-url-directive_test.ts',
-          `beforeEach(angular.mock.module('home', 'home/directives/test3-with-url-directive.tpl.html'));`);
+          'beforeEach(angular.mock.module(\'home\', \'home/directives/test3-with-url-directive.tpl.html\'));');
       });
     });
 
@@ -159,7 +159,7 @@ describe('Directive generator', () => {
 
       it('should inject template module in spec', () => {
         assert.fileContent('app/home/test2-with-url-directive_test.es6',
-          `beforeEach(module('home', 'home/test2-with-url-directive.tpl.html'));`);
+          'beforeEach(module(\'home\', \'home/test2-with-url-directive.tpl.html\'));');
       });
     });
   });
@@ -215,12 +215,12 @@ describe('Directive generator', () => {
 
       it('should use template in script file', () => {
         assert.fileContent('app/home/directives/test-with-inline-directive.js',
-          `template: '<div>{{testWithInline.name}}</div>',`);
+          'template: \'<div>{{testWithInline.name}}</div>\',');
       });
 
       it('should not inject template module', () => {
         assert.fileContent('app/home/directives/test-with-inline-directive_test.js',
-          `beforeEach(module('home'));`);
+          'beforeEach(module(\'home\'));');
       });
     });
 
@@ -253,12 +253,12 @@ describe('Directive generator', () => {
 
       it('should use template in script file', () => {
         assert.fileContent('app/home/test1-with-inline-directive.coffee',
-          `template: '<div>{{test1WithInline.name}}</div>'`);
+          'template: \'<div>{{test1WithInline.name}}</div>\'');
       });
 
       it('should not inject template module', () => {
         assert.fileContent('app/home/test1-with-inline-directive_test.coffee',
-          `beforeEach module('home')`);
+          'beforeEach module(\'home\')');
       });
     });
 
@@ -292,12 +292,12 @@ describe('Directive generator', () => {
 
       it('should use template in script file', () => {
         assert.fileContent('app/home/directives/test3-with-inline-directive.ts',
-          `template: '<div>{{test3WithInline.name}}</div>',`);
+          'template: \'<div>{{test3WithInline.name}}</div>\',');
       });
 
       it('should not inject template module', () => {
         assert.fileContent('app/home/directives/test3-with-inline-directive_test.ts',
-          `beforeEach(angular.mock.module('home'));`);
+          'beforeEach(angular.mock.module(\'home\'));');
       });
     });
 
@@ -330,12 +330,12 @@ describe('Directive generator', () => {
 
       it('should use template in script file', () => {
         assert.fileContent('app/home/test2-with-inline-directive.es6',
-          `template: '<div>{{test2WithInline.name}}</div>',`);
+          'template: \'<div>{{test2WithInline.name}}</div>\',');
       });
 
       it('should not inject template module', () => {
         assert.fileContent('app/home/test2-with-inline-directive_test.es6',
-          `beforeEach(module('home'));`);
+          'beforeEach(module(\'home\'));');
       });
     });
   });
