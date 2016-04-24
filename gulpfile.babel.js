@@ -5,7 +5,6 @@ import del from 'del';
 import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import istanbul from 'gulp-istanbul';
-import jscs from 'gulp-jscs';
 import mocha from 'gulp-mocha';
 
 const configFiles = 'gulpfile.babel.js'
@@ -20,9 +19,6 @@ gulp.task('lint', () =>
     .pipe(eslint())
     .pipe(eslint.format('node_modules/eslint-formatter-pretty'))
     .pipe(eslint.failAfterError())
-    .pipe(jscs())
-    .pipe(jscs.reporter())
-    .pipe(jscs.reporter('fail'))
 );
 
 gulp.task('compile', ['clean', 'lint'], () =>
