@@ -35,10 +35,8 @@ describe('Constant generator', () => {
         })
         .withArguments(['test'])
         .withOptions({
-          structure: 'module-type'
-        })
-        .withPrompts({
-          module: 'home/'
+          structure: 'module-type',
+          module: 'home'
         })
         .on('end', done);
     });
@@ -58,11 +56,9 @@ describe('Constant generator', () => {
           tmpdir: false
         })
         .withArguments(['test1'])
-        .withPrompts({
-          module: 'app'
-        })
         .withOptions({
           'app-script': 'ts',
+          module: 'app',
           'test-script': 'ts'
         })
         .on('end', done);
@@ -83,11 +79,9 @@ describe('Constant generator', () => {
           tmpdir: false
         })
         .withArguments(['test2'])
-        .withPrompts({
-          module: 'app'
-        })
         .withOptions({
           'app-script': 'coffee',
+          module: 'app',
           'test-script': 'coffee'
         })
         .on('end', done);
@@ -110,6 +104,7 @@ describe('Constant generator', () => {
         .withArguments(['test3'])
         .withOptions({
           'app-script': 'es6',
+          module: 'app',
           'test-script': 'es6'
         })
         .on('end', done);
