@@ -53,7 +53,7 @@
     "remove-trailing-slash": "^0.1.0",
     "underscore.string": "^3.0.1",
     "update-notifier": "^0.6.0",
-    "yeoman-generator": "^0.22.4",
+    "yeoman-generator": "^0.23.1",
     "yosay": "^1.0.0"
   },
   "devDependencies": {
