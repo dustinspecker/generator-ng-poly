@@ -3,7 +3,7 @@ module <%= upperCamel %> {
   'use strict';
 
   class <%= upperCamel %> {
-    public static $inject = [
+    public static $inject: Array<string> = [
     ];
 
     constructor() {
