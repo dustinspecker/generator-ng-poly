@@ -57,7 +57,7 @@
     "yosay": "^1.0.0"
   },
   "devDependencies": {
-    "a": "^1.0.1",
+    "a": "^2.0.6",
     "babel-core": "^6.1.19",
     "babel-eslint": "^6.0.0",
     "babel-plugin-syntax-async-functions": "^6.1.18",
