@@ -28,12 +28,12 @@ module <%= upperCamel %> {
         export class <%= upperCamel %>Controller {
             public name: string;
             public static $inject: Array<string> = [];
+
             constructor() {
                 this.name = '<%= lowerCamel %>';
             }
         }
     <% } %>
-
     /**
     * @ngdoc directive
     * @name <% if (parentModuleName) { %><%= parentModuleName %>.<% } %><%= moduleName %>.directive:<%= lowerCamel %>
