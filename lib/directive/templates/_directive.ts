@@ -10,22 +10,24 @@ module <%= upperCamel %> {
             template: '<div>{{<%= lowerCamel %>.name}}</div>'<% } %>,
             replace: false,<% if (controllerAs) { %>
             controllerAs: '<%= lowerCamel %>',<% } %>
-            controller: function (<% if (!controllerAs) { %>$scope: ng.IScope<% } %>) {
-                <% if (controllerAs) { %>var vm = this;
-                vm.name = '<%= lowerCamel %>';<% } else { %>$scope.<%= lowerCamel %> = {};
-                $scope.<%= lowerCamel %>.name = '<%= lowerCamel %>';<% } %>
-            },
+            controller: <% if (!controllerAs) { %>
+                function($scope: ng.IScope) {
+                    $scope.<%= lowerCamel %> = {};
+                    $scope.<%= lowerCamel %>.name = '<%= lowerCamel %>';
+                }
+                <% } else { %><%= upperCamel %>Controller<% } %>,
             link: function (scope: ng.IScope, element: JQuery, attrs: any) {
                 /*jshint unused:false */
                 /*eslint "no-unused-vars": [2, {"args": "none"}]*/
             }
         }
     }
-    <% if (!controllerAs) { %>
+    <% if (controllerAs) { %>
         export class <%= upperCamel %>Controller {
+            public name: string;
             public static $inject: Array<string> = [];
             constructor() {
-                /*jshint unused:false */
+                this.name = '<%= lowerCamel %>';
             }
         }
     <% } %>
