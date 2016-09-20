@@ -38,7 +38,7 @@
     "babel-runtime": "^6.1.18",
     "chalk": "^1.0.0",
     "count-spaces": "^1.0.1",
-    "find-up": "^1.0.0",
+    "find-up": "^2.0.0",
     "func-has-param": "^1.1.1",
     "get-yo-rc-path": "^1.0.1",
     "indent-string": "^2.0.0",
