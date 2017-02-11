@@ -80,7 +80,7 @@
     "proxyquire": "^1.0.1",
     "semantic-release": "^4.3.5",
     "sinon": "^1.10.3",
-    "yeoman-assert": "^2.1.1",
+    "yeoman-assert": "^3.0.0",
     "yeoman-test": "^1.0.0"
   },
   "config": {
