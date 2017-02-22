@@ -1,12 +1,12 @@
 {
-  "name": "generator-ng-poly",
+  "name": "generator-sd-angular",
   "version": "0.0.0-semantic-release",
   "description": "Yeoman generator for modular AngularJS apps with Gulp and optional Polymer support",
   "license": "MIT",
   "main": "generators/app/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dustinspecker/generator-ng-poly.git"
+    "url": "https://github.com/dustinspecker/generator-sd-angular.git"
   },
   "author": {
     "name": "Dustin Specker",
