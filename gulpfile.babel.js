@@ -21,7 +21,7 @@ gulp.task('lint', () =>
     .pipe(eslint.failAfterError())
 );
 
-gulp.task('compile', ['clean', 'lint'], () =>
+gulp.task('compile', ['clean'], () =>
   gulp.src(srcFiles, {base: './lib'})
     .pipe(babel())
     .pipe(gulp.dest(destDir))
