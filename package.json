@@ -78,7 +78,7 @@
     "gulp-istanbul": "^0.10.0",
     "gulp-mocha": "^2.0.0",
     "proxyquire": "^1.0.1",
-    "semantic-release": "^4.3.5",
+    "semantic-release": "^6.3.6",
     "sinon": "^1.10.3",
     "yeoman-assert": "^2.1.1",
     "yeoman-test": "^1.0.0"
