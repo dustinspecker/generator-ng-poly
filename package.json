@@ -63,7 +63,7 @@
     "babel-plugin-syntax-async-functions": "^6.1.18",
     "babel-plugin-transform-regenerator": "^6.1.18",
     "babel-preset-es2015": "^6.1.18",
-    "chai": "^3.2.0",
+    "chai": "^4.0.0",
     "coveralls": "^2.11.1",
     "cz-conventional-changelog": "^1.1.5",
     "del": "^2.0.0",
