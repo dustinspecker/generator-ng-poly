@@ -48,7 +48,7 @@
     "ng-add-dep": "^0.3.0",
     "ng-mod-get-names": "^1.0.0",
     "path-exists": "^3.0.0",
-    "pify": "^2.2.0",
+    "pify": "^3.0.0",
     "recursive-readdir": "^2.0.0",
     "remove-trailing-slash": "^0.1.0",
     "underscore.string": "^3.0.1",
